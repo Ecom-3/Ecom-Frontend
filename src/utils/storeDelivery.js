@@ -1,3 +1,5 @@
+import { parseDeliveryEstimate } from './productBrowsing.js';
+
 export const DELIVERY_MODE_OPTIONS = ['Standard Delivery', 'Instant Delivery', 'Express Delivery', 'Scheduled Delivery', 'Store Pickup'];
 export const DELIVERY_METHOD_PRIORITY = ['instant', 'scheduled', 'express', 'standard', 'pickup'];
 
@@ -45,14 +47,14 @@ export const deliverySlotLabel = (method = '') => {
 
 export const deliverySummary = (store = {}, formatCurrency = (value) => `Rs. ${Number(value || 0).toLocaleString('en-IN')}`) => {
   const radius = Number(store.deliveryRadiusKm || 0);
-  const eta = Number(store.deliveryEtaMinutes || 0);
+  const eta = parseDeliveryEstimate(store.deliveryEtaMinutes);
   const charge = Number(store.deliveryCharge || 0);
   const freeAbove = Number(store.freeDeliveryAbove || 0);
   const modes = parseDeliveryModes(store.deliveryModes);
   const radiusText = Number.isInteger(radius) ? String(radius) : radius.toFixed(1);
   return {
     radiusLabel: radius > 0 ? `${radiusText} km radius` : 'Radius not set',
-    etaLabel: eta > 0 ? `${eta} min delivery` : 'Delivery ETA not set',
+    etaLabel: eta ? `${eta.min === eta.max ? eta.max : `${eta.min}–${eta.max}`} min delivery` : 'Delivery ETA not set',
     chargeLabel: charge > 0 ? `${formatCurrency(charge)} delivery charge` : 'No delivery charge',
     freeLabel: freeAbove > 0 ? `Free above ${formatCurrency(freeAbove)}` : 'No free delivery threshold',
     modesLabel: modes.length ? modes.join(', ') : 'Delivery modes not set',

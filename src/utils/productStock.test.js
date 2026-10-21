@@ -34,6 +34,7 @@ test('mismatched identities and invalid quantities cannot claim availability', a
   for (const patch of [{ storeId: 'other' }, { productId: 'other' }, { variantId: 'other' }, { availableQuantity: undefined }, { availableQuantity: -1 }, { status: 'UNKNOWN' }]) {
     assert.deepEqual(await loadProductStock(async () => ({ ...row, ...patch }), identity), { state: 'error' });
   }
+  assert.deepEqual(await loadProductStock(async () => row, { productId: 'product', storeId: 'store' }), { state: 'error' });
 });
 test('inventory requests retain the session Bearer token and distinguish server/auth errors', async () => {
   const previous = { fetch: globalThis.fetch, sessionStorage: globalThis.sessionStorage };

@@ -28,7 +28,7 @@ import { validRegistrationName } from '../../utils/registrationValidation';
 const Profile = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { logout, user, setUser, addresses, deleteAddress, formatDateTime, formatCurrency, selectedLocation } = useContext(AppContext);
+  const { logout, user, setUser, addresses, deleteAddress, setDefaultAddress, formatDateTime, formatCurrency, selectedLocation } = useContext(AppContext);
   const photoInputRef = useRef(null);
   const addressSectionRef = useRef(null);
   const [addressesExpanded, setAddressesExpanded] = useState(false);
@@ -340,6 +340,7 @@ const Profile = () => {
                   {address.address}
                 </Typography>
                 <Box className="address-actions">
+                  {!address.isDefault && <Button className="action-btn" onClick={() => setDefaultAddress(address.id)}>Set as default</Button>}
                   <Button startIcon={<EditOutlinedIcon />} className="action-btn edit-btn" onClick={() => navigate('/address-form', { state: { editAddress: address } })}>Edit</Button>
                   <Button startIcon={<DeleteForeverOutlinedIcon />} className="action-btn remove-btn" onClick={() => deleteAddress(address.id)}>Remove</Button>
                 </Box>

@@ -3,7 +3,7 @@ export const loadProductStock = async (lookup, identity) => {
   try {
     const value = await lookup(identity);
     const matches = value?.storeId === identity.storeId && value?.productId === identity.productId
-      && (!identity.variantId || value?.variantId === identity.variantId);
+      && (identity.variantId ? value?.variantId === identity.variantId : !value?.variantId);
     if (!matches || !Number.isInteger(value.availableQuantity) || value.availableQuantity < 0
       || !['ACTIVE', 'OUT_OF_STOCK', 'INACTIVE'].includes(value.status)) {
       return { state: 'error' };

@@ -1,37 +1,24 @@
 import { useContext, useEffect, useState } from 'react';
-import { Box, Button, Chip, Typography } from '@mui/material';
+import { Box, Button, Chip, InputAdornment, TextField, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
+import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
+import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined';
+import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import BottomNav from '../../components/BottomNav/BottomNav';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import CampaignCarousel from '../../components/CampaignCarousel/CampaignCarousel';
 import { AppContext } from '../../context/AppContext';
-import { collectionStore } from '../../services/localDataService';
 import { promotionApplies } from '../../services/promotionScope';
-import { savePendingCouponCode, validateCoupon } from '../../services/couponService';
 import { getCachedStoreDeliveryQuote, getStoreProducts } from '../../services/catalogApi';
 import { adaptStoreProductList } from '../../services/catalogAdapter';
 import { deliverySummary, isGlobalProduct, isGlobalStore, storeDeliversTo } from '../../utils/storeDelivery';
+import StoreServiceAreaMap from '../../components/StoreServiceAreaMap/StoreServiceAreaMap';
 import './StorePage.css';
-
-const GLOBAL_STORE = {
-  id: 'global-store',
-  name: 'India-wide Global Store',
-  address: 'India-wide delivery',
-  location: 'All India',
-  deliveryRadiusKm: 0,
-  deliveryEtaMinutes: 0,
-  deliveryCharge: 0,
-  freeDeliveryAbove: 0,
-  deliveryModes: '5-7 days delivery',
-  deliveryNotes: 'India-wide products are delivered in 5-7 days.',
-  delivery: 'Yes',
-  status: 'Active',
-  active: true,
-  global: true,
-};
 
 const lineStringCoordinates = (geometry) => {
   if (!geometry) return [];
@@ -40,35 +27,13 @@ const lineStringCoordinates = (geometry) => {
   return [];
 };
 
-const routeBounds = (points, fallbackLat, fallbackLng, customerLat, customerLng) => {
-  const coordinates = [
-    ...points,
-    [fallbackLng, fallbackLat],
-    Number.isFinite(customerLat) && Number.isFinite(customerLng) ? [customerLng, customerLat] : null,
-  ].filter((point) => point && Number.isFinite(Number(point[0])) && Number.isFinite(Number(point[1])));
-  const lngs = coordinates.map((point) => Number(point[0]));
-  const lats = coordinates.map((point) => Number(point[1]));
-  const minLng = Math.min(...lngs);
-  const maxLng = Math.max(...lngs);
-  const minLat = Math.min(...lats);
-  const maxLat = Math.max(...lats);
-  const lngPad = Math.max((maxLng - minLng) * 0.18, 0.01);
-  const latPad = Math.max((maxLat - minLat) * 0.18, 0.01);
-  return { minLng:minLng - lngPad, maxLng:maxLng + lngPad, minLat:minLat - latPad, maxLat:maxLat + latPad };
-};
-
-const mapPoint = (lng, lat, bounds) => ({
-  x: ((Number(lng) - bounds.minLng) / (bounds.maxLng - bounds.minLng)) * 100,
-  y: ((bounds.maxLat - Number(lat)) / (bounds.maxLat - bounds.minLat)) * 100,
-});
-
 const StorePage = () => {
   const { storeId } = useParams();
   const navigate = useNavigate();
-  const { userCity, catalogProducts, catalogBanners, formatCurrency, addresses, selectedLocation, setShowLocationModal, catalogStores, catalogLoading, deliveryMode, setDeliveryMode, cartCount, cartItems } = useContext(AppContext);
+  const { userCity, catalogProducts, catalogBanners, formatCurrency, addresses, selectedLocation, setShowLocationModal, catalogStores, catalogLoading, deliveryMode, setDeliveryMode, cartCount } = useContext(AppContext);
   const [storeProducts, setStoreProducts] = useState([]);
+  const [productSearch, setProductSearch] = useState('');
   const [quote, setQuote] = useState(null);
-  const [offerMessage, setOfferMessage] = useState('');
 
   useEffect(() => {
     let ignore = false;
@@ -82,7 +47,7 @@ const StorePage = () => {
     return () => { ignore = true; };
   }, [storeId]);
 
-  const store = catalogStores.find((item) => item.id === storeId) || (storeId === GLOBAL_STORE.id ? GLOBAL_STORE : null);
+  const store = catalogStores.find((item) => item.id === storeId) || null;
   const globalStore = isGlobalStore(store);
   useEffect(() => {
     if (!store?.id) return;
@@ -104,9 +69,7 @@ const StorePage = () => {
       .catch(() => { if (!ignore) setQuote(null); });
     return () => { ignore = true; };
   }, [storeId, customerLat, customerLng]);
-  const bannerSource = catalogBanners.length ? catalogBanners : collectionStore.list('banners');
-  const banners = store ? bannerSource.filter((item) => item.status === 'Active' && item.image && promotionApplies(item, { location: store.location, store: store.name })) : [];
-  const coupons = store ? collectionStore.list('coupons').filter((item) => item.status === 'Active' && promotionApplies(item, { location: store.location, store: store.name })) : [];
+  const banners = store ? catalogBanners.filter((item) => item.status === 'Active' && item.image && promotionApplies(item, { location: store.location, store: store.name })) : [];
   const mappedProductIds = new Set(storeProducts.filter((item) => item.storeId === storeId && item.status !== 'INACTIVE' && item.available !== false).map((item) => item.productId));
   const mappedProducts = storeProducts
     .filter((item) => item.product)
@@ -115,17 +78,11 @@ const StorePage = () => {
     ...mappedProducts,
     ...catalogProducts.filter((item) => mappedProductIds.has(item.productId) || item.storeId === storeId || item.store === store.name || item.storeName === store.name || (globalStore && isGlobalProduct(item))),
   ].filter((product, index, items) => product.active !== false && items.findIndex((item) => (item.productId ?? item.id) === (product.productId ?? product.id)) === index) : [];
-
-  const applyStoreOffer = (coupon) => {
-    const subtotal = cartItems.reduce((sum, item) => sum + Number(item.price || item.unitPrice || 0) * Number(item.quantity || 1), 0);
-    savePendingCouponCode(coupon.name);
-    if (!cartItems.length) {
-      setOfferMessage(`${coupon.name} selected. Add eligible items from this store, then open cart or checkout to apply it.`);
-      return;
-    }
-    const result = validateCoupon(coupon, { subtotal, cartItems, catalogProducts, location: store.location || userCity, store: store.name });
-    setOfferMessage(result.valid ? `${coupon.name} selected. Discount will be applied in cart and checkout.` : result.message);
-  };
+  const normalizedProductSearch = productSearch.trim().toLowerCase();
+  const visibleProducts = normalizedProductSearch
+    ? products.filter((product) => [product.title, product.name, product.description, product.category?.name || product.category, product.sku]
+      .some((value) => String(value || '').toLowerCase().includes(normalizedProductSearch)))
+    : products;
 
   if (catalogLoading) return <Box className="store-page"><Header /><Typography>Loading store...</Typography></Box>;
   if (!store) return <Box className="store-page"><Header /><Box className="store-empty"><Typography variant="h6">Store not found</Typography><Button onClick={() => navigate('/home')}>Return home</Button></Box><BottomNav /></Box>;
@@ -142,14 +99,12 @@ const StorePage = () => {
   }));
   const lat = Number(store.latitude);
   const lng = Number(store.longitude);
-  const hasMapPoint = Number.isFinite(lat) && Number.isFinite(lng);
+  const hasMapPoint = Number.isFinite(lat) && Number.isFinite(lng) && Math.abs(lat) <= 90 && Math.abs(lng) <= 180;
   const routePoints = lineStringCoordinates(quote?.routeGeometry);
-  const mapBounds = hasMapPoint ? routeBounds(routePoints, lat, lng, customerLat, customerLng) : null;
-  const routeSvgPoints = mapBounds ? routePoints.map(([pointLng, pointLat]) => mapPoint(pointLng, pointLat, mapBounds)).map((point) => `${point.x},${point.y}`).join(' ') : '';
-  const storePoint = mapBounds ? mapPoint(lng, lat, mapBounds) : null;
-  const customerPoint = mapBounds && Number.isFinite(customerLat) && Number.isFinite(customerLng) ? mapPoint(customerLng, customerLat, mapBounds) : null;
-  const radiusSize = `${Math.max(18, Math.min(92, Number(store.deliveryRadiusKm || 0) * 4))}%`;
-  const mapUrl = hasMapPoint ? `https://www.openstreetmap.org/export/embed.html?bbox=${mapBounds.minLng}%2C${mapBounds.minLat}%2C${mapBounds.maxLng}%2C${mapBounds.maxLat}&layer=mapnik` : '';
+  const customerPoint = Number.isFinite(customerLat) && Number.isFinite(customerLng) && Math.abs(customerLat) <= 90 && Math.abs(customerLng) <= 180 ? { latitude: customerLat, longitude: customerLng } : null;
+  const deliveryLocationLabel = selectedLocation?.address || selectedLocation?.subtitle || selectedLocation?.title || defaultAddress.address || '';
+  const deliveryChargeLabel = quote?.deliveryCharge != null ? formatCurrency(quote.deliveryCharge) : delivery.chargeLabel;
+  const serviceMethodsLabel = quoteMethods.length ? quoteMethods.map((method) => method.deliveryType).join(', ') : delivery.modesLabel;
 
   return <Box className="store-page">
     <Header />
@@ -171,31 +126,47 @@ const StorePage = () => {
       </Box>
     </Box>
     <CampaignCarousel banners={banners} onNavigate={navigate} />
-    {coupons.length > 0 && <Box sx={{ mx: { xs: 2, md: 5 }, my: 2, p: 2, bgcolor: '#eef8f3', borderRadius: 2 }}><Typography fontWeight={800}>Offers available at this store</Typography><Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mt: 1 }}>{coupons.map((coupon) => <Chip key={coupon.id} color="success" variant="outlined" clickable onClick={() => applyStoreOffer(coupon)} label={`${coupon.name} | ${coupon.discountType === 'Percentage' ? `${coupon.discount}% off` : `${formatCurrency(coupon.discount)} off`}`} />)}</Box>{offerMessage && <Typography role="status" sx={{ mt: 1, color: offerMessage.toLowerCase().includes('selected') ? '#075F40' : 'error.main', fontSize: 13 }}>{offerMessage}</Typography>}</Box>}
     <Box className="store-service-panel">
-      <Box>
-        <Typography variant="h6">Store service area</Typography>
-        {quote?.distanceKm && <Typography>Road Distance: {quote.distanceKm} KM</Typography>}
-        {quote?.routeDurationMinutes && <Typography>Driving Time: ~{quote.routeDurationMinutes} min</Typography>}
-        {quoteZone && <Typography>{quoteZone}</Typography>}
-        <Typography>{delivery.freeLabel}</Typography>
-        <Typography>{quoteMethods.length ? `Available Delivery: ${quoteMethods.map((method) => `${method.deliveryType}${method.estimatedTime ? ` - ${method.estimatedTime}` : ''} - ${Number(method.deliveryCharge || 0) ? formatCurrency(method.deliveryCharge) : 'Free'}`).join(' | ')}` : delivery.modesLabel}</Typography>
-        {store.deliveryNotes && <Typography>{store.deliveryNotes}</Typography>}
+      <Box className="store-service-content">
+        <Box className="store-service-heading">
+          <Box className="store-service-heading-icon"><PlaceOutlinedIcon /></Box>
+          <Box><Typography variant="h6">Store service area</Typography><Typography>{store.name}</Typography></Box>
+          <Chip label={delivery.radiusLabel} size="small" />
+        </Box>
+        <Typography className="store-service-address">{store.address || [store.area, store.city || store.location, store.state, store.pincode].filter(Boolean).join(', ')}</Typography>
+        {deliveryLocationLabel && <Typography className="store-selected-location">Delivering to: {deliveryLocationLabel}</Typography>}
+        <Box className="store-service-metrics">
+          <Box><AccessTimeOutlinedIcon /><span><small>Delivery time</small><b>{quoteEta || delivery.etaLabel}</b></span></Box>
+          <Box><LocalShippingOutlinedIcon /><span><small>Delivery fee</small><b>{deliveryChargeLabel}</b></span></Box>
+          <Box><PaymentsOutlinedIcon /><span><small>Free delivery</small><b>{delivery.freeLabel.replace('Free ', '')}</b></span></Box>
+        </Box>
+        {(quoteZone || quote?.distanceKm || quote?.routeDurationMinutes) && <Typography className="store-service-quote">{[quoteZone, quote?.distanceKm ? `${quote.distanceKm} km by road` : '', quote?.routeDurationMinutes ? `~${quote.routeDurationMinutes} min drive` : ''].filter(Boolean).join(' · ')}</Typography>}
+        {store.deliveryNotes && <Typography className="store-service-notes">{store.deliveryNotes}</Typography>}
+        {deliveryModes.length > 0 && <Box className="store-service-modes">{deliveryModes.map((mode) => <Chip key={mode.name} label={mode.label} size="small" />)}</Box>}
+        {!deliveryModes.length && <Typography className="store-service-methods">Service types: {serviceMethodsLabel}</Typography>}
       </Box>
-      {hasMapPoint && <Box className="store-radius-map">
-        <iframe title={`${store.name} service map`} src={mapUrl} />
-        {routeSvgPoints && <svg className="store-route-overlay" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-          <polyline points={routeSvgPoints} />
-        </svg>}
-        {storePoint && <i className="store-map-pin store-pin" style={{ left:`${storePoint.x}%`, top:`${storePoint.y}%` }}>Store</i>}
-        {customerPoint && <i className="store-map-pin customer-pin" style={{ left:`${customerPoint.x}%`, top:`${customerPoint.y}%` }}>You</i>}
-        <span style={{ width: radiusSize, height: radiusSize }}>{delivery.radiusLabel}</span>
-      </Box>}
-      {deliveryModes.length > 0 && <Box className="store-service-modes">{deliveryModes.map((mode) => <Chip key={mode.name} label={mode.label} sx={{ height: 'auto', '& .MuiChip-label': { whiteSpace: 'normal', py: 1 } }} />)}</Box>}
+      {hasMapPoint ? <StoreServiceAreaMap
+        key={`${store.id}:${customerPoint?.latitude ?? ''}:${customerPoint?.longitude ?? ''}`}
+        store={store}
+        radiusKm={store.deliveryRadiusKm}
+        routePoints={routePoints}
+        customerPoint={customerPoint}
+      /> : <Box className="store-radius-map store-map-empty">Store coordinates are not available for this map.</Box>}
     </Box>
     <Box className="store-products">
-      <Typography variant="h6">Products in this store ({products.length})</Typography>
-      {products.length ? <Box className="store-product-grid">{products.map((product) => <ProductCard key={product.id} {...product} storeId={store.id} store={store.name} storeName={store.name} deliveryQuote={quote} deliveryMode={deliveryMode} />)}</Box> : <Box className="store-empty"><Typography>No products are currently assigned to this store.</Typography></Box>}
+      <Box className="store-products-toolbar">
+        <Typography variant="h6">Products in this store ({visibleProducts.length})</Typography>
+        <TextField
+          className="store-product-search"
+          size="small"
+          value={productSearch}
+          onChange={(event) => setProductSearch(event.target.value)}
+          placeholder="Search products in this store"
+          inputProps={{ 'aria-label': 'Search products in this store' }}
+          InputProps={{ startAdornment: <InputAdornment position="start"><SearchOutlinedIcon /></InputAdornment> }}
+        />
+      </Box>
+      {visibleProducts.length ? <Box className="store-product-grid">{visibleProducts.map((product) => <ProductCard key={product.productId || product.id} {...product} storeId={store.id} store={store.name} storeName={store.name} deliveryQuote={quote} deliveryMode={deliveryMode} />)}</Box> : <Box className="store-empty"><Typography>{normalizedProductSearch ? `No products match “${productSearch.trim()}” in this store.` : 'No products are currently assigned to this store.'}</Typography></Box>}
     </Box>
     <BottomNav />
   </Box>;

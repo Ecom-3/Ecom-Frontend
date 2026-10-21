@@ -3,7 +3,6 @@ import { Link, useParams } from 'react-router-dom';
 import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { AppContext } from '../context/AppContext';
-import { collectionStore } from '../services/localDataService';
 import { deliveryProducts } from '../utils/storeDelivery';
 import ProductCard from '../components/ProductCard/ProductCard';
 import SafeProductImage from '../components/SafeProductImage/SafeProductImage';
@@ -11,8 +10,7 @@ import SafeProductImage from '../components/SafeProductImage/SafeProductImage';
 export default function BannerPage() {
   const { bannerId } = useParams();
   const { catalogBanners, catalogProducts, catalogStoreProducts, catalogStores, selectedLocation, catalogLoading, catalogError, loadCatalog } = useContext(AppContext);
-  const banners = catalogBanners.length ? catalogBanners : collectionStore.list('banners');
-  const banner = banners.find(item => String(item.id) === bannerId);
+  const banner = catalogBanners.find(item => String(item.id) === bannerId);
   const available = deliveryProducts(catalogProducts, catalogStoreProducts, catalogStores, selectedLocation);
   const products = available.filter(item => {
     if (banner?.store && item.storeId !== banner.store && item.storeName !== banner.store) return false;

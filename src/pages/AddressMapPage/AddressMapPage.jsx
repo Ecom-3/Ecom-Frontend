@@ -14,7 +14,15 @@ export default function AddressMapPage() {
   const [selection, setSelection] = useState(route.state?.location || selectedLocation || null);
   const [confirmedLocation, setConfirmedLocation] = useState(null);
   const returnTo = route.state?.returnTo || '/home';
-  const confirm = (place) => { saveSelectedLocation(place); setConfirmedLocation(place); };
+  const confirm = (place) => {
+    if (returnTo === '/address-form') {
+      setSelection(place);
+      setConfirmedLocation(place);
+      return;
+    }
+    saveSelectedLocation(place);
+    setConfirmedLocation(place);
+  };
   const continueToAddress = () => navigate(returnTo, { replace: true, state: { ...route.state?.formState, startManual: false, location: confirmedLocation } });
   const goBack = () => navigate(returnTo, { replace: true, state: route.state?.formState });
 

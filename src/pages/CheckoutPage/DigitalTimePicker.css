@@ -1,0 +1,17 @@
+.digital-clock-picker { display: grid; justify-items: center; gap: 7px; padding: 12px 10px; border: 1px solid #dce8e1; border-radius: 8px; background: #f8fbf9; }
+.digital-clock-preview-label { color: #65766c; font-size: 9px; font-weight: 700; letter-spacing: .1em; }
+.digital-clock-preview { color: #075f40; font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.digital-clock-columns { display: grid; grid-template-columns: minmax(62px, 1fr) 10px minmax(62px, 1fr) minmax(62px, 1fr); align-items: center; gap: 6px; width: min(100%, 300px); padding: 10px; border: 1px solid #31443b; border-radius: 9px; background: linear-gradient(145deg, #1d2c25, #101a15); box-shadow: 0 7px 16px #12251b26, inset 0 1px #ffffff12; }
+.digital-clock-column { display: grid; gap: 5px; min-width: 0; }
+.digital-clock-column-title { color: #c1d1c7; font-size: 8px; font-weight: 700; letter-spacing: .08em; text-align: center; text-transform: uppercase; }
+.digital-clock-scroll { display: grid; align-content: center; max-height: 112px; overflow-y: auto; overscroll-behavior: contain; scroll-snap-type: y mandatory; padding: 3px; border-radius: 6px; background: #14221b; scrollbar-color: #657b6d #1a2921; scrollbar-width: thin; }
+.digital-clock-flap { position: relative; min-height: 32px; margin: 2px 0; overflow: hidden; border: 1px solid #526359; border-radius: 4px; color: #d5e2d9; background: linear-gradient(180deg, #27372e 0 49%, #18251e 50% 100%); font: inherit; font-size: 16px; font-weight: 750; font-variant-numeric: tabular-nums; cursor: pointer; scroll-snap-align: center; transition: transform .18s ease, background-color .18s ease, color .18s ease; }
+.digital-clock-flap::after { position: absolute; top: 50%; right: 0; left: 0; height: 1px; background: #0b140f; box-shadow: 0 1px #ffffff20; content: ''; }
+.digital-clock-flap:hover { border-color: #80aa91; }
+.digital-clock-flap.selected { border-color: #82c29c; color: #eafff0; background: linear-gradient(180deg, #176c4c 0 49%, #10543b 50% 100%); box-shadow: 0 0 0 1px #3c9468, 0 3px 8px #0005; animation: digital-clock-flip .2s ease-out both; }
+.digital-clock-flap:active { transform: perspective(160px) rotateX(-7deg); }
+.digital-clock-flap:focus-visible { outline: 2px solid #9ee0b6; outline-offset: 1px; }
+.digital-clock-colon { padding-top: 16px; color: #d8e6dd; font-size: 21px; font-weight: 700; text-align: center; }
+.digital-clock-help, .digital-clock-empty { margin: 0; color: #76867d; font-size: 9px; text-align: center; }
+@keyframes digital-clock-flip { from { transform: perspective(160px) rotateX(-55deg); filter: brightness(.8); } to { transform: perspective(160px) rotateX(0); filter: brightness(1); } }
+@media (prefers-reduced-motion: reduce) { .digital-clock-flap { transition: none; animation: none !important; } }

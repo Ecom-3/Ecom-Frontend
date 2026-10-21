@@ -9,7 +9,6 @@ import BottomNav from '../../components/BottomNav/BottomNav';
 import pickleJarImg from '../../assets/images/pickel-removebg-preview.png';
 import { AppContext } from '../../context/AppContext';
 import { getCustomerOrderHistory, isOrderServiceUnavailable, normalizeOrder } from '../../services/orderApi';
-import { orderStore } from '../../services/localDataService';
 import './OrdersHistoryPage.css';
 
 const OrdersHistoryPage = () => {
@@ -36,15 +35,13 @@ const OrdersHistoryPage = () => {
       .then((payload) => {
         if (!ignore) {
           const rows = Array.isArray(payload) ? payload : payload?.orders || payload?.content || [];
-          const localOrders = orderStore.list().filter((order) => order.customer?.id === user.id && ['DELIVERED', 'CANCELLED'].includes(order.status));
-          const merged = [...localOrders, ...rows].filter((order, index, items) => items.findIndex((entry) => entry.id === order.id) === index);
-          setOrders(merged.map(normalizeOrder));
+          setOrders(rows.map(normalizeOrder));
           setUnavailable(false);
         }
       })
       .catch((apiError) => {
         if (!ignore) {
-          setOrders(orderStore.list().filter((order) => order.customer?.id === user.id && ['DELIVERED', 'CANCELLED'].includes(order.status)).map(normalizeOrder));
+          setOrders([]);
           setUnavailable(isOrderServiceUnavailable(apiError));
           setError(isOrderServiceUnavailable(apiError) ? 'Order Service is unavailable. Please try again when backend is online.' : apiError.message);
         }

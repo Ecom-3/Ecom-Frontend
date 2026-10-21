@@ -22,7 +22,9 @@ export class ApiError extends Error {
   }
 }
 
-export const apiRequest = async (baseUrl, path, options = {}) => {
+const inFlightReads = new Map();
+
+const performApiRequest = async (baseUrl, path, options = {}) => {
   const requestToken = authToken();
   const timeout = AbortSignal.timeout(options.timeoutMs ?? (options.method && options.method !== 'GET' ? 30000 : 12000));
   const signal = options.signal ? AbortSignal.any([options.signal, timeout]) : timeout;
@@ -56,4 +58,34 @@ export const apiRequest = async (baseUrl, path, options = {}) => {
     throw new ApiError(serverMessage || accessMessage || `Request failed (${response.status}).`, response.status, payload);
   }
   return payload;
+};
+
+// Share only simultaneous GETs. The access token and request headers are part
+// of the identity so a response can never cross customer/session boundaries.
+// Requests with a caller-owned signal are kept independent so one component
+// cannot cancel another component's read.
+export const apiRequest = (baseUrl, path, options = {}) => {
+  const method = String(options.method || 'GET').toUpperCase();
+  if (method !== 'GET' || options.signal) return performApiRequest(baseUrl, path, options);
+
+  const headers = Object.entries(options.headers || {}).sort(([left], [right]) => left.localeCompare(right));
+  const key = JSON.stringify([
+    baseUrl,
+    path,
+    method,
+    authToken(),
+    options.auth === false,
+    options.expireSession !== false,
+    options.timeoutMs ?? null,
+    headers,
+    options.credentials || '',
+  ]);
+  const existing = inFlightReads.get(key);
+  if (existing) return existing;
+
+  const request = performApiRequest(baseUrl, path, options).finally(() => {
+    if (inFlightReads.get(key) === request) inFlightReads.delete(key);
+  });
+  inFlightReads.set(key, request);
+  return request;
 };

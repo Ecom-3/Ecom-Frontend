@@ -5,10 +5,12 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { AppContext } from '../../context/AppContext';
+import { useHomeNavigation } from '../../hooks/useHomeNavigation';
 import './BottomNav.css';
 
 const BottomNav = () => {
   const navigate = useNavigate();
+  const goHome = useHomeNavigation();
   const location = useLocation();
   const { isLoggedIn, t } = useContext(AppContext);
 
@@ -16,7 +18,7 @@ const BottomNav = () => {
 
   return (
     <Box className="bottom-nav-container">
-      <Box className={`nav-item ${isActive('/home')}`} onClick={() => navigate('/home')}>
+      <Box role="button" tabIndex={0} className={`nav-item ${isActive('/home')}`} onClick={goHome} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); goHome(); } }}>
         <HomeOutlinedIcon className="nav-icon" />
         <Typography className="nav-text">{t('home')}</Typography>
       </Box>

@@ -1,10 +1,9 @@
-﻿import { collectionStore } from './localDataService';
 import { promotionApplies, resolvedPromotionScope } from './promotionScope';
 
 export const PENDING_COUPON_KEY = 'checkout:pendingCouponCode';
 const SERVER_COUPONS_ENABLED = false;
 
-export const listCoupons = () => collectionStore.list('coupons');
+export const listCoupons = () => [];
 
 export const findCouponByCode = (code) => {
   const normalized = String(code || '').trim().toUpperCase();
@@ -51,11 +50,10 @@ const couponTargetsCart = (coupon, cartItems = [], catalogProducts = []) => {
 export const cartPromotionContext = ({ cartItems = [], fallbackLocation = '', fallbackStore = '' } = {}) => {
   const stores = [...new Set(cartItems.map(itemStore).filter(Boolean))];
   const store = stores.length === 1 ? stores[0] : fallbackStore;
-  const storeRecord = collectionStore.list('stores').find((item) => sameText(item.name, store) || sameText(item.id, store));
   const locations = [...new Set(cartItems.map((item) => item.location || item.storeLocation || '').filter(Boolean))];
   return {
     store,
-    location: locations.length === 1 ? locations[0] : storeRecord?.location || fallbackLocation,
+    location: locations.length === 1 ? locations[0] : fallbackLocation,
   };
 };
 

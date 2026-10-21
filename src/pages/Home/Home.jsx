@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { balancedStoreProductPreview, uniqueStoreProductListings, uniqueCatalogProducts } from '../../utils/storeProductListings';
 import { Box, Typography, Button, Chip, MenuItem, Select } from '@mui/material';
 import SearchOffOutlinedIcon from '@mui/icons-material/SearchOffOutlined';
@@ -10,28 +10,28 @@ import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import FilterListOutlinedIcon from '@mui/icons-material/FilterListOutlined';
 import SortOutlinedIcon from '@mui/icons-material/SortOutlined';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import CategoryNav from '../../components/CategoryNav/CategoryNav';
-import HeroBanner from '../../components/HeroBanner/HeroBanner';
 import ProductSection from '../../components/ProductSection/ProductSection';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import CategoryCircle from '../../components/CategoryCircle/CategoryCircle';
 import CampaignCarousel from '../../components/CampaignCarousel/CampaignCarousel';
 import BottomNav from '../../components/BottomNav/BottomNav';
 import { AppContext } from '../../context/AppContext';
-import { collectionStore } from '../../services/localDataService';
 import { promotionApplies } from '../../services/promotionScope';
 import { getCategoryProducts, getProducts } from '../../services/catalogApi';
 import { adaptProductList } from '../../services/catalogAdapter';
 import { deliverySummary, storeDeliversTo, deliveryDistanceKm, deliveryProducts, isGlobalStore } from '../../utils/storeDelivery';
-import { homepageCategoryImages } from '../../services/categoryImages';
+import { filterAndSortProducts, prepareBrowseProduct, parseDeliveryEstimate } from '../../utils/productBrowsing.js';
+import { useBrowseDeliveryQuotes } from '../../hooks/useBrowseDeliveryQuotes';
 import './Home.css';
 
 const OTHER_SUBCATEGORY_CATEGORIES = ['Traditional Pickles', 'Premium Dry Fruits', 'Fresh Vegetables', 'Fresh Non-Veg'];
 
 
 const Home = () => {
+  const location = useLocation();
   const [selectedSubcategory, setSelectedSubcategory] = useState('All');
   const [showSearchFilters, setShowSearchFilters] = useState(false);
   const [showSearchSort, setShowSearchSort] = useState(false);
@@ -42,14 +42,21 @@ const Home = () => {
   const [searchSort, setSearchSort] = useState('popularity');
   const [storeFilter, setStoreFilter] = useState('all');
   const [collection, setCollection] = useState('');
+  const [collectionEntry, setCollectionEntry] = useState(location.key);
+  if (collectionEntry !== location.key) {
+    setCollectionEntry(location.key);
+    setCollection('');
+  }
   const navigate = useNavigate();
   const {
     selectedCategory,
     setSelectedCategory,
     homeSearchQuery,
+    setHomeSearchQuery,
     t,
     userCity,
     selectedLocation,
+    addresses,
     setShowLocationModal,
     catalogProducts,
     catalogStoreProducts,
@@ -62,34 +69,58 @@ const Home = () => {
     formatCurrency,
     setDeliveryMode,
   } = useContext(AppContext);
-  const [, setFilteredCatalogProducts] = useState([]);
+  useLayoutEffect(() => {
+    if (location.state?.resetHome) {
+      setHomeSearchQuery('');
+      setSelectedCategory('All');
+    }
+  }, [location.key, location.state?.resetHome, setHomeSearchQuery, setSelectedCategory]);
+
+  const [filteredCatalogResult, setFilteredCatalogResult] = useState({ key: '', products: [] });
   const [filterLoading, setFilterLoading] = useState(false);
 
+  const selectedCategoryData = catalogCategories.find((item) =>
+    item.name === selectedCategory || item.title === selectedCategory || item.id === selectedCategory || item.slug === selectedCategory
+  );
+  const categoryRequestKey = `${selectedCategoryData?.id || ''}:${homeSearchQuery.trim()}`;
+
   useEffect(() => {
-    const category = catalogCategories.find((item) => item.name === selectedCategory || item.title === selectedCategory || item.id === selectedCategory);
+    const category = catalogCategories.find((item) =>
+      item.name === selectedCategory || item.title === selectedCategory || item.id === selectedCategory || item.slug === selectedCategory
+    );
     const shouldFetch = Boolean((selectedCategory && selectedCategory !== 'All') || homeSearchQuery.trim());
     if (!shouldFetch) {
-      const timer = window.setTimeout(() => { setFilteredCatalogProducts([]); setFilterLoading(false); }, 0);
+      const timer = window.setTimeout(() => { setFilteredCatalogResult({ key: '', products: [] }); setFilterLoading(false); }, 0);
       return () => window.clearTimeout(timer);
     }
     let ignore = false;
     const loadingTimer = window.setTimeout(() => setFilterLoading(true), 0);
     const query = homeSearchQuery.trim();
     const params = { status: 'ACTIVE', search: query || undefined, q: query || undefined };
-    const request = category?.id && selectedCategory !== 'All' ? getCategoryProducts(category.id, params) : getProducts(params);
-    request
+    const controller = new AbortController();
+    const requestTimer = window.setTimeout(() => {
+      const request = category?.id && selectedCategory !== 'All'
+        ? getCategoryProducts(category.id, params, { signal: controller.signal })
+        : getProducts(params, { signal: controller.signal });
+      request
       .then((payload) => {
-        if (!ignore) setFilteredCatalogProducts(adaptProductList(payload || []));
+        if (!ignore) setFilteredCatalogResult({
+          key: `${category?.id || ''}:${query}`,
+          products: adaptProductList(payload || []),
+        });
       })
       .catch(() => {
-        if (!ignore) setFilteredCatalogProducts([]);
+        if (!ignore && !controller.signal.aborted) setFilteredCatalogResult({ key: `${category?.id || ''}:${query}`, products: [] });
       })
       .finally(() => {
         if (!ignore) setFilterLoading(false);
       });
+    }, 300);
     return () => {
       ignore = true;
       window.clearTimeout(loadingTimer);
+      window.clearTimeout(requestTimer);
+      controller.abort();
     };
   }, [selectedCategory, homeSearchQuery, catalogCategories]);
 
@@ -107,48 +138,48 @@ const Home = () => {
     return 'Other';
   };
   // localStorage-backed reference data â€” read once per session, not on every render.
-  const reviews = useMemo(() => collectionStore.list('reviews').filter((review) => review.status === 'Approved' && review.active !== false), []);
-  const locations = useMemo(() => collectionStore.list('locations'), []);
-  const banners = useMemo(() => (catalogBanners.length ? catalogBanners : collectionStore.list('banners')), [catalogBanners]);
+  const reviews = [];
+  const banners = catalogBanners;
 
   const allMasterProducts = useMemo(() => catalogProducts
     .filter((item) => item.status !== 'Inactive' && item.active !== false)
     .map((item) => {
       const product = item;
-      const productReviews = reviews.filter((review) => review.productId === (product.id || product.sku || product.title) || review.product === product.title);
-      const rating = productReviews.length ? productReviews.reduce((sum,review) => sum + Number(review.rating || 0), 0) / productReviews.length : 0;
-      const store = stores.find((entry) => entry.name === product.store || entry.name === product.storeName || entry.id === product.storeId);
-      const pickup = product.pickup === true || product.pickup === 'Yes' || store?.pickup === 'Yes';
-      const deliveryMinutes = Number(product.deliveryMinutes || product.deliveryEtaMinutes || store?.deliveryEtaMinutes || 0);
-      const basePrice = Number(product.price || product.offerPrice || product.basePrice || 0);
-      return { ...product, storeId:store?.id || product.storeId, store:store?.name || product.store || product.storeName, title: product.title || product.name || 'Product', subcategory:inferSubcategory(item), rating, pickup, deliveryMinutes, under30:deliveryMinutes > 0 && deliveryMinutes <= 30, offer:Number(item.discount || 0) > 0 || (Number(product.offerPrice) > 0 && Number(product.offerPrice) < basePrice), popularity:product.bestSeller === 'Yes' ? 100 : 0, newest:new Date(product.createdAt || 0).getTime() };
-    }), [catalogProducts, reviews, stores]);
-
+      return { ...product, title: product.title || product.name || 'Product', subcategory: inferSubcategory(item) };
+    }), [catalogProducts]);
 
   const sharedCategories = useMemo(() => catalogCategories
     .filter((item) => item.status !== 'Inactive' && item.active !== false)
     .sort((a,b) => Number(a.sortOrder || 0) - Number(b.sortOrder || 0)), [catalogCategories]);
   const sharedStores = useMemo(() => stores.filter((store) => storeDeliversTo(store, selectedLocation) || isGlobalStore(store))
     .sort((a, b) => deliveryDistanceKm(a, selectedLocation) - deliveryDistanceKm(b, selectedLocation)), [stores, selectedLocation]);
-  const availableProductPool = useMemo(() => deliveryProducts(allMasterProducts, catalogStoreProducts, stores, selectedLocation), [allMasterProducts, catalogStoreProducts, stores, selectedLocation]);
+  const deliveryPool = useMemo(() => deliveryProducts(allMasterProducts, catalogStoreProducts, stores, selectedLocation), [allMasterProducts, catalogStoreProducts, stores, selectedLocation]);
+  const quotedProducts = useBrowseDeliveryQuotes(deliveryPool, selectedLocation, addresses);
+  const availableProductPool = quotedProducts.map(product => prepareBrowseProduct(product, stores, reviews));
+  const categoryApiProducts = useMemo(
+    () => filteredCatalogResult.key === categoryRequestKey && selectedCategoryData ? filteredCatalogResult.products : [],
+    [filteredCatalogResult, categoryRequestKey, selectedCategoryData]
+  );
+  const categoryDeliveryPool = useMemo(
+    () => deliveryProducts(categoryApiProducts, catalogStoreProducts, stores, selectedLocation),
+    [categoryApiProducts, catalogStoreProducts, stores, selectedLocation]
+  );
+  const quotedCategoryProducts = useBrowseDeliveryQuotes(categoryDeliveryPool, selectedLocation, addresses);
+  const availableCategoryProductPool = quotedCategoryProducts.map(product => prepareBrowseProduct(product, stores, reviews));
   const visibleStores = useMemo(() => {
-    const hasGlobalStore = sharedStores.some((store) => store.id === 'global-store' || isGlobalStore(store));
-    const globalStoreOption = { id: 'global-store', name: 'India-wide Global Store', address: 'India-wide delivery', location: 'All India', deliveryRadiusKm: 0, deliveryEtaMinutes: 0, global: true, active: true, status: 'Active' };
-    const baseStores = (!selectedLocation || hasGlobalStore) ? sharedStores : [...sharedStores, globalStoreOption];
-    const activeCoupons = collectionStore.list('coupons').filter((coupon) => coupon.status === 'Active' && coupon.active !== false);
+    const baseStores = sharedStores;
     const storeHasOffer = (store) => {
       const hasProductOffer = catalogProducts.some((product) => (product.storeId === store.id || product.store === store.name || product.storeName === store.name || (isGlobalStore(store) && product.globalProduct)) && (product.offer || Number(product.compareAtPrice || 0) > Number(product.price || 0)));
-      const hasCouponOffer = activeCoupons.some((coupon) => promotionApplies(coupon, { location: store.location, store: store.name }));
-      return hasProductOffer || hasCouponOffer;
+      return hasProductOffer;
     };
-    const storeEtaMinutes = (store) => Number(store.deliveryEtaMinutes || store.etaMinutes || store.estimatedDeliveryMinutes || 0);
+    const storeEtaMinutes = (store) => parseDeliveryEstimate(store.deliveryEtaMinutes ?? store.etaMinutes ?? store.estimatedDeliveryMinutes)?.max ?? null;
     const enriched = baseStores.map((store) => {
       const etaMinutes = storeEtaMinutes(store);
       return {
         ...store,
         hasOffer: storeHasOffer(store),
         etaMinutes,
-        under30: etaMinutes > 0 && etaMinutes <= 30,
+        under30: etaMinutes !== null && etaMinutes < 30,
         above30: etaMinutes > 30,
         isNew: store.isNew === true,
       };
@@ -169,18 +200,13 @@ const Home = () => {
 
   const activeBanners = useMemo(() => {
     const now = new Date();
-    const cityMatch = locations.find((entry) => userCity.toLowerCase().includes(entry.name.toLowerCase()))?.name || '';
     return banners.filter((item) => {
       if (item.status !== 'Active' || item.active === false) return false;
       const startsAt = item.startDate ? new Date(`${item.startDate}T00:00:00`) : null;
       const endsAt = item.endDate ? new Date(`${item.endDate}T23:59:59.999`) : null;
-      return (!startsAt || startsAt <= now) && (!endsAt || endsAt >= now) && promotionApplies(item, { location: cityMatch });
-    }).map((item, index) => ({
-      ...item,
-      image: homepageCategoryImages[index % homepageCategoryImages.length],
-      mobileImage: homepageCategoryImages[index % homepageCategoryImages.length],
-    }));
-  }, [banners, locations, userCity]);
+      return (!startsAt || startsAt <= now) && (!endsAt || endsAt >= now) && promotionApplies(item, { location: userCity });
+    });
+  }, [banners, userCity]);
 
   const subcategories = useMemo(() => {
     if (selectedCategory === 'All') return [];
@@ -193,11 +219,7 @@ const Home = () => {
     return existing;
   }, [availableProductPool, selectedCategory]);
   const effectiveSubcategory = subcategories.includes(selectedSubcategory) ? selectedSubcategory : 'All';
-  const catalogApiProducts = useMemo(() => {
-    // The API request still refreshes category/search data, but search must rank
-    // the complete local delivery pool instead of replacing it with API matches.
-    return availableProductPool;
-  }, [availableProductPool]);
+  const catalogApiProducts = selectedCategoryData ? availableCategoryProductPool : availableProductPool;
   const productCardKey = (product, suffix = '') => `${product.storeId || product.store || 'store'}:${product.productId || product.id || product.title}${suffix}`;
   const uniqueByProduct = uniqueStoreProductListings;
   const merchProducts = (flag) => uniqueByProduct(availableProductPool.filter((item) => item[flag] === 'Yes' || item[flag] === true));
@@ -212,7 +234,13 @@ const Home = () => {
     }
     const baseCategoryPool = selectedCategory && selectedCategory !== 'All'
       ? catalogApiProducts.filter((item) => {
-        const categoryMatches = item.category === selectedCategory || (selectedCategory === 'Spice Powders' && item.category === 'Spice powder');
+        const productCategoryId = item.categoryId ?? item.category?.id;
+        const categoryMatches = selectedCategoryData?.id && productCategoryId != null
+          ? String(productCategoryId) === String(selectedCategoryData.id)
+          : categoryApiProducts.length > 0
+            || [item.category?.name, item.category, item.categoryName, item.categorySlug]
+              .some((value) => String(value || '').trim().toLowerCase() === String(selectedCategoryData?.name || selectedCategory).trim().toLowerCase()
+                || String(value || '').trim().toLowerCase() === String(selectedCategoryData?.slug || '').trim().toLowerCase());
         const itemSubcategory = String(item.subcategory || '').trim();
         return categoryMatches && (effectiveSubcategory === 'All' || itemSubcategory.toLowerCase() === effectiveSubcategory.toLowerCase());
       })
@@ -220,20 +248,10 @@ const Home = () => {
 
     if (homeSearchQuery && homeSearchQuery.trim()) {
       const searchPool = baseCategoryPool || catalogApiProducts;
-      const term = homeSearchQuery.trim().toLowerCase();
-      const ranked = searchPool.map((product, index) => {
-        const productName = String(product.title || product.name || '').trim().toLowerCase();
-        const priority = productName.startsWith(term) ? 0 : productName.includes(term) ? 1 : 2;
-        return { product, index, priority };
+      return filterAndSortProducts(searchPool, {
+        query: homeSearchQuery, nameOnly: true, category: searchCategory, maxPrice: searchPrice,
+        rating: searchRating, availability: searchAvailability, sort: searchSort,
       });
-      return ranked
-        .filter(({ priority }) => priority < 2)
-        .filter(({ product }) => searchCategory === 'all' || product.category === searchCategory)
-        .filter(({ product }) => searchPrice === 'all' || Number(product.price) <= Number(searchPrice))
-        .filter(({ product }) => searchRating === 'all' || (searchRating === '5' ? product.rating === 5 : product.rating >= 4))
-        .filter(({ product }) => searchAvailability === 'all' || (searchAvailability === 'pickup' ? product.pickup : product.under30))
-        .sort((a, b) => a.priority - b.priority || a.index - b.index)
-        .map(({ product }) => product);
     }
 
     return baseCategoryPool ? uniqueByProduct(baseCategoryPool) : null;
@@ -255,27 +273,28 @@ const Home = () => {
         {collection && <Button onClick={() => setCollection('')}>Back to home</Button>}
         {(catalogLoading || filterLoading) && <Box style={{ padding: '16px 4vw' }}><Typography>Loading catalogâ€¦</Typography></Box>}
         {catalogError && !catalogLoading && <Box style={{ padding: '16px 4vw' }}><Typography color="error">{catalogError}</Typography><Button onClick={loadCatalog}>Retry products</Button></Box>}
+        {homeSearchQuery && <Box className="home-search-controls" sx={{ mx: '4vw', mt: 2 }}>
+          <Box className="home-search-actions">
+            <Button variant={showSearchFilters || searchFilterCount ? 'contained' : 'outlined'} startIcon={<FilterListOutlinedIcon />} onClick={() => { setShowSearchFilters((value) => !value); setShowSearchSort(false); }}>Filter{searchFilterCount ? ` (${searchFilterCount})` : ''}</Button>
+            <Button variant={showSearchSort || searchSort !== 'popularity' ? 'contained' : 'outlined'} startIcon={<SortOutlinedIcon />} onClick={() => { setShowSearchSort((value) => !value); setShowSearchFilters(false); }}>Sort</Button>
+            {searchFilterCount > 0 && <Button className="home-search-clear" onClick={resetSearchFilters}>Clear All Filters</Button>}
+          </Box>
+          {showSearchFilters && <Box className="home-search-panel">
+            <Select size="small" value={searchCategory} onChange={(event) => setSearchCategory(event.target.value)}><MenuItem value="all">All Categories</MenuItem>{sharedCategories.map((category) => <MenuItem key={category.id} value={category.name}>{category.name}</MenuItem>)}</Select>
+            <Select size="small" value={searchPrice} onChange={(event) => setSearchPrice(event.target.value)}><MenuItem value="all">All Prices</MenuItem><MenuItem value="150">Under â‚¹150</MenuItem><MenuItem value="200">Under â‚¹200</MenuItem><MenuItem value="300">Under â‚¹300</MenuItem></Select>
+            <Select size="small" value={searchRating} onChange={(event) => setSearchRating(event.target.value)}><MenuItem value="all">All Ratings</MenuItem><MenuItem value="4">4 stars & above</MenuItem><MenuItem value="5">5 stars only</MenuItem></Select>
+            <Select size="small" value={searchAvailability} onChange={(event) => setSearchAvailability(event.target.value)}><MenuItem value="all">All Availability</MenuItem><MenuItem value="pickup">Pickup Available</MenuItem><MenuItem value="under30">Under 30 min</MenuItem></Select>
+            {searchFilterCount > 0 && <Button onClick={resetSearchFilters}>Reset filters</Button>}
+          </Box>}
+          {showSearchSort && <Box className="home-search-panel home-sort-panel"><Select size="small" value={searchSort} onChange={(event) => setSearchSort(event.target.value)}><MenuItem value="popularity">Popularity</MenuItem><MenuItem value="newest">Newest</MenuItem><MenuItem value="price-low">Price Low to High</MenuItem><MenuItem value="price-high">Price High to Low</MenuItem><MenuItem value="pickup">Pickup</MenuItem><MenuItem value="offers">Offers</MenuItem><MenuItem value="under30">Delivery time: fastest first</MenuItem></Select></Box>}
+        </Box>}
         {activeCategoryProducts ? (
           activeCategoryProducts.length > 0 ? (
             <Box style={{ padding: '16px 4vw' }}>
               <Typography variant="h6" style={{ fontWeight: 700, marginBottom: '16px', color: '#1e293b' }}>
                 {homeSearchQuery ? `Results for "${homeSearchQuery}"` : `${collection || selectedCategory} Products`} ({activeCategoryProducts.length})
               </Typography>
-              {homeSearchQuery && <Box className="home-search-controls">
-                <Box className="home-search-actions">
-                  <Button variant={showSearchFilters || searchFilterCount ? 'contained' : 'outlined'} startIcon={<FilterListOutlinedIcon />} onClick={() => { setShowSearchFilters((value) => !value); setShowSearchSort(false); }}>Filter{searchFilterCount ? ` (${searchFilterCount})` : ''}</Button>
-                  <Button variant={showSearchSort || searchSort !== 'popularity' ? 'contained' : 'outlined'} startIcon={<SortOutlinedIcon />} onClick={() => { setShowSearchSort((value) => !value); setShowSearchFilters(false); }}>Sort</Button>
-                  {(searchFilterCount > 0 || searchSort !== 'popularity') && <Button className="home-search-clear" onClick={() => { resetSearchFilters(); setSearchSort('popularity'); }}>Clear all</Button>}
-                </Box>
-                {showSearchFilters && <Box className="home-search-panel">
-                  <Select size="small" value={searchCategory} onChange={(event) => setSearchCategory(event.target.value)}><MenuItem value="all">All Categories</MenuItem>{sharedCategories.map((category) => <MenuItem key={category.id} value={category.name}>{category.name}</MenuItem>)}</Select>
-                  <Select size="small" value={searchPrice} onChange={(event) => setSearchPrice(event.target.value)}><MenuItem value="all">All Prices</MenuItem><MenuItem value="150">Under â‚¹150</MenuItem><MenuItem value="200">Under â‚¹200</MenuItem><MenuItem value="300">Under â‚¹300</MenuItem></Select>
-                  <Select size="small" value={searchRating} onChange={(event) => setSearchRating(event.target.value)}><MenuItem value="all">All Ratings</MenuItem><MenuItem value="4">4 stars & above</MenuItem><MenuItem value="5">5 stars only</MenuItem></Select>
-                  <Select size="small" value={searchAvailability} onChange={(event) => setSearchAvailability(event.target.value)}><MenuItem value="all">All Availability</MenuItem><MenuItem value="pickup">Pickup Available</MenuItem><MenuItem value="under30">Under 30 min</MenuItem></Select>
-                  {searchFilterCount > 0 && <Button onClick={resetSearchFilters}>Reset filters</Button>}
-                </Box>}
-                {showSearchSort && <Box className="home-search-panel home-sort-panel"><Select size="small" value={searchSort} onChange={(event) => setSearchSort(event.target.value)}><MenuItem value="popularity">Popularity</MenuItem><MenuItem value="newest">Newest</MenuItem><MenuItem value="price-low">Price Low to High</MenuItem><MenuItem value="price-high">Price High to Low</MenuItem><MenuItem value="pickup">Pickup</MenuItem><MenuItem value="offers">Offers</MenuItem><MenuItem value="under30">Under 30 min delivery</MenuItem></Select></Box>}
-              </Box>}
+
               <Box style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
                 {activeCategoryProducts.map((item) => (
                   <ProductCard key={`${productCardKey(item)}:${item.variantId || item.selectedVariant?.id || ''}`} {...item} />
@@ -292,13 +311,13 @@ const Home = () => {
                 <Typography className="no-products-subtitle">
                   We couldn't find any products matching "{homeSearchQuery || selectedCategory}".
                 </Typography>
-                {homeSearchQuery && (searchFilterCount > 0 || searchSort !== 'popularity') && <Button sx={{ mt:2 }} variant="outlined" onClick={() => { resetSearchFilters(); setSearchSort('popularity'); }}>Clear filters and sorting</Button>}
+                {homeSearchQuery && <Button sx={{ mt:2 }} variant="outlined" onClick={resetSearchFilters}>Clear All Filters</Button>}
               </Box>
             </Box>
           )
         ) : (
           <>
-            {activeBanners.length > 0 ? <CampaignCarousel banners={activeBanners} onNavigate={navigate}/> : <HeroBanner />}
+            {activeBanners.length > 0 && <CampaignCarousel banners={activeBanners} onNavigate={navigate}/>}
 
             <ProductSection title={t('shopCategories')} hasViewAll={false}>
               {sharedCategories.map((cat) => <CategoryCircle key={cat.id} title={cat.name} image={cat.image} onClick={() => setSelectedCategory(cat.name)} />)}
@@ -333,11 +352,11 @@ const Home = () => {
                 {[{id:'all',label:'All'}, {id:'offers',label:'Offers'}, {id:'under30',label:'Under 30 mins'}, {id:'above30',label:'Above 30 mins'}, {id:'new',label:'New'}].map((filter) => <Chip key={filter.id} clickable label={filter.label} color={storeFilter === filter.id ? 'success' : 'default'} onClick={() => setStoreFilter(filter.id)} />)}
               </Box>
               <Box sx={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(128px, 1fr))', gap:2 }}>
-                {visibleStores.map((store) => { const delivery = deliverySummary(store, formatCurrency); const openStore = () => { const targetStoreId = store.id || 'global-store'; setDeliveryMode('delivery'); localStorage.setItem('selectedStoreId', targetStoreId); localStorage.setItem('selectedStore', store.name || targetStoreId); navigate(`/stores/${encodeURIComponent(targetStoreId)}`); }; return <Box key={store.id} role="button" tabIndex={0} onClick={openStore} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openStore(); } }} sx={{ cursor:'pointer', textAlign:'center', p:1, border:'1px solid #e2e8f0', borderRadius:3, bgcolor:'#fff' }}>
+                {visibleStores.map((store) => { const delivery = deliverySummary(store, formatCurrency); const openStore = () => { if (!store.id) return; const targetStoreId = store.id; setDeliveryMode('delivery'); localStorage.setItem('selectedStoreId', targetStoreId); localStorage.setItem('selectedStore', store.name || targetStoreId); navigate(`/stores/${encodeURIComponent(targetStoreId)}`); }; return <Box key={store.id} role="button" tabIndex={0} onClick={openStore} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openStore(); } }} sx={{ cursor:'pointer', textAlign:'center', p:1, border:'1px solid #e2e8f0', borderRadius:3, bgcolor:'#fff' }}>
                   <Box sx={{ width:64, height:64, mx:'auto', borderRadius:'50%', bgcolor:'#eef8f3', display:'grid', placeItems:'center', overflow:'hidden', border:'1px solid #d8eee5' }}><StorefrontOutlinedIcon sx={{ color:'#075F40' }} /></Box>
                   <Typography sx={{ mt:1, fontWeight:800, fontSize:13 }} noWrap>{store.name}</Typography>
                   {store.hasOffer && <Typography sx={{ color:'#dc2626', fontSize:11, fontWeight:800 }}>Offer</Typography>}
-                  <Typography sx={{ color:'#64748b', fontSize:12 }}>{store.id === 'global-store' ? '5-7 days' : delivery.etaLabel}</Typography>
+                  <Typography sx={{ color:'#64748b', fontSize:12 }}>{delivery.etaLabel}</Typography>
                 </Box>; })}
                 {visibleStores.length === 0 && <Typography color="text.secondary" sx={{ gridColumn:'1 / -1' }}>
                   {storeFilter === 'above30' ? 'No stores with delivery above 30 minutes are available for this location.' : `No stores match the selected ${storeFilter === 'under30' ? 'Under 30 mins' : storeFilter === 'offers' ? 'Offers' : 'New'} filter.`}

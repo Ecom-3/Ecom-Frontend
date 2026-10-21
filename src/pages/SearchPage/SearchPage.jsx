@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useMemo, useRef } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import { Box, Typography, Button, Chip, IconButton, InputBase, MenuItem, Rating, Select } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SearchIcon from '@mui/icons-material/Search';
@@ -6,24 +6,34 @@ import CloseIcon from '@mui/icons-material/Close';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
-import { collectionStore } from '../../services/localDataService';
 import { getProducts } from '../../services/catalogApi';
 import { adaptProductList } from '../../services/catalogAdapter';
 import { deliverySummary, deliveryProducts } from '../../utils/storeDelivery';
 import SafeProductImage from '../../components/SafeProductImage/SafeProductImage';
+import { filterAndSortProducts, prepareBrowseProduct } from '../../utils/productBrowsing.js';
+import { useBrowseDeliveryQuotes } from '../../hooks/useBrowseDeliveryQuotes';
+import BottomNav from '../../components/BottomNav/BottomNav';
+import { useSearchBrowseState } from '../../hooks/useSearchBrowseState';
 import './SearchPage.css';
 
 const SearchPage = () => {
   const navigate = useNavigate();
-  const { addToCart, setSelectedProduct, formatCurrency, catalogProducts, catalogCategories, catalogStoreProducts, selectedLocation, catalogStores: stores, homeSearchQuery, setHomeSearchQuery } = useContext(AppContext);
-  const [searchTerm, setSearchTerm] = useState(() => new URLSearchParams(window.location.search).get('q') ?? homeSearchQuery ?? '');
+  const { addToCart, setSelectedProduct, formatCurrency, catalogProducts, catalogCategories, catalogStoreProducts, selectedLocation, addresses, catalogStores: stores, homeSearchQuery, setHomeSearchQuery, cartLoading } = useContext(AppContext);
+  const browse = useSearchBrowseState(homeSearchQuery);
+  const searchTerm = browse.query;
+  const setSearchTerm = value => browse.update({ q: value });
   const inputRef = useRef(null);
   const [recentSearches, setRecentSearches] = useState(['Mango pickle']);
-  const [sortBy, setSortBy] = useState('popularity');
-  const [maxPrice, setMaxPrice] = useState('all');
-  const [categoryFilter, setCategoryFilter] = useState('all');
-  const [ratingFilter, setRatingFilter] = useState('all');
-  const [availabilityFilter, setAvailabilityFilter] = useState('all');
+  const sortBy = browse.sort;
+  const setSortBy = value => browse.update({ sort: value });
+  const maxPrice = browse.price;
+  const setMaxPrice = value => browse.update({ price: value });
+  const categoryFilter = browse.category;
+  const setCategoryFilter = value => browse.update({ category: value });
+  const ratingFilter = browse.rating;
+  const setRatingFilter = value => browse.update({ rating: value });
+  const availabilityFilter = browse.availability;
+  const setAvailabilityFilter = value => browse.update({ availability: value });
   const [apiProducts, setApiProducts] = useState([]);
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchError, setSearchError] = useState('');
@@ -57,61 +67,55 @@ const SearchPage = () => {
       categoryId: selectedCategory?.id,
       category: categoryFilter !== 'all' ? categoryFilter : undefined,
     };
-    getProducts(params)
-      .then((payload) => {
-        if (!ignore) setApiProducts(adaptProductList(payload || []));
-      })
-      .catch(() => {
-        if (!ignore) { setApiProducts([]); setSearchError('Search service is unavailable. Showing matching catalog products.'); }
-      })
-      .finally(() => { if (!ignore) setSearchLoading(false); });
+    const controller = new AbortController();
+    const requestTimer = window.setTimeout(() => {
+      getProducts(params, { signal: controller.signal })
+        .then((payload) => {
+          if (!ignore) setApiProducts(adaptProductList(payload || []));
+        })
+        .catch(() => {
+          if (!ignore && !controller.signal.aborted) { setApiProducts([]); setSearchError('Search service is unavailable. Showing matching catalog products.'); }
+        })
+        .finally(() => { if (!ignore) setSearchLoading(false); });
+    }, 300);
     return () => {
       ignore = true;
       window.clearTimeout(loadingTimer);
+      window.clearTimeout(requestTimer);
+      controller.abort();
     };
   }, [searchTerm, categoryFilter, catalogCategories]);
 
-  const reviews = collectionStore.list('reviews').filter((review) => review.status === 'Approved' && review.active !== false);
+  const reviews = [];
   const categories = catalogCategories.map((category) => category.name || category.title || category);
-  const normalizedSearchTerm = searchTerm.trim().toLowerCase();
-  const matchesSearchTerm = (product) => [product.title,product.name,product.description,product.category,product.subcategory,product.ingredients,product.tags,product.store,product.storeName]
-    .filter(Boolean).join(' ').toLowerCase().includes(normalizedSearchTerm);
-  const apiProductIds = useMemo(() => new Set(apiProducts.filter(matchesSearchTerm).map((item) => String(item.productId || item.id || ''))), [apiProducts, normalizedSearchTerm]); // eslint-disable-line react-hooks/exhaustive-deps
   const allProducts = deliveryProducts(catalogProducts, catalogStoreProducts, stores, selectedLocation)
     .map((product) => ({
       ...product,
       title: product.title || product.name || 'Product',
       category: product.category || product.categoryName || 'General',
-      price: Number(product.price ?? product.offerPrice ?? 0),
+      price: product.price ?? product.offerPrice,
       basePrice: Number(product.basePrice ?? product.price ?? product.offerPrice ?? 0),
       description: product.description || '',
       id: product.id || product.productId || product.sku || product.title,
       image: product.image || product.images?.[0] || '',
     }));
-  const searchableProducts = allProducts.map((product) => {
-    const productReviews=reviews.filter((review) => review.productId === (product.id || product.sku || product.title) || review.product === product.title);
-    const rating=productReviews.length ? productReviews.reduce((sum,review)=>sum+Number(review.rating || 0),0)/productReviews.length : 0;
-    const store=stores.find((item)=>item.name===product.store||item.name===product.storeName||item.id===product.storeId);
-    const summary=deliverySummary(store || product, formatCurrency);
-    const pickup=product.pickup === true || product.pickup === 'Yes' || store?.pickup === 'Yes';
-    const deliveryMinutes=Number(product.deliveryMinutes || product.deliveryEtaMinutes || store?.deliveryEtaMinutes || 0);
-    return { ...product,storeId:store?.id || product.storeId,store:store?.name || product.store || product.storeName,deliverySummary:summary,rating,ratingCount:productReviews.length,pickup,deliveryMinutes,under30:deliveryMinutes>0&&deliveryMinutes<=30,offer:Number(product.discount || 0)>0 || (Number(product.offerPrice)>0&&Number(product.offerPrice)<product.basePrice),popularity:product.bestSeller==='Yes'?100:0,newest:new Date(product.createdAt || 0).getTime() };
+  const quotedProducts = useBrowseDeliveryQuotes(allProducts, selectedLocation, addresses);
+  const searchableProducts = quotedProducts.map(product => {
+    const prepared = prepareBrowseProduct(product, stores, reviews);
+    const store = stores.find(item => item.id === product.storeId);
+    const summary = deliverySummary(store || product, formatCurrency);
+    const estimate = prepared.deliveryEstimate;
+    return { ...prepared, deliverySummary: { ...summary, etaLabel: product.deliveryLabel || (estimate ? `${estimate.min === estimate.max ? estimate.max : `${estimate.min}–${estimate.max}`} min delivery` : 'Delivery ETA not set') } };
   });
-  const filteredProducts = (searchTerm.trim()
-    ? searchableProducts.filter((p) => {
-        const id = String(p.productId || p.id || '');
-        const textMatch = matchesSearchTerm(p);
-        return textMatch || apiProductIds.has(id);
-      })
-    : []).filter((product) => categoryFilter === 'all' || product.category === categoryFilter).filter((product) => maxPrice === 'all' || Number(product.price) <= Number(maxPrice)).filter((product) => ratingFilter === 'all' || (ratingFilter === '5' ? product.rating === 5 : product.rating >= 4)).filter((product) => availabilityFilter === 'all' || (availabilityFilter === 'pickup' ? product.pickup : product.under30)).sort((a,b) => sortBy === 'price-low' ? Number(a.price)-Number(b.price) : sortBy === 'price-high' ? Number(b.price)-Number(a.price) : sortBy === 'newest' ? b.newest-a.newest : sortBy === 'pickup' ? Number(b.pickup)-Number(a.pickup) || b.popularity-a.popularity : sortBy === 'offers' ? Number(b.offer)-Number(a.offer) || b.popularity-a.popularity : sortBy === 'under30' ? Number(b.under30)-Number(a.under30) || (a.deliveryMinutes || Infinity)-(b.deliveryMinutes || Infinity) : b.popularity-a.popularity);
+  const filteredProducts = filterAndSortProducts(searchableProducts, {
+    query: searchTerm, category: categoryFilter, maxPrice, rating: ratingFilter,
+    availability: availabilityFilter, sort: sortBy,
+    matchedIds: new Set(filterAndSortProducts(apiProducts, { query: searchTerm }).map(item => String(item.productId || item.id || ''))),
+  });
 
-  const hasActiveFilters = categoryFilter !== 'all' || maxPrice !== 'all' || ratingFilter !== 'all' || availabilityFilter !== 'all' || sortBy !== 'popularity';
+  const hasActiveFilters = categoryFilter !== 'all' || maxPrice !== 'all' || ratingFilter !== 'all' || availabilityFilter !== 'all';
   const clearFilters = () => {
-    setCategoryFilter('all');
-    setMaxPrice('all');
-    setRatingFilter('all');
-    setAvailabilityFilter('all');
-    setSortBy('popularity');
+    browse.update({ category: 'all', price: 'all', rating: 'all', availability: 'all' });
   };
 
   const handleRecentClick = (term) => {
@@ -130,7 +134,7 @@ const SearchPage = () => {
   const handleItemClick = (product) => {
     setSelectedProduct(product);
     const targetId = product.productId || product.id || product.sku || product.title;
-    navigate(`/product-info/${encodeURIComponent(targetId)}`);
+    navigate(`/product-info/${encodeURIComponent(targetId)}`, { state: { product: product } });
   };
 
   return (
@@ -221,21 +225,22 @@ const SearchPage = () => {
               <MenuItem value="price-high">Price High to Low</MenuItem>
               <MenuItem value="pickup">Pickup</MenuItem>
               <MenuItem value="offers">Offers</MenuItem>
-              <MenuItem value="under30">Under 30 min delivery</MenuItem>
+              <MenuItem value="under30">Delivery time: fastest first</MenuItem>
             </Select>
-            {hasActiveFilters && <Button className="clear-filters-btn" onClick={clearFilters}>Clear filters</Button>}
+            {hasActiveFilters && <Button className="clear-filters-btn" onClick={clearFilters}>Clear All Filters</Button>}
           </Box>
           <Box className="search-results-summary">
             <Typography>{filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'} found</Typography>
-            <Typography>Sorted by {sortBy === 'price-low' ? 'Price: Low to High' : sortBy === 'price-high' ? 'Price: High to Low' : sortBy === 'under30' ? 'Under 30 min delivery' : sortBy.charAt(0).toUpperCase() + sortBy.slice(1)}</Typography>
+            <Typography>Sorted by {sortBy === 'price-low' ? 'Price: Low to High' : sortBy === 'price-high' ? 'Price: High to Low' : sortBy === 'under30' ? 'Delivery time: fastest first' : sortBy.charAt(0).toUpperCase() + sortBy.slice(1)}</Typography>
           </Box>
           {searchLoading && <Typography role="status" sx={{ px:1, color:'#64748b' }}>Searching products...</Typography>}
           {searchError && <Typography role="alert" sx={{ px:1, color:'#b45309' }}>{searchError}</Typography>}
           {filteredProducts.length === 0 ? (
             <Box className="no-results-box">
               <Typography variant="body1" color="textSecondary">
-                No products match “{searchTerm}” with the selected filters.
+                No products found matching “{searchTerm}” with the selected filters.
               </Typography>
+              <Button onClick={clearFilters}>Clear All Filters</Button>
             </Box>
           ) : (
             filteredProducts.map((prod) => (
@@ -243,12 +248,12 @@ const SearchPage = () => {
                 <Box className="search-card-left">
                   <Typography className="search-prod-title">{prod.title}</Typography>
                   <Typography className="search-prod-specs">
-                    {prod.weight} | <span className="price-bold">{formatCurrency(prod.price)}</span>
+                    {prod.weight} | <span className="price-bold">{prod.browsePrice == null ? 'Price unavailable' : formatCurrency(prod.browsePrice)}</span>
                   </Typography>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, mt: 0.5 }}>
-                    <Rating value={prod.rating} precision={0.1} size="small" readOnly />
+                    <Rating value={prod.rating || 0} precision={0.1} size="small" readOnly />
                     <Typography variant="caption">
-                      {prod.ratingCount ? `${prod.rating.toFixed(1)} (${prod.ratingCount})` : 'No ratings'}
+                      {prod.rating != null ? `${prod.rating.toFixed(1)}${prod.ratingCount ? ` (${prod.ratingCount})` : ''}` : 'No ratings'}
                     </Typography>
                   </Box>
                   <Box sx={{ display: 'flex', gap: 0.75, flexWrap: 'wrap', mt: 1 }}>
@@ -283,7 +288,7 @@ const SearchPage = () => {
                         store: prod.store,
                       });
                     }}
-                    disabled={prod.active === false}
+                    disabled={cartLoading || prod.active === false}
                   >
                     {prod.active === false ? 'Unavailable' : 'Add +'}
                   </Button>
@@ -293,6 +298,7 @@ const SearchPage = () => {
           )}
         </Box>
       )}
+      <BottomNav />
     </Box>
   );
 };

@@ -68,8 +68,8 @@ const CartDrawer = () => {
               {/* Cart Items Section */}
               <Box className="cart-section delivery-section">
                 <Box className="cart-items-list">
-                  {cartItems.map((item, idx) => (
-                    <Box key={idx} className="cart-item-row">
+                  {cartItems.map((item) => (
+                    <Box key={`${item.cartId || item.storeId || 'guest'}:${item.id || `${item.productId}:${item.variantId ?? 'product'}`}`} className="cart-item-row">
                       <Box className="item-thumbnail">
                         {item.image ? (
                           <SafeProductImage src={item.image} alt={item.title} />
@@ -87,6 +87,7 @@ const CartDrawer = () => {
                         <Box className="qty-selector">
                           <button
                             className="qty-btn"
+                            disabled={cartLoading}
                           onClick={() => updateQuantity(item.productId, item.variantId, -1, item.storeId)}
                           >
                             -
@@ -94,6 +95,7 @@ const CartDrawer = () => {
                           <span className="qty-count">{item.quantity}</span>
                           <button
                             className="qty-btn"
+                            disabled={cartLoading}
                           onClick={() => updateQuantity(item.productId, item.variantId, 1, item.storeId)}
                           >
                             +

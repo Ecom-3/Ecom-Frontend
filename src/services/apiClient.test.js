@@ -39,4 +39,44 @@ test('401 with a stale token expires the customer session', async () => {
     assert.equal(event, 'customer-session-expired');
   } finally { Object.assign(globalThis, previous); }
 });
+
+test('simultaneous identical GETs share one in-flight request', async () => {
+  const previous = { fetch: globalThis.fetch, sessionStorage: globalThis.sessionStorage };
+  globalThis.sessionStorage = { getItem: () => 'dedupe-read-session' };
+  let calls = 0;
+  let resolveFetch;
+  globalThis.fetch = () => {
+    calls += 1;
+    return new Promise((resolve) => { resolveFetch = resolve; });
+  };
+  try {
+    const first = apiRequest('/catalog', '/api/v1/products?status=ACTIVE');
+    const second = apiRequest('/catalog', '/api/v1/products?status=ACTIVE');
+    assert.equal(calls, 1);
+    resolveFetch(new Response(JSON.stringify([{ id: 'product-1' }]), { status: 200 }));
+    assert.deepEqual(await Promise.all([first, second]), [[{ id: 'product-1' }], [{ id: 'product-1' }]]);
+  } finally { Object.assign(globalThis, previous); }
+});
+
+test('failed GETs are not cached and mutations are never deduplicated', async () => {
+  const previous = { fetch: globalThis.fetch, sessionStorage: globalThis.sessionStorage };
+  globalThis.sessionStorage = { getItem: () => 'dedupe-failure-session' };
+  let calls = 0;
+  globalThis.fetch = async (_url, options) => {
+    calls += 1;
+    return options.method === 'POST'
+      ? new Response('{}', { status: 200 })
+      : calls === 1
+        ? new Response('{"message":"temporary failure"}', { status: 500 })
+        : new Response('{"ok":true}', { status: 200 });
+  };
+  try {
+    await assert.rejects(apiRequest('/catalog', '/api/v1/retry'), (error) => error.status === 500);
+    assert.deepEqual(await apiRequest('/catalog', '/api/v1/retry'), { ok: true });
+    const first = apiRequest('/cart', '/api/v1/carts', { method: 'POST', body: '{}' });
+    const second = apiRequest('/cart', '/api/v1/carts', { method: 'POST', body: '{}' });
+    await Promise.all([first, second]);
+    assert.equal(calls, 4);
+  } finally { Object.assign(globalThis, previous); }
+});
 import { Buffer } from 'node:buffer';

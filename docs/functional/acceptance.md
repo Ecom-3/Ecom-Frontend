@@ -15,8 +15,8 @@ Use test accounts for each of the six roles, two stores in different locations, 
 | QA07 | C05 | Open two store pages and add the same product/variant from each; retain distinct supplying-store identity. |
 | QA08 | C06 | Search by text; combine category, price, rating, availability and sort; clear filters; confirm no-result state and recent-term limit. |
 | QA09 | C07 | Open product by direct URL and refresh; choose variant; verify correct price/stock/store. Missing or unverified inventory must not show confirmed stock. |
-| QA10 | C08 | Add as guest, change quantity/remove, sign in and inspect migration. Repeat with multiple stores and a failed cart request; no silent item loss. |
-| QA11 | C08 | Change logged-in cart quantities and compare server totals. Test remove/clear and unavailable-service feedback. |
+| QA10 | C08 | Add as guest, change quantity/remove, sign in and inspect migration, then refresh. Repeat with multiple stores and a partially failed migration; acknowledged lines appear once and unacknowledged lines remain available for retry. |
+| QA11 | C08 | Add while signed in from Home/Search with no store selected, then refresh; restore every store's items. Repeat with another browsing store selected and an empty active cart in another store. Change quantities and compare server totals; test remove/clear, failed reloads, and account switching without showing the previous customer's cart. |
 | QA12 | C09 | Wishlist an item, log in to merge/deduplicate, move to cart and remove. Switch accounts/browser to identify actual local persistence boundary. |
 | QA13 | C09 | Save a cart item for later and restore it after price/stock changes; cart uses current permitted identity and surfaces failures. |
 | QA14 | C10 | Select GPS/map/search location; deny GPS; complete manual form. Missing floor/landmark/phone/PIN yields field-specific errors. |

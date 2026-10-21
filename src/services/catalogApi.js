@@ -16,6 +16,7 @@ const pendingReads = new Map();
 const request = (path, options = {}) => {
   if (options.method && options.method !== 'GET') return apiRequest(CATALOG_BASE_URL, path, options);
   const publicReadOptions = { ...options, auth: options.auth ?? false };
+  if (publicReadOptions.signal) return apiRequest(CATALOG_BASE_URL, path, publicReadOptions);
   const key = path;
   if (!pendingReads.has(key)) {
     pendingReads.set(key, apiRequest(CATALOG_BASE_URL, path, publicReadOptions).finally(() => pendingReads.delete(key)));
@@ -23,8 +24,7 @@ const request = (path, options = {}) => {
   return pendingReads.get(key);
 };
 const quoteCache = new Map();
-const QUOTE_CACHE_TTL_MS = 5 * 60 * 1000;
-const QUOTE_FAILURE_TTL_MS = 30 * 1000;
+const QUOTE_CACHE_TTL_MS = 60 * 1000;
 const quoteCacheKey = (storeId, params = {}) => [
   storeId,
   Number(params.latitude).toFixed(5),
@@ -38,9 +38,9 @@ export const getCategory = async (categoryId) => request(`/api/v1/categories/${e
 export const createCategory = async (data) => request('/api/v1/categories', { method:'POST', body:JSON.stringify(data) });
 export const updateCategory = async (id, data) => request(`/api/v1/categories/${encodeURIComponent(id)}`, { method:'PUT', body:JSON.stringify(data) });
 export const deleteCategory = async (id) => request(`/api/v1/categories/${encodeURIComponent(id)}`, { method:'DELETE' });
-export const getCategoryProducts = async (categoryId, params = {}) => {
-  if (!categoryId) return getProducts(params);
-  return request(`/api/v1/categories/${encodeURIComponent(categoryId)}/products${buildQueryString(params)}`);
+export const getCategoryProducts = async (categoryId, params = {}, options = {}) => {
+  if (!categoryId) return getProducts(params, options);
+  return request(`/api/v1/categories/${encodeURIComponent(categoryId)}/products${buildQueryString(params)}`, options);
 };
 
 export const getBanners = async (params = {}) => request(`/api/v1/banners${buildQueryString(params)}`);
@@ -49,7 +49,7 @@ export const updateBanner = async (id, data) => request(`/api/v1/banners/${encod
 export const deleteBanner = async (id) => request(`/api/v1/banners/${encodeURIComponent(id)}`, { method:'DELETE' });
 export const setBannerStatus = async (id, status) => request(`/api/v1/banners/${encodeURIComponent(id)}/status`, { method:'PATCH', body:JSON.stringify({ status }) });
 
-export const getProducts = async (params = {}) => request(`/api/v1/products${buildQueryString(params)}`);
+export const getProducts = async (params = {}, options = {}) => request(`/api/v1/products${buildQueryString(params)}`, options);
 export const searchProducts = async (params = {}) => getProducts(params);
 export const getProduct = async (productId) => request(`/api/v1/products/${encodeURIComponent(productId)}`);
 export const createProduct = async (data) => request('/api/v1/products', { method:'POST', body:JSON.stringify(data) });
@@ -72,7 +72,7 @@ export const getCachedStoreDeliveryQuote = async (storeId, params = {}) => {
   if (cached) quoteCache.delete(key);
   const entry = { promise: null, expiresAt: Date.now() + QUOTE_CACHE_TTL_MS };
   entry.promise = getStoreDeliveryQuote(storeId, params).catch((error) => {
-    entry.expiresAt = Date.now() + QUOTE_FAILURE_TTL_MS;
+    if (quoteCache.get(key) === entry) quoteCache.delete(key);
     throw error;
   });
   quoteCache.set(key, entry);

@@ -6,14 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import BottomNav from '../../components/BottomNav/BottomNav';
 import './HelpCenterPage.css';
-import { supportStore } from '../../services/localDataService';
 
 const HelpCenterPage = () => {
   const navigate = useNavigate();
   const [ticketText, setTicketText] = useState('');
-  const [chatText, setChatText] = useState('');
-  const [tickets, setTickets] = useState(() => supportStore.tickets());
-  const [messages, setMessages] = useState(() => supportStore.messages());
 
   const faqs = [
     {
@@ -83,15 +79,12 @@ const HelpCenterPage = () => {
         <Box className="faq-container-card">
           <Typography className="faq-main-heading">Raise a Support Ticket</Typography>
           <TextField fullWidth multiline minRows={2} label="Describe your issue" value={ticketText} onChange={(e) => setTicketText(e.target.value)} />
-          <Button variant="contained" sx={{ mt: 2 }} disabled={ticketText.trim().length < 5} onClick={() => { supportStore.createTicket({ subject: ticketText }); setTickets(supportStore.tickets()); setTicketText(''); }}>Submit Ticket</Button>
-          {tickets.map((ticket) => <Typography key={ticket.id} sx={{ mt: 1 }}>{ticket.id} — {ticket.status}: {ticket.subject}</Typography>)}
+          <Typography sx={{ mt: 1 }} color="text.secondary">Ticket submission is unavailable until support is connected to the account service.</Typography>
         </Box>
 
         <Box className="faq-container-card">
           <Typography className="faq-main-heading">Live Chat</Typography>
-          <Box sx={{ maxHeight: 180, overflowY: 'auto', mb: 2 }}>{messages.map((item) => <Typography key={item.id} sx={{ textAlign: item.sender === 'customer' ? 'right' : 'left' }}>{item.text}</Typography>)}</Box>
-          <TextField fullWidth label="Type a message" value={chatText} onChange={(e) => setChatText(e.target.value)} />
-          <Button sx={{ mt: 1 }} variant="contained" disabled={!chatText.trim()} onClick={() => { supportStore.sendMessage(chatText); supportStore.sendMessage('Thanks. Our local support assistant has received your message.', 'support'); setMessages(supportStore.messages()); setChatText(''); }}>Send</Button>
+          <Typography color="text.secondary">Live chat is unavailable right now. Please use the contact options above.</Typography>
         </Box>
 
         {/* FAQ Section Card */}

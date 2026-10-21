@@ -13,7 +13,6 @@ import { AppContext } from '../../context/AppContext';
 import pickleJarImg from '../../assets/images/pickel-removebg-preview.png';
 import { cancelOrder, getOrder, getOrderItems, isOrderServiceUnavailable, normalizeOrder } from '../../services/orderApi';
 import { getPaymentByOrder, isPaymentServiceUnavailable, normalizePayment } from '../../services/paymentApi';
-import { orderStore } from '../../services/localDataService';
 import OrderDocuments from '../../components/OrderDocuments';
 import FulfillmentTrackingPanel from '../../components/FulfillmentTrackingPanel/FulfillmentTrackingPanel';
 import NotificationHistoryPanel from '../../components/NotificationHistoryPanel/NotificationHistoryPanel';
@@ -21,22 +20,6 @@ import { useFulfillmentTracking } from '../../hooks/useFulfillmentTracking';
 import './OrderDetailViewPage.css';
 
 const formatAddress = (address) => address ? [address.addressLine1, address.city, address.state, address.country, address.postalCode].filter(Boolean).join(', ') : '';
-const mergeLocalSnapshot = (remoteOrder, localOrder) => {
-  if (!localOrder) return remoteOrder;
-  const localItems = localOrder.items || [];
-  const snapshotFor = (item, index) => localItems.find((local) => local.productId && local.productId === item.productId && (local.variantId ?? null) === (item.variantId ?? null)) || localItems[index] || {};
-  return {
-    ...remoteOrder,
-    items: (remoteOrder.items || []).map((item, index) => {
-      const snapshot = snapshotFor(item, index);
-      return {
-        ...item,
-        image: item.image || snapshot.image || snapshot.imageUrl || '',
-      };
-    }),
-  };
-};
-
 const OrderDetailViewPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -63,21 +46,13 @@ const OrderDetailViewPage = () => {
       setError('');
     }
     try {
-      const localOrder = orderStore.list().find((item) => item.id === requestedOrderId);
       const [orderResponse, itemsResponse] = await Promise.all([getOrder(requestedOrderId), getOrderItems(requestedOrderId).catch(() => null)]);
       const items = Array.isArray(itemsResponse) ? itemsResponse : itemsResponse?.items;
-      const next = normalizeOrder(mergeLocalSnapshot(items ? { ...orderResponse, items } : orderResponse, localOrder));
+      const next = normalizeOrder(items ? { ...orderResponse, items } : orderResponse);
       setOrder(next);
       setUnavailable(false);
       setError('');
     } catch (apiError) {
-      const localOrder = orderStore.list().find((item) => item.id === requestedOrderId);
-      if (localOrder && [401, 403, 404].includes(Number(apiError.status))) {
-        setOrder(normalizeOrder(localOrder));
-        setUnavailable(false);
-        setError('');
-        return;
-      }
       if (!silent || [401,403,404].includes(apiError.status)) {
         setOrder(null);
         setUnavailable(isOrderServiceUnavailable(apiError));
@@ -176,9 +151,7 @@ const OrderDetailViewPage = () => {
   const paymentStatus = payment?.status || localPaymentStatus || 'Payment confirmation unavailable';
   const visiblePaymentError = paymentError && !localPaymentStatus ? paymentError : '';
   const suggestions = catalogProducts.filter((product) => product.productId !== firstItem.productId).slice(0, 3);
-  const siblingOrders = order.parentOrderId
-    ? orderStore.list().filter((item) => item.parentOrderId === order.parentOrderId).sort((a, b) => String(a.id).localeCompare(String(b.id)))
-    : [];
+  const siblingOrders = Array.isArray(order.childOrders) ? order.childOrders : [];
 
   return (
     <Box className="order-detail-wrapper">

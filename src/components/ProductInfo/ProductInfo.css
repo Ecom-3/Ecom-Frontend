@@ -83,6 +83,7 @@
   color: #6b7280;
   margin-top: -8px !important;
 }
+.product-image-status{position:absolute;left:8px;right:8px;top:6px;text-align:center;color:#fff;font-size:.72rem!important;text-shadow:0 1px 3px #000}
 
 /* Weight Selector Chips */
 .weight-options-row {
@@ -218,6 +219,7 @@
   font-weight: 800 !important;
   color: #111827;
 }
+.compare-at-price{font-size:.78rem!important;color:#64748b;text-decoration:line-through}
 
 .taxes-note {
   font-size: 0.7rem !important;

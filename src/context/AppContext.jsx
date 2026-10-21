@@ -5,13 +5,16 @@ import { createContext, useState, useEffect, useRef } from 'react';
 import { readSelectedLocation, storeSelectedLocation } from '../utils/selectedLocation';
 import { customerProfileService } from '../services/customerProfileService';
 import { getCustomerOrders, normalizeOrder, orderDeliveryAddress } from '../services/orderApi';
-import { collectionStore } from '../services/localDataService';
 import { getProducts, getCategories, getCategoryProducts, getStoreProducts, getStores, getBanners } from '../services/catalogApi';
 import { adaptProductList, adaptCategoryList, adaptStoreProductList, adaptBannerList } from '../services/catalogAdapter';
-import { addCartItem, calculateCartTotal, clearCartItems, createCart, getActiveCart, removeCartItem, updateCartItem } from '../services/cartApi';
+import { addCartItem, calculateCartTotal, clearCartItems, createCart, getActiveCart, getActiveCarts, getCart, removeCartItem, updateCartItem } from '../services/cartApi';
 import { rememberProductStore, resolveProductStore } from '../services/productStoreResolver';
 import { cleanDisplayText } from '../utils/textEncoding';
 import { findInventoryForItem } from '../services/inventoryApi';
+import { migrateGuestCart } from '../utils/migrateGuestCart.js';
+import { loadCustomerCart } from '../utils/loadCustomerCart.js';
+import { planCartLineMutation, sameCartLine } from '../utils/cartLineMutation.js';
+import { logCartDiagnostic, logCartSnapshot } from '../utils/cartDiagnostics.js';
 import { validateCheckoutAvailability } from '../utils/checkoutAvailability';
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -80,6 +83,9 @@ export const AppProvider = ({ children }) => {
     return items.length ? { id: GUEST_CART_ID, status: 'GUEST', totalAmount: items.reduce((sum, item) => sum + Number(item.price || item.unitPrice || 0) * Number(item.quantity || 0), 0) } : null;
   });
   const [cartLoading, setCartLoading] = useState(false);
+  const cartMutationPending = useRef(false);
+  const cartHydrationRequest = useRef(0);
+  const cartHydrationPromise = useRef(null);
   const [cartError, setCartError] = useState('');
   const [cartUnavailable, setCartUnavailable] = useState(false);
 
@@ -137,7 +143,8 @@ export const AppProvider = ({ children }) => {
 
   const cartCount = cartItems.reduce((sum, item) => sum + Number(item.quantity || 0), 0);
   const localCartTotal = (items = cartItems) => items.reduce((sum, item) => sum + Number(item.price || item.unitPrice || 0) * Number(item.quantity || 0), 0);
-  const cartTotal = Number(activeCart?.totalAmount ?? localCartTotal());
+  // activeCart represents only one store. Sum visible lines for a multi-store cart.
+  const cartTotal = localCartTotal();
   const currentCustomerId = () => tokenCustomerId() || user?.id || null;
 
   const resolveProductIdentity = (product) => {
@@ -148,8 +155,7 @@ export const AppProvider = ({ children }) => {
     };
   };
 
-  const sameCatalogItem = (left, right) =>
-    Boolean(left?.productId && right?.productId && left.productId === right.productId && (left.variantId ?? null) === (right.variantId ?? null) && (!left.storeId || !right.storeId || left.storeId === right.storeId));
+  const sameCatalogItem = sameCartLine;
 
   const catalogItemKey = (item) => `${item?.storeId || 'store'}:${item?.productId || ''}:${item?.variantId ?? 'product'}`;
 
@@ -170,6 +176,7 @@ export const AppProvider = ({ children }) => {
       store: item?.store || item?.storeName || cartStore.store || source.store,
       storeName: item?.storeName || item?.store || cartStore.storeName || source.storeName,
       id: item?.id || null,
+      cartId: item?.cartId || cart?.id || null,
       productId: item?.productId || null,
       variantId: item?.variantId ?? null,
       productName: cleanDisplayText(item?.productName || item?.title || 'Product'),
@@ -198,9 +205,13 @@ export const AppProvider = ({ children }) => {
   const mergeCartResponse = (cart) => {
     const incoming = cartItemsFromResponse(cart);
     const storeId = cart?.storeId || incoming.find((item) => item.storeId)?.storeId || '';
+    const cartId = cart?.id || '';
     setActiveCart(cart || null);
     setCartItems((current) => [
-      ...current.filter((item) => !storeId || item.storeId !== storeId),
+      ...current.filter((item) => {
+        if (cartId && item.cartId) return item.cartId !== cartId;
+        return storeId ? String(item.storeId || '') !== String(storeId) : true;
+      }),
       ...incoming,
     ]);
     setCartUnavailable(false);
@@ -220,6 +231,7 @@ export const AppProvider = ({ children }) => {
 
   const upsertGuestCartItem = (itemPayload) => {
     const items = readGuestCartItems().map(adaptCartItem);
+    logCartSnapshot('guest.add.before', items, 'guest localStorage');
     const existingIndex = items.findIndex((item) => sameCatalogItem(item, itemPayload));
     const nextItems = [...items];
     if (existingIndex >= 0) {
@@ -229,7 +241,9 @@ export const AppProvider = ({ children }) => {
     } else {
       nextItems.push({ ...itemPayload, quantity: 1, totalPrice: itemPayload.unitPrice });
     }
-    return applyGuestCartItems(nextItems);
+    const updated = applyGuestCartItems(nextItems);
+    logCartSnapshot('guest.add.after', updated, 'guest localStorage');
+    return updated;
   };
 
   const isCartServiceUnavailable = (error) => error?.name === 'TypeError' || Number(error?.status) >= 500;
@@ -243,6 +257,9 @@ export const AppProvider = ({ children }) => {
     return {
       ...source,
       ...product,
+      storeId: product.storeId || source.storeId,
+      store: product.store || source.store,
+      storeName: product.storeName || source.storeName,
       id: identity.productId,
       productId: identity.productId,
       variantId: identity.variantId,
@@ -258,7 +275,7 @@ export const AppProvider = ({ children }) => {
   const resolveCartStoreId = (product) => {
     if (product?.storeId) return product.storeId;
     const selectedStore = localStorage.getItem('selectedStoreId') || localStorage.getItem('selectedStore');
-    const stores = collectionStore.list('stores');
+    const stores = catalogStores;
     const match = stores.find((store) => store.id === selectedStore || store.name === selectedStore);
     return match?.id || stores.find((store) => store.status !== 'Inactive' && store.active !== false)?.id || null;
   };
@@ -295,9 +312,8 @@ export const AppProvider = ({ children }) => {
         setCatalogStores(Array.isArray(response) ? response : response?.content || response?.items || []);
       })
       .catch(() => {
-        const localStores = collectionStore.list('stores').filter((store) => store.status !== 'Inactive' && store.active !== false);
-        setCatalogStores(localStores);
-        if (!localStores.length) setCatalogError('Delivery stores could not be loaded. Please retry in a moment.');
+        setCatalogStores([]);
+        setCatalogError('Delivery stores could not be loaded. Please retry in a moment.');
       });
     const storeRequest = getStoreProducts('', { status: 'ACTIVE' });
     const mappingsRequest = Promise.all([productsRequest, storeRequest])
@@ -309,12 +325,8 @@ export const AppProvider = ({ children }) => {
         setCatalogStoreProducts(storeProducts);
       })
       .catch(() => {
-        const localStores = collectionStore.list('stores').filter((store) => store.status !== 'Inactive' && store.active !== false);
-        if (localStores.length) {
-          setCatalogStores(localStores);
-        } else {
-          setCatalogError('Products and delivery availability could not be loaded. Please retry in a moment.');
-        }
+        setCatalogStoreProducts([]);
+        setCatalogError('Products and delivery availability could not be loaded. Please retry in a moment.');
       });
     catalogRequest.current = Promise.allSettled([productsRequest, categoriesRequest, bannersRequest, mappingsRequest, storesRequest])
       .finally(() => { catalogRequest.current = null; setCatalogLoading(false); });
@@ -332,6 +344,9 @@ export const AppProvider = ({ children }) => {
     setCatalogStores((current) => current.some((item) => item.id === store.id)
       ? current.map((item) => item.id === store.id ? store : item)
       : [...current, store]);
+  };
+  const removeCatalogStore = (storeId) => {
+    setCatalogStores((current) => current.filter((item) => item.id !== storeId));
   };
 
   const loadCategoryProducts = async (categoryId, params = {}) => {
@@ -365,7 +380,7 @@ export const AppProvider = ({ children }) => {
   }, [isLoggedIn]);
   useEffect(() => {
     const token = sessionStorage.getItem('authToken');
-    const customerId = currentCustomerId();
+    const customerId = tokenCustomerId() || user?.id || null;
     if (!isLoggedIn || !token || token.startsWith('local-') || !customerId) return;
     getCustomerOrders(customerId, { expireSession: false }).then((orders) => {
       const seen = new Set();
@@ -386,9 +401,15 @@ export const AppProvider = ({ children }) => {
   useEffect(() => localStorage.setItem('savedForLater', JSON.stringify(savedForLater)), [savedForLater]);
 
   const login = (authenticatedUser, token) => {
+    cartHydrationRequest.current += 1;
+    setCartLoading(false);
     if (token) sessionStorage.setItem('authToken', token);
     const customerId = tokenCustomerId();
     const accountUser = customerId ? { ...authenticatedUser, id: customerId } : authenticatedUser;
+    if (isLoggedIn && accountUser?.id !== user?.id) {
+      setCartItems(readGuestCartItems());
+      setActiveCart(null);
+    }
     let accountLikes = readStoredArray('wishlist:' + accountUser.id);
     const combinedLikes = [...accountLikes, ...(!isLoggedIn ? wishlistItems : [])];
     const mergedLikes = combinedLikes.filter((item, index, items) => items.findIndex((other) => sameCatalogItem(other, item)) === index);
@@ -403,6 +424,8 @@ export const AppProvider = ({ children }) => {
     setIsLoggedIn(true);
   };
   const logout = () => {
+    cartHydrationRequest.current += 1;
+    setCartLoading(false);
     const token = sessionStorage.getItem('authToken');
     if (token && !token.startsWith('local-')) customerAuthService.logout().catch(() => {});
     sessionStorage.removeItem('user');
@@ -479,7 +502,7 @@ export const AppProvider = ({ children }) => {
     const scope = cartScopeFor(scopeProduct);
     if (!scope.customerId) throw new Error('Log in to use your cart.');
     if (!scope.storeId) throw new Error('Select a store before using the cart.');
-    if (activeCart?.id && activeCart.customerId === scope.customerId && activeCart.storeId === scope.storeId && activeCart.status === 'ACTIVE') return activeCart;
+    if (!options.forceRefresh && activeCart?.id && activeCart.customerId === scope.customerId && activeCart.storeId === scope.storeId && activeCart.status === 'ACTIVE') return activeCart;
     try {
       const cart = await getActiveCart(scope);
       if (options.preserveVisibleItems) {
@@ -503,72 +526,103 @@ export const AppProvider = ({ children }) => {
   };
 
   const refreshCartTotal = async (cartId, options = {}) => {
-    const cart = await calculateCartTotal(cartId);
+    let cart = await calculateCartTotal(cartId);
+    if (!Array.isArray(cart?.items) && !Array.isArray(cart?.cartItems)) cart = await getCart(cartId);
     if (options.mergeStoreItems) return mergeCartResponse(cart);
     return applyCartResponse(cart);
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const migrateGuestCartToCustomer = async (customerId) => {
-    const guestItems = readGuestCartItems().map(adaptCartItem).filter((item) => item.productId && item.quantity > 0);
-    if (!guestItems.length || !customerId) return false;
-    const storeId = resolveCartStoreId(guestItems[0]);
-    if (!storeId) {
-      applyGuestCartItems(guestItems);
-      setCartError('Select a store to sync your saved cart.');
-      return false;
-    }
-    let cart;
-    try {
-      try {
-        cart = await getActiveCart({ customerId, storeId });
-      } catch (error) {
-        if (error.status !== 404) throw error;
-        cart = await createCart({ customerId, storeId });
-      }
-      for (const item of guestItems) {
-        await addCartItem(cart.id, {
-          productId: item.productId,
-          variantId: item.variantId,
-          productName: item.productName,
-          quantity: item.quantity,
-          unitPrice: item.unitPrice,
-        });
-      }
-      localStorage.removeItem(GUEST_CART_KEY);
-      await refreshCartTotal(cart.id);
-      return true;
-    } catch (error) {
-      setCartUnavailable(isCartServiceUnavailable(error));
-      setCartError(error.message || 'Could not sync your saved cart.');
-      applyGuestCartItems(guestItems);
-      return false;
-    }
-  };
-
   useEffect(() => {
-    if (!isLoggedIn || !user?.id) {
+    const requestId = ++cartHydrationRequest.current;
+    const token = sessionStorage.getItem('authToken') || '';
+    const customerId = currentCustomerId();
+    if (!isLoggedIn || !customerId || !token || token.startsWith('local-')) {
       return undefined;
     }
-    const guestItems = readGuestCartItems();
-    if (guestItems.length) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      applyGuestCartItems(guestItems);
-    }
-    return undefined;
-  }, [isLoggedIn, user?.id]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    const previousHydration = cartHydrationPromise.current;
+    const isCurrent = () => requestId === cartHydrationRequest.current;
+    const hydrate = async () => {
+      // Finish an in-flight guest acknowledgement before a new account or
+      // catalog-triggered load reads the same guest storage.
+      if (previousHydration) await previousHydration;
+      if (!isCurrent()) return;
+      setCartLoading(true);
+      setCartError('');
+      const readGuestItems = () => readGuestCartItems().map((item) => {
+        const adapted = adaptCartItem(item);
+        return { ...adapted, storeId: adapted.storeId || resolveCartStoreId(adapted) };
+      }).filter((item) => item.productId && item.quantity > 0);
+      logCartSnapshot('cart.hydration.guest.read', readGuestItems(), 'guest localStorage');
+      const result = await loadCustomerCart({
+        customerId, readGuestItems, isCurrent,
+        api: { getActiveCart, getActiveCarts, createCart, addCartItem },
+      });
+      if (!result || !isCurrent()) return;
+      const { carts, guestItems: failedGuestItems, errors: failures } = result;
+      const serverItems = carts.flatMap(cartItemsFromResponse);
+      logCartSnapshot('cart.hydration.server', serverItems, 'server API');
+      logCartSnapshot('cart.hydration.unmigrated-guest', failedGuestItems, 'guest localStorage');
+      const visibleItems = [...serverItems, ...failedGuestItems];
+      const populatedCarts = carts.filter((cart) => cartItemsFromResponse(cart).length > 0);
+      setCartItems(visibleItems);
+      setActiveCart(populatedCarts[populatedCarts.length - 1] || carts[carts.length - 1] || null);
+      setCartUnavailable(failures.some(isCartServiceUnavailable));
+      setCartError(failures[0]?.message || (failedGuestItems.length ? 'Some saved items could not be synced. Please retry.' : ''));
+    };
+
+    cartHydrationPromise.current = hydrate().catch((error) => {
+      if (requestId === cartHydrationRequest.current) {
+        setCartUnavailable(isCartServiceUnavailable(error));
+        setCartError(error.message || 'Could not load your saved cart.');
+      }
+    }).finally(() => {
+      if (requestId === cartHydrationRequest.current) setCartLoading(false);
+    });
+    return () => { if (requestId === cartHydrationRequest.current) cartHydrationRequest.current += 1; };
+  }, [isLoggedIn, user?.id, catalogStores]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const addToCart = async (product) => {
-    const itemPayload = buildCartItem(product);
-    if (!itemPayload) return;
-    if (isLoggedIn && currentCustomerId()) {
-      const current = cartItems.find(item => sameCatalogItem(item, itemPayload));
-      try {
-        await validateCheckoutAvailability([{ storeId: itemPayload.storeId, items: [{ ...itemPayload, quantity: Number(current?.quantity || 0) + 1 }] }], findInventoryForItem);
-        const cart = await ensureCart(itemPayload, { preserveVisibleItems: true });
-        const existing = cartItems.find(item => sameCatalogItem(item, itemPayload));
-        if (existing?.id) {
-          await updateCartItem(cart.id, existing.id, { quantity: Number(existing.quantity || 0) + 1 });
+    // Serialize every cart mutation before React can disable the controls.
+    if (cartMutationPending.current) return false;
+    cartMutationPending.current = true;
+    setCartLoading(true);
+    setCartError('');
+    try {
+      if (isLoggedIn && cartHydrationPromise.current) await cartHydrationPromise.current;
+      const itemPayload = buildCartItem(product);
+      if (!itemPayload) throw new Error('This product is not ready to add. Please reload it.');
+      if (!Number.isFinite(itemPayload.unitPrice) || itemPayload.unitPrice < 0) throw new Error('This product has an invalid price.');
+      if (isLoggedIn && !currentCustomerId()) throw new Error('Your customer session is incomplete. Please sign in again.');
+      logCartDiagnostic('cart.add.explicit', {
+        storeId: itemPayload.storeId,
+        productId: itemPayload.productId,
+        variantId: itemPayload.variantId,
+        quantity: 1,
+        source: isLoggedIn ? 'server API' : 'guest localStorage',
+      });
+      if (isLoggedIn && currentCustomerId()) {
+        itemPayload.storeId = resolveCartStoreId(itemPayload);
+        if (!itemPayload.storeId) throw new Error('Select a store before using the cart.');
+        let cart = await ensureCart(itemPayload, { preserveVisibleItems: true, forceRefresh: true });
+        const guestItems = readGuestCartItems().map(adaptCartItem);
+        if (guestItems.some(item => item.storeId === cart.storeId)) {
+          await migrateGuestCart(cart, guestItems, addCartItem);
+          cart = await getActiveCart({ customerId: currentCustomerId(), storeId: itemPayload.storeId });
+        }
+        const mutation = planCartLineMutation([...cartItemsFromResponse(cart), ...cartItems], itemPayload, 1, cart.id);
+        const nextQuantity = mutation.quantity;
+        logCartDiagnostic(`cart.add.plan.${mutation.type}`, {
+          storeId: itemPayload.storeId,
+          productId: itemPayload.productId,
+          variantId: itemPayload.variantId,
+          cartItemId: mutation.line?.id,
+          quantity: nextQuantity,
+          source: 'server API',
+        });
+        await validateCheckoutAvailability([{ storeId: itemPayload.storeId, items: [{ ...itemPayload, quantity: nextQuantity }] }], findInventoryForItem);
+        if (mutation.type === 'update') {
+          await updateCartItem(cart.id, mutation.line.id, { quantity: nextQuantity });
         } else {
           await addCartItem(cart.id, {
             productId: itemPayload.productId,
@@ -579,84 +633,142 @@ export const AppProvider = ({ children }) => {
           });
         }
         await refreshCartTotal(cart.id, { mergeStoreItems: true });
-        setCartError('');
-        triggerAddedPopup(itemPayload);
-        return;
-      } catch (error) { setCartError(error.message); return; }
+      } else {
+        upsertGuestCartItem(itemPayload);
+      }
+      triggerAddedPopup(itemPayload);
+      return true;
+    } catch (error) {
+      setCartUnavailable(isCartServiceUnavailable(error));
+      setCartError(error.message || 'Could not add this product to your cart.');
+      return false;
+    } finally {
+      cartMutationPending.current = false;
+      setCartLoading(false);
     }
-    upsertGuestCartItem(itemPayload);
-    triggerAddedPopup(itemPayload);
   };
 
   const updateQuantity = async (productId, variantId, delta, storeId = '') => {
+    if (cartMutationPending.current) return false;
     const match = { productId, variantId, storeId };
     const current = cartItems.find((item) => sameCatalogItem(item, match));
-    if (isLoggedIn && currentCustomerId() && current && Number(delta) > 0) {
-      try {
-        await validateCheckoutAvailability([{ storeId: current.storeId, items: [{ ...current, quantity: Number(current.quantity) + Number(delta) }] }], findInventoryForItem);
-        setCartError('');
-      } catch (error) { setCartError(error.message); return; }
-    }
-    if (!isLoggedIn || activeCart?.id === GUEST_CART_ID) {
-      const nextQuantity = Number(current?.quantity || 0) + Number(delta || 0);
+    const nextQuantity = Number(current?.quantity || 0) + Number(delta || 0);
+    logCartDiagnostic('cart.quantity.change', {
+      storeId: current?.storeId || storeId,
+      productId,
+      variantId,
+      cartItemId: current?.id,
+      quantity: nextQuantity,
+      source: isLoggedIn && current?.cartId ? 'server API' : 'guest localStorage',
+    });
+    if (!isLoggedIn || !current?.cartId) {
+      logCartSnapshot('guest.quantity.before', cartItems, 'guest localStorage');
       applyGuestCartItems(cartItems.flatMap((item) => {
         if (!sameCatalogItem(item, match)) return [item];
         return nextQuantity > 0 ? [{ ...item, quantity: nextQuantity, totalPrice: Number(item.unitPrice || item.price || 0) * nextQuantity }] : [];
       }));
-      return;
+      logCartSnapshot('guest.quantity.after', readGuestCartItems().map(adaptCartItem), 'guest localStorage');
+      return true;
     }
-    if (!activeCart?.id || !current?.id) return;
-    const nextQuantity = Number(current.quantity || 0) + Number(delta || 0);
+    const cartId = current.cartId;
+    if (!cartId || !current?.id) return;
+    cartMutationPending.current = true;
     setCartLoading(true);
     try {
-      if (nextQuantity <= 0) {
-        await removeCartItem(activeCart.id, current.id);
-      } else {
-        await updateCartItem(activeCart.id, current.id, { quantity: nextQuantity });
+      if (isLoggedIn && currentCustomerId() && Number(delta) > 0) {
+        await validateCheckoutAvailability([{ storeId: current.storeId, items: [{ ...current, quantity: nextQuantity }] }], findInventoryForItem);
       }
-      await refreshCartTotal(activeCart.id);
+      setCartError('');
+      if (nextQuantity <= 0) {
+        await removeCartItem(cartId, current.id);
+      } else {
+        await updateCartItem(cartId, current.id, { quantity: nextQuantity });
+      }
+      await refreshCartTotal(cartId, { mergeStoreItems: true });
     } catch (error) {
       setCartUnavailable(isCartServiceUnavailable(error));
       setCartError(error.message || 'Cart Service is unavailable.');
+      return false;
     } finally {
+      cartMutationPending.current = false;
       setCartLoading(false);
     }
+    return true;
   };
 
   const removeFromCart = async (productId, variantId, storeId = '') => {
+    if (cartMutationPending.current) return false;
     const match = { productId, variantId, storeId };
     const current = cartItems.find((item) => sameCatalogItem(item, match));
-    if (!isLoggedIn || activeCart?.id === GUEST_CART_ID) {
+    logCartDiagnostic('cart.remove', {
+      storeId: current?.storeId || storeId,
+      productId,
+      variantId,
+      cartItemId: current?.id,
+      quantity: current?.quantity,
+      source: isLoggedIn && current?.cartId ? 'server API' : 'guest localStorage',
+    });
+    if (!isLoggedIn || !current?.cartId) {
+      logCartSnapshot('guest.remove.before', cartItems, 'guest localStorage');
       applyGuestCartItems(cartItems.filter((item) => !sameCatalogItem(item, match)));
-      return;
+      logCartSnapshot('guest.remove.after', readGuestCartItems().map(adaptCartItem), 'guest localStorage');
+      return true;
     }
-    if (!activeCart?.id || !current?.id) return;
+    const cartId = current.cartId;
+    if (!cartId || !current?.id) return;
+    cartMutationPending.current = true;
     setCartLoading(true);
     try {
-      await removeCartItem(activeCart.id, current.id);
-      await refreshCartTotal(activeCart.id);
+      await removeCartItem(cartId, current.id);
+      await refreshCartTotal(cartId, { mergeStoreItems: true });
     } catch (error) {
       setCartUnavailable(isCartServiceUnavailable(error));
       setCartError(error.message || 'Cart Service is unavailable.');
+      return false;
     } finally {
+      cartMutationPending.current = false;
       setCartLoading(false);
     }
+    return true;
   };
 
   const clearCart = async () => {
-    if (!isLoggedIn || activeCart?.id === GUEST_CART_ID) {
+    if (cartMutationPending.current) return false;
+    if (!isLoggedIn || cartItems.every((item) => !item.cartId || item.cartId === GUEST_CART_ID)) {
+      logCartSnapshot('guest.clear.before', cartItems, 'guest localStorage');
       applyGuestCartItems([]);
-      return;
+      logCartSnapshot('guest.clear.after', [], 'guest localStorage');
+      return true;
     }
-    if (!activeCart?.id) return;
+    const cartIds = [...new Set(cartItems.map((item) => item.cartId).filter((id) => id && id !== GUEST_CART_ID))];
+    if (!cartIds.length) {
+      applyGuestCartItems([]);
+      return true;
+    }
+    cartMutationPending.current = true;
     setCartLoading(true);
     try {
-      await clearCartItems(activeCart.id);
-      await refreshCartTotal(activeCart.id);
+      const results = await Promise.allSettled(cartIds.map((cartId) => clearCartItems(cartId)));
+      const clearedCartIds = cartIds.filter((_, index) => results[index].status === 'fulfilled');
+      setCartItems((items) => items.filter((item) => !clearedCartIds.includes(item.cartId)));
+      if (clearedCartIds.length === cartIds.length) {
+        localStorage.removeItem(GUEST_CART_KEY);
+        setCartItems([]);
+        setActiveCart(null);
+        setCartError('');
+        setCartUnavailable(false);
+        return true;
+      }
+      const failure = results.find((result) => result.status === 'rejected')?.reason;
+      setCartUnavailable(isCartServiceUnavailable(failure));
+      setCartError(failure?.message || 'Some store carts could not be cleared.');
+      return false;
     } catch (error) {
       setCartUnavailable(isCartServiceUnavailable(error));
       setCartError(error.message || 'Cart Service is unavailable.');
+      return false;
     } finally {
+      cartMutationPending.current = false;
       setCartLoading(false);
     }
   };
@@ -666,20 +778,24 @@ export const AppProvider = ({ children }) => {
     const exists = items.some((item) => sameCatalogItem(item, itemPayload));
     return exists ? items.filter((item) => !sameCatalogItem(item, itemPayload)) : [...items, itemPayload];
   });
-  const moveWishlistToCart = (product) => {
-    addToCart(product);
+  const moveWishlistToCart = async (product) => {
+    const added = await addToCart(product);
+    if (!added) return false;
     const itemPayload = buildCartItem(product);
     setWishlistItems((items) => items.filter((item) => !sameCatalogItem(item, itemPayload)));
+    return true;
   };
   const saveItemForLater = async (product) => {
     const itemPayload = adaptCartItem(product);
     if (!itemPayload?.productId) return;
+    const removed = await removeFromCart(itemPayload.productId, itemPayload.variantId, itemPayload.storeId);
+    if (!removed) return false;
     setSavedForLater((items) => {
       const existingIndex = items.findIndex((item) => sameCatalogItem(item, itemPayload));
       if (existingIndex < 0) return [...items, itemPayload];
       return items.map((item, index) => index === existingIndex ? { ...item, ...itemPayload } : item);
     });
-    await removeFromCart(itemPayload.productId, itemPayload.variantId, itemPayload.storeId);
+    return true;
   };
   const removeSavedForLater = (product) => {
     const itemPayload = adaptCartItem(product);
@@ -687,6 +803,7 @@ export const AppProvider = ({ children }) => {
     setSavedForLater((items) => items.filter((item) => !sameCatalogItem(item, itemPayload)));
   };
   const restoreSavedItem = async (product) => {
+    if (cartMutationPending.current) return false;
     const itemPayload = adaptCartItem(product);
     if (!itemPayload?.productId) return;
     const quantity = Math.max(1, Number(itemPayload.quantity || 1));
@@ -703,31 +820,45 @@ export const AppProvider = ({ children }) => {
       }
       applyGuestCartItems(nextItems);
       setSavedForLater((items) => items.filter((item) => !sameCatalogItem(item, itemPayload)));
-      return;
+      return true;
     }
+    cartMutationPending.current = true;
     setCartLoading(true);
     try {
-      const cart = await ensureCart(itemPayload);
-      await addCartItem(cart.id, {
+      itemPayload.storeId = resolveCartStoreId(itemPayload);
+      const cart = await ensureCart(itemPayload, { preserveVisibleItems: true, forceRefresh: true });
+      const guestItems = readGuestCartItems().map(adaptCartItem);
+      if (guestItems.some((item) => item.storeId === cart.storeId)) {
+        await migrateGuestCart(cart, guestItems, addCartItem);
+      }
+      const latestCart = await getActiveCart({ customerId: currentCustomerId(), storeId: cart.storeId });
+      const mutation = planCartLineMutation(cartItemsFromResponse(latestCart), itemPayload, quantity, latestCart.id);
+      if (mutation.type === 'update') await updateCartItem(latestCart.id, mutation.line.id, { quantity: mutation.quantity });
+      else await addCartItem(latestCart.id, {
         productId: itemPayload.productId,
         variantId: itemPayload.variantId,
         productName: itemPayload.productName,
         quantity,
         unitPrice: itemPayload.unitPrice,
       });
-      await refreshCartTotal(cart.id);
+      await refreshCartTotal(latestCart.id, { mergeStoreItems: true });
       setSavedForLater((items) => items.filter((item) => !sameCatalogItem(item, itemPayload)));
+      return true;
     } catch (error) {
       setCartUnavailable(isCartServiceUnavailable(error));
       setCartError(error.message || 'Could not move item back to cart.');
+      return false;
     } finally {
+      cartMutationPending.current = false;
       setCartLoading(false);
     }
   };
   const addAddress = async (address) => {
-    const saved = await customerProfileService.createAddress({ ...address, isDefault: true });
-    const next = { ...saved, isDefault:true, coordinates:saved.latitude != null ? {lat:saved.latitude,lng:saved.longitude}:null, manualLocation:saved.street?{street:saved.street,city:saved.city||'',state:saved.state||'',pincode:saved.pincode||''}:null };
-    setAddresses((items) => [...items.map((item)=>({...item,isDefault:false})),next]);
+    const duplicate = addresses.find((item) => cleanLocationText(item.address).toLowerCase() === cleanLocationText(address.address).toLowerCase());
+    if (duplicate) throw new Error('This address is already saved. Choose it from your saved addresses or edit it.');
+    const saved = await customerProfileService.createAddress(address);
+    const next = { ...saved, isDefault:Boolean(saved.defaultAddress ?? address.isDefault), coordinates:saved.latitude != null ? {lat:saved.latitude,lng:saved.longitude}:null, manualLocation:saved.street?{street:saved.street,city:saved.city||'',state:saved.state||'',pincode:saved.pincode||''}:null };
+    setAddresses((items) => [...items.map((item)=>({...item,isDefault:next.isDefault ? false : item.isDefault})),next]);
     setDeliveryAddress(next.address);
     return next;
   };
@@ -749,7 +880,7 @@ export const AppProvider = ({ children }) => {
   const openCart = () => setIsCartOpen(true);
   const closeCart = () => setIsCartOpen(false);
 
-  const saveSelectedLocation = (value) => {
+  const saveSelectedLocation = (value, { persistAddress = true } = {}) => {
     const next = {
       ...value,
       title: cleanLocationText(value.title),
@@ -763,7 +894,7 @@ export const AppProvider = ({ children }) => {
     setSelectedLocation(next);
     setUserCity(locationAddress || cleanLocationText([next.title && next.title !== next.city ? next.title : '', next.city].filter(Boolean).join(', ')));
     setDeliveryAddress(locationAddress);
-    setAddresses((items) => {
+    if (persistAddress) setAddresses((items) => {
       const normalized = items.map((item) => ({ ...item, isDefault: false }));
       const matchIndex = normalized.findIndex((item) => cleanLocationText(item.address) === locationAddress);
       if (matchIndex >= 0) {
@@ -823,6 +954,7 @@ export const AppProvider = ({ children }) => {
         catalogBanners,
         catalogStores,
         updateCatalogStore,
+        removeCatalogStore,
         catalogLoading,
         catalogError,
         loadCatalog,

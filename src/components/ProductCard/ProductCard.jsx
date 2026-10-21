@@ -1,10 +1,9 @@
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Box, Typography, Button, Chip, IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
-import { collectionStore } from '../../services/localDataService';
 import { getCachedStoreDeliveryQuote } from '../../services/catalogApi';
 import { deliverySummary } from '../../utils/storeDelivery';
 import fallbackProductImage from '../../assets/images/mango_pickle_jar.png';
@@ -17,7 +16,7 @@ const dbVariantId = (value) => UUID_PATTERN.test(String(value || '')) ? value : 
 
 const ProductCard = ({ title, weight, price, image, ...details }) => {
   const navigate = useNavigate();
-  const { cartItems, addToCart, updateQuantity, setSelectedProduct, wishlistItems, toggleWishlist, formatCurrency, sameCatalogItem, addresses, selectedLocation, t, user } = useContext(AppContext);
+  const { cartItems, addToCart, updateQuantity, setSelectedProduct, wishlistItems, toggleWishlist, formatCurrency, sameCatalogItem, addresses, selectedLocation, catalogStores, t, user, cartLoading } = useContext(AppContext);
   const cardImage = image || '';
   const [imageSrc, setImageSrc] = useState(cardImage || fallbackProductImage);
   const selectedVariant = details.selectedVariant || details.variants?.[0] || {};
@@ -25,13 +24,13 @@ const ProductCard = ({ title, weight, price, image, ...details }) => {
   const variantId = details.variantId ?? selectedVariant.variantId ?? selectedVariant.id ?? null;
   const inventoryVariantId = dbVariantId(variantId);
   const hasProductIdentity = Boolean(productId) && variantId !== undefined;
-  const stores = useMemo(() => collectionStore.list('stores'), []);
-  const store = stores.find((item) => details.storeId ? item.id === details.storeId : item.name === details.store || item.name === details.storeName);
+  const store = catalogStores.find((item) => details.storeId ? item.id === details.storeId : item.name === details.store || item.name === details.storeName);
   const delivery = deliverySummary(store || details, formatCurrency);
-  const [cardQuote, setCardQuote] = useState(details.deliveryQuote || null);
+  const [cardQuote, setCardQuote] = useState(null);
   const defaultAddress = addresses.find((address) => address.isDefault) || addresses[0] || {};
   const customerLat = Number(selectedLocation?.latitude ?? defaultAddress.coordinates?.lat ?? defaultAddress.latitude);
   const customerLng = Number(selectedLocation?.longitude ?? defaultAddress.coordinates?.lng ?? defaultAddress.longitude);
+  const quoteScope = `${store?.id || details.storeId}:${customerLat}:${customerLng}`;
   const cardRef = useRef(null);
   const [inView, setInView] = useState(typeof IntersectionObserver === 'undefined');
   const [stock, setStock] = useState(null);
@@ -59,32 +58,27 @@ const ProductCard = ({ title, weight, price, image, ...details }) => {
     return () => observer.disconnect();
   }, [inView]);
   useEffect(() => {
-    const quoteStoreId = store?.id;
-    if (details.deliveryQuote) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setCardQuote(details.deliveryQuote);
-      return undefined;
-    }
-    if (!inView || !quoteStoreId || !Number.isFinite(customerLat) || !Number.isFinite(customerLng)) {
-       
-      setCardQuote(null);
-      return undefined;
-    }
+    const quoteStoreId = store?.id || details.storeId;
+    if (details.deliveryQuote || !inView || !quoteStoreId || !Number.isFinite(customerLat) || !Number.isFinite(customerLng)) return undefined;
     let ignore = false;
     getCachedStoreDeliveryQuote(quoteStoreId, { latitude:customerLat, longitude:customerLng })
-      .then((payload) => { if (!ignore) setCardQuote(payload); })
-      .catch(() => { if (!ignore) setCardQuote(null); });
+      .then((payload) => { if (!ignore) setCardQuote({ scope: quoteScope, value: payload }); })
+      .catch(() => { if (!ignore) setCardQuote({ scope: quoteScope, value: null }); });
     return () => { ignore = true; };
-  }, [inView, details.deliveryQuote, details.storeId, store?.id, customerLat, customerLng]);
+  }, [inView, details.deliveryQuote, details.storeId, store?.id, customerLat, customerLng, quoteScope]);
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setImageSrc(cardImage || fallbackProductImage);
   }, [cardImage]);
-  const quote = cardQuote;
+  const quote = details.deliveryQuote || (cardQuote?.scope === quoteScope ? cardQuote.value : null);
   const primaryMethod = quote?.methods?.find((method) => method.deliveryType === quote.selectedDeliveryMethod) || quote?.methods?.[0];
+  const estimate = details.deliveryEstimate;
+  const etaLabel = details.deliveryLabel || (Object.hasOwn(details, 'deliveryEstimate')
+    ? estimate ? `${estimate.min === estimate.max ? estimate.max : `${estimate.min}–${estimate.max}`} min delivery` : 'Delivery ETA not set'
+    : delivery.etaLabel);
   const deliveryLine = quote?.deliveryAvailable
     ? `${quote.distanceKm} KM by road | ${primaryMethod?.deliveryType || 'Delivery'} ${primaryMethod?.estimatedTime || ''} ${Number(primaryMethod?.deliveryCharge ?? quote.deliveryCharge ?? 0) ? `| ${formatCurrency(primaryMethod?.deliveryCharge ?? quote.deliveryCharge)}` : '| Free'}`
-    : `${delivery.etaLabel} | ${delivery.chargeLabel}`;
+    : quote?.deliveryAvailable === false ? 'Delivery unavailable' : `${etaLabel} | ${delivery.chargeLabel}`;
 
   const product = { ...details, id: productId, productId, variantId, selectedVariant, title, name:details.name || title, weight, price: Number(selectedVariant.price ?? price), image: cardImage, storeId:store?.id || details.storeId, store:store?.name || details.store || details.storeName };
   const cartItem = cartItems.find((item) => sameCatalogItem(item, product));
@@ -112,7 +106,7 @@ const ProductCard = ({ title, weight, price, image, ...details }) => {
     };
     setSelectedProduct(resolvedProduct);
     const targetId = resolvedProduct.productId || resolvedProduct.id || title;
-    navigate(`/product-info/${encodeURIComponent(targetId)}`);
+    navigate(`/product-info/${encodeURIComponent(targetId)}`, { state: { product: resolvedProduct } });
   };
 
   const handleAdd = (e) => {
@@ -158,16 +152,16 @@ const ProductCard = ({ title, weight, price, image, ...details }) => {
             <Typography className="product-price">{Number(price) > 0 ? formatCurrency(price) : t('unavailable')}</Typography>
           </Box>
           {quantity === 0 ? (
-            <Button variant="contained" className="add-btn" disabled={checkingStock || (noStock && !stockError) || details.active === false || !hasProductIdentity || !(Number(product.price) > 0)} onClick={(event) => { if (stockError) { event.stopPropagation(); setStockAttempt((attempt) => attempt + 1); } else handleAdd(event); }}>
+            <Button variant="contained" className="add-btn" disabled={cartLoading || checkingStock || (noStock && !stockError) || details.active === false || !hasProductIdentity || !(Number(product.price) > 0)} onClick={(event) => { if (stockError) { event.stopPropagation(); setStockAttempt((attempt) => attempt + 1); } else handleAdd(event); }}>
               {checkingStock ? 'Checking' : stockError ? 'Retry stock' : currentStock?.state === 'missing' ? 'No stock record' : noStock || details.active === false || !hasProductIdentity || !(Number(product.price) > 0) ? t('out') : t('add')}
             </Button>
           ) : (
             <Box className="qty-control-box">
-              <button type="button" className="qty-action-btn" onClick={handleDecrement}>
+              <button type="button" className="qty-action-btn" disabled={cartLoading} onClick={handleDecrement}>
                 -
               </button>
               <Typography className="qty-count-text">{quantity}</Typography>
-              <button type="button" className="qty-action-btn" disabled={checkingStock || noStock || (user?.id && currentStock?.available <= quantity)} onClick={handleIncrement}>
+              <button type="button" className="qty-action-btn" disabled={cartLoading || checkingStock || noStock || (user?.id && currentStock?.available <= quantity)} onClick={handleIncrement}>
                 +
               </button>
             </Box>

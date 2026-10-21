@@ -12,11 +12,8 @@ export const useFulfillmentTracking = (orderId, order) => {
 
   useEffect(() => {
     if (!orderId || ['DELIVERED', 'CANCELLED'].includes(order?.status) || ['DELIVERED', 'CANCELLED', 'RETURNED'].includes(shipment?.status)) return undefined;
-    const poll = window.setInterval(() => {
-      if (document.visibilityState === 'visible') refresh();
-    }, 10000);
     window.addEventListener('focus', refresh);
-    return () => { window.clearInterval(poll); window.removeEventListener('focus', refresh); };
+    return () => window.removeEventListener('focus', refresh);
   }, [orderId, order?.status, shipment?.status, refresh]);
 
   useEffect(() => {

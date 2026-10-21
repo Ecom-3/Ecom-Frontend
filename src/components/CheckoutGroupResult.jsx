@@ -5,7 +5,7 @@ import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined
 import { checkoutGroupView } from '../utils/checkoutGroup';
 import PersistedPaymentReference from './PersistedPaymentReference';
 
-export default function CheckoutGroupResult({ group, error, onRetry, onNewCheckout, onOrder, formatCurrency }) {
+export default function CheckoutGroupResult({ group, error, onRetry, onNewCheckout, onOrder, onCart, formatCurrency }) {
   const view = checkoutGroupView(group);
   const storeNames = { 'global-store': 'India-wide Global Store', 'india-store-1-1': 'Hyderabad Main Store', 'india-store-1-3': 'SR Nagar Store' };
   return <Box sx={{ width: '100%', py: { xs: 2, md: 4 } }} aria-live="polite">
@@ -42,6 +42,7 @@ export default function CheckoutGroupResult({ group, error, onRetry, onNewChecko
     </Box>)}
     </Box>
     {!view.complete && !view.failed && <Button onClick={onRetry}>Check Checkout Status</Button>}
+    {view.complete && onCart && <Button variant="outlined" onClick={onCart}>Back to Cart</Button>}
     {view.canStartNew && onNewCheckout && <Button variant="outlined" onClick={onNewCheckout}>Review Cart &amp; Retry</Button>}
   </Box>;
 }

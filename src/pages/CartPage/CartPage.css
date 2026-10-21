@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #fbfbfb;
+  background-color: #f7faf8;
   overflow: hidden;
   position: relative;
   font-family: 'Roboto', sans-serif;
@@ -10,25 +10,109 @@
 
 /* Header Bar */
 .cart-page-header {
-  height: 56px;
-  background-color: #0B6E4F;
+  min-height: 64px;
+  background-color: #ffffff;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 0 12px;
+  padding: 8px 4vw;
+  position: relative;
   z-index: 10;
+  border-bottom: 1px solid #e2e8f0;
 }
 
-.cart-header-left {
+.cart-breadcrumb {
+  position: absolute;
+  left: 4vw;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.cart-breadcrumb button {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+.cart-breadcrumb strong { color: #1e293b; }
+
+.cart-checkout-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cart-checkout-progress > i {
+  width: clamp(20px, 5vw, 62px);
+  height: 1px;
+  background: #cbd5e1;
+}
+
+.cart-progress-step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.cart-progress-step span {
+  width: 19px;
+  height: 19px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #cbd5e1;
+  border-radius: 50%;
+  font-size: 9px;
+}
+
+.cart-progress-step.active { color: #075f40; }
+.cart-progress-step.active span { background: #075f40; color: #fff; border-color: #075f40; }
+.cart-progress-step.active b { font-weight: 800; }
+
+.cart-header-actions {
+  position: absolute;
+  right: 4vw;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.cart-page-title {
-  color: #ffffff !important;
-  font-weight: 700 !important;
-  font-size: 1.1rem !important;
+.cart-header-actions .MuiButton-root {
+  text-transform: none;
+  border-color: #d4e2da;
+  color: #075f40;
+}
+
+.cart-header-actions .MuiButton-contained { background: #075f40; color: #fff; }
+.cart-header-actions .MuiIconButton-root { color: #075f40; }
+
+.cart-items-container {
+  display: block;
+}
+
+.cart-content-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  align-items: start;
+  gap: 18px;
+}
+
+.cart-primary-column, .cart-summary-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.cart-summary-column {
+  align-self: start;
 }
 
 /* Main Scrollable View */
@@ -62,13 +146,13 @@
 }
 
 /* Item Slot Cards */
-.cart-items-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
+.cart-list-toolbar { grid-column: 1 / -1; }
+.cart-list-toolbar > h6 { margin-right: auto; font-size: 15px; font-weight: 800; color: #1e293b; }
+.cart-list-actions { display: flex; align-items: center; gap: 12px; }
+.cart-list-actions .MuiButton-root { text-transform: none; font-size: 11px; }
 
 .cart-slot-card {
+  grid-column: 1;
   background-color: #ffffff;
   border-radius: 16px;
   overflow: hidden;
@@ -81,9 +165,18 @@
   border-bottom: 1px solid #d5ebd9;
   padding: 8px 14px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 8px;
   align-items: center;
 }
+
+.slot-store-icon { flex: 0 0 auto; color: #087451; font-size: 18px !important; }
+.verified-store-chip { margin-left: auto; background: #e8f5ef !important; color: #075f40 !important; font-size: 9px !important; }
+.verified-store-chip .MuiChip-icon { color: #087451; font-size: 14px; }
+.slot-banner .slot-text { flex: 1; }
+.slot-item-store { color: #64748b !important; font-size: 10px !important; }
+.cart-remove-button { width: 27px; height: 27px; color: #64748b !important; border: 1px solid #e2e8f0 !important; }
+.cart-item-secondary-actions .MuiButton-root { color: #64748b; font-size: 10px; text-transform: none; padding: 0; min-width: 0; }
 
 .slot-text {
   font-size: 0.78rem;
@@ -184,6 +277,7 @@
 
 /* You May Also Like Section */
 .you-may-like-section {
+  grid-column: 1;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -204,6 +298,7 @@
 }
 
 .saved-later-section {
+  grid-column: 1;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -285,6 +380,37 @@
   gap: 6px;
 }
 
+.cart-delivery-breakdown { grid-column: 1; }
+.cart-order-summary {
+  align-self: start;
+  position: static;
+  padding: 16px;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, .06);
+}
+.cart-order-summary .bill-section-title { font-size: 15px !important; font-weight: 800 !important; }
+.cart-order-summary .bill-data-row { align-items: center; padding: 3px 0; }
+.cart-order-summary .grand-total-row { margin-top: 8px; padding-top: 12px; }
+.summary-checkout-button { width: 100%; justify-content: space-between !important; margin-top: 10px !important; background: #075f40 !important; text-transform: none !important; font-weight: 800 !important; }
+.cart-address-card, .cart-benefits-card {
+  grid-column: 2;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px;
+}
+.cart-address-card { display: flex; align-items: center; gap: 9px; color: #087451; }
+.cart-address-card > svg { flex: 0 0 auto; font-size: 18px; }
+.cart-address-card > div { display: grid; gap: 3px; min-width: 0; flex: 1; color: #1e293b; }
+.cart-address-card strong { font-size: 10px; }
+.cart-address-card span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #64748b; font-size: 10px; }
+.cart-address-card .MuiButton-root { min-width: 0; padding: 3px; color: #087451; text-transform: none; font-size: 10px; }
+.cart-benefits-card { display: grid; gap: 12px; }
+.cart-benefits-card > div { display: flex; align-items: center; gap: 9px; color: #087451; }
+.cart-benefits-card svg { flex: 0 0 auto; font-size: 17px; }
+.cart-benefits-card span { display: grid; gap: 2px; }
+.cart-benefits-card strong { color: #1e293b; font-size: 10px; }
+.cart-benefits-card small { color: #64748b; font-size: 9px; line-height: 1.3; }
+
 .bill-divider-header {
   display: flex;
   align-items: center;
@@ -347,16 +473,17 @@
 
 /* Sticky Checkout Footer */
 .cart-sticky-footer {
-  position: absolute;
+  position: sticky;
   bottom: 0;
   left: 0;
   right: 0;
   background-color: #ffffff;
   border-top: 1px solid #e2e8f0;
-  padding: 10px 16px;
+  padding: 8px 4vw;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
   z-index: 20;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
 }
@@ -420,6 +547,9 @@
   align-items: center;
 }
 
+.footer-item-count { color: #64748b; font-size: 10px !important; font-weight: 600 !important; }
+.footer-item-count span { padding: 0 5px; color: #cbd5e1; }
+
 .total-pay-col {
   display: flex;
   flex-direction: column;
@@ -451,4 +581,32 @@
 
 .proceed-pay-btn:hover {
   background-color: #08543c !important;
+}
+
+.cart-sticky-footer .checkout-action-row { width: 100%; }
+.cart-sticky-footer .total-pay-col { flex-direction: row; align-items: center; gap: 9px; }
+.cart-sticky-footer .total-pay-amount { font-size: 16px !important; }
+
+@media (max-width: 900px) {
+  .cart-breadcrumb { display: none; }
+  .cart-header-actions .MuiIconButton-root { display: none; }
+  .cart-content-grid { grid-template-columns: minmax(0, 1fr) 250px; gap: 12px; }
+}
+
+@media (max-width: 680px) {
+  .cart-page-header { min-height: 58px; padding: 8px; flex-direction: column; gap: 6px; }
+  .cart-checkout-progress { gap: 5px; }
+  .cart-checkout-progress > i { width: clamp(10px, 4vw, 28px); }
+  .cart-progress-step { gap: 3px; font-size: 8px; }
+  .cart-progress-step span { width: 17px; height: 17px; }
+  .cart-header-actions { position: static; display: flex; }
+  .cart-header-actions .MuiIconButton-root { display: inline-flex; }
+  .cart-content-grid { grid-template-columns: minmax(0, 1fr); }
+  .cart-primary-column, .cart-summary-column { gap: 10px; }
+  .cart-order-summary, .cart-address-card, .cart-benefits-card { width: 100%; position: static; }
+  .cart-page-scroll { padding: 12px 3vw 18px; }
+  .cart-sticky-footer { padding: 7px 3vw; }
+  .cart-sticky-footer .total-pay-col { display: block; }
+  .footer-item-count { display: none; }
+  .proceed-pay-btn { padding: 8px 12px !important; font-size: 11px !important; }
 }

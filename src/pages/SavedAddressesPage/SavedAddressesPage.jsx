@@ -47,7 +47,7 @@ const SavedAddressesPage = () => {
             <Box className="loc-card-details">
               <Typography className="loc-type-title">{loc.type}{loc.isDefault ? ' (Default)' : ''}</Typography>
               <Typography className="loc-address-text">{loc.address}</Typography>
-              {!loc.isDefault && <Button size="small" onClick={() => setDefaultAddress(loc.id)}>Set default</Button>}
+              {!loc.isDefault && <Button size="small" onClick={() => setDefaultAddress(loc.id)}>Set as default address</Button>}
               {loc.coordinates && <Button size="small" component="a" href={openStreetMapLocationUrl(loc.coordinates)} target="_blank" rel="noreferrer" startIcon={<OpenInNewIcon />}>Open map</Button>}
               <Button size="small" color="error" onClick={() => deleteAddress(loc.id)}>Delete</Button>
             </Box>

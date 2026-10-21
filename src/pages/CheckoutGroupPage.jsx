@@ -7,6 +7,8 @@ import CheckoutGroupResult from '../components/CheckoutGroupResult';
 import { getCheckoutGroup, retryCheckoutGroup } from '../services/orderApi';
 import { resetFailedCheckout } from '../utils/checkoutGroup';
 
+const COMPLETED_CHECKOUT_RETURN_KEY = 'freshcart.completedCheckoutReturnToCart';
+
 export default function CheckoutGroupPage() {
   const { groupId } = useParams();
   const navigate = useNavigate();
@@ -72,11 +74,14 @@ export default function CheckoutGroupPage() {
     load();
     return () => { active = false; clearTimeout(timer); };
   }, [groupId, user?.id, retry]);
+  useEffect(() => {
+    if (group?.state === 'COMPLETED') sessionStorage.setItem(COMPLETED_CHECKOUT_RETURN_KEY, group.id);
+  }, [group?.id, group?.state]);
   return <Box component="main" sx={{ width: '100%', boxSizing: 'border-box', minHeight: '100vh', border: '2px solid #087454', borderTopWidth: 6, bgcolor: '#f3f7f5', px: { xs: 2, md: 5 }, py: 2, color: '#173b2e' }}>
     <Box sx={{ width: '100%', mx: 'auto' }}>
     <Button startIcon={<ArrowBackIcon />} sx={{ color: '#087454', textTransform: 'none' }} onClick={() => navigate('/orders')}>Orders</Button>
     {!user?.id ? <Button onClick={() => navigate('/login')}>Sign In</Button> : group?.id === groupId && group?.customerId === user.id
-      ? <Box aria-busy={recovering}><CheckoutGroupResult group={group} error={error} onRetry={recover} onNewCheckout={reviewCart} onOrder={(id) => navigate(`/order-details/${encodeURIComponent(id)}`)} formatCurrency={formatCurrency} /></Box>
+      ? <Box aria-busy={recovering}><CheckoutGroupResult group={group} error={error} onRetry={recover} onNewCheckout={reviewCart} onOrder={(id) => navigate(`/order-details/${encodeURIComponent(id)}`)} onCart={() => navigate('/cart', { replace: true })} formatCurrency={formatCurrency} /></Box>
       : error ? <><Typography role="alert">{error}</Typography><Button onClick={() => setRetry((value) => value + 1)}>Try Again</Button></>
         : <CircularProgress aria-label="Loading checkout" />}
     </Box>

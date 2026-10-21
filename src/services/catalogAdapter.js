@@ -1,9 +1,9 @@
+import { numericValue } from '../utils/productBrowsing.js';
+import { normalizeProductImageUrl, parseVariantAttributes, variantChoiceLabel } from '../utils/productVariantData.js';
 import { bannerImageFor, categoryImageFor, productImageFor } from './categoryImages';
+export { parseVariantAttributes, variantChoiceLabel } from '../utils/productVariantData.js';
 
-const safeImageUrl = (value) => {
-  const url = String(value || '').trim();
-  return /^(?:https?:)?\/\/(?:www\.)?loremflickr\.com(?:\/|$)/i.test(url) ? '' : url;
-};
+const safeImageUrl = normalizeProductImageUrl;
 
 const asArray = (value) => {
   if (Array.isArray(value)) return value;
@@ -30,9 +30,9 @@ const firstImageUrl = (images = []) => {
 };
 
 const extractWeight = (variant, fallback) => {
-  const candidate = variant?.attributes || variant || {};
-  const weight = candidate.weight || candidate.size || candidate.label || candidate.name || candidate.variantName || fallback || '500g';
-  return String(weight).trim() || '500g';
+  const candidate = parseVariantAttributes(variant?.attributes);
+  const weight = candidate.weight || candidate.size || candidate.label || candidate.name || candidate.variantName || fallback || '';
+  return String(weight).trim();
 };
 
 const subcategoryName = (product = {}) => {
@@ -58,28 +58,30 @@ export const adaptCategory = (category) => ({
 });
 
 export const adaptVariant = (variant, fallbackProduct = {}) => {
-  const attributes = variant?.attributes || {};
+  const attributes = parseVariantAttributes(variant?.attributes);
   const price = pickPrice(variant?.price ?? variant?.sellingPrice ?? variant?.mrp ?? 0);
   const compareAt = pickPrice(variant?.compareAtPrice ?? variant?.mrp ?? variant?.price ?? 0);
-  const id = variant?.variantId || variant?.id || variant?.sku || `${fallbackProduct.id || fallbackProduct.productId || 'variant'}-default`;
+  const id = variant?.variantId || variant?.id || null;
+  const label = variantChoiceLabel({ ...variant, attributes }) || variant?.name || attributes.weight || attributes.size || '';
   return {
     id,
     variantId: id,
     productId: variant?.productId || fallbackProduct.productId || fallbackProduct.id || null,
     sku: variant?.sku || fallbackProduct.sku || '',
-    name: variant?.name || extractWeight(variant, fallbackProduct.weight || '500g'),
-    label: variant?.name || extractWeight(variant, fallbackProduct.weight || '500g'),
+    name: variant?.name || extractWeight(variant, fallbackProduct.weight || ''),
+    label,
     price,
-    compareAtPrice: compareAt > price ? compareAt : price,
+    priceKnown: numericValue(variant?.price ?? variant?.sellingPrice ?? variant?.mrp) !== null,
     attributes,
     active: variant?.active ?? true,
-    weight: extractWeight(variant, fallbackProduct.weight || '500g'),
+    weight: extractWeight(variant, fallbackProduct.weight || ''),
     image: safeImageUrl(variant?.image || fallbackProduct.image),
+    compareAtPrice: compareAt > price ? compareAt : price,
   };
 };
 
 export const adaptImage = (image, productId) => {
-  const url = safeImageUrl(image?.url || image?.imageUrl || image?.path);
+  const url = safeImageUrl(typeof image === 'string' ? image : image?.url || image?.imageUrl || image?.path);
   const displayOrder = Number(image?.displayOrder ?? 0);
   return {
     id: image?.id || image?.imageId || `${productId || 'product'}-image-${displayOrder}-${url}`,
@@ -121,6 +123,7 @@ export const adaptProduct = (product) => {
     name: product?.name || product?.title || 'Default',
     label: product?.name || product?.title || 'Default',
     price: pickPrice(product?.price ?? product?.offerPrice ?? 0),
+    priceKnown: numericValue(product?.price ?? product?.offerPrice) !== null,
     compareAtPrice: pickPrice(product?.compareAtPrice ?? product?.price ?? 0),
     attributes: product?.attributes || {},
     active: true,
@@ -152,17 +155,23 @@ export const adaptProduct = (product) => {
     images: images.map((image) => image.url).filter(Boolean),
     gallery: images.map((image) => image.url).filter(Boolean),
     price: pickPrice(variant?.price ?? 0),
+    priceKnown: variant.priceKnown,
     offerPrice: pickPrice(variant?.price ?? 0),
     compareAtPrice: pickPrice(variant?.compareAtPrice ?? variant?.price ?? 0),
     sku: variant?.sku || product?.sku || product?.productCode || '',
     weight: variant?.weight || extractWeight(variant, product?.weight || '500g'),
     variantId: variant?.variantId || variant?.id || null,
     variants: variants.length ? variants : [variant],
+    catalogVariants: variants,
+    catalogVariantsKnown: Array.isArray(product?.variants) || Array.isArray(product?.variantList),
     attributes: product?.attributes || {},
     metadata: product?.metadata || {},
     storeId: product?.storeId || product?.store?.id || null,
     store: product?.store || product?.storeName || product?.store?.name || '',
     storeName: product?.storeName || product?.store || product?.store?.name || '',
+    pickup: product?.pickupEnabled ?? product?.pickup ?? product?.store?.pickupEnabled ?? product?.store?.pickup,
+    deliveryLabel: product?.deliveryLabel,
+    deliveryQuote: product?.deliveryQuote,
     deliveryRadiusKm: product?.deliveryRadiusKm ?? product?.store?.deliveryRadiusKm ?? null,
     deliveryEtaMinutes: product?.deliveryEtaMinutes ?? product?.deliveryMinutes ?? product?.store?.deliveryEtaMinutes ?? null,
     deliveryCharge: product?.deliveryCharge ?? product?.store?.deliveryCharge ?? null,

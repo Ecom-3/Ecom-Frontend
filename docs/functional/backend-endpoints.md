@@ -24,36 +24,40 @@ Source: [CartController.java](../../../ecom-backend/cart-service/src/main/java/c
 // line 21
 @GetMapping("/active")
 // line 22
-@PreAuthorize("@cartAccess.owner(#cartId)")
+@PreAuthorize("@cartAccess.customer(#customerId)")
 // line 23
-@PostMapping("/{cartId}/items")
+@GetMapping("/customer/{customerId}/active")
 // line 24
 @PreAuthorize("@cartAccess.owner(#cartId)")
 // line 25
-@PostMapping("/{cartId}/checkout-claim")
+@PostMapping("/{cartId}/items")
 // line 26
 @PreAuthorize("@cartAccess.owner(#cartId)")
 // line 27
-@PatchMapping("/{cartId}/items/{itemId}")
+@PostMapping("/{cartId}/checkout-claim")
 // line 28
 @PreAuthorize("@cartAccess.owner(#cartId)")
 // line 29
-@DeleteMapping("/{cartId}/items/{itemId}")
+@PatchMapping("/{cartId}/items/{itemId}")
 // line 30
 @PreAuthorize("@cartAccess.owner(#cartId)")
 // line 31
-@DeleteMapping("/{cartId}/items")
+@DeleteMapping("/{cartId}/items/{itemId}")
 // line 32
 @PreAuthorize("@cartAccess.owner(#cartId)")
 // line 33
-@PostMapping("/{cartId}/calculate-total")
+@DeleteMapping("/{cartId}/items")
 // line 34
 @PreAuthorize("@cartAccess.owner(#cartId)")
 // line 35
-@PatchMapping("/{cartId}/items/{itemId}/save-for-later")
+@PostMapping("/{cartId}/calculate-total")
 // line 36
 @PreAuthorize("@cartAccess.owner(#cartId)")
 // line 37
+@PatchMapping("/{cartId}/items/{itemId}/save-for-later")
+// line 38
+@PreAuthorize("@cartAccess.owner(#cartId)")
+// line 39
 @PatchMapping("/{cartId}/items/{itemId}/move-to-cart")
 ```
 

@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 import { Box, Typography, Button, IconButton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -30,21 +30,23 @@ const AddressFormPage = () => {
   const editAddress = location.state?.editAddress;
   const draft = location.state?.draft;
   const selectedLocation = location.state?.location;
-  const { setDeliveryAddress, addAddress, updateAddress, user } = useContext(AppContext);
+  const { setDeliveryAddress, addAddress, updateAddress, addresses, setDefaultAddress, user } = useContext(AppContext);
   const [formError, setFormError] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
   const [needsSignIn, setNeedsSignIn] = useState(false);
   const [locationSummary, setLocationSummary] = useState(normalizeLocation(selectedLocation));
-  const [isLocating, setIsLocating] = useState(!location.state?.startManual && !selectedLocation && !editAddress);
   const [manualMode, setManualMode] = useState(Boolean(location.state?.startManual || (!selectedLocation && editAddress?.manualLocation)));
   const [manualLocation, setManualLocation] = useState(selectedLocation ? addressFieldsFromLocation(selectedLocation) : draft?.manualLocation || editAddress?.manualLocation || addressFieldsFromLocation({}));
 
-  const [houseNumber, setHouseNumber] = useState(draft?.houseNumber || editAddress?.houseNumber || selectedLocation?.houseNumber || '');
+  const [houseNumber, setHouseNumber] = useState(draft?.houseNumber || editAddress?.houseNumber || '');
   const [floor, setFloor] = useState(draft?.floor || editAddress?.floor || '');
   const [landmark, setLandmark] = useState(draft?.landmark || editAddress?.landmark || '');
   const [saveAs, setSaveAs] = useState(draft?.type || editAddress?.type || 'Home');
   const [phone, setPhone] = useState(draft?.phone || editAddress?.phone || user?.phone?.replace(/\D/g, '').slice(-10) || '');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const savePending = useRef(false);
+  const [makeDefault, setMakeDefault] = useState(Boolean(editAddress?.isDefault || addresses.length === 0));
 
   const useGps = () => navigate('/address-map', {
     state: {
@@ -61,33 +63,13 @@ const AddressFormPage = () => {
     reverseGeocodeOpenStreetMap(coordinates.lat, coordinates.lng).then((data) => {
       if (cancelled || !data) return;
       setManualLocation((current) => fillMissingAddressFields(current, data));
-      setHouseNumber((current) => current || data.houseNumber || '');
       setLocationSummary((current) => normalizeLocation({ ...current, ...data, coordinates }));
     }).catch(() => { /* Selected location remains usable when lookup is unavailable. */ });
     return () => { cancelled = true; };
   }, [selectedLocation, editAddress]);
 
-  useEffect(() => {
-    if (location.state?.startManual || selectedLocation || editAddress) return;
-    if (!navigator.geolocation) {
-      const timer = setTimeout(() => { setIsLocating(false); setFormError('Location access is not supported. Search the location manually.'); }, 0);
-      return () => clearTimeout(timer);
-    }
-    navigator.geolocation.getCurrentPosition(async (position) => {
-      const coordinates = { lat:position.coords.latitude,lng:position.coords.longitude };
-      try {
-        const data = await reverseGeocodeOpenStreetMap(coordinates.lat, coordinates.lng);
-        setManualLocation((current) => fillMissingAddressFields(current, data || {}));
-        setHouseNumber((current) => current || data?.houseNumber || '');
-        setLocationSummary(normalizeLocation({ ...data, title:data?.title || 'Current Location',subtitle:data?.subtitle || `${coordinates.lat.toFixed(6)}, ${coordinates.lng.toFixed(6)}`,coordinates }));
-      } catch {
-        setLocationSummary(normalizeLocation({ title:'Current Location',subtitle:`${coordinates.lat.toFixed(6)}, ${coordinates.lng.toFixed(6)}`,coordinates }));
-      } finally { setIsLocating(false); }
-    }, (error) => { setIsLocating(false); setFormError(`${error.message}. Search the location manually.`); }, { enableHighAccuracy:true,timeout:10000 });
-  }, [editAddress, selectedLocation, location.state?.startManual]);
-
   const handleSaveAddress = async () => {
-    if (isLocating) return;
+    if (savePending.current) return;
     const errors = validateAddressFields({ houseNumber, floor, landmark, phone, manualMode, manualLocation });
     setFieldErrors(errors);
     if (Object.keys(errors).length) {
@@ -97,21 +79,34 @@ const AddressFormPage = () => {
     }
     if (!manualMode && !locationSummary && !editAddress) { setFormError('Wait for the live location or enter the address manually.'); return; }
     const baseLocation = manualMode ? joinAddressParts([manualLocation.street, manualLocation.city, manualLocation.state, manualLocation.pincode]) : locationSummary ? joinAddressParts([locationSummary.title, locationSummary.subtitle || locationSummary.address]) : editAddress.address;
-    const formatted = joinAddressParts([saveAs, houseNumber, `Floor ${floor}`, landmark, baseLocation]);
+    const formatted = joinAddressParts([saveAs, houseNumber, floor ? `Floor ${floor}` : '', landmark, baseLocation]);
     const detectedManualLocation = locationSummary ? {
       street: locationSummary.address || locationSummary.subtitle || locationSummary.title || '',
       city: locationSummary.city || '',
       state: locationSummary.state || '',
       pincode: locationSummary.pincode || '',
     } : null;
-    const addressData = { type: saveAs, address: formatted, phone:indianMobileDigits(phone), houseNumber, floor, landmark, coordinates: manualMode ? null : (locationSummary?.coordinates || editAddress?.coordinates || null), manualLocation: manualMode ? manualLocation : detectedManualLocation };
+    const addressData = { type: saveAs, address: formatted, phone:indianMobileDigits(phone), houseNumber, floor, landmark, isDefault:makeDefault, coordinates: manualMode ? null : (locationSummary?.coordinates || editAddress?.coordinates || null), manualLocation: manualMode ? manualLocation : detectedManualLocation };
+    savePending.current = true;
+    setIsSaving(true);
     try {
-      const saved = editAddress?.id ? await updateAddress(editAddress.id, addressData) : await addAddress(addressData);
+      let saved;
+      if (editAddress?.id) {
+        saved = await updateAddress(editAddress.id, addressData);
+        if (makeDefault && !saved.isDefault) await setDefaultAddress(saved.id);
+      }
+      else {
+        saved = await addAddress(addressData);
+        if (makeDefault && !saved.isDefault) await setDefaultAddress(saved.id);
+      }
       setDeliveryAddress(saved.address || formatted);
     } catch (error) {
       setNeedsSignIn(error.status === 401);
       setFormError(error.message || 'Could not save the address.');
       return;
+    } finally {
+      savePending.current = false;
+      setIsSaving(false);
     }
     setFormError('');
     setShowSuccessModal(true);
@@ -139,11 +134,11 @@ const AddressFormPage = () => {
         {/* Top Location Summary Card */}
         <Box className="loc-summary-card">
           <Box className="loc-card-left">
-            <Typography className="loc-main-name">{isLocating ? 'Detecting your live location…' : `Location: ${locationSummary?.title || editAddress?.type || 'Select location'}`}</Typography>
-            <Typography className="loc-sub-name">{isLocating ? 'Please allow location access in your browser.' : locationSummary?.subtitle || editAddress?.address || 'Use Change to search manually.'}</Typography>
+            <Typography className="loc-main-name">{`Location: ${locationSummary?.title || editAddress?.type || 'Select location'}`}</Typography>
+            <Typography className="loc-sub-name">{locationSummary?.subtitle || editAddress?.address || 'Use GPS to select a delivery point, then add your address details.'}</Typography>
           </Box>
-          <Button className="change-loc-btn" startIcon={<MyLocationIcon />} disabled={isLocating} onClick={useGps}>
-            {isLocating ? 'Locating...' : 'Use GPS'}
+          <Button className="change-loc-btn" startIcon={<MyLocationIcon />} onClick={useGps}>
+            {locationSummary ? 'Change location' : 'Use GPS'}
           </Button>
         </Box>
 
@@ -151,6 +146,7 @@ const AddressFormPage = () => {
 
         {/* Input Form Fields */}
         <Box className="address-form-box">
+          {locationSummary && !manualMode && <Typography role="status" sx={{ color:'#075F40', bgcolor:'#ecfdf5', p:1.25, borderRadius:1.5, fontSize:13 }}>GPS location selected. Add your building or house number, floor and landmark below before saving.</Typography>}
           {manualMode && [['street', 'Street / Road / Area'], ['city', 'City'], ['state', 'State'], ['pincode', 'PIN / Postal code']].map(([key, label]) => <Box key={key} className="form-field-group">
             <Typography component="label" htmlFor={`address-${key}`} className="form-field-label">{label} <span className="req">*</span></Typography>
             <input id={`address-${key}`} className="custom-form-input" value={manualLocation[key] || ''} inputMode={key === 'pincode' ? 'numeric' : 'text'} aria-invalid={Boolean(fieldErrors[key])} aria-describedby={fieldErrors[key] ? `error-${key}` : undefined} onChange={event => { const value = key === 'pincode' ? event.target.value.replace(/\D/g, '').slice(0, 6) : event.target.value; setManualLocation(current => ({ ...current, [key]: value })); setFieldErrors(current => ({ ...current, [key]: '' })); }} placeholder={`Enter ${label.toLowerCase()}`} />
@@ -173,6 +169,11 @@ const AddressFormPage = () => {
             />
             {fieldErrors.houseNumber && <Typography id="error-houseNumber" role="alert" color="error" variant="caption">{fieldErrors.houseNumber}</Typography>}
           </Box>
+
+          <label className="default-address-choice">
+            <input type="checkbox" checked={makeDefault} onChange={(event) => setMakeDefault(event.target.checked)} />
+            <span><strong>Set as default address</strong><small>Use this address automatically for future orders.</small></span>
+          </label>
 
           <Box className="form-field-group">
             <Typography className="form-field-label">
@@ -262,8 +263,9 @@ const AddressFormPage = () => {
           fullWidth
           className="save-address-btn"
           onClick={handleSaveAddress}
+          disabled={isSaving}
         >
-          Save Address Details
+          {isSaving ? 'Saving address...' : 'Save Address Details'}
         </Button>
       </Box>
 

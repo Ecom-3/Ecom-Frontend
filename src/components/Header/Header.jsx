@@ -11,11 +11,13 @@ import TranslateIcon from '@mui/icons-material/Translate';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import { useAnimatedPlaceholder } from '../../hooks/useAnimatedPlaceholder';
+import { useHomeNavigation } from '../../hooks/useHomeNavigation';
 import logo from '../../assets/images/logo.png';
 import './Header.css';
 
 const Header = () => {
   const navigate = useNavigate();
+  const goHome = useHomeNavigation();
   const { pathname } = useLocation();
   const animatedPlaceholder = useAnimatedPlaceholder();
   const searchInputRef = useRef(null);
@@ -34,7 +36,7 @@ const Header = () => {
   return (
     <Box className="header-container">
       <Box className="header-left">
-        <img src={logo} alt="Pickles & Spices" className="header-logo" onClick={() => navigate('/home')} style={{ cursor: 'pointer' }} />
+        <img src={logo} alt="Pickles & Spices" className="header-logo" onClick={goHome} style={{ cursor: 'pointer' }} />
         
         {(
           <Box className="header-user-info">

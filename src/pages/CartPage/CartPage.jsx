@@ -1,9 +1,11 @@
 ﻿import { useContext, useEffect, useState } from 'react';
-import { Box, Typography, Button, IconButton } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Box, Typography, Button, IconButton, Chip } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
+import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import { AppContext } from '../../context/AppContext';
 import pickleJarImg from '../../assets/images/pickel-removebg-preview.png';
@@ -15,6 +17,8 @@ import { buildCartDeliveryLines } from '../../services/cartDeliveryLines';
 import { PENDING_COUPON_KEY, calculateCouponDiscount, cartPromotionContext, validateCouponCode } from '../../services/couponService';
 import { isGlobalProduct } from '../../utils/storeDelivery';
 
+const COMPLETED_CHECKOUT_RETURN_KEY = 'freshcart.completedCheckoutReturnToCart';
+
 const CartPage = () => {
   const navigate = useNavigate();
   const { cartItems, updateQuantity, removeFromCart, clearCart, deliveryAddress, saveItemForLater, savedForLater, restoreSavedItem, removeSavedForLater, formatCurrency, cartTotal, cartLoading, cartError, cartUnavailable, isLoggedIn, user, addresses, catalogProducts, catalogItemKey, deliveryMode, setDeliveryMode, selectedLocation } = useContext(AppContext);
@@ -22,6 +26,7 @@ const CartPage = () => {
   const [deliveryError, setDeliveryError] = useState('');
   const [offerCode] = useState(() => localStorage.getItem(PENDING_COUPON_KEY) || '');
   const goToCheckout = () => {
+    sessionStorage.removeItem(COMPLETED_CHECKOUT_RETURN_KEY);
     if (!isLoggedIn) {
       navigate('/login', { state: { from: '/checkout', completeProfile: true, checkoutIntent: true } });
       return;
@@ -65,7 +70,6 @@ const CartPage = () => {
   const lineFor = (item) =>
     deliveryLines.find((line) => line.key === itemLineKey(item))
     || deliveryLines.find((line) => line.storeId && [item.storeId, item.sourceStoreId].includes(line.storeId) && line.productId === item.productId && (line.variantId ?? null) === (item.variantId ?? null))
-    || deliveryLines.find((line) => line.productId === item.productId && (line.variantId ?? null) === (item.variantId ?? null))
     || {};
   const deliveryGroups = cartItems.reduce((groups, item) => {
     const line = lineFor(item);
@@ -122,18 +126,17 @@ const CartPage = () => {
     <Box className="cart-page-wrapper">
       {/* Header Bar matching screenshot */}
       <Box className="cart-page-header">
-        <Box className="cart-header-left">
-          <IconButton onClick={() => navigate(-1)} style={{ color: '#ffffff' }}>
-            <ArrowBackIcon />
-          </IconButton>
-          <Typography variant="h6" className="cart-page-title">
-            Cart
-          </Typography>
-          <Box sx={{ display:'flex', gap:1, ml:2 }}><Button size="small" variant={deliveryMode === 'delivery' ? 'contained' : 'outlined'} onClick={() => setDeliveryMode('delivery')}>Delivery</Button>{!hasGlobalCart && <Button size="small" variant={deliveryMode === 'pickup' ? 'contained' : 'outlined'} onClick={() => setDeliveryMode('pickup')}>Pick-up</Button>}</Box>
+        <Box className="cart-breadcrumb"><button type="button" onClick={() => navigate('/home')}>Home</button><span>›</span><strong>Cart</strong></Box>
+        <Box className="cart-checkout-progress" aria-label="Checkout progress">
+          <Box className="cart-progress-step active"><span>1</span><b>Cart</b></Box><i />
+          <Box className="cart-progress-step"><span>2</span><b>Checkout</b></Box><i />
+          <Box className="cart-progress-step"><span>3</span><b>Payment</b></Box><i />
+          <Box className="cart-progress-step"><span>4</span><b>Confirmation</b></Box>
         </Box>
-        <IconButton style={{ color: '#ffffff' }} onClick={() => navigate('/search')} aria-label="Search products">
-          <SearchIcon />
-        </IconButton>
+        <Box className="cart-header-actions">
+          <Box sx={{ display:'flex', gap:1 }}><Button size="small" variant={deliveryMode === 'delivery' ? 'contained' : 'outlined'} onClick={() => setDeliveryMode('delivery')}>Delivery</Button>{!hasGlobalCart && <Button size="small" variant={deliveryMode === 'pickup' ? 'contained' : 'outlined'} onClick={() => setDeliveryMode('pickup')}>Pick-up</Button>}</Box>
+          <IconButton onClick={() => navigate('/search')} aria-label="Search products"><SearchIcon /></IconButton>
+        </Box>
       </Box>
 
       {/* Main Scroll Content */}
@@ -156,33 +159,40 @@ const CartPage = () => {
           </Box>
         ) : (
           <Box className="cart-items-container">
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
+          <Box className="cart-content-grid">
+          <Box className="cart-primary-column">
+            <Box className="cart-list-toolbar" sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
+              <Typography variant="h6">Your items ({cartItems.length})</Typography>
               <Button color="error" onClick={clearCart} disabled={cartLoading}>Clear cart</Button>
               {deliveryError && <Typography role="alert" color="error">{deliveryError}</Typography>}
             </Box>
             {deliveryGroups.map((group) => (
               <Box key={group.key} className="cart-slot-card">
                 <Box className="slot-banner">
+                  <StorefrontOutlinedIcon className="slot-store-icon" />
                   <span className="slot-text">
                     {deliveryMode === 'pickup' ? `Pick-up | ${group.line.storeName || group.items[0]?.storeName || group.items[0]?.store || 'Store'} | ${group.items.length} item${group.items.length === 1 ? '' : 's'}` : group.line.fulfillmentType === 'global' ? `Global Delivery | Delivered in 5-7 days | ${group.items.length} Item${group.items.length === 1 ? '' : 's'}` : `${group.line.deliveryLabel || 'Calculating delivery'} | ${group.line.storeName || 'Store checking'} | ${group.items.length} item${group.items.length === 1 ? '' : 's'}`}
                   </span>
+                  <Chip className="verified-store-chip" size="small" label={`${group.items.length} item${group.items.length === 1 ? '' : 's'}`} />
                 </Box>
 
-                {group.items.map((item) => <Box className="slot-item-body" key={`${item.productId}:${item.variantId ?? 'product'}`}>
+                {group.items.map((item) => <Box className="slot-item-body" key={catalogItemKey(item)}>
                     <Box className="slot-item-img">
                       <SafeProductImage src={item.image} fallback={pickleJarImg} alt={item.title} />
                     </Box>
                     <Box className="slot-item-info">
                       <Typography component="button" className="slot-item-title" onClick={() => navigate(`/product-info/${encodeURIComponent(item.productId || item.id)}`)} sx={{ border:0, bgcolor:'transparent', textAlign:'left', cursor:'pointer' }}>{item.title}</Typography>
                       <Typography className="slot-item-weight">{item.weight}</Typography>
+                      <Typography className="slot-item-store">{storeLabelFor(item)}</Typography>
                       <Typography className="slot-item-weight">{deliveryMode === 'pickup' ? 'Pick-up from store' : lineFor(item).fulfillmentType === 'global' ? 'Delivered in 5-7 days' : lineFor(item).estimatedDelivery || 'Checking ETA'}</Typography>
-                      <Box sx={{ display: 'flex', gap: 1 }}><Button size="small" onClick={() => saveItemForLater(item)} sx={{ p: 0, minWidth: 0, textTransform: 'none' }}>Save for later</Button><Button size="small" color="error" onClick={() => removeFromCart(item.productId, item.variantId, item.storeId)} sx={{ p: 0, minWidth: 0, textTransform: 'none' }}>Remove</Button></Box>
-                      <Typography className="slot-item-price">{formatCurrency(item.price)}</Typography>
+                      <Box sx={{ display: 'flex', gap: 1 }}><Button size="small" disabled={cartLoading} onClick={() => saveItemForLater(item)} sx={{ p: 0, minWidth: 0, textTransform: 'none' }}>Save for later</Button><Button size="small" disabled={cartLoading} color="error" onClick={() => removeFromCart(item.productId, item.variantId, item.storeId)} sx={{ p: 0, minWidth: 0, textTransform: 'none' }}>Remove</Button></Box>
+                      <Typography className="slot-item-price">{formatCurrency(Number(item.price) * Number(item.quantity))}</Typography>
                     </Box>
 
                     <Box className="slot-qty-selector">
                       <button
                         className="slot-qty-btn"
+                        disabled={cartLoading}
                         onClick={() => updateQuantity(item.productId, item.variantId, -1, item.storeId)}
                       >
                         -
@@ -190,6 +200,7 @@ const CartPage = () => {
                       <span className="slot-qty-count">{item.quantity}</span>
                       <button
                         className="slot-qty-btn"
+                        disabled={cartLoading}
                         onClick={() => updateQuantity(item.productId, item.variantId, 1, item.storeId)}
                       >
                         +
@@ -201,7 +212,7 @@ const CartPage = () => {
 
             {savedForLaterSection}
 
-            {deliveryMode !== 'pickup' && deliveryLines.length > 0 && <Box className="cart-bill-summary-card">
+            {deliveryMode !== 'pickup' && deliveryLines.length > 0 && <Box className="cart-bill-summary-card cart-delivery-breakdown">
               <Box className="bill-divider-header">
                 <Typography className="bill-section-title">Item Delivery Breakdown</Typography>
                 <Box className="bill-title-line" />
@@ -219,17 +230,19 @@ const CartPage = () => {
               </Box>
             </Box>
 
-            {/* Bill Summary Section */}
-            <Box className="cart-bill-summary-card">
+          </Box>
+          <Box className="cart-summary-column">
+            <Box className="cart-bill-summary-card cart-order-summary">
               <Box className="bill-divider-header">
-                <Typography className="bill-section-title">Bill Summary</Typography>
+                <Typography className="bill-section-title">Order Summary</Typography>
                 <Box className="bill-title-line" />
               </Box>
 
               <Box className="bill-data-row">
-                <Typography className="bill-item-label">Item total</Typography>
+                <Typography className="bill-item-label">Items ({cartItems.length})</Typography>
                 <Typography className="bill-item-value">{formatCurrency(grandTotal)}</Typography>
               </Box>
+              <Box className="bill-data-row"><Typography className="bill-item-label">Delivery fee</Typography><Typography className="bill-item-free">Calculated at checkout</Typography></Box>
 
               {offerCode && <Box className="bill-data-row">
                 <Typography className="bill-item-label">Offer {offerCode}</Typography>
@@ -241,7 +254,17 @@ const CartPage = () => {
                 <Typography className="grand-total-label">Amount to be paid</Typography>
                 <Typography className="grand-total-value">{formatCurrency(cartTotalWithDelivery)}</Typography>
               </Box>
+              <Button variant="contained" className="summary-checkout-button" onClick={goToCheckout} disabled={cartLoading}>Proceed to Checkout <span>→</span></Button>
             </Box>
+            <Box className="cart-address-card"><HomeOutlinedIcon /><Box><strong>{deliveryMode === 'pickup' ? 'Pick up from' : 'Delivering to'}</strong><span>{deliveryMode === 'pickup' ? (cartItems[0]?.storeName || cartItems[0]?.store || 'Selected store') : (selectedLocation?.address || deliveryAddress || 'Choose delivery address')}</span></Box><Button onClick={() => navigate('/address-map', { state: { returnTo: '/cart' } })}>Change</Button></Box>
+            <Box className="cart-benefits-card">
+              <Box><StorefrontOutlinedIcon /><span><strong>Multiple Stores</strong><small>Items from each store are grouped separately.</small></span></Box>
+              <Box><LocalShippingOutlinedIcon /><span><strong>Store Delivery</strong><small>Delivery options are confirmed at checkout.</small></span></Box>
+              <Box><CheckCircleOutlineIcon /><span><strong>Quality Products</strong><small>Carefully selected for your order.</small></span></Box>
+              <Box><SupportAgentOutlinedIcon /><span><strong>Need Help?</strong><small>Contact support for assistance.</small></span></Box>
+            </Box>
+          </Box>
+          </Box>
           </Box>
         )}
       </Box>
@@ -249,31 +272,10 @@ const CartPage = () => {
       {/* Sticky Bottom Delivery Address & Action Footer */}
       {cartItems.length > 0 && (
         <Box className="cart-sticky-footer">
-          {/* Top Address Bar */}
-          <Box className="delivery-address-row">
-            <Box className="address-info-col">
-              <Box className="address-header-line">
-                <HomeOutlinedIcon className="address-home-icon" />
-                <Typography className="delivering-to-label">{deliveryMode === 'pickup' ? 'Pickup from' : 'Delivering to'} <span className="address-tag">{deliveryMode === 'pickup' ? 'Store' : 'Home'}</span></Typography>
-              </Box>
-              <Typography className="address-full-text">
-                {deliveryMode === 'pickup' ? (cartItems[0]?.storeName || cartItems[0]?.store || 'Selected store') : (selectedLocation?.address || deliveryAddress)}
-              </Typography>
-            </Box>
-            <Button
-              className="change-address-btn"
-              onClick={() => navigate('/address-map', { state: { returnTo: '/cart' } })}
-              startIcon={<EditOutlinedIcon fontSize="small" />}
-            >
-              Change
-            </Button>
-          </Box>
-
-          {/* Bottom Action Row */}
           <Box className="checkout-action-row">
             <Box className="total-pay-col">
+              <Typography className="footer-item-count">{cartItems.length} items <span>·</span> Amount to be paid</Typography>
               <Typography className="total-pay-amount">{formatCurrency(cartTotalWithDelivery)}</Typography>
-              <Typography className="view-bill-text">TOTAL AMOUNT</Typography>
             </Box>
 
             <Button
@@ -281,7 +283,7 @@ const CartPage = () => {
               className="proceed-pay-btn"
               onClick={goToCheckout}
             >
-              Go to checkout
+              Proceed to Checkout <span>→</span>
             </Button>
           </Box>
         </Box>

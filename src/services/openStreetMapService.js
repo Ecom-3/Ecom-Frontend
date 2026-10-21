@@ -3,33 +3,6 @@ const reverseGeocodeCache = new Map();
 let reverseGeocodeQueue = Promise.resolve();
 let lastReverseRequestAt = 0;
 
-const DEMO_LOCATIONS = [
-  { id: 'demo-500018', title: 'Ameerpet', address: 'Ameerpet, Hyderabad, Telangana 500018, India', city: 'Hyderabad', state: 'Telangana', pincode: '500018', latitude: 17.4375, longitude: 78.4483, source: 'manual' },
-  { id: 'demo-500038', title: 'SR Nagar', address: 'SR Nagar, Ameerpet, Hyderabad, Telangana 500038, India', city: 'Hyderabad', state: 'Telangana', pincode: '500038', latitude: 17.4419, longitude: 78.4483, source: 'manual' },
-  { id: 'demo-500081', title: 'Madhapur', address: 'Madhapur, Hyderabad, Telangana 500081, India', city: 'Hyderabad', state: 'Telangana', pincode: '500081', latitude: 17.4483, longitude: 78.3915, source: 'manual' },
-  { id: 'demo-500032', title: 'Gachibowli', address: 'Gachibowli, Hyderabad, Telangana 500032, India', city: 'Hyderabad', state: 'Telangana', pincode: '500032', latitude: 17.4401, longitude: 78.3489, source: 'manual' },
-  { id: 'demo-500034', title: 'Banjara Hills', address: 'Banjara Hills, Hyderabad, Telangana 500034, India', city: 'Hyderabad', state: 'Telangana', pincode: '500034', latitude: 17.4123, longitude: 78.4482, source: 'manual' },
-  { id: 'demo-500003', title: 'Secunderabad', address: 'Secunderabad, Hyderabad, Telangana 500003, India', city: 'Hyderabad', state: 'Telangana', pincode: '500003', latitude: 17.4399, longitude: 78.4983, source: 'manual' },
-  { id: 'demo-516454', title: 'Simhadripuram', address: 'Simhadripuram, Kadapa, Andhra Pradesh 516454, India', city: 'Kadapa', state: 'Andhra Pradesh', pincode: '516454', latitude: 14.6206, longitude: 78.0739, source: 'manual' },
-  { id: 'demo-andhra-pradesh', title: 'Andhra Pradesh', address: 'Andhra Pradesh, India', city: 'Andhra Pradesh', state: 'Andhra Pradesh', pincode: '', latitude: 15.9129, longitude: 79.74, source: 'manual' },
-  { id: 'demo-vijayawada', title: 'Vijayawada', address: 'Vijayawada, Andhra Pradesh, India', city: 'Vijayawada', state: 'Andhra Pradesh', pincode: '', latitude: 16.5062, longitude: 80.6480, source: 'manual' },
-  { id: 'demo-visakhapatnam', title: 'Visakhapatnam', address: 'Visakhapatnam, Andhra Pradesh, India', city: 'Visakhapatnam', state: 'Andhra Pradesh', pincode: '', latitude: 17.6868, longitude: 83.2185, source: 'manual' },
-];
-
-const demoMatches = (query) => {
-  const text = String(query || '').trim().toLowerCase();
-  if (!text) return [];
-  return DEMO_LOCATIONS.filter((place) =>
-    place.pincode === text ||
-    place.title.toLowerCase().includes(text) ||
-    place.city.toLowerCase().includes(text) ||
-    place.state.toLowerCase().includes(text) ||
-    place.address.toLowerCase().includes(text)
-  );
-};
-
-export const getDeliveryLocationSuggestions = (query) => demoMatches(query);
-
 const fromIndiaPost = (row, pincode) => {
   const title = row.Name || row.Block || row.District || `Pincode ${pincode}`;
   const city = row.District || row.Block || row.Division || title;
@@ -118,7 +91,6 @@ export const openStreetMapEmbedUrl = ({ lat, lng, delta = 0.012 }) => `https://w
 
 // Explicit searches only: no requests on every keystroke.
 export const searchDeliveryLocations = async (query, options = {}) => {
-  const localMatches = demoMatches(query);
   if (/^[1-9]\d{5}$/.test(query)) {
     try {
       const postalMatches = await searchIndiaPostPincode(query, options);
@@ -134,28 +106,19 @@ export const searchDeliveryLocations = async (query, options = {}) => {
         const withCoordinates = enriched.filter((place) => Number.isFinite(place.latitude) && Number.isFinite(place.longitude));
         if (withCoordinates.length) return withCoordinates;
       }
-    } catch {
-      if (localMatches.length) return localMatches;
-    }
+    } catch { /* Continue with the remote geocoder. */ }
   }
   const params = new URLSearchParams({ format: 'json', addressdetails: '1', limit: '6', countrycodes: 'in' });
   if (/^[1-9]\d{5}$/.test(query)) {
     params.set('postalcode', query);
     params.set('country', 'India');
   } else params.set('q', /\bindia\b/i.test(query) ? query : `${query}, India`);
-  try {
-    const response = await fetch(`${NOMINATIM_BASE}/search?${params}`, options);
-    if (!response.ok) throw new Error('Location lookup failed.');
-    const rows = await response.json();
-    const remoteMatches = rows.map((row) => ({ ...normalizeAddress(row), city: normalizeAddress(row).city || row.name || query,
-      latitude: Number(row.lat), longitude: Number(row.lon), source: 'manual', id: String(row.place_id),
-    })).filter((row) => Number.isFinite(row.latitude) && Number.isFinite(row.longitude));
-    const seen = new Set(localMatches.map((place) => place.id));
-    return [...localMatches, ...remoteMatches.filter((place) => !seen.has(place.id))];
-  } catch (error) {
-    if (localMatches.length) return localMatches;
-    throw error;
-  }
+  const response = await fetch(`${NOMINATIM_BASE}/search?${params}`, options);
+  if (!response.ok) throw new Error('Location lookup failed.');
+  const rows = await response.json();
+  return rows.map((row) => ({ ...normalizeAddress(row), city: normalizeAddress(row).city || row.name || query,
+    latitude: Number(row.lat), longitude: Number(row.lon), source: 'manual', id: String(row.place_id),
+  })).filter((row) => Number.isFinite(row.latitude) && Number.isFinite(row.longitude));
 };
 
 

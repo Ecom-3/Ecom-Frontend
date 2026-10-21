@@ -9,7 +9,6 @@ import {
   normalizeNotification,
   sendNotification,
 } from '../../services/notificationApi';
-import { notificationStore, subscribeToLocalData } from '../../services/localDataService';
 import './NotificationHistoryPanel.css';
 
 const statusColor = {
@@ -25,32 +24,7 @@ const formatDate = (value) => {
   return Number.isNaN(date.getTime()) ? value : date.toLocaleString();
 };
 
-const localNotificationsFor = (orderId) => notificationStore.list().filter((item) => item.orderId === orderId).map((item) => normalizeNotification({
-  ...item,
-  subject: item.subject || item.title,
-  notificationType: item.notificationType || item.type || 'ORDER_STATUS_UPDATED',
-  channel: item.channel || 'PUSH',
-  status: item.status || 'SENT',
-  sentAt: item.sentAt || item.createdAt,
-}));
-
-const fallbackNotificationFor = (order) => {
-  if (!order?.id || !order?.status) return null;
-  return normalizeNotification({
-    id: `order-status-${order.id}-${order.status}`,
-    orderId: order.id,
-    customerId: order.customerId || order.customer?.id || '',
-    notificationType: order.status === 'CANCELLED' ? 'ORDER_CANCELLED' : 'ORDER_STATUS_UPDATED',
-    channel: 'PUSH',
-    subject: `Order ${order.status}`,
-    message: `Your order ${order.orderNumber || order.id} is now ${String(order.status).toLowerCase()}.`,
-    status: 'SENT',
-    sentAt: order.updatedAt || order.createdAt,
-    createdAt: order.updatedAt || order.createdAt || new Date().toISOString(),
-  });
-};
-
-const NotificationHistoryPanel = ({ orderId, order }) => {
+const NotificationHistoryPanel = ({ orderId }) => {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(false);
   const [sendingId, setSendingId] = useState('');
@@ -68,33 +42,18 @@ const NotificationHistoryPanel = ({ orderId, order }) => {
     try {
       const response = await getNotificationsByOrder(orderId, 0, 20);
       const backend = (response?.content || []).map(normalizeNotification);
-      const local = localNotificationsFor(orderId);
-      const fallback = fallbackNotificationFor(order);
-      setNotifications([...(fallback ? [fallback] : []), ...local, ...backend].filter((item, index, items) => items.findIndex((entry) => entry.id === item.id) === index));
+      setNotifications(backend);
     } catch (apiError) {
-      const local = localNotificationsFor(orderId);
-      const fallback = fallbackNotificationFor(order);
-      const next = [...(fallback ? [fallback] : []), ...local];
-      setNotifications(next);
-      setError(next.length ? '' : isNotificationServiceUnavailable(apiError) ? 'Notification Service is unavailable.' : apiError.message);
+      setNotifications([]);
+      setError(isNotificationServiceUnavailable(apiError) ? 'Notification Service is unavailable.' : apiError.message);
     } finally {
       setLoading(false);
     }
-  }, [order, orderId]);
+  }, [orderId]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     load();
-    const poll = window.setInterval(() => {
-      if (document.visibilityState === 'visible') load();
-    }, 10000);
-    const unsubscribe = subscribeToLocalData(({ key }) => {
-      if (!key || key === 'notifications') load();
-    });
-    return () => {
-      window.clearInterval(poll);
-      unsubscribe();
-    };
   }, [load]);
 
   const handleSend = async (notificationId) => {

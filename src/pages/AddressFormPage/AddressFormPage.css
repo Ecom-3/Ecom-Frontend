@@ -81,6 +81,12 @@
   gap: 6px;
 }
 
+.default-address-choice { display: flex; align-items: flex-start; gap: 10px; padding: 12px; border: 1px solid #d9e9e1; border-radius: 10px; background: #f7fbf8; color: #1e293b; cursor: pointer; }
+.default-address-choice input { width: 17px; height: 17px; margin: 1px 0 0; accent-color: #075F40; }
+.default-address-choice span { display: grid; gap: 3px; }
+.default-address-choice strong { font-size: .84rem; }
+.default-address-choice small { color: #64748b; font-size: .74rem; }
+
 .form-field-label {
   font-size: 0.78rem !important;
   font-weight: 700 !important;

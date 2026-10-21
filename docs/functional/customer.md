@@ -80,7 +80,7 @@ Sources: [cart page](../../src/pages/CartPage/CartPage.jsx), [drawer](../../src/
 
 Customers add items, increase/decrease quantities, remove items, clear a cart and proceed toward checkout. Product, variant and store distinguish lines. Totals derive from quantity and unit price, with service-calculated cart totals used when available.
 
-Guests have a local cart. Logged-in carts use Cart Service and store scope. Login contains guest-cart migration logic; migration should be verified for multiple stores rather than assuming all guest items always transfer. Failed service operations expose cart errors/unavailable state.
+Guests have a local cart. Logged-in carts use Cart Service and store scope. Login and refresh load all of the customer's active store carts, independently of the selected browsing store. Guest migration removes each local line only after server acknowledgement and retains unacknowledged lines for retry. Failed reloads preserve the current account's already displayed cart and expose cart errors/unavailable state. Account changes discard stale responses and clear the previous account's displayed cart.
 
 Changing a quantity to a removal condition follows the removal path. Invalid identity, absent store, unavailable cart service and stock changes are relevant failures. Delivery grouping and final price validation occur again during checkout.
 
