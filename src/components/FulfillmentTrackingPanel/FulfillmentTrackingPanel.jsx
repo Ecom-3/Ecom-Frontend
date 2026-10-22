@@ -3,10 +3,12 @@ import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined
 import RefreshOutlinedIcon from '@mui/icons-material/RefreshOutlined';
 import DemoTrackingMap from '../DemoTrackingMap';
 import { customerDeliveryStatus } from '../../utils/fulfillmentStatus';
+import { isGlobalOrder } from '../../services/orderApi';
 
 const FulfillmentTrackingPanel = ({ order, fulfillment, shipment, trackingEvents = [], loading = {}, errors = {}, refresh }) => {
-  const deliveryStatus = customerDeliveryStatus({ fulfillment, shipment, order, trackingEvents });
-  const isGlobal = order?.fulfillmentType === 'global' || order?.globalApproval === 'Pending' || order?.channel === '5-7 Days Delivery';
+  const isGlobal = isGlobalOrder(order);
+  const globalPending = isGlobal && String(order?.globalApproval || 'pending').toLowerCase() === 'pending' && !order?.fulfillment && !order?.shipment;
+  const deliveryStatus = globalPending ? 'Awaiting assignment' : customerDeliveryStatus({ fulfillment, shipment, order, trackingEvents });
   const statusTone = ['Delivered', 'Cancelled', 'Failed', 'Returned'].includes(deliveryStatus) ? 'default' : 'success';
   const busy = Boolean(loading.fulfillment || loading.shipment);
   const error = errors.fulfillment || errors.shipment;
@@ -24,7 +26,12 @@ const FulfillmentTrackingPanel = ({ order, fulfillment, shipment, trackingEvents
         {refresh && <Button size="small" variant="outlined" startIcon={<RefreshOutlinedIcon />} disabled={busy} onClick={refresh} sx={{ borderColor: '#d5e5dc', color: '#075F40', textTransform: 'none' }}>Refresh</Button>}
       </Box>
     </Box>
-    {error && <Typography role="alert" color="error">{error}</Typography>}
+    {isGlobal && <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, borderRadius: 1.5, bgcolor: '#f0f8f3', px: 1.5, py: 1 }}>
+      <Typography variant="body2" fontWeight={700} color="#075F40">{globalPending ? 'Global fulfillment' : 'Global delivery estimate'}</Typography>
+      <Typography variant="body2" color="text.secondary">7–10 days</Typography>
+      {globalPending && <Typography variant="body2" color="text.secondary">Awaiting fulfillment assignment</Typography>}
+    </Box>}
+    {error && !globalPending && <Typography role="alert" color="error">{error}</Typography>}
   </Box>;
 };
 

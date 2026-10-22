@@ -19,9 +19,18 @@ const ProductCard = ({ title, weight, price, image, ...details }) => {
   const { cartItems, addToCart, updateQuantity, setSelectedProduct, wishlistItems, toggleWishlist, formatCurrency, sameCatalogItem, addresses, selectedLocation, catalogStores, t, user, cartLoading } = useContext(AppContext);
   const cardImage = image || '';
   const [imageSrc, setImageSrc] = useState(cardImage || fallbackProductImage);
-  const selectedVariant = details.selectedVariant || details.variants?.[0] || {};
-  const productId = details.productId || details.id || selectedVariant.productId;
-  const variantId = details.variantId ?? selectedVariant.variantId ?? selectedVariant.id ?? null;
+  const productVariants = (Array.isArray(details.variants) && details.variants.length ? details.variants : [details.selectedVariant || details]).filter((variant) => variant?.active !== false);
+  const baseVariant = details.selectedVariant || productVariants[0] || {};
+  const productId = details.productId || details.id || baseVariant.productId;
+  const variantScope = productVariants.map((variant) => variant.variantId || variant.id || 'product').join(',');
+  const [availableVariantResult, setAvailableVariantResult] = useState(null);
+  const [stock, setStock] = useState(null);
+  const [stockAttempt, setStockAttempt] = useState(0);
+  const stockStoreId = catalogStores.find((item) => details.storeId ? item.id === details.storeId : item.name === details.store || item.name === details.storeName)?.id || details.storeId;
+  const stockScope = `${user?.id}:${stockStoreId}:${productId}:${variantScope}`;
+  const stockForScope = stock?.scope === stockScope && stock?.attempt === stockAttempt ? stock : null;
+  const selectedVariant = availableVariantResult?.scope === stockScope ? availableVariantResult.variant : baseVariant;
+  const variantId = selectedVariant.variantId ?? selectedVariant.id ?? details.variantId ?? null;
   const inventoryVariantId = dbVariantId(variantId);
   const hasProductIdentity = Boolean(productId) && variantId !== undefined;
   const store = catalogStores.find((item) => details.storeId ? item.id === details.storeId : item.name === details.store || item.name === details.storeName);
@@ -33,18 +42,29 @@ const ProductCard = ({ title, weight, price, image, ...details }) => {
   const quoteScope = `${store?.id || details.storeId}:${customerLat}:${customerLng}`;
   const cardRef = useRef(null);
   const [inView, setInView] = useState(typeof IntersectionObserver === 'undefined');
-  const [stock, setStock] = useState(null);
-  const [stockAttempt, setStockAttempt] = useState(0);
-  const stockStoreId = store?.id || details.storeId;
-  const stockScope = `${user?.id}:${stockStoreId}:${productId}:${inventoryVariantId || 'product'}`;
   useEffect(() => {
     if (!user?.id || !inView || !stockStoreId || !productId) return undefined;
     let active = true;
-    loadProductStock(findInventoryForItem, { storeId: stockStoreId, productId, variantId: inventoryVariantId })
-      .then(result => { if (active) setStock({ scope: stockScope, attempt: stockAttempt, ...result }); });
+    (async () => {
+      let firstUnavailable = null;
+      let lookupFailed = false;
+      for (const variant of productVariants) {
+        const candidateId = variant.variantId ?? variant.id ?? null;
+        const result = await loadProductStock(findInventoryForItem, { storeId: stockStoreId, productId, variantId: dbVariantId(candidateId) });
+        if (!active) return;
+        if (result.state === 'available') {
+          setAvailableVariantResult({ scope: stockScope, variant });
+          setStock({ scope: stockScope, attempt: stockAttempt, ...result });
+          return;
+        }
+        if (result.state === 'error') lookupFailed = true;
+        if (!firstUnavailable) firstUnavailable = result;
+      }
+      if (active) setStock({ scope: stockScope, attempt: stockAttempt, ...(lookupFailed ? { state: 'error' } : firstUnavailable || { state: 'missing' }) });
+    })();
     return () => { active = false; };
-  }, [user?.id, inView, stockStoreId, productId, inventoryVariantId, stockScope, stockAttempt]);
-  const currentStock = stock?.scope === stockScope && stock?.attempt === stockAttempt ? stock : null;
+  }, [user?.id, inView, stockStoreId, productId, variantScope, stockScope, stockAttempt]);
+  const currentStock = stockForScope;
   const checkingStock = Boolean(user?.id && !currentStock);
   const stockError = Boolean(user?.id && currentStock?.state === 'error');
   const noStock = Boolean(user?.id && currentStock && currentStock.state !== 'available');
@@ -73,17 +93,24 @@ const ProductCard = ({ title, weight, price, image, ...details }) => {
   const quote = details.deliveryQuote || (cardQuote?.scope === quoteScope ? cardQuote.value : null);
   const primaryMethod = quote?.methods?.find((method) => method.deliveryType === quote.selectedDeliveryMethod) || quote?.methods?.[0];
   const estimate = details.deliveryEstimate;
-  const etaLabel = details.deliveryLabel || (Object.hasOwn(details, 'deliveryEstimate')
+  const rawEtaLabel = details.deliveryLabel || (Object.hasOwn(details, 'deliveryEstimate')
     ? estimate ? `${estimate.min === estimate.max ? estimate.max : `${estimate.min}–${estimate.max}`} min delivery` : 'Delivery ETA not set'
     : delivery.etaLabel);
+  const etaLabel = rawEtaLabel === 'Delivery ETA not set' || !rawEtaLabel ? 'Delivery estimate shown at checkout' : rawEtaLabel;
+  const quoteDistance = Number(quote?.distanceKm);
+  const quoteCharge = Number(primaryMethod?.deliveryCharge ?? quote?.deliveryCharge ?? 0);
   const deliveryLine = quote?.deliveryAvailable
-    ? `${quote.distanceKm} KM by road | ${primaryMethod?.deliveryType || 'Delivery'} ${primaryMethod?.estimatedTime || ''} ${Number(primaryMethod?.deliveryCharge ?? quote.deliveryCharge ?? 0) ? `| ${formatCurrency(primaryMethod?.deliveryCharge ?? quote.deliveryCharge)}` : '| Free'}`
+    ? [Number.isFinite(quoteDistance) && quoteDistance > 0 ? `${quoteDistance} KM by road` : '', primaryMethod?.deliveryType || 'Delivery', primaryMethod?.estimatedTime || '', quoteCharge > 0 ? formatCurrency(quoteCharge) : 'Free delivery'].filter(Boolean).join(' | ')
     : quote?.deliveryAvailable === false ? 'Delivery unavailable' : `${etaLabel} | ${delivery.chargeLabel}`;
 
-  const product = { ...details, id: productId, productId, variantId, selectedVariant, title, name:details.name || title, weight, price: Number(selectedVariant.price ?? price), image: cardImage, storeId:store?.id || details.storeId, store:store?.name || details.store || details.storeName };
+  const variantWeight = selectedVariant.weight || selectedVariant.label || weight;
+  const variantPrice = selectedVariant.price ?? price;
+  const product = { ...details, id: productId, productId, variantId, selectedVariant, title, name:details.name || title, weight:variantWeight, price: Number(variantPrice), image: cardImage, storeId:store?.id || details.storeId, store:store?.name || details.store || details.storeName };
   const cartItem = cartItems.find((item) => sameCatalogItem(item, product));
   const quantity = cartItem ? cartItem.quantity : 0;
   const isWishlisted = wishlistItems.some((item) => sameCatalogItem(item, product));
+
+  if (user?.id && quantity === 0 && ['missing', 'out'].includes(currentStock?.state)) return null;
 
   const handleCardClick = () => {
     const resolvedProduct = {
@@ -91,13 +118,15 @@ const ProductCard = ({ title, weight, price, image, ...details }) => {
       id: productId,
       productId,
       variantId,
+      selectedVariant,
       title: title || details.name || 'Product',
       subtitle: details.subtitle || details.category || '',
       description: details.description || '',
       highlights: details.highlights || [],
       aboutSource: details.aboutSource || '',
-      price: Number(price || 0),
-      weights: details.weights || [weight || '250g'],
+      price: Number(variantPrice || 0),
+      weight: variantWeight,
+      weights: details.weights || [variantWeight || '250g'],
       image: cardImage,
       gallery: details.gallery || [],
       storeId: store?.id || details.storeId,
@@ -148,12 +177,12 @@ const ProductCard = ({ title, weight, price, image, ...details }) => {
         {details.offerType==='Buy X Get Y'&&<Chip size="small" color="success" label={`Buy ${details.buyQuantity||1}, get ${details.freeQuantity||1} free`} sx={{my:.5}}/>}
         <Box className="product-actions">
           <Box className="product-details">
-            <Typography className="product-weight">{weight}</Typography>
-            <Typography className="product-price">{Number(price) > 0 ? formatCurrency(price) : t('unavailable')}</Typography>
+            <Typography className="product-weight">{variantWeight}</Typography>
+            <Typography className="product-price">{Number(variantPrice) > 0 ? formatCurrency(variantPrice) : t('unavailable')}</Typography>
           </Box>
           {quantity === 0 ? (
             <Button variant="contained" className="add-btn" disabled={cartLoading || checkingStock || (noStock && !stockError) || details.active === false || !hasProductIdentity || !(Number(product.price) > 0)} onClick={(event) => { if (stockError) { event.stopPropagation(); setStockAttempt((attempt) => attempt + 1); } else handleAdd(event); }}>
-              {checkingStock ? 'Checking' : stockError ? 'Retry stock' : currentStock?.state === 'missing' ? 'No stock record' : noStock || details.active === false || !hasProductIdentity || !(Number(product.price) > 0) ? t('out') : t('add')}
+              {stockError ? 'Check availability' : currentStock?.state === 'missing' ? t('out') : noStock || details.active === false || !hasProductIdentity || !(Number(product.price) > 0) ? t('out') : t('add')}
             </Button>
           ) : (
             <Box className="qty-control-box">

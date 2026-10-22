@@ -146,7 +146,7 @@ const PaymentOptions = () => {
   const checkoutBlock = multiStoreCart && !persistedMultiStore
     ? 'Persisted multi-store checkout is not enabled on this service stack. No orders or payments were submitted.'
     : !(persistedMultiStore && !existingOrderId) && !existingOrderId
-      ? checkoutPolicyError({ groupCount: splitKeysFor(cartItems, checkout.deliveryLines || []).length, handlingFee: summary.handling, discount: summary.discount, coupon: checkout.coupon })
+      ? checkoutPolicyError({ groupCount: splitKeysFor(cartItems, checkout.deliveryLines || []).length, handlingFee: summary.handling, discount: summary.discount, coupon: checkout.coupon, promotionVerified:Boolean(checkout.promotionVerified) })
       : '';
   const storeNameFor = (order = {}) => {
     const storeId = order.sourceStoreId || order.storeId || '';
@@ -183,13 +183,14 @@ const PaymentOptions = () => {
     await verifyGlobalItems();
     const deliveryLines = checkout.deliveryLines || [];
     const splitKeys = splitKeysFor(cartItems, deliveryLines);
-    const policyError = checkoutPolicyError({ groupCount: splitKeys.length, handlingFee: summary.handling, discount: summary.discount, coupon: checkout.coupon });
+    const policyError = checkoutPolicyError({ groupCount: splitKeys.length, handlingFee: summary.handling, discount: summary.discount, coupon: checkout.coupon, promotionVerified:Boolean(checkout.promotionVerified) });
     if (policyError) throw new Error(policyError);
     const hasGlobalLine = deliveryLines.some((line) => line.fulfillmentType === 'global') || ['global','mixed'].includes(checkout.fulfillmentType);
     const useLocalSplitOrder = hasGlobalLine || splitKeys.length > 1;
     if (useLocalSplitOrder) {
       const defaultAddress = addresses.find((address) => address.isDefault) || addresses[0] || {};
       const groups = splitGroupsFor(cartItems, deliveryLines);
+      if(checkout.coupon && groups.length>1) throw new Error('Coupon checkout requires the verified combined checkout service. Please retry after combined checkout is available.');
         const childOrders = await Promise.all(groups.map(async (group, index) => {
           const line = group.line || {};
           const firstItem = group.items[0] || {};
@@ -229,6 +230,7 @@ const PaymentOptions = () => {
             scheduledDeliverySlot: line.scheduleSlot || null,
             pickupDetails: line.pickupDetails || null,
             couponCode: checkout.coupon || '',
+            promotionLocation: checkout.customerLocation || '',
             paymentStatus: 'PENDING',
           }));
           return {
@@ -286,6 +288,7 @@ const PaymentOptions = () => {
         scheduledDeliverySlot: primaryLine.scheduleSlot || checkout.slot || null,
         pickupDetails: primaryLine.pickupDetails || (checkout.pickupStore ? `Pickup from ${checkout.pickupStore}` : null),
         couponCode: checkout.coupon || '',
+        promotionLocation: checkout.customerLocation || '',
         paymentStatus: 'PENDING',
       }));
   };
@@ -354,7 +357,6 @@ const PaymentOptions = () => {
       setStatus('submitting');
       setError('');
       try {
-        if (summary.discount || checkout.coupon) throw new Error('Promotions must be verified before combined checkout.');
         await verifyGlobalItems();
         const address = addresses.find(entry => entry.isDefault) || addresses[0] || {};
         const groups = splitGroupsFor(cartItems, checkout.deliveryLines || []).reduce((stores, group) => {
@@ -370,7 +372,7 @@ const PaymentOptions = () => {
           } else stores.push({ ...group, storeId, items: [...group.items] });
           return stores;
         }, []);
-        const stores = groups.map(group => ({
+        const stores = groups.map((group,index) => ({
           customerId,
           storeId: group.storeId,
           items: buildOrderItemsPayload(group.items),
@@ -382,6 +384,8 @@ const PaymentOptions = () => {
           customerLongitude: checkout.customerLongitude ?? null,
           scheduledDeliveryDate: checkout.date || null,
           scheduledDeliverySlot: checkout.slot || null,
+          couponCode:index===0?(checkout.coupon||''):'',
+          promotionLocation:checkout.customerLocation||'',
         }));
         const group = await persistStoreCheckout({ customerId, stores, cartApi, request: createCheckoutGroup, lookup: getCheckoutGroupByKey, checkInventory: entries => validateCheckoutAvailability(entries, lookupCheckoutInventory) });
         navigate(`/checkout-group/${encodeURIComponent(group.id)}`);

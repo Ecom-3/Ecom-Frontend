@@ -49,6 +49,13 @@ export const updateBanner = async (id, data) => request(`/api/v1/banners/${encod
 export const deleteBanner = async (id) => request(`/api/v1/banners/${encodeURIComponent(id)}`, { method:'DELETE' });
 export const setBannerStatus = async (id, status) => request(`/api/v1/banners/${encodeURIComponent(id)}/status`, { method:'PATCH', body:JSON.stringify({ status }) });
 
+export const getCoupons = async () => request('/api/v1/coupons', { auth:true });
+export const validateCouponPromotion = async (data) => request('/api/v1/coupons/validate', { method:'POST', body:JSON.stringify(data) });
+export const createCoupon = async (data) => request('/api/v1/coupons', { method:'POST', body:JSON.stringify(data) });
+export const updateCoupon = async (id, data) => request(`/api/v1/coupons/${encodeURIComponent(id)}`, { method:'PUT', body:JSON.stringify(data) });
+export const setCouponStatus = async (id, status) => request(`/api/v1/coupons/${encodeURIComponent(id)}/status`, { method:'PATCH', body:JSON.stringify({ status }) });
+export const deleteCoupon = async (id) => request(`/api/v1/coupons/${encodeURIComponent(id)}`, { method:'DELETE' });
+
 export const getProducts = async (params = {}, options = {}) => request(`/api/v1/products${buildQueryString(params)}`, options);
 export const searchProducts = async (params = {}) => getProducts(params);
 export const getProduct = async (productId) => request(`/api/v1/products/${encodeURIComponent(productId)}`);

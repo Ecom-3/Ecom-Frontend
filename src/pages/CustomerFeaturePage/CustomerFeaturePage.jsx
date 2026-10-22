@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
-import { Box, Button, Chip, MenuItem, Select, Typography } from '@mui/material';
+import { Alert, Box, Button, Chip, MenuItem, Select, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import { getCustomerOrderHistory, isOrderServiceUnavailable, normalizeOrder, ORDER_STATUSES } from '../../services/orderApi';
-import { getNotificationsByCustomer, normalizeNotification } from '../../services/notificationApi';
+import { clearCustomerNotifications, getAllCustomerNotifications, markNotificationRead, normalizeNotification } from '../../services/notificationApi';
 import FulfillmentTrackingPanel from '../../components/FulfillmentTrackingPanel/FulfillmentTrackingPanel';
 import { useFulfillmentTracking } from '../../hooks/useFulfillmentTracking';
 
@@ -27,20 +27,38 @@ const CustomerFeaturePage = ({ type }) => {
   const [timeZone, setTimeZone] = useState(locale.timeZone);
   const [notifications, setNotifications] = useState([]);
   const [notificationsError, setNotificationsError] = useState('');
+  const [notificationsBusy, setNotificationsBusy] = useState(false);
   const [trackingOrders, setTrackingOrders] = useState([]);
   const [trackingLoading, setTrackingLoading] = useState(false);
   const [trackingError, setTrackingError] = useState('');
   useEffect(() => {
     if (type !== 'notifications' || !user?.id) return undefined;
     let active = true;
-    getNotificationsByCustomer(user.id)
-      .then((response) => {
-        const rows = Array.isArray(response) ? response : response?.content || response?.items || [];
+    getAllCustomerNotifications(user.id)
+      .then((rows) => {
         if (active) setNotifications(rows.map(normalizeNotification));
       })
       .catch((error) => { if (active) setNotificationsError(error.message || 'Notifications could not be loaded.'); });
     return () => { active = false; };
   }, [type, user?.id]);
+  const markRead = async (notification) => {
+    if (!notification.id || notification.read) return;
+    setNotificationsBusy(true); setNotificationsError('');
+    try {
+      const updated = normalizeNotification(await markNotificationRead(notification.id));
+      setNotifications((current) => current.map((item) => item.id === updated.id ? updated : item));
+    } catch (error) { setNotificationsError(error.message || 'This notification could not be marked as read.'); }
+    finally { setNotificationsBusy(false); }
+  };
+  const clearNotifications = async () => {
+    if (!user?.id || !notifications.length) return;
+    setNotificationsBusy(true); setNotificationsError('');
+    try {
+      await clearCustomerNotifications(user.id);
+      setNotifications([]);
+    } catch (error) { setNotificationsError(error.message || 'Notifications could not be cleared.'); }
+    finally { setNotificationsBusy(false); }
+  };
   useEffect(() => {
     if (type !== 'tracking' || !user?.id) return undefined;
     let ignore = false;
@@ -86,7 +104,19 @@ const CustomerFeaturePage = ({ type }) => {
         <Box sx={{ bgcolor: 'white', borderRadius: 3, p: 3, boxShadow: '0 4px 16px rgba(15,23,42,.08)' }}>
           <Typography sx={{ color: '#64748b', mb: 2 }}>{config.empty}</Typography>
 
-          {type === 'notifications' && <Box>{notificationsError ? <Typography role="alert" color="error">{notificationsError}</Typography> : notifications.length === 0 ? <Typography>No notifications from the server.</Typography> : notifications.map((item) => <Box key={item.id} sx={{ p:2,mb:1,border:'1px solid #e2e8f0',borderRadius:2,bgcolor:item.read ? '#fff' : '#ecfdf5' }}><Typography fontWeight={700}>{item.title || item.subject}</Typography><Typography>{item.message}</Typography><Typography variant="caption">{item.createdAt ? new Date(item.createdAt).toLocaleString() : ''}</Typography></Box>)}</Box>}
+          {type === 'notifications' && <Box sx={{ display: 'grid', gap: 1.5 }}>
+            {notificationsError && <Alert severity="error" role="alert">{notificationsError}</Alert>}
+            {notifications.length > 0 && <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}><Button color="inherit" disabled={notificationsBusy} onClick={clearNotifications}>Clear all</Button></Box>}
+            {!notificationsError && notifications.length === 0 ? <Typography>No notifications to show.</Typography> : notifications.map((item) => <Box key={item.id} sx={{ p: 2, border: '1px solid #e2e8f0', borderRadius: 2, bgcolor: item.read ? '#fff' : '#ecfdf5', display: 'grid', gap: 0.75 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1 }}><Typography fontWeight={700}>{item.subject || 'Order update'}</Typography>{!item.read && <Chip size="small" color="success" label="New" />}</Box>
+              <Typography>{item.message}</Typography>
+              <Typography variant="caption" color="text.secondary">{item.createdAt ? new Date(item.createdAt).toLocaleString() : ''}</Typography>
+              <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                {item.orderId && <Button size="small" onClick={() => { markRead(item); navigate(`/order-details/${encodeURIComponent(item.orderId)}`, { state: { orderId: item.orderId } }); }}>View order</Button>}
+                {!item.read && <Button size="small" disabled={notificationsBusy} onClick={() => markRead(item)}>Mark as read</Button>}
+              </Box>
+            </Box>)}
+          </Box>}
 
           {type === 'reviews' && <Box sx={{ display:'grid',gap:2 }}><Typography color="text.secondary">Reviews are shown when provided by the product or order service. Submit a review from a completed order.</Typography><Button variant="outlined" onClick={() => navigate('/orders')}>Open order history</Button></Box>}
           {type === 'localization' && <Box sx={{ display: 'grid', gap: 2 }}>

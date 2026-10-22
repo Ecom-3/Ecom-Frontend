@@ -24,7 +24,7 @@ const OrderDetailViewPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { orderId: routeOrderId } = useParams();
-  const { addToCart, catalogProducts, formatCurrency, user } = useContext(AppContext);
+  const { addToCart, catalogProducts, formatCurrency, formatDateTime, user } = useContext(AppContext);
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(Boolean(routeOrderId || location.state?.orderId || location.state?.order?.id));
   const [error, setError] = useState('');
@@ -143,7 +143,7 @@ const OrderDetailViewPage = () => {
   const firstItem = order.items[0] || {};
   const title = firstItem.title || 'Order';
   const price = order.totalAmount;
-  const date = order.createdAt ? new Date(order.createdAt).toLocaleString() : 'Date unavailable';
+  const date = order.createdAt ? formatDateTime(order.createdAt, { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'Date unavailable';
   const image = firstItem.image || pickleJarImg;
   const customer = order.customer || user || {};
   const deliveryAddress = order.checkout?.deliveryAddress || order.deliveryAddress || formatAddress(order.shippingAddress);
@@ -152,6 +152,11 @@ const OrderDetailViewPage = () => {
   const visiblePaymentError = paymentError && !localPaymentStatus ? paymentError : '';
   const suggestions = catalogProducts.filter((product) => product.productId !== firstItem.productId).slice(0, 3);
   const siblingOrders = Array.isArray(order.childOrders) ? order.childOrders : [];
+  const itemSubtotal = order.items.reduce((sum, item) => sum + Number(item.totalPrice || 0), 0);
+  const deliveryCharge = Number(order.deliveryCharge || 0);
+  const handlingFee = Number(order.handlingFee || 0);
+  const discountAmount = Number(order.discountAmount || 0);
+  const otherCharges = Math.max(0, Number(price || 0) - itemSubtotal - deliveryCharge - handlingFee + discountAmount);
 
   return (
     <Box className="order-detail-wrapper">
@@ -160,7 +165,7 @@ const OrderDetailViewPage = () => {
         <IconButton aria-label="Back to previous page" onClick={() => navigate(-1)} style={{ color: '#ffffff' }}><ArrowBackIcon /></IconButton>
         <Box sx={{ minWidth: 0, flex: 1 }}>
           <Typography variant="h6" className="order-detail-title" sx={{ overflowWrap: 'anywhere' }}>Order #{order.orderNumber || order.id}</Typography>
-          <Typography variant="caption">{date} | {order.items.length} items | {formatCurrency(price)}</Typography>
+          <Typography variant="caption">{date} | {order.items.length} item{order.items.length === 1 ? '' : 's'} | {formatCurrency(price)}</Typography>
         </Box>
         <Button sx={{ ml: 'auto', color: 'white' }} onClick={() => navigate('/help-center')}>Get Help</Button>
       </Box>
@@ -186,6 +191,14 @@ const OrderDetailViewPage = () => {
             <Box><Typography fontWeight={700}>{item.title}</Typography><Typography variant="body2">Quantity: {item.quantity}</Typography></Box>
             <Typography>{formatCurrency(item.totalPrice)}</Typography>
           </Box>)}
+          <Box sx={{ display: 'grid', gap: 0.75, maxWidth: 360, ml: 'auto', pt: 1.5 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}><Typography variant="body2" color="text.secondary">Items subtotal</Typography><Typography variant="body2">{formatCurrency(itemSubtotal)}</Typography></Box>
+            {deliveryCharge > 0 && <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}><Typography variant="body2" color="text.secondary">Delivery</Typography><Typography variant="body2">{formatCurrency(deliveryCharge)}</Typography></Box>}
+            {handlingFee > 0 && <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}><Typography variant="body2" color="text.secondary">Handling fee</Typography><Typography variant="body2">{formatCurrency(handlingFee)}</Typography></Box>}
+            {otherCharges > 0 && <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}><Typography variant="body2" color="text.secondary">Other charges</Typography><Typography variant="body2">{formatCurrency(otherCharges)}</Typography></Box>}
+            {discountAmount > 0 && <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}><Typography variant="body2" color="text.secondary">Discount</Typography><Typography variant="body2">-{formatCurrency(discountAmount)}</Typography></Box>}
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2, borderTop: '1px solid #e2e8f0', pt: 0.75 }}><Typography fontWeight={700}>Order total</Typography><Typography fontWeight={700}>{formatCurrency(price)}</Typography></Box>
+          </Box>
         </Box>
 
         <Box className="delivery-status-card">
@@ -240,7 +253,7 @@ const OrderDetailViewPage = () => {
           <Box className="info-detail-row"><HomeOutlinedIcon className="info-row-icon" /><Box className="info-col"><Typography className="info-label-sub">Delivery Address</Typography><Typography className="info-value-bold">{deliveryAddress || 'Unavailable'}</Typography></Box></Box>
         </Box>
 
-        <NotificationHistoryPanel orderId={order.id} order={order} />
+        <NotificationHistoryPanel orderId={order.id} order={order} formatDateTime={formatDateTime} />
 
         <Box className="total-order-card">
           <Box className="price-top-row">

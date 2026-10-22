@@ -106,6 +106,6 @@ export const deliveryProducts = (products, mappings, stores, location) => {
   const nearbyKeys = new Set(nearbyRows.filter((item) => item.fulfillmentType === 'global').map((item) => String(item.productId ?? item.id)));
   const globalRows = products
     .filter((item) => item.active !== false && String(item.status).toLowerCase() !== 'inactive' && item.available !== false && isGlobalProduct(item) && !nearbyKeys.has(String(item.productId ?? item.id)))
-    .map((item) => ({ ...item, storeId: 'global-store', store: 'India-wide Global Store', storeName: 'India-wide Global Store', fulfillmentType: 'global', deliveryLabel: item.deliveryLabel || '5-7 days delivery' }));
+    .map((item) => ({ ...item, storeId: 'global-store', store: 'India-wide Global Store', storeName: 'India-wide Global Store', fulfillmentType: 'global', deliveryLabel: item.deliveryLabel || '7-10 days delivery' }));
   return [...nearbyRows, ...globalRows];
 };

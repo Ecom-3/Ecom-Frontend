@@ -33,6 +33,7 @@ export default function CheckoutGroupResult({ group, error, onRetry, onNewChecko
       {child.total != null && <>
         <Typography><span>Subtotal</span><span>{formatCurrency(child.subtotal)}</span></Typography>
         <Typography><span>Delivery</span><span>{formatCurrency(child.deliveryFee)}</span></Typography>
+      {Number(child.discountAmount)>0 && <Typography sx={{ color:'#087454' }}><span>{child.couponCode || 'Coupon'} discount</span><span>-{formatCurrency(child.discountAmount)}</span></Typography>}
         <Typography fontWeight={700}><span>Store total</span><span>{formatCurrency(child.total)}</span></Typography>
       </>}
       </Box>

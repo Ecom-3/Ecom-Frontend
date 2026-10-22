@@ -33,6 +33,24 @@ export const getNotificationsByOrder = async (orderId, page = 0, size = 20) =>
 export const getNotificationsByCustomer = async (customerId, page = 0, size = 20) =>
   request(`/api/v1/notifications/customer/${encodeURIComponent(customerId)}?page=${page}&size=${size}`);
 
+export const getAllCustomerNotifications = async (customerId) => {
+  const first = await getNotificationsByCustomer(customerId, 0, 100);
+  if (Array.isArray(first)) return first;
+  const notifications = [...(first?.content || first?.items || [])];
+  const totalPages = Math.max(1, Number(first?.totalPages || 1));
+  for (let page = 1; page < totalPages; page += 1) {
+    const result = await getNotificationsByCustomer(customerId, page, 100);
+    notifications.push(...(Array.isArray(result) ? result : result?.content || result?.items || []));
+  }
+  return notifications;
+};
+
+export const markNotificationRead = async (notificationId) =>
+  request(`/api/v1/notifications/${encodeURIComponent(notificationId)}/read`, { method: 'PATCH' });
+
+export const clearCustomerNotifications = async (customerId) =>
+  request(`/api/v1/notifications/customer/${encodeURIComponent(customerId)}/clear`, { method: 'DELETE' });
+
 export const getNotificationHistory = async (page = 0, size = 20) =>
   request(`/api/v1/notifications/history?page=${page}&size=${size}`);
 
@@ -56,6 +74,9 @@ export const normalizeNotification = (notification = {}) => ({
   subject: notification.subject || '',
   message: notification.message || '',
   status: NOTIFICATION_STATUSES.includes(notification.status) ? notification.status : notification.status || 'PENDING',
+  readAt: notification.readAt || null,
+  clearedAt: notification.clearedAt || null,
+  read: notification.read === true || Boolean(notification.readAt),
   sentAt: notification.sentAt || null,
   createdAt: notification.createdAt || '',
 });

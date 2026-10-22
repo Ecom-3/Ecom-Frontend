@@ -74,25 +74,37 @@ export const normalizeOrderItem = (item = {}) => ({
   image: item.image || item.imageUrl || item.productImage || item.thumbnailUrl || '',
 });
 
+export const isGlobalOrder = (order = {}) => {
+  const type = String(order.fulfillmentType || order.deliveryMethod || '').toLowerCase();
+  const channel = String(order.channel || '').toLowerCase();
+  const approval = String(order.globalApproval || '').toLowerCase();
+  return type === 'global' || order.storeId === 'global-store' || approval === 'pending' || channel.includes('global') || channel.includes('7-10 days delivery') || channel.includes('5-7 days delivery');
+};
+
 export const normalizeOrder = (order = {}) => {
   const items = (Array.isArray(order.items) ? order.items : Array.isArray(order.orderItems) ? order.orderItems : []).map(normalizeOrderItem);
   const addresses = Array.isArray(order.addresses) ? order.addresses : [];
   const shippingAddress = order.shippingAddress || addresses.find((address) => address.addressType === 'SHIPPING') || addresses[0] || null;
   const billingAddress = order.billingAddress || addresses.find((address) => address.addressType === 'BILLING') || shippingAddress;
   const fulfillmentType = order.fulfillmentType || (order.deliveryMethod === 'global' || order.storeId === 'global-store' ? 'global' : order.deliveryMethod);
+  const normalized = { ...order, fulfillmentType };
+  const global = isGlobalOrder(normalized);
+  const deliveryLabel = global ? '7-10 days delivery' : order.deliveryLabel;
   return {
-    ...order,
+    ...normalized,
     id: order.id || order.orderId || '',
     orderId: order.orderId || order.id || '',
     status: ORDER_STATUSES.includes(order.status) ? order.status : 'CREATED',
     paymentStatus: order.paymentStatus === 'PAID' ? 'SUCCESS' : PAYMENT_STATUSES.includes(order.paymentStatus) ? order.paymentStatus : 'PENDING',
     totalAmount: Number(order.totalAmount ?? order.total ?? 0),
-    items,
+    items: items.map((item) => ({ ...item, ...(global ? { deliveryLabel: item.deliveryLabel || deliveryLabel, sourceStore: item.sourceStore || order.sourceStore || order.store || 'India-wide Global Store' } : {}) })),
     addresses,
     shippingAddress,
     billingAddress,
     fulfillmentType,
-    channel: order.channel || (fulfillmentType === 'global' ? '5-7 Days Delivery' : order.channel),
+    deliveryLabel,
+    estimatedDelivery: global ? '7-10 days' : order.estimatedDelivery,
+    channel: order.channel || (global ? '7-10 Days Delivery' : order.channel),
   };
 };
 

@@ -1,4 +1,4 @@
-import { useContext, useRef } from 'react';
+import { useContext, useEffect, useState, useRef } from 'react';
 import { Box, Typography, InputBase, Badge } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
@@ -22,6 +22,14 @@ const Header = () => {
   const animatedPlaceholder = useAnimatedPlaceholder();
   const searchInputRef = useRef(null);
   const { isLoggedIn, user, cartCount, openCart, selectedLocation, homeSearchQuery, setHomeSearchQuery, t, locale, setShowLocationModal, savedForLater } = useContext(AppContext);
+  const [clockTime, setClockTime] = useState(() => new Date());
+  useEffect(() => {
+    const timer = window.setInterval(() => setClockTime(new Date()), 1000);
+    return () => window.clearInterval(timer);
+  }, []);
+  const selectedZoneTime = new Intl.DateTimeFormat(locale.language === 'Hindi' ? 'hi-IN' : locale.language === 'Telugu' ? 'te-IN' : 'en-IN', {
+    timeZone: locale.timeZone || 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true,
+  }).format(clockTime);
   const cleanLabel = (value) => String(value || '').split(',').map((part) => part.trim()).filter((part) => part && !/^undefined$/i.test(part) && !/^null$/i.test(part)).join(', ');
   const selectedLocationLabel = cleanLabel(selectedLocation?.address || [selectedLocation?.title, selectedLocation?.city].filter(Boolean).join(', '));
   const deliveryLabel = selectedLocationLabel || t('selectDeliveryLocation');
@@ -80,6 +88,10 @@ const Header = () => {
       </Box>
 
       <Box className="header-right">
+        <Box className="header-time" aria-label={`Current time in ${locale.timeZone || 'selected time zone'}: ${selectedZoneTime}`} title={locale.timeZone || 'Selected time zone'}>
+          <span className="header-time-value">{selectedZoneTime}</span>
+          <span className="header-time-zone">{locale.timeZone || 'Selected time zone'}</span>
+        </Box>
         <Box className="action-item" onClick={() => navigate('/settings/language')} title="Language, currency and time zone">
           <TranslateIcon className="action-icon" />
           <Typography className="action-text">{locale.language}</Typography>

@@ -1,7 +1,18 @@
 ﻿const NOMINATIM_BASE = 'https://nominatim.openstreetmap.org';
 const reverseGeocodeCache = new Map();
-let reverseGeocodeQueue = Promise.resolve();
-let lastReverseRequestAt = 0;
+let nominatimQueue = Promise.resolve();
+let lastNominatimRequestAt = 0;
+
+const queueNominatimRequest = (request) => {
+  const queued = nominatimQueue.then(async () => {
+    const waitMs = Math.max(0, 1000 - (Date.now() - lastNominatimRequestAt));
+    if (waitMs) await new Promise((resolve) => setTimeout(resolve, waitMs));
+    lastNominatimRequestAt = Date.now();
+    return request();
+  });
+  nominatimQueue = queued.catch(() => undefined);
+  return queued;
+};
 
 const fromIndiaPost = (row, pincode) => {
   const title = row.Name || row.Block || row.District || `Pincode ${pincode}`;
@@ -42,6 +53,7 @@ const normalizeAddress = (data) => {
     address: data.display_name || '',
     city: address.city || address.town || address.village || address.county || '',
     state: address.state || '',
+    country: address.country || '',
     pincode: address.postcode || '',
   };
 };
@@ -52,25 +64,21 @@ export const reverseGeocodeOpenStreetMap = (lat, lng, options = {}) => {
   const cacheKey = `${latitude.toFixed(6)},${longitude.toFixed(6)}`;
   if (reverseGeocodeCache.has(cacheKey)) return Promise.resolve(reverseGeocodeCache.get(cacheKey));
 
-  const request = async () => {
-    const waitMs = Math.max(0, 1000 - (Date.now() - lastReverseRequestAt));
-    if (waitMs) await new Promise((resolve) => setTimeout(resolve, waitMs));
-    lastReverseRequestAt = Date.now();
+  return queueNominatimRequest(async () => {
     const params = new URLSearchParams({ format: 'jsonv2', addressdetails: '1', lat: String(latitude), lon: String(longitude), zoom: '18', 'accept-language': 'en' });
     const response = await fetch(`${NOMINATIM_BASE}/reverse?${params}`, options);
+    if (response.status === 429) throw new Error('Address lookup is rate-limited. Please wait a moment and try again.');
     if (!response.ok) throw new Error('Location lookup failed.');
     const normalized = normalizeAddress(await response.json());
     if (normalized) reverseGeocodeCache.set(cacheKey, normalized);
     return normalized;
-  };
-
-  const queued = reverseGeocodeQueue.then(request, request);
-  reverseGeocodeQueue = queued.catch(() => undefined);
-  return queued;
+  });
 };
 
-export const geocodeOpenStreetMap = async (query) => {
-  const response = await fetch(`${NOMINATIM_BASE}/search?format=json&addressdetails=1&limit=1&q=${encodeURIComponent(query)}`);
+export const geocodeOpenStreetMap = (query, options = {}) => queueNominatimRequest(async () => {
+  const params = new URLSearchParams({ format: 'jsonv2', addressdetails: '1', limit: '1', countrycodes: 'in', 'accept-language': 'en', q: /\bindia\b/i.test(query) ? query : `${query}, India` });
+  const response = await fetch(`${NOMINATIM_BASE}/search?${params}`, options);
+  if (response.status === 429) throw new Error('Address search is rate-limited. Please wait a moment and try again.');
   if (!response.ok) throw new Error('Address lookup failed.');
   const data = await response.json();
   return data[0] ? {
@@ -83,7 +91,7 @@ export const geocodeOpenStreetMap = async (query) => {
     providerOsmId:String(data[0].osm_id || ''),
     locationAccuracyMeters:data[0].importance ? Math.max(10, Math.round((1 - Number(data[0].importance)) * 1000)) : null,
   } : null;
-};
+});
 
 export const openStreetMapLocationUrl = ({ lat, lng, zoom = 17 }) => `https://www.openstreetmap.org/?mlat=${encodeURIComponent(lat)}&mlon=${encodeURIComponent(lng)}#map=${zoom}/${encodeURIComponent(lat)}/${encodeURIComponent(lng)}`;
 export const openStreetMapDirectionsUrl = ({ origin, destination }) => `https://www.openstreetmap.org/directions?engine=fossgis_osrm_car&route=${encodeURIComponent(origin)}%3B${encodeURIComponent(destination)}`;

@@ -1,7 +1,6 @@
 ﻿import { useContext, useEffect, useState } from 'react';
 import { Box, Typography, Button, IconButton, Chip } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
@@ -21,10 +20,11 @@ const COMPLETED_CHECKOUT_RETURN_KEY = 'freshcart.completedCheckoutReturnToCart';
 
 const CartPage = () => {
   const navigate = useNavigate();
-  const { cartItems, updateQuantity, removeFromCart, clearCart, deliveryAddress, saveItemForLater, savedForLater, restoreSavedItem, removeSavedForLater, formatCurrency, cartTotal, cartLoading, cartError, cartUnavailable, isLoggedIn, user, addresses, catalogProducts, catalogItemKey, deliveryMode, setDeliveryMode, selectedLocation } = useContext(AppContext);
+  const { cartItems, updateQuantity, removeFromCart, clearCart, saveItemForLater, savedForLater, restoreSavedItem, removeSavedForLater, formatCurrency, cartTotal, cartLoading, cartError, cartUnavailable, isLoggedIn, user, addresses, catalogProducts, catalogItemKey, deliveryMode, setDeliveryMode, selectedLocation } = useContext(AppContext);
   const [deliveryLines, setDeliveryLines] = useState([]);
   const [deliveryError, setDeliveryError] = useState('');
   const [offerCode] = useState(() => localStorage.getItem(PENDING_COUPON_KEY) || '');
+  const [couponResult, setCouponResult] = useState(null);
   const goToCheckout = () => {
     sessionStorage.removeItem(COMPLETED_CHECKOUT_RETURN_KEY);
     if (!isLoggedIn) {
@@ -62,7 +62,13 @@ const CartPage = () => {
   }, [hasGlobalCart, deliveryMode, setDeliveryMode]);
   const deliveryCharge = 0;
   const couponContext = cartPromotionContext({ cartItems, catalogProducts });
-  const couponResult = offerCode ? validateCouponCode(offerCode, { subtotal: grandTotal, cartItems, catalogProducts, location: couponContext.location, store: couponContext.store }) : null;
+  useEffect(() => {
+    let ignore=false;
+    if(!offerCode){setCouponResult(null);return undefined;}
+    setCouponResult(null);
+    validateCouponCode(offerCode,{subtotal:grandTotal,location:couponContext.location,store:couponContext.store}).then((result)=>{if(!ignore)setCouponResult(result);});
+    return()=>{ignore=true;};
+  },[offerCode,grandTotal,couponContext.location,couponContext.store]);
   const offerDiscount = couponResult?.valid ? calculateCouponDiscount(couponResult.coupon, grandTotal) : 0;
   const cartTotalWithDelivery = grandTotal + deliveryCharge - offerDiscount;
   const offerMessage = offerCode ? (couponResult?.valid ? `${offerCode} applied. You saved ${formatCurrency(offerDiscount)}.` : couponResult?.message || 'Offer could not be applied.') : '';
@@ -171,7 +177,7 @@ const CartPage = () => {
                 <Box className="slot-banner">
                   <StorefrontOutlinedIcon className="slot-store-icon" />
                   <span className="slot-text">
-                    {deliveryMode === 'pickup' ? `Pick-up | ${group.line.storeName || group.items[0]?.storeName || group.items[0]?.store || 'Store'} | ${group.items.length} item${group.items.length === 1 ? '' : 's'}` : group.line.fulfillmentType === 'global' ? `Global Delivery | Delivered in 5-7 days | ${group.items.length} Item${group.items.length === 1 ? '' : 's'}` : `${group.line.deliveryLabel || 'Calculating delivery'} | ${group.line.storeName || 'Store checking'} | ${group.items.length} item${group.items.length === 1 ? '' : 's'}`}
+                    {deliveryMode === 'pickup' ? `Pick-up | ${group.line.storeName || group.items[0]?.storeName || group.items[0]?.store || 'Store'} | ${group.items.length} item${group.items.length === 1 ? '' : 's'}` : group.line.fulfillmentType === 'global' ? `Global Delivery | Delivered in 7-10 days | ${group.items.length} Item${group.items.length === 1 ? '' : 's'}` : `${group.line.deliveryLabel || 'Calculating delivery'} | ${group.line.storeName || 'Store checking'} | ${group.items.length} item${group.items.length === 1 ? '' : 's'}`}
                   </span>
                   <Chip className="verified-store-chip" size="small" label={`${group.items.length} item${group.items.length === 1 ? '' : 's'}`} />
                 </Box>
@@ -184,7 +190,7 @@ const CartPage = () => {
                       <Typography component="button" className="slot-item-title" onClick={() => navigate(`/product-info/${encodeURIComponent(item.productId || item.id)}`)} sx={{ border:0, bgcolor:'transparent', textAlign:'left', cursor:'pointer' }}>{item.title}</Typography>
                       <Typography className="slot-item-weight">{item.weight}</Typography>
                       <Typography className="slot-item-store">{storeLabelFor(item)}</Typography>
-                      <Typography className="slot-item-weight">{deliveryMode === 'pickup' ? 'Pick-up from store' : lineFor(item).fulfillmentType === 'global' ? 'Delivered in 5-7 days' : lineFor(item).estimatedDelivery || 'Checking ETA'}</Typography>
+                      <Typography className="slot-item-weight">{deliveryMode === 'pickup' ? 'Pick-up from store' : lineFor(item).fulfillmentType === 'global' ? 'Delivered in 7-10 days' : lineFor(item).estimatedDelivery || 'Checking ETA'}</Typography>
                       <Box sx={{ display: 'flex', gap: 1 }}><Button size="small" disabled={cartLoading} onClick={() => saveItemForLater(item)} sx={{ p: 0, minWidth: 0, textTransform: 'none' }}>Save for later</Button><Button size="small" disabled={cartLoading} color="error" onClick={() => removeFromCart(item.productId, item.variantId, item.storeId)} sx={{ p: 0, minWidth: 0, textTransform: 'none' }}>Remove</Button></Box>
                       <Typography className="slot-item-price">{formatCurrency(Number(item.price) * Number(item.quantity))}</Typography>
                     </Box>
@@ -217,7 +223,7 @@ const CartPage = () => {
                 <Typography className="bill-section-title">Item Delivery Breakdown</Typography>
                 <Box className="bill-title-line" />
               </Box>
-              {deliveryGroups.map((group, index) => <Box className="bill-data-row" key={group.key}><Typography className="bill-item-label">Order {index + 1}: {group.line.fulfillmentType === 'global' ? 'Global Fulfillment' : group.line.storeName || 'Store not mapped'} | {group.items.length} Item{group.items.length === 1 ? '' : 's'}</Typography><Typography className="bill-item-value">{group.line.fulfillmentType === 'global' ? '5-7 days delivery' : group.line.deliveryLabel}</Typography></Box>)}
+              {deliveryGroups.map((group, index) => <Box className="bill-data-row" key={group.key}><Typography className="bill-item-label">Order {index + 1}: {group.line.fulfillmentType === 'global' ? 'Global Fulfillment' : group.line.storeName || 'Store not mapped'} | {group.items.length} Item{group.items.length === 1 ? '' : 's'}</Typography><Typography className="bill-item-value">{group.line.fulfillmentType === 'global' ? '7-10 days delivery' : group.line.deliveryLabel}</Typography></Box>)}
             </Box>}
 
             {/* You May Also Like Section */}
@@ -256,7 +262,6 @@ const CartPage = () => {
               </Box>
               <Button variant="contained" className="summary-checkout-button" onClick={goToCheckout} disabled={cartLoading}>Proceed to Checkout <span>→</span></Button>
             </Box>
-            <Box className="cart-address-card"><HomeOutlinedIcon /><Box><strong>{deliveryMode === 'pickup' ? 'Pick up from' : 'Delivering to'}</strong><span>{deliveryMode === 'pickup' ? (cartItems[0]?.storeName || cartItems[0]?.store || 'Selected store') : (selectedLocation?.address || deliveryAddress || 'Choose delivery address')}</span></Box><Button onClick={() => navigate('/address-map', { state: { returnTo: '/cart' } })}>Change</Button></Box>
             <Box className="cart-benefits-card">
               <Box><StorefrontOutlinedIcon /><span><strong>Multiple Stores</strong><small>Items from each store are grouped separately.</small></span></Box>
               <Box><LocalShippingOutlinedIcon /><span><strong>Store Delivery</strong><small>Delivery options are confirmed at checkout.</small></span></Box>

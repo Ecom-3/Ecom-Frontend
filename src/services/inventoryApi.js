@@ -22,23 +22,32 @@ export const getInventories = async (params = {}) => {
   return request(`/api/v1/inventories${buildQueryString({ productId, variantId, storeId, status })}`);
 };
 export const getInventoryForItem = ({ storeId, productId, variantId }) => request(`/api/v1/inventories${buildQueryString({ storeId, productId, variantId })}`);
+const inventoryRows = (payload) => Array.isArray(payload)
+  ? payload
+  : payload?.content || payload?.items || payload?.data || payload?.inventories || (payload ? [payload] : []);
+const sameId = (left, right) => String(left ?? '') === String(right ?? '');
+const matchingInventory = (payload, { storeId, productId, variantId }) => {
+  const rows = inventoryRows(payload).filter((item) => sameId(item.storeId, storeId) && sameId(item.productId, productId));
+  if (variantId) {
+    const exact = rows.find((item) => sameId(item.variantId, variantId));
+    if (exact) return exact;
+  }
+  return rows.find((item) => !item.variantId) || null;
+};
 export const findInventoryForItem = async ({ storeId, productId, variantId }) => {
-  const attempts = [];
-  if (variantId) attempts.push({ storeId, productId, variantId });
-  attempts.push({ storeId, productId });
-  for (const query of attempts) {
+  const queries = variantId
+    ? [{ storeId, productId, variantId }, { storeId, productId }]
+    : [{ storeId, productId }];
+  for (const query of queries) {
     try {
-      return await getInventoryForItem(query);
+      const match = matchingInventory(await getInventoryForItem(query), { storeId, productId, variantId });
+      if (match) return match;
     } catch (error) {
       if (Number(error.status) !== 404) throw error;
     }
   }
   const payload = await getInventories({ storeId, status: 'ACTIVE' });
-  const rows = Array.isArray(payload) ? payload : payload?.content || payload?.items || payload?.data || payload?.inventories || [];
-  const exact = rows.find((item) => item.productId === productId && (variantId ? item.variantId === variantId : true));
-  const productLevel = rows.find((item) => item.productId === productId && !item.variantId);
-  const anyActiveProductRow = rows.find((item) => item.productId === productId);
-  const match = exact || productLevel || anyActiveProductRow;
+  const match = matchingInventory(payload, { storeId, productId, variantId });
   if (!match) {
     const error = new Error('Inventory not found for product and store');
     error.status = 404;

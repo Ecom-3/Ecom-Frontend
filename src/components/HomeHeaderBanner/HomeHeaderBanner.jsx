@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Box, Typography, InputBase, Badge } from '@mui/material';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -19,6 +19,7 @@ import GrainOutlinedIcon from '@mui/icons-material/GrainOutlined';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import { useAnimatedPlaceholder } from '../../hooks/useAnimatedPlaceholder';
+import { getAllCustomerNotifications, normalizeNotification } from '../../services/notificationApi';
 import logo from '../../assets/images/logo.png';
 import mangoPickleImg from '../../assets/images/mango_pickle_jar.png';
 import './HomeHeaderBanner.css';
@@ -26,7 +27,21 @@ import './HomeHeaderBanner.css';
 const HomeHeaderBanner = () => {
   const navigate = useNavigate();
   const animatedPlaceholder = useAnimatedPlaceholder();
-  const { userCity, selectedCategory, setSelectedCategory, homeSearchQuery, setHomeSearchQuery, cartCount, savedForLater } = useContext(AppContext);
+  const { userCity, selectedCategory, setSelectedCategory, homeSearchQuery, setHomeSearchQuery, cartCount, savedForLater, user, isLoggedIn } = useContext(AppContext);
+  const [unreadNotifications, setUnreadNotifications] = useState(0);
+  useEffect(() => {
+    if (!isLoggedIn || !user?.id) { setUnreadNotifications(0); return undefined; }
+    let active = true;
+    const loadUnread = async () => {
+      try {
+        const rows = await getAllCustomerNotifications(user.id);
+        if (active) setUnreadNotifications(rows.map(normalizeNotification).filter((item) => !item.read).length);
+      } catch { if (active) setUnreadNotifications(0); }
+    };
+    loadUnread();
+    const timer = window.setInterval(loadUnread, 60000);
+    return () => { active = false; window.clearInterval(timer); };
+  }, [isLoggedIn, user?.id]);
 
   const categories = [
     { name: 'All', icon: <AllInclusiveOutlinedIcon fontSize="small" /> },
@@ -83,8 +98,8 @@ const HomeHeaderBanner = () => {
             </Badge>
             <Typography className="banner-action-label">Saved</Typography>
           </Box>
-          <Box className="banner-action-item" onClick={() => navigate('/notifications')}>
-            <NotificationsNoneOutlinedIcon style={{ fontSize: 22, color: '#ffffff' }} />
+          <Box className="banner-action-item" role="button" tabIndex={0} aria-label={`Notifications${unreadNotifications ? `, ${unreadNotifications} unread` : ''}`} onClick={() => navigate('/notifications')} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); navigate('/notifications'); } }}>
+            <Badge badgeContent={unreadNotifications} color="error" className="banner-cart-badge"><NotificationsNoneOutlinedIcon style={{ fontSize: 22, color: '#ffffff' }} /></Badge>
             <Typography className="banner-action-label">Notifications</Typography>
           </Box>
           <Box className="banner-action-item" onClick={() => navigate('/cart')}>

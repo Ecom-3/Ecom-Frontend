@@ -25,34 +25,29 @@ const DigitalTimePicker = ({ slots = [], value = '', onChange, label = 'Availabl
     minute: ['00', '15', '30', '45'],
     period: ['AM', 'PM'],
   };
+  const choose = (field, option) => onChange(nearestOption(slots, field, option, selected)?.value || '');
 
-  const renderColumn = (field, title) => <Box className="digital-clock-column" role="group" aria-label={title}>
-    <Typography component="span" className="digital-clock-column-title">{title}</Typography>
-    <Box className={`digital-clock-scroll digital-clock-scroll-${field}`} role="listbox" aria-label={title} tabIndex={0} onKeyDown={(event) => {
-      if (!['ArrowUp', 'ArrowDown'].includes(event.key) || !options[field].length) return;
-      event.preventDefault();
-      const currentIndex = Math.max(0, options[field].indexOf(parts?.[field]));
-      const delta = event.key === 'ArrowDown' ? 1 : -1;
-      const next = options[field][(currentIndex + delta + options[field].length) % options[field].length];
-      onChange(nearestOption(slots, field, next, selected)?.value || '');
-    }} onWheel={(event) => {
-      if (!options[field].length) return;
-      event.preventDefault();
-      const currentIndex = Math.max(0, options[field].indexOf(parts?.[field]));
-      const delta = event.deltaY > 0 ? 1 : -1;
-      const next = options[field][(currentIndex + delta + options[field].length) % options[field].length];
-      onChange(nearestOption(slots, field, next, selected)?.value || '');
-    }}>
-      {options[field].map((option) => <button type="button" role="option" aria-selected={parts?.[field] === option} key={option} className={`digital-clock-flap ${parts?.[field] === option ? 'selected' : ''}`} onClick={() => onChange(nearestOption(slots, field, option, selected)?.value || '')}><span>{option}</span></button>)}
-    </Box>
+  const renderDial = (field, title, radius = 0) => <Box className={`round-clock-options round-clock-${field}`} role="group" aria-label={title}>
+    {options[field].map((option, index) => {
+      const angle = (index / options[field].length) * Math.PI * 2 - Math.PI / 2;
+      const style = radius ? { left: `${50 + Math.cos(angle) * radius}%`, top: `${50 + Math.sin(angle) * radius}%` } : undefined;
+      const active = parts?.[field] === option;
+      return <button type="button" key={option} style={style} className={`round-clock-option ${active ? 'selected' : ''}`} aria-pressed={active} onClick={() => choose(field, option)}>{option}</button>;
+    })}
   </Box>;
 
   if (!slots.length) return <Typography className="digital-clock-empty">No valid times are available for this date.</Typography>;
   return <Box className="digital-clock-picker">
     <Typography className="digital-clock-preview-label">{label}</Typography>
-    <Typography className="digital-clock-preview" aria-live="polite">{selected?.label || 'Choose a time'}</Typography>
-    <Box className="digital-clock-columns">{renderColumn('hour', 'Hour')}<span className="digital-clock-colon">:</span>{renderColumn('minute', 'Minute')}{renderColumn('period', 'AM/PM')}</Box>
-    <Typography className="digital-clock-help">Choose any hour from 1 to 12 and a quarter-hour time. This is a requested time and may need store confirmation.</Typography>
+    <Box className="round-clock" role="group" aria-label="Choose a delivery time">
+      {renderDial('hour', 'Hour', 39)}
+      <Box className="round-clock-center">
+        <span className="round-clock-time" aria-live="polite">{selected?.label || 'Choose time'}</span>
+        {renderDial('minute', 'Minute')}
+        {renderDial('period', 'AM or PM')}
+      </Box>
+    </Box>
+    <Typography className="digital-clock-help">Select an hour, quarter-hour, and AM/PM. This is a requested time and may need store confirmation.</Typography>
   </Box>;
 };
 

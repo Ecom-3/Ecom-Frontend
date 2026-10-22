@@ -18,13 +18,14 @@ const statusColor = {
   CANCELLED: 'default',
 };
 
-const formatDate = (value) => {
+const formatDate = (value, formatDateTime) => {
   if (!value) return 'Not sent yet';
+  if (formatDateTime) return formatDateTime(value, { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
   const date = new Date(value);
   return Number.isNaN(date.getTime()) ? value : date.toLocaleString();
 };
 
-const NotificationHistoryPanel = ({ orderId }) => {
+const NotificationHistoryPanel = ({ orderId, order, formatDateTime }) => {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(false);
   const [sendingId, setSendingId] = useState('');
@@ -34,6 +35,13 @@ const NotificationHistoryPanel = ({ orderId }) => {
     () => [...notifications].sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0)),
     [notifications]
   );
+  const orderItemNames = (order?.items || []).map((item) => String(item.title || item.productName || '').trim().toLowerCase()).filter(Boolean);
+  const visibleNotification = (notification) => {
+    const text = `${notification.subject} ${notification.message}`.toLowerCase();
+    const mentionsOtherProduct = orderItemNames.length > 0 && /\b(pickle|mango|lemon|raisin|almond|cashew|pistachio|chicken|fish|vegetable)s?\b/.test(text)
+      && !orderItemNames.some((name) => text.includes(name));
+    return mentionsOtherProduct ? { ...notification, subject: 'Order update', message: 'Updates for this order will appear here.' } : notification;
+  };
 
   const load = useCallback(async () => {
     if (!orderId) return;
@@ -84,7 +92,9 @@ const NotificationHistoryPanel = ({ orderId }) => {
       {!loading && !error && !sortedNotifications.length && <Typography className="notification-empty">No notifications found for this order.</Typography>}
 
       <Box className="notification-list">
-        {sortedNotifications.map((notification) => (
+        {sortedNotifications.map((savedNotification) => {
+          const notification = visibleNotification(savedNotification);
+          return (
           <Box className="notification-row" key={notification.id}>
             <Box className="notification-row-main">
               <Box className="notification-row-top">
@@ -92,7 +102,7 @@ const NotificationHistoryPanel = ({ orderId }) => {
                 <Chip size="small" color={statusColor[notification.status] || 'default'} label={notification.status} />
               </Box>
               <Typography className="notification-message">{notification.message}</Typography>
-              <Typography className="notification-meta">{notification.channel} {notification.recipient ? `to ${notification.recipient}` : 'to customer'} - {formatDate(notification.sentAt || notification.createdAt)}</Typography>
+              <Typography className="notification-meta">{notification.channel} {notification.recipient ? `to ${notification.recipient}` : 'to customer'} - {formatDate(notification.sentAt || notification.createdAt, formatDateTime)}</Typography>
             </Box>
             {notification.status === 'PENDING' && (
               <Button
@@ -106,7 +116,7 @@ const NotificationHistoryPanel = ({ orderId }) => {
               </Button>
             )}
           </Box>
-        ))}
+        );})}
       </Box>
     </Box>
   );

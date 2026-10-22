@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import { hasCompleteProfile } from '../../utils/profileCompletion';
 import { checkoutReviewError } from '../../utils/checkoutPolicy';
-import { calculateCouponDiscount, cartPromotionContext, consumePendingCouponCode, findCouponByCode, validateCoupon } from '../../services/couponService';
+import { calculateCouponDiscount, cartPromotionContext, consumePendingCouponCode, validateCouponCode } from '../../services/couponService';
 import { getCachedStoreDeliveryQuote } from '../../services/catalogApi';
 import { resolveProductStore } from '../../services/productStoreResolver';
 import { totalDeliveryCharge } from '../../services/cartDeliveryLines';
@@ -75,6 +75,7 @@ const CheckoutPage = () => {
   const [coupon, setCoupon] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [couponMessage, setCouponMessage] = useState('');
+  const [couponBusy, setCouponBusy] = useState(false);
   const [error, setError] = useState('');
   useEffect(() => {
     if (sessionStorage.getItem(COMPLETED_CHECKOUT_RETURN_KEY)) navigate('/cart', { replace: true });
@@ -202,7 +203,7 @@ const CheckoutPage = () => {
       itemTotal: Number(item.price || item.unitPrice || 0) * Number(item.quantity || 0),
       storeId: group.storeId, storeName: group.name, sourceLocation: group.store.location || '',
     });
-    if (group.global) return group.items.map((item) => ({ ...baseLine(item), deliveryType: 'global', deliveryLabel: 'Global Delivery', estimatedDelivery: '5-7 days delivery', deliveryCharge: 0, fulfillmentType: 'global', globalApproval: 'Pending', quote }));
+    if (group.global) return group.items.map((item) => ({ ...baseLine(item), deliveryType: 'global', deliveryLabel: 'Global Delivery', estimatedDelivery: '7-10 days delivery', deliveryCharge: 0, fulfillmentType: 'global', globalApproval: 'Pending', quote }));
     if (!selection) return group.items.map((item) => ({ ...baseLine(item), deliveryType: '', deliveryLabel: '', estimatedDelivery: '', deliveryCharge: 0, fulfillmentType: 'nearby', globalApproval: 'Not Required', quoteUnavailable: true, notConfigured: true }));
     if (selection.fulfillment === 'pickup') return group.items.map((item) => ({
       ...baseLine(item), deliveryType: 'pickup', deliveryLabel: 'Store Pickup', estimatedDelivery: '', deliveryCharge: 0,
@@ -321,24 +322,27 @@ const CheckoutPage = () => {
     updateStoreSelection(setFulfillmentByStore, group.id, { date: '', slot: '' });
   };
 
-  const applyCouponCode = (value) => {
+  const applyCouponCode = async (value) => {
     const code = String(value || '').trim().toUpperCase();
-    const match = findCouponByCode(code);
     const customerLocation = selectedLocation?.city || selectedAddress.manualLocation?.city || userCity || '';
     const context = cartPromotionContext({ cartItems, catalogProducts, fallbackLocation: customerLocation, fallbackStore: selectedStore?.name || sourceStoreName || '' });
-    const result = validateCoupon(match, { subtotal, cartItems, catalogProducts, location: context.location || customerLocation, store: context.store });
     setCoupon(code);
+    if(!code){setAppliedCoupon(null);setCouponMessage('Enter a coupon code.');return false;}
+    setCouponBusy(true);setCouponMessage('Checking coupon...');
+    const result=await validateCouponCode(code,{subtotal,location:context.location||customerLocation,store:context.store});
     if (!result.valid) {
       setAppliedCoupon(null);
       setCouponMessage(result.message);
+      setCouponBusy(false);
       return false;
     }
-    setAppliedCoupon(match);
+    setAppliedCoupon(result.coupon);
     setCouponMessage(result.message);
+    setCouponBusy(false);
     return true;
   };
 
-  const applyCoupon = () => applyCouponCode(coupon);
+  const applyCoupon = () => { void applyCouponCode(coupon); };
 
   useEffect(() => {
     const pending = consumePendingCouponCode();
@@ -349,7 +353,7 @@ const CheckoutPage = () => {
 
   const proceed = () => {
     if (!cartItems.length) return setError('Your cart is empty.');
-    const policyError = checkoutReviewError({ groupCount: deliveryGroups.length, handlingFee, discount, coupon: appliedCoupon?.name });
+    const policyError = checkoutReviewError({ groupCount: deliveryGroups.length, handlingFee, discount, coupon: appliedCoupon?.name, promotionVerified:Boolean(appliedCoupon) });
     if (policyError) return setError(policyError);
     if (hasDeliverySelection && !(selectedLocation?.address || deliveryAddress)) return setError('Select a delivery address for the stores using delivery.');
     if (quoteLoading) return setError('Store delivery availability is still loading.');
@@ -385,7 +389,7 @@ const CheckoutPage = () => {
       globalApproval: isGlobalReview ? 'Pending' : 'Not Required', deliveryLines,
       sourceStoreId: sourceStoreId, sourceStore: sourceStoreName, sourceLocation: selectedStore?.location || '', sourceState: selectedStore?.state || '',
       date: firstLine.scheduleDate || '', slot: firstLine.scheduleSlot || '',
-      notes: notes.trim(), coupon: appliedCoupon?.name || '', discount, subtotal, deliveryFee,
+      notes: notes.trim(), coupon: appliedCoupon?.name || '', discount, promotionVerified:Boolean(appliedCoupon), subtotal, deliveryFee,
       handlingFee, total, deliveryAddress: hasDeliverySelection ? (selectedLocation?.address || deliveryAddress) : '',
       contactNumber: contactPhone, customerLocation: userCity,
       deliveryQuote: deliveryLines.find((line) => line.fulfillmentType !== 'global' && line.quote)?.quote || null,
@@ -491,7 +495,7 @@ const CheckoutPage = () => {
                   </button>
                   {expanded && <Box className="checkout-store-accordion-content">
                   <Box className="checkout-store-fulfillment-heading"><Box><strong>{group.name}</strong><small>{group.items.length} item{group.items.length === 1 ? '' : 's'} in this store</small></Box><b>{formatCurrency(group.subtotal)}</b></Box>
-                  {group.global ? <Box className="checkout-global-fulfillment"><LocalShippingOutlinedIcon /><Box><strong>Global delivery</strong><small>Estimated delivery: 5-7 days - No local pickup</small></Box></Box> : <>
+                  {group.global ? <Box className="checkout-global-fulfillment"><LocalShippingOutlinedIcon /><Box><strong>Global delivery</strong><small>Estimated delivery: 7-10 days - No local pickup</small></Box></Box> : <>
                     <Box className="checkout-mode-switch" role="group" aria-label={`${group.name} fulfillment`}>
                       <button type="button" className={selection.fulfillment === 'delivery' ? 'selected' : ''} aria-pressed={selection.fulfillment === 'delivery'} onClick={() => { updateStoreSelection(setFulfillmentByStore, group.id, { fulfillment: 'delivery', date: '', slot: '' }); setError(''); }}><LocalShippingOutlinedIcon /> Delivery</button>
                       <button type="button" disabled={!pickupAvailableForStore} className={selection.fulfillment === 'pickup' ? 'selected' : ''} aria-pressed={selection.fulfillment === 'pickup'} onClick={() => { updateStoreSelection(setFulfillmentByStore, group.id, { fulfillment: 'pickup', pickupTiming: 'asap', date: '', slot: '' }); setError(''); }}><StorefrontOutlinedIcon /> Store pickup</button>
@@ -557,7 +561,7 @@ const CheckoutPage = () => {
               <Box><Typography component="h2">4. Order Notes <small>(Optional)</small></Typography><small>Anything we should know before delivery?</small></Box>
             </Box>
             <TextField fullWidth className="checkout-notes-field" placeholder="Add special instructions for delivery (e.g. gate code, landmark, leave at door, etc.)" multiline minRows={2} value={notes} onChange={(event) => setNotes(event.target.value)} />
-            <Box className="checkout-coupon-row"><TextField fullWidth size="small" label="Coupon code" value={coupon} onChange={(event) => { setCoupon(event.target.value.toUpperCase()); setAppliedCoupon(null); setCouponMessage(''); }} helperText={couponMessage || 'Use SAVE10 or an admin-created coupon.'} error={Boolean(couponMessage && !appliedCoupon)} color={appliedCoupon ? 'success' : 'primary'} /><Button variant="outlined" onClick={applyCoupon}>{appliedCoupon ? 'Applied' : 'Apply'}</Button></Box>
+            <Box className="checkout-coupon-row"><TextField fullWidth size="small" label="Coupon code" value={coupon} onChange={(event) => { setCoupon(event.target.value.toUpperCase()); setAppliedCoupon(null); setCouponMessage(''); }} helperText={couponMessage || 'Try TEST10 or TEST100.'} error={Boolean(couponMessage && !appliedCoupon && !couponBusy)} color={appliedCoupon ? 'success' : 'primary'} /><Button variant="outlined" onClick={applyCoupon} disabled={couponBusy}>{couponBusy?'Checking...':appliedCoupon ? 'Applied' : 'Apply'}</Button></Box>
           </Box>
         </Box>
 
@@ -576,7 +580,7 @@ const CheckoutPage = () => {
                 <Box className="checkout-summary-store-heading"><StorefrontOutlinedIcon /><strong>{group.name}</strong><span className={`checkout-fulfillment-pill ${isGlobalStore ? 'global' : ''}`}>{isGlobalStore ? 'Global' : isConfigured ? isPickupStore ? 'Pick-up' : 'Delivery' : 'Not configured'}</span></Box>
                 {group.items.map((item) => <Box className="checkout-summary-item" key={`${item.storeId}:${item.productId}:${item.variantId}`}>
                   <SafeProductImage className="checkout-summary-image" src={item.image} alt={item.title} />
-                  <Box className="checkout-summary-item-copy"><strong>{item.title}</strong><small>{item.weight || 'Product'}</small><b>{formatCurrency(Number(item.price) * Number(item.quantity))}</b></Box>
+                  <Box className="checkout-summary-item-copy"><strong>{item.title}</strong><small>{item.weight || 'Product'} · {item.quantity} × {formatCurrency(Number(item.price ?? item.unitPrice ?? 0))}</small><b>{formatCurrency(Number(item.price ?? item.unitPrice ?? 0) * Number(item.quantity))}</b></Box>
                   <span className="checkout-summary-quantity">{item.quantity}</span>
                 </Box>)}
                 <Box className="checkout-summary-store-service"><span>{isConfigured ? storeLine.deliveryLabel || 'Fulfillment' : 'Choose a fulfillment option'}</span><strong>{isConfigured && storeCharge ? formatCurrency(storeCharge) : isConfigured ? 'No charge' : ''}</strong></Box>
@@ -585,7 +589,7 @@ const CheckoutPage = () => {
               </Box>;
             })}
           </Box>
-          {appliedCoupon && <Box className="checkout-summary-discount"><LocalOfferOutlinedIcon /><span>Promotion applied</span><strong>-{formatCurrency(discount)}</strong></Box>}
+          {appliedCoupon && <Box className="checkout-summary-discount"><LocalOfferOutlinedIcon /><span>Coupon {appliedCoupon.code || appliedCoupon.couponCode || 'applied'}</span><strong>Applied</strong></Box>}
           <Box className="checkout-summary-totals">
             <Box><span>Subtotal ({cartItems.length} items)</span><strong>{formatCurrency(subtotal)}</strong></Box>
             <Box><span>Delivery Fee</span><strong>{quoteLoading ? 'Calculatingâ€¦' : formatCurrency(deliveryFee)}</strong></Box>

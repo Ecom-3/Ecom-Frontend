@@ -34,12 +34,13 @@ const ProductInfo = () => {
   const [variantResult, setVariantResult] = useState(null);
   const [imageResult, setImageResult] = useState(null);
   const [selectionScope, setSelectionScope] = useState(targetId);
-  const [selectedVariantId, setSelectedVariantId] = useState('');
+  const initialVariantId = location.state?.product?.selectedVariant?.variantId || location.state?.product?.selectedVariant?.id || location.state?.product?.variantId || '';
+  const [selectedVariantId, setSelectedVariantId] = useState(initialVariantId);
   if (selectionScope !== targetId) {
     setSelectionScope(targetId);
     setImageIndex(0);
     setActiveLink(null);
-    setSelectedVariantId('');
+    setSelectedVariantId(initialVariantId);
   }
   const currentProductResult = productResult?.targetId === targetId ? productResult : null;
   const currentVariantResult = variantResult?.targetId === targetId ? variantResult : null;
@@ -115,19 +116,22 @@ const ProductInfo = () => {
   const variantsUnavailable = variantDataUnknown || (actualVariants.length > 0 && (!variantOptions.length || variantOptions.every((variant) => !variant.variantId && !variant.id)));
   const selectedWeight = selectedVariant?.label || selectedVariant?.weight || product.weight || '';
   const [stockResult, setStockResult] = useState(null);
+  const [stockAttempt, setStockAttempt] = useState(0);
   const stockVariantId = selectedVariant?.variantId ?? selectedVariant?.id ?? null;
   const stockScope = `${product.storeId}:${product.productId}:${stockVariantId}`;
   useEffect(() => {
-    if (!product.storeId || !product.productId) return;
+    if (!isLoggedIn || !product.storeId || !product.productId) return;
     let ignore = false;
     loadProductStock(findInventoryForItem, { storeId: product.storeId, productId: product.productId, variantId: stockVariantId })
       .then(stock => { if (!ignore) setStockResult({ scope: stockScope, ...stock }); });
     return () => { ignore = true; };
-  }, [product.storeId, product.productId, stockVariantId, stockScope]);
+  }, [isLoggedIn, product.storeId, product.productId, stockVariantId, stockScope, stockAttempt]);
   const stock = stockResult?.scope === stockScope ? stockResult : null;
-  const checkingStock = Boolean(product.storeId && catalogProduct && !stock);
+  const checkingStock = Boolean(isLoggedIn && product.storeId && catalogProduct && !stock);
 
-  const bestSellers = catalogProducts.filter((item) => item.productId !== targetId).slice(0, 3);
+  const bestSellers = catalogProducts.filter((item) => item.productId !== targetId
+    && (item.bestSeller === 'Yes' || item.bestSeller === true)
+    && item.category === product.category).slice(0, 3);
   const productImages = [product.image, ...(product.gallery || [])].filter((image, index, values) => image && values.indexOf(image) === index);
   const selectedImageIndex = Math.min(imageIndex, Math.max(0, productImages.length - 1));
   const externalLinks = [
@@ -150,7 +154,8 @@ const ProductInfo = () => {
   const cartItem = cartItems.find((item) => sameCatalogItem(item, { productId: product.productId, variantId: selectedVariant?.variantId || selectedVariant?.id, storeId: product.storeId }));
   const productQuantity = cartItem ? cartItem.quantity : 0;
   const insufficientStock = stock?.state === 'available' && productQuantity >= stock.available;
-  const isOutOfStock = stock?.state === 'out' || product.available === false || product.active === false || selectedVariant?.active === false || variantsUnavailable || insufficientStock;
+  const stockUnverified = Boolean(isLoggedIn && product.storeId && ['missing', 'error'].includes(stock?.state));
+  const isOutOfStock = stock?.state === 'out' || stockUnverified || product.available === false || product.active === false || selectedVariant?.active === false || variantsUnavailable || insufficientStock;
 
   const handleViewCart = () => {
     if (isLoggedIn) {
@@ -203,7 +208,7 @@ const ProductInfo = () => {
         <Box className="product-details-content">
           <Typography className="product-info-title">{product.title}</Typography>
           <Typography className="product-info-subtitle">
-            {product.subtitle || 'Not specified'}
+            {product.subtitle || [product.brand, product.category].filter(Boolean).join(' · ') || 'Not specified'}
           </Typography>
 
           {/* Weight Selectors */}
@@ -228,7 +233,7 @@ const ProductInfo = () => {
           <Typography className="product-description-text">
             {product.description || 'Not specified'}
           </Typography>
-          <Box className={`availability-status ${isOutOfStock ? 'out' : ''}`}><Typography>{productLoading || checkingStock ? 'Checking stock...' : stock?.state === 'available' && insufficientStock ? `Only ${stock.available} available` : stock?.state === 'available' ? `In stock${Number.isInteger(stock.available) ? ` (${stock.available})` : ''}` : stock?.state === 'out' || product.active === false || product.available === false || selectedVariant?.active === false ? 'Unavailable' : variantsUnavailable ? 'Variant options unavailable' : 'Stock status unknown'}</Typography></Box>
+          <Box className={`availability-status ${isOutOfStock ? 'out' : ''}`}><Typography>{productLoading || checkingStock ? 'Checking availability...' : stock?.state === 'available' && insufficientStock ? `Only ${stock.available} available` : stock?.state === 'available' ? `In stock${Number.isInteger(stock.available) ? ` (${stock.available})` : ''}` : stock?.state === 'missing' ? 'Currently unavailable' : stock?.state === 'error' ? 'Availability could not be confirmed. Please try again.' : stock?.state === 'out' || product.active === false || product.available === false || selectedVariant?.active === false ? 'Unavailable' : variantsUnavailable ? 'Variant options unavailable' : !isLoggedIn ? 'Sign in to check stock' : 'Stock availability could not be checked'}</Typography>{stock?.state === 'error' && <Button size="small" onClick={() => setStockAttempt((attempt) => attempt + 1)}>Check again</Button>}</Box>
 
           <Box className="info-block"><Typography className="info-block-heading">Ingredients</Typography><Typography>{product.ingredients || 'Not specified'}</Typography></Box>
           <Box className="info-block"><Typography className="info-block-heading">Specifications</Typography>{specifications.length ? <Box className="specification-list">{specifications.map((specification) => { const [label,...value]=specification.split(':');return <Box key={specification}><Typography>{label}</Typography><Typography>{value.join(':').trim() || '-'}</Typography></Box>; })}</Box> : <Typography>Not specified</Typography>}</Box>
@@ -258,14 +263,14 @@ const ProductInfo = () => {
 
           {/* Bestsellers Section */}
           <Box className="info-block bestsellers-block">
-            <Typography className="info-block-heading">Bestsellers</Typography>
+            <Typography className="info-block-heading">Bestsellers in {product.category || 'this category'}</Typography>
             <Box className="bestsellers-scroll-row">
-              {bestSellers.map((item) => (
+              {bestSellers.length ? bestSellers.map((item) => (
                 <ProductCard
                   key={`${item.storeId || ""}:${item.productId || item.id}`}
                   {...item}
                 />
-              ))}
+              )) : <Typography color="text.secondary">No products in this category are marked as bestsellers yet.</Typography>}
             </Box>
           </Box>
         </Box>
@@ -303,7 +308,7 @@ const ProductInfo = () => {
             <span className="sticky-qty-count">{productQuantity}</span>
             <button
               className="sticky-qty-btn"
-              disabled={cartLoading || productLoading || checkingStock || insufficientStock || !productPriceKnown}
+              disabled={cartLoading || productLoading || checkingStock || stockUnverified || isOutOfStock || insufficientStock || !productPriceKnown}
               onClick={handleAddProduct}
             >
               +
@@ -311,7 +316,7 @@ const ProductInfo = () => {
           </Box>
         ) : (
           <Button className="bottom-add-btn" disabled={!catalogProduct || productLoading || cartLoading || checkingStock || isOutOfStock || !productPriceKnown} onClick={handleAddProduct}>
-            {productLoading || checkingStock ? 'LOADING...' : cartLoading ? 'ADDING...' : !productPriceKnown ? 'PRICE UNAVAILABLE' : insufficientStock ? 'STOCK LIMIT' : isOutOfStock ? 'UNAVAILABLE' : 'ADD +'}
+            {productLoading || checkingStock ? 'CHECKING...' : cartLoading ? 'ADDING...' : !productPriceKnown ? 'PRICE UNAVAILABLE' : insufficientStock ? 'STOCK LIMIT' : stockUnverified ? 'CHECK AVAILABILITY' : isOutOfStock ? 'UNAVAILABLE' : 'ADD +'}
           </Button>
         )}
       </Box>

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { getFulfillmentByOrderId, getShipmentByOrderId, getTrackingEvents, isFulfillmentNotFound, normalizeFulfillment, normalizeShipment, normalizeTrackingEvent } from '../services/fulfillmentApi';
+import { isGlobalOrder } from '../services/orderApi';
 
 export const useFulfillmentTracking = (orderId, order) => {
   const [fulfillment, setFulfillment] = useState(null);
@@ -28,6 +29,15 @@ export const useFulfillmentTracking = (orderId, order) => {
       }
       setErrors({});
       if (!orderId) { setLoading({}); return; }
+      const globalPending = isGlobalOrder(order) && String(order?.globalApproval || 'pending').toLowerCase() === 'pending' && !order?.fulfillment && !order?.shipment;
+      if (globalPending) {
+        setFulfillment(null);
+        setShipment(null);
+        setTrackingEvents([]);
+        setLoading({ fulfillment: false, shipment: false, tracking: false });
+        setErrors({});
+        return;
+      }
       if (order?.fulfillment || order?.shipment || order?.trackingEvents?.length) {
         setFulfillment(order.fulfillment ? normalizeFulfillment(order.fulfillment) : null);
         setShipment(order.shipment ? normalizeShipment(order.shipment) : null);

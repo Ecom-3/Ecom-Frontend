@@ -21,7 +21,7 @@ export const variantChoiceLabel = (variant) => {
 
 export const normalizeProductImageUrl = (value) => {
   const url = String(value || '').trim();
-  if (!url || /^(?:https?:)?\/\/(?:www\.)?loremflickr\.com(?:\/|$)/i.test(url)) return '';
+  if (!url || /^(?:https?:)?\/\/(?:www\.)?(?:loremflickr\.com|source\.unsplash\.com)(?:\/|$)/i.test(url)) return '';
   if (/^(?:https?:\/\/|data:image\/)/i.test(url)) return url;
   if (/^[a-z][a-z\d+.-]*:/i.test(url)) return '';
   return url;

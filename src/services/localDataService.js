@@ -182,8 +182,8 @@ export const orderStore = {
         fulfillmentType:isGlobal?'global':'nearby',
         channel:isGlobal?'5-7 Days Delivery':'Nearby Store',
         deliveryLines:groupLines,
-        deliveryLabel:isGlobal?'5-7 days delivery':groupLines[0]?.deliveryLabel,
-        estimatedDelivery:isGlobal?'5-7 days':groupLines[0]?.estimatedDelivery,
+        deliveryLabel:isGlobal?'7-10 days delivery':groupLines[0]?.deliveryLabel,
+        estimatedDelivery:isGlobal?'7-10 days':groupLines[0]?.estimatedDelivery,
         sourceStore:primarySource.sourceStore,
         sourceStoreId:primarySource.storeId,
         sourceLocation:primarySource.sourceLocation,
@@ -243,8 +243,8 @@ export const orderStore = {
         quantity: Number(item.quantity || 1),
         deliveryLine: line,
         image: item.image || item.imageUrl || item.productImage || '',
-        deliveryLabel: isGlobal ? '5-7 days delivery' : line.deliveryLabel,
-        estimatedDelivery: isGlobal ? '5-7 days' : line.estimatedDelivery,
+        deliveryLabel: isGlobal ? '7-10 days delivery' : line.deliveryLabel,
+        estimatedDelivery: isGlobal ? '7-10 days' : line.estimatedDelivery,
         deliveryCharge: Number(line.deliveryCharge || 0),
         fulfillmentType: isGlobal ? 'global' : line.fulfillmentType,
         globalApproval: isGlobal ? 'Pending' : line.globalApproval,
@@ -265,8 +265,8 @@ export const orderStore = {
       fulfillmentType: isGlobal ? 'global' : checkout.fulfillmentType || firstLine.fulfillmentType || 'nearby',
       channel: isGlobal ? '5-7 Days Delivery' : checkout.channel || 'Nearby Store',
       deliveryLines: lines,
-      deliveryLabel: isGlobal ? '5-7 days delivery' : firstLine.deliveryLabel,
-      estimatedDelivery: isGlobal ? '5-7 days' : firstLine.estimatedDelivery,
+      deliveryLabel: isGlobal ? '7-10 days delivery' : firstLine.deliveryLabel,
+      estimatedDelivery: isGlobal ? '7-10 days' : firstLine.estimatedDelivery,
       sourceStore: store?.name || firstLine.storeName || checkout.sourceStore || orderResult.storeId,
       sourceStoreId: isGlobal ? firstLine.storeId || checkout.sourceStoreId || store?.id || orderResult.storeId || '' : orderResult.storeId || firstLine.storeId || checkout.sourceStoreId || store?.id || '',
       sourceLocation: store?.location || firstLine.sourceLocation || checkout.sourceLocation || '',
@@ -384,15 +384,15 @@ export const orderStore = {
         const stock=Number(product?.stock??product?.availableQuantity??0);
         return {requested:item,product,stock};
       });
-      return {store,matches,distanceLabel:store.location===order.destinationLocation||String(order.checkout?.deliveryAddress||'').includes(store.location)?'Same city':'5-7 days'};
+      return {store,matches,distanceLabel:store.location===order.destinationLocation||String(order.checkout?.deliveryAddress||'').includes(store.location)?'Same city':'7-10 days'};
     }).filter((option)=>option.matches.length&&option.matches.every(({product,stock,requested})=>product&&stock>=Number(requested.quantity||1)));
   },
   assignGlobalStore(id, storeId) {
     const current=read('orders',[]).find((order)=>order.id===id);if(!current)throw new Error('Order not found.');if(current.globalApproval==='Approved')throw new Error('This order has already been assigned.');
     const option=this.globalStoreOptions(id).find((item)=>item.store.id===storeId);if(!option)throw new Error('The selected store cannot fulfil every item in this order.');
-    const assignedAt=new Date().toISOString();const assignedItems=option.matches.map(({requested,product})=>({...requested,id:product.id,image:requested.image||product.image||product.thumbnail||'',deliveryLabel:'5-7 days delivery',estimatedDelivery:'5-7 days',sourceStore:option.store.name,sourceStoreId:option.store.id,sourceLocation:option.store.location,sourceState:option.store.state}));
+    const assignedAt=new Date().toISOString();const assignedItems=option.matches.map(({requested,product})=>({...requested,id:product.id,image:requested.image||product.image||product.thumbnail||'',deliveryLabel:'7-10 days delivery',estimatedDelivery:'7-10 days',sourceStore:option.store.name,sourceStoreId:option.store.id,sourceLocation:option.store.location,sourceState:option.store.state}));
     const assignment={storeId:option.store.id,store:option.store.name,location:option.store.location,state:option.store.state,status:'Assigned',assignedAt};
-    const orders=read('orders',[]).map((order)=>order.id===id?{...order,items:assignedItems,fulfilmentAssignments:[assignment],globalApproval:'Approved',globalApprovedAt:assignedAt,status:'CONFIRMED',deliveryLabel:'5-7 days delivery',estimatedDelivery:'5-7 days',transferredToStore:true,assignmentMethod:option.nearby?'Global Admin selected nearby stocked store':'Global Admin selected stocked store',assignedStoreId:option.store.id,sourceStore:option.store.name,sourceStoreId:option.store.id,sourceLocation:option.store.location,sourceState:option.store.state,store:option.store.name,location:option.store.location}:order);
+    const orders=read('orders',[]).map((order)=>order.id===id?{...order,items:assignedItems,fulfilmentAssignments:[assignment],globalApproval:'Approved',globalApprovedAt:assignedAt,status:'CONFIRMED',deliveryLabel:'7-10 days delivery',estimatedDelivery:'7-10 days',transferredToStore:true,assignmentMethod:option.nearby?'Global Admin selected nearby stocked store':'Global Admin selected stocked store',assignedStoreId:option.store.id,sourceStore:option.store.name,sourceStoreId:option.store.id,sourceLocation:option.store.location,sourceState:option.store.state,store:option.store.name,location:option.store.location}:order);
     write('orders',orders);write('local:orders',orders);write('notifications',[{id:crypto.randomUUID(),title:'Global order assigned',message:`${id} was assigned to ${option.store.name}, ${option.store.location}.`,type:'order',orderId:id,read:false,createdAt:assignedAt},...read('notifications',[])]);return orders.find((order)=>order.id===id);
   },
   dispatchParcel(id, carrier, trackingNumber) {

@@ -26,7 +26,7 @@ const globalLine = (item, source = {}, quote = null) => ({
   sourceLocation: source.location || '',
   deliveryType: 'global',
   deliveryLabel: 'Global Delivery',
-  estimatedDelivery: '5-7 days delivery',
+  estimatedDelivery: '7-10 days delivery',
   deliveryCharge: 0,
   fulfillmentType: 'global',
   globalApproval: 'Pending',

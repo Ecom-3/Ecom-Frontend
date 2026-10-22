@@ -1,15 +1,8 @@
 import { promotionApplies, resolvedPromotionScope } from './promotionScope';
+import { validateCouponPromotion } from './catalogApi';
 
 export const PENDING_COUPON_KEY = 'checkout:pendingCouponCode';
-const SERVER_COUPONS_ENABLED = false;
-
-export const listCoupons = () => [];
-
-export const findCouponByCode = (code) => {
-  const normalized = String(code || '').trim().toUpperCase();
-  if (!normalized) return null;
-  return null;
-};
+export const listCoupons = async () => [];
 
 export const savePendingCouponCode = (code) => {
   const normalized = String(code || '').trim().toUpperCase();
@@ -58,13 +51,13 @@ export const cartPromotionContext = ({ cartItems = [], fallbackLocation = '', fa
 };
 
 export const calculateCouponDiscount = (coupon, subtotal) => {
+  if(Number.isFinite(Number(coupon?.discountAmount))) return Math.min(Number(coupon.discountAmount),Number(subtotal||0));
   const value = Number(coupon?.discount || 0);
   const raw = coupon?.discountType === 'Fixed' ? value : Math.round(Number(subtotal || 0) * value / 100);
   return Math.min(raw, Number(coupon?.maximumDiscount || raw), Number(subtotal || 0));
 };
 
 export const validateCoupon = (coupon, { subtotal = 0, cartItems = [], catalogProducts = [], location = '', store = '' } = {}) => {
-  if (!SERVER_COUPONS_ENABLED) return { valid:false, message:'Coupons are unavailable until server-side promotion configuration is enabled.' };
   if (!coupon) return { valid:false, message:'Coupon not found or inactive.' };
   if (coupon.active === false || coupon.status === 'Inactive') return { valid:false, message:'Coupon not found or inactive.' };
   const today = new Date().toISOString().slice(0, 10);
@@ -76,8 +69,13 @@ export const validateCoupon = (coupon, { subtotal = 0, cartItems = [], catalogPr
   return { valid:true, message:`${String(coupon.name || '').toUpperCase()} applied successfully.`, scoped };
 };
 
-export const validateCouponCode = (code, options) => {
-  const coupon = findCouponByCode(code);
-  const result = validateCoupon(coupon, options);
-  return { coupon, ...result };
+export const validateCouponCode = async (code, { subtotal = 0, location = '', store = '' } = {}) => {
+  const normalized=String(code||'').trim().toUpperCase();
+  if(!normalized) return { coupon:null,valid:false,message:'Enter a coupon code.' };
+  try {
+    const result=await validateCouponPromotion({code:normalized,subtotal:Number(subtotal),location:location||null,store:store||null});
+    if(!result?.valid) return {coupon:null,valid:false,message:result?.message||'Coupon is not valid.'};
+    const coupon={...result,name:result.code,couponName:result.couponName,discountType:String(result.discountType||'PERCENTAGE').toUpperCase()==='FIXED'?'Fixed':'Percentage',active:true,status:'Active'};
+    return {coupon,valid:true,message:result.message||`${normalized} applied successfully.`};
+  } catch(error) { return {coupon:null,valid:false,message:error.message||'Coupon validation is unavailable. Please retry.'}; }
 };

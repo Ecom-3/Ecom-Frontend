@@ -31,7 +31,7 @@ const firstImageUrl = (images = []) => {
 
 const extractWeight = (variant, fallback) => {
   const candidate = parseVariantAttributes(variant?.attributes);
-  const weight = candidate.weight || candidate.size || candidate.label || candidate.name || candidate.variantName || fallback || '';
+  const weight = candidate.weight || candidate.size || candidate.label || candidate.name || candidate.variantName || variant?.name || fallback || '';
   return String(weight).trim();
 };
 
@@ -135,6 +135,7 @@ export const adaptProduct = (product) => {
     productId,
     name: product?.name || product?.title || 'Product',
     title: product?.title || product?.name || 'Product',
+    subtitle: product?.subtitle || [product?.brand, categoryName].filter(Boolean).join(' · '),
     slug: product?.slug || product?.name,
     category: categoryName,
     categoryId: product?.category?.id || product?.categoryId || null,
@@ -166,11 +167,11 @@ export const adaptProduct = (product) => {
     catalogVariantsKnown: Array.isArray(product?.variants) || Array.isArray(product?.variantList),
     attributes: product?.attributes || {},
     metadata: product?.metadata || {},
-    storeId: product?.storeId || product?.store?.id || null,
-    store: product?.store || product?.storeName || product?.store?.name || '',
-    storeName: product?.storeName || product?.store || product?.store?.name || '',
+    storeId: product?.storeId || product?.store?.id || (product?.globalProduct === true || product?.fulfillmentType === 'global' ? 'global-store' : null),
+    store: product?.store || product?.storeName || product?.store?.name || (product?.globalProduct === true || product?.fulfillmentType === 'global' ? 'India-wide Global Store' : ''),
+    storeName: product?.storeName || product?.store || product?.store?.name || (product?.globalProduct === true || product?.fulfillmentType === 'global' ? 'India-wide Global Store' : ''),
     pickup: product?.pickupEnabled ?? product?.pickup ?? product?.store?.pickupEnabled ?? product?.store?.pickup,
-    deliveryLabel: product?.deliveryLabel,
+    deliveryLabel: product?.deliveryLabel || (product?.globalProduct === true || product?.fulfillmentType === 'global' ? '7–10 days delivery' : undefined),
     deliveryQuote: product?.deliveryQuote,
     deliveryRadiusKm: product?.deliveryRadiusKm ?? product?.store?.deliveryRadiusKm ?? null,
     deliveryEtaMinutes: product?.deliveryEtaMinutes ?? product?.deliveryMinutes ?? product?.store?.deliveryEtaMinutes ?? null,

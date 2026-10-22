@@ -1,5 +1,5 @@
 import { serviceBaseUrl } from '../config/serviceRoutes.js';
-import { apiRequest } from './apiClient';
+import { apiRequest } from './apiClient.js';
 const ORG_ACCESS_BASE_URL = serviceBaseUrl('orgAccess', import.meta.env);
 
 const normalizeRole = (role) => {
@@ -54,6 +54,7 @@ export const orgAccessService = {
   },
   async me() { return apiRequest(ORG_ACCESS_BASE_URL, '/api/users/me'); },
   async validate() { return apiRequest(ORG_ACCESS_BASE_URL, '/api/auth/validate'); },
+  async listUsers() { return apiRequest(ORG_ACCESS_BASE_URL, '/api/users'); },
   async createUser(user) {
     return apiRequest(ORG_ACCESS_BASE_URL, '/api/users', {
       method: 'POST',
@@ -66,7 +67,8 @@ export const orgAccessService = {
         mobile:user.mobile || user.phone || null,
         status:user.status || 'Active',
         organizationId:user.organizationId || 'metaarch-commerce',
-        location:user.location || null,
+        // Org Access persists location_id as the canonical lower-case key used by existing memberships.
+        location:user.location ? String(user.location).trim().toLowerCase() : null,
         storeId:user.storeId || null,
         store:user.store || user.storeName || null,
         storeLocation:user.storeLocation || user.location || null,
@@ -78,7 +80,20 @@ export const orgAccessService = {
         providerOsmType:user.providerOsmType || null,
         providerOsmId:user.providerOsmId || null,
         locationAccuracyMeters:user.locationAccuracyMeters === '' || user.locationAccuracyMeters == null ? null : Number(user.locationAccuracyMeters),
-        assignedBy:user.assignedBy || null,
+      }),
+    });
+  },
+  async updateUser(id, user) {
+    if (!Number.isInteger(Number(id)) || Number(id) <= 0) throw new Error('A valid staff account ID is required.');
+    return apiRequest(ORG_ACCESS_BASE_URL, `/api/users/${encodeURIComponent(id)}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        name: String(user.name || '').trim(),
+        email: String(user.email || '').trim(),
+        mobile: String(user.mobile || user.phone || '').trim() || null,
+        role: String(user.role || '').toUpperCase().replace(/-/g, '_'),
+        status: user.status || 'Active',
+        location: user.role === 'location-admin' ? String(user.location || '').trim().toLowerCase() : null,
       }),
     });
   },

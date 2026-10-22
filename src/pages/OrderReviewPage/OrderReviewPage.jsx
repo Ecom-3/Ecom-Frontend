@@ -35,7 +35,10 @@ export default function OrderReviewPage() {
 
   useEffect(() => {
     let active = true;
-    const optional = (request) => request.catch((requestError) => requestError?.status === 404 ? null : null);
+    const optional = (request) => request.catch((requestError) => {
+      if (requestError?.status === 404) return null;
+      throw requestError;
+    });
     Promise.all([getOrder(orderId), optional(getOrderReview(orderId)), optional(getFulfillmentByOrderId(orderId)), optional(getShipmentByOrderId(orderId))])
       .then(([savedOrder, review, savedFulfillment, savedShipment]) => {
         if (!active) return;
