@@ -84,4 +84,3 @@ test('inventory list preserves search, sorting, and client pagination', () => {
   assert.deepEqual(paginateInventoryRecords(matching, 2, 1).map((record) => record.id), ['inv-c']);
   assert.deepEqual(filterInventoryRecords(records, { query: 'alpha', status: 'Active', sort: 'oldest' }).map((record) => record.id), ['inv-c']);
 });
-

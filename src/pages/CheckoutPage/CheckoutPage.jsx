@@ -238,34 +238,7 @@ const CheckoutPage = () => {
     if (!existing) groups.push(group);
     return groups;
   }, []);
-<<<<<<< Updated upstream
-  const selectedQuoteMethod = quote?.methods?.find((item) => deliveryMethodId(item.deliveryType) === activeMethod);
-  const quoteEta = selectedQuoteMethod?.estimatedTime || (quote?.estimatedDeliveryMin && quote?.estimatedDeliveryMax ? `${quote.estimatedDeliveryMin}-${quote.estimatedDeliveryMax} minutes` : '');
-  const deliveryWindow = deliveryGroups.length > 1 ? 'See estimates for each store above' : deliveryLines[0]?.estimatedDelivery || quoteEta || 'Estimate unavailable';
-  const availableQuoteMethod = (quote?.methods || []).some((item) => deliveryMethodId(item.deliveryType) === activeMethod);
-  const selectedMethodUnavailable = quote?.deliveryAvailable === false && quote?.deliveryZoneId && quote?.methods?.length && !availableQuoteMethod;
-  const availableMethods = useMemo(() => {
-    if (isGlobalReview) {
-      return [{ id: 'global', label: 'Global Delivery', caption: 'Delivered in 5-7 days' }];
-    }
-    if (quote && quote.deliveryAvailable === false && !quote.deliveryZoneId) {
-      return [{ id: activeMethod, label: '5-7 days delivery', caption: 'Long distance delivery' }];
-    }
-    const quoted = sortDeliveryMethods(quote?.methods || []).map((item) => ({
-      id: deliveryMethodId(item.deliveryType),
-      label: item.deliveryType,
-      caption: [item.estimatedTime, Number(item.deliveryCharge || 0) > 0 ? formatCurrency(item.deliveryCharge) : 'Free'].filter(Boolean).join(' - '),
-    })).filter((item) => item.id !== 'express' && item.id !== 'same-day');
-    const methodById = new Map((quoted.length ? quoted : fallbackMethods).map((item) => [item.id, item]));
-    return [
-      methodById.get('instant') || { id: 'instant', label: 'Instant Delivery', caption: deliveryWindow },
-      methodById.get('standard') || { id: 'standard', label: 'Standard Delivery', caption: deliveryWindow },
-      methodById.get('scheduled') || { id: 'scheduled', label: 'Scheduled Delivery', caption: 'Choose date & time' },
-    ];
-  }, [activeMethod, deliveryWindow, formatCurrency, isGlobalReview, quote]);
-=======
   const summaryStoreGroups = cartStoreGroups.map((group) => ({ ...group, key: group.id, lines: deliveryLines.filter((line) => line.storeId === group.storeId) }));
->>>>>>> Stashed changes
   const discount = appliedCoupon ? calculateCouponDiscount(appliedCoupon, subtotal) : 0;
   const total = subtotal + deliveryFee + handlingFee - discount;
   const chooseSavedAddress = (address) => {

@@ -9,10 +9,6 @@ import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import { clearDeliveryQuoteCache, createStore, createStoreDeliveryZone, deleteStoreDeliveryZone, getStore, getStoreDeliveryZones, getStores, updateStore, updateStoreDeliveryZone } from '../../services/catalogApi';
 import { collectionStore, staffProfileStore } from '../../services/localDataService';
-<<<<<<< Updated upstream
-=======
-import { getOrders, normalizeOrder } from '../../services/orderApi';
->>>>>>> Stashed changes
 import { DELIVERY_MODE_OPTIONS } from '../../utils/storeDelivery';
 import logo from '../../assets/images/logo.png';
 import SafeProductImage from '../../components/SafeProductImage/SafeProductImage';
@@ -455,54 +451,21 @@ const DeliveryRadiusPage = () => {
 const StoreOrdersPage = () => {
   const { user } = useContext(AppContext);
   const { store } = useAssignedStore(user);
-<<<<<<< Updated upstream
-  const { orders, error, loading } = useManagerOrders(user?.storeId || store?.id, user?.id);
-  return <StoreManagerShell active="orders" store={store}>
-    <Box className="sm-page-title"><Box><Typography variant="h4">Store Orders</Typography><Typography>{store?.name || user?.store}</Typography></Box></Box>
-    {error && <Alert severity="error">{error}</Alert>}{loading && <Typography>Loading orders...</Typography>}
-    <Box className="sm-orders-list">{orders.length ? orders.map((order) => <Box className="sm-order-card" key={order.id}><Box><Typography fontWeight={900}>{order.orderNumber || order.id}</Typography><Typography>Customer: {order.customer?.name || order.customerName || 'Customer'}</Typography><Typography>Distance: {order.calculatedDistanceKm || order.checkout?.deliveryQuote?.distanceKm || '--'} KM</Typography><Typography>Zone: {order.deliveryZoneLabel || (order.checkout?.deliveryQuote?.deliveryZoneId ? `Zone ${order.checkout.deliveryQuote.deliveryZoneId}` : '--')}</Typography></Box><Box><Typography>Delivery: {order.deliveryMethod || order.checkout?.deliveryQuote?.selectedDeliveryMethod || order.checkout?.method || '--'}</Typography><Typography>ETA: {order.estimatedDeliveryMin && order.estimatedDeliveryMax ? `${order.estimatedDeliveryMin}-${order.estimatedDeliveryMax} min` : '--'}</Typography><Typography>Delivery Charge: {money(order.deliveryCharge || order.checkout?.deliveryFee || 0)}</Typography><Typography>Total: {money(order.totalAmount || order.total || 0)}</Typography></Box><Chip label={order.status}/></Box>) : <Typography color="text.secondary">No orders for this store yet.</Typography>}</Box>
-=======
-  const [orders, setOrders] = useState([]);
-  const [error, setError] = useState('');
-  useEffect(() => {
-    let active = true;
-    if (!store?.id) return undefined;
-    getOrders({ storeId:store.id }).then((rows) => {
-      if (active) { setOrders((rows || []).map(normalizeOrder)); setError(''); }
-    }).catch((reason) => { if (active) { setOrders([]); setError(reason.message || 'Could not load store orders from the Order Service.'); } });
-    return () => { active = false; };
-  }, [store?.id]);
-  const visibleOrders = store?.id ? orders : [];
+  const { orders: visibleOrders, error } = useManagerOrders(store?.id, user?.id);
   return <StoreManagerShell active="orders" store={store}>
     <Box className="sm-page-title"><Box><Typography variant="h4">Store Orders</Typography><Typography>{store?.name || user?.store}</Typography></Box></Box>
     {error && <Alert severity="error">{error}</Alert>}
     <Box className="sm-orders-list">{visibleOrders.length ? visibleOrders.map((order) => <Box className="sm-order-card" key={order.id}><Box><Typography fontWeight={900}>{order.orderNumber || order.id}</Typography><Typography>Customer: {order.customer?.name || order.customerName || 'Customer'}</Typography><Typography>Distance: {order.calculatedDistanceKm || order.checkout?.deliveryQuote?.distanceKm || '--'} KM</Typography><Typography>Zone: {order.deliveryZoneLabel || (order.checkout?.deliveryQuote?.deliveryZoneId ? `Zone ${order.checkout.deliveryQuote.deliveryZoneId}` : '--')}</Typography></Box><Box><Typography>Delivery: {order.deliveryMethod || order.checkout?.deliveryQuote?.selectedDeliveryMethod || order.checkout?.method || '--'}</Typography><Typography>ETA: {order.estimatedDeliveryMin && order.estimatedDeliveryMax ? `${order.estimatedDeliveryMin}-${order.estimatedDeliveryMax} min` : '--'}</Typography><Typography>Delivery Charge: {money(order.deliveryCharge || order.checkout?.deliveryFee || 0)}</Typography><Typography>Total: {money(order.totalAmount || order.total || 0)}</Typography></Box><Chip label={order.status}/></Box>) : !error && <Typography color="text.secondary">No orders for this store yet.</Typography>}</Box>
->>>>>>> Stashed changes
   </StoreManagerShell>;
 };
 
 const StoreManagerDashboard = () => {
   const { user } = useContext(AppContext);
   const { store } = useAssignedStore(user);
-<<<<<<< Updated upstream
-  const { orders, error, loading } = useManagerOrders(user?.storeId || store?.id, user?.id);
-  return <StoreManagerShell active="dashboard" store={store}>
-    <Box className="sm-page-title"><Box><Typography variant="h4">Welcome back, {user?.name || 'Store Manager'}</Typography><Typography>{store?.name || user?.store}</Typography></Box></Box>
-    {error && <Alert severity="error">{error}</Alert>}{loading && <Typography>Loading orders...</Typography>}
-    <Box className="sm-stat-grid">{[['Orders', orders.length], ['Active Orders', orders.filter((order) => !['DELIVERED', 'Delivered', 'CANCELLED', 'Cancelled'].includes(order.status)).length], ['Revenue', money(orders.reduce((sum, order) => sum + Number(order.totalAmount || order.total || 0), 0))], ['Store Status', store?.status || 'Active']].map(([label, value]) => <Box className="sm-stat" key={label}><Typography>{label}</Typography><Typography variant="h5">{value}</Typography></Box>)}</Box>
-=======
-  const [orders, setOrders] = useState([]);
-  useEffect(() => {
-    let active = true;
-    if (!store?.id) return undefined;
-    getOrders({ storeId:store.id }).then((rows) => { if (active) setOrders((rows || []).map(normalizeOrder)); }).catch(() => { if (active) setOrders([]); });
-    return () => { active = false; };
-  }, [store?.id]);
-  const visibleOrders = store?.id ? orders : [];
+  const { orders: visibleOrders } = useManagerOrders(store?.id, user?.id);
   return <StoreManagerShell active="dashboard" store={store}>
     <Box className="sm-page-title"><Box><Typography variant="h4">Welcome back, {user?.name || 'Store Manager'}</Typography><Typography>{store?.name || user?.store}</Typography></Box></Box>
     <Box className="sm-stat-grid">{[['Orders', visibleOrders.length], ['Active Orders', visibleOrders.filter((order) => !['DELIVERED', 'Delivered', 'CANCELLED', 'Cancelled'].includes(order.status)).length], ['Revenue', money(visibleOrders.reduce((sum, order) => sum + Number(order.totalAmount || order.total || 0), 0))], ['Store Status', store?.status || 'Active']].map(([label, value]) => <Box className="sm-stat" key={label}><Typography>{label}</Typography><Typography variant="h5">{value}</Typography></Box>)}</Box>
->>>>>>> Stashed changes
     <Box className="sm-actions"><Button variant="contained" onClick={() => window.location.assign('/store-manager/delivery-radius')}>Manage Delivery Radius</Button><Button variant="outlined" onClick={() => window.location.assign('/store-manager/orders')}>View Orders</Button></Box>
   </StoreManagerShell>;
 };

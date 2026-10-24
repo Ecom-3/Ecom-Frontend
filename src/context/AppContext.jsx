@@ -1,4 +1,3 @@
-import { mutateAuthenticatedCart } from '../utils/authenticatedCart.js';
 import { translate, normalizeLanguage, languageCode } from '../i18n/index';
 import { readLanguage, persistLanguage } from '../i18n/preferences';
 import { customerAuthService } from '../services/customerAuthService';
@@ -9,11 +8,7 @@ import { customerProfileService } from '../services/customerProfileService';
 import { getCustomerOrders, normalizeOrder, orderDeliveryAddress } from '../services/orderApi';
 import { getProducts, getCategories, getCategoryProducts, getStoreProducts, getStores, getBanners } from '../services/catalogApi';
 import { adaptProductList, adaptCategoryList, adaptStoreProductList, adaptBannerList } from '../services/catalogAdapter';
-<<<<<<< Updated upstream
-import { addCartItem, clearCartItems, createCart, getActiveCart, removeCartItem, updateCartItem } from '../services/cartApi';
-=======
 import { addCartItem, calculateCartTotal, clearCartItems, createCart, getActiveCart, getActiveCarts, getCart, moveSavedCartItemToCart, removeCartItem, saveCartItemForLater, updateCartItem } from '../services/cartApi';
->>>>>>> Stashed changes
 import { rememberProductStore, resolveProductStore } from '../services/productStoreResolver';
 import { cleanDisplayText } from '../utils/textEncoding';
 import { findInventoryForItem } from '../services/inventoryApi';
@@ -53,27 +48,10 @@ export const AppProvider = ({ children }) => {
     } catch { return false; }
   });
 
-<<<<<<< Updated upstream
-  const readGuestCartItems = () => {
-    try {
-      const saved = localStorage.getItem(GUEST_CART_KEY);
-      return saved ? JSON.parse(saved).map(item => ({ ...item, id: null, cartSource: 'guest' })) : [];
-    } catch {
-      return [];
-    }
-  };
-
-  const [cartItems, setCartItems] = useState(() => readGuestCartItems());
-  const [activeCart, setActiveCart] = useState(() => {
-    const items = readGuestCartItems();
-    return items.length ? { id: GUEST_CART_ID, status: 'GUEST', totalAmount: items.reduce((sum, item) => sum + Number(item.price || item.unitPrice || 0) * Number(item.quantity || 0), 0) } : null;
-  });
-=======
   const guestCartItemsRef = useRef([]);
   const readGuestCartItems = () => guestCartItemsRef.current;
   const [cartItems, setCartItems] = useState([]);
   const [activeCart, setActiveCart] = useState(null);
->>>>>>> Stashed changes
   const [cartLoading, setCartLoading] = useState(false);
   const cartMutationPending = useRef(false);
   const cartHydrationRequest = useRef(0);
@@ -115,15 +93,10 @@ export const AppProvider = ({ children }) => {
 
   const cartCount = cartItems.reduce((sum, item) => sum + Number(item.quantity || 0), 0);
   const localCartTotal = (items = cartItems) => items.reduce((sum, item) => sum + Number(item.price || item.unitPrice || 0) * Number(item.quantity || 0), 0);
-<<<<<<< Updated upstream
-  const cartTotal = localCartTotal();
-  const currentCustomerId = () => tokenCustomerId() || user?.id || null;
-=======
   // activeCart represents only one store. Sum visible lines for a multi-store cart.
   const cartTotal = localCartTotal();
   const activeCustomerId = useMemo(() => resolveCustomerId({ role: user?.role, tokenCustomerId: tokenCustomerId(), userId: user?.id }), [user?.id, user?.role]);
   const currentCustomerId = () => activeCustomerId;
->>>>>>> Stashed changes
 
   const resolveProductIdentity = (product) => {
     const variant = product?.variant || product?.selectedVariant || product?.variants?.[0] || {};
@@ -153,13 +126,8 @@ export const AppProvider = ({ children }) => {
       storeId: item?.storeId || cartStore.storeId || source.storeId,
       store: item?.store || item?.storeName || cartStore.store || source.store,
       storeName: item?.storeName || item?.store || cartStore.storeName || source.storeName,
-<<<<<<< Updated upstream
-      id: cart?.id ? item?.id || null : null,
-      cartSource: cart?.id ? 'server' : 'guest',
-=======
       id: item?.id || null,
       cartId: item?.cartId || cart?.id || null,
->>>>>>> Stashed changes
       productId: item?.productId || null,
       variantId: item?.variantId ?? null,
       productName: cleanDisplayText(item?.productName || item?.title || 'Product'),
@@ -208,13 +176,8 @@ export const AppProvider = ({ children }) => {
   };
 
   const applyGuestCartItems = (items) => {
-<<<<<<< Updated upstream
-    const normalized = items.map(item => adaptCartItem(item)).filter((item) => item.productId && item.quantity > 0);
-    localStorage.setItem(GUEST_CART_KEY, JSON.stringify(normalized));
-=======
     const normalized = items.map(adaptCartItem).filter((item) => item.productId && item.quantity > 0);
     guestCartItemsRef.current = normalized;
->>>>>>> Stashed changes
     setCartItems(normalized);
     setActiveCart(normalized.length ? { id: GUEST_CART_ID, status: 'GUEST', totalAmount: localCartTotal(normalized) } : null);
     setCartUnavailable(false);
@@ -223,12 +186,8 @@ export const AppProvider = ({ children }) => {
   };
 
   const upsertGuestCartItem = (itemPayload) => {
-<<<<<<< Updated upstream
-    const items = readGuestCartItems().map(item => adaptCartItem(item));
-=======
     const items = readGuestCartItems().map(adaptCartItem);
     logCartSnapshot('guest.add.before', items, 'guest in-memory cart');
->>>>>>> Stashed changes
     const existingIndex = items.findIndex((item) => sameCatalogItem(item, itemPayload));
     const nextItems = [...items];
     if (existingIndex >= 0) {
@@ -254,15 +213,10 @@ export const AppProvider = ({ children }) => {
     return {
       ...source,
       ...product,
-<<<<<<< Updated upstream
-      id: null,
-      cartSource: 'guest',
-=======
       storeId: product.storeId || source.storeId,
       store: product.store || source.store,
       storeName: product.storeName || source.storeName,
       id: identity.productId,
->>>>>>> Stashed changes
       productId: identity.productId,
       variantId: identity.variantId,
       productName: cleanDisplayText(product.productName || product.title || product.name || 'Product'),
@@ -394,13 +348,8 @@ export const AppProvider = ({ children }) => {
   }, [isLoggedIn, user?.role]);
   useEffect(() => {
     const token = sessionStorage.getItem('authToken');
-<<<<<<< Updated upstream
-    const customerId = tokenCustomerId() || user?.id || null;
-    if (!isLoggedIn || !token || token.startsWith('local-') || !customerId) return;
-=======
     const customerId = activeCustomerId;
     if (!isLoggedIn || !isCustomerSession({ role: user?.role, tokenCustomerId: tokenCustomerId() }) || !token || token.startsWith('local-') || !customerId) return;
->>>>>>> Stashed changes
     getCustomerOrders(customerId, { expireSession: false }).then((orders) => {
       const seen = new Set();
       const derived = (Array.isArray(orders) ? orders : [])
@@ -507,36 +456,6 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-<<<<<<< Updated upstream
-  const cartMutationQueue = useRef(Promise.resolve());
-  const runAuthenticatedCartMutation = (item, operation, delta = 0) => {
-    const customerId = currentCustomerId();
-    const storeId = resolveCartStoreId(item);
-    const pending = cartMutationQueue.current.catch(() => {}).then(async () => {
-      if (currentCustomerId() !== customerId) return false;
-      setCartLoading(true);
-      const applyOwnedCart = cart => {
-        if (currentCustomerId() === customerId) mergeCartResponse(cart);
-      };
-      try {
-        const cart = await mutateAuthenticatedCart({ customerId, storeId, item, operation, delta,
-          api: { getActiveCart, createCart, addCartItem, updateCartItem, removeCartItem, clearCartItems },
-          checkInventory: stores => validateCheckoutAvailability(stores, findInventoryForItem),
-          onReconciled: applyOwnedCart,
-        });
-        applyOwnedCart(cart);
-        return true;
-      } catch (error) {
-        if (currentCustomerId() === customerId) {
-          setCartUnavailable(isCartServiceUnavailable(error));
-          setCartError(error.message || 'Cart Service is unavailable.');
-        }
-        return false;
-      } finally { setCartLoading(false); }
-    });
-    cartMutationQueue.current = pending;
-    return pending;
-=======
   const ensureCart = async (scopeProduct, options = {}) => {
     const scope = cartScopeFor(scopeProduct);
     if (!scope.customerId) throw new Error('Log in to use your cart.');
@@ -569,7 +488,6 @@ export const AppProvider = ({ children }) => {
     if (!Array.isArray(cart?.items) && !Array.isArray(cart?.cartItems)) cart = await getCart(cartId);
     if (options.mergeStoreItems) return mergeCartResponse(cart);
     return applyCartResponse(cart);
->>>>>>> Stashed changes
   };
 
   useEffect(() => {
@@ -626,13 +544,6 @@ export const AppProvider = ({ children }) => {
   }, [isLoggedIn, user?.id, catalogStores]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const addToCart = async (product) => {
-<<<<<<< Updated upstream
-    const itemPayload = buildCartItem(product);
-    if (!itemPayload) return;
-    if (isLoggedIn && currentCustomerId()) {
-      if (await runAuthenticatedCartMutation({ ...itemPayload, quantity: 1 }, 'add')) triggerAddedPopup(itemPayload);
-      return;
-=======
     // Serialize every cart mutation before React can disable the controls.
     if (cartMutationPending.current) return false;
     cartMutationPending.current = true;
@@ -695,24 +606,12 @@ export const AppProvider = ({ children }) => {
     } finally {
       cartMutationPending.current = false;
       setCartLoading(false);
->>>>>>> Stashed changes
     }
   };
 
   const updateQuantity = async (productId, variantId, delta, storeId = '') => {
     if (cartMutationPending.current) return false;
     const match = { productId, variantId, storeId };
-<<<<<<< Updated upstream
-    const current = cartItems.find(item => sameCatalogItem(item, match));
-    if (!current) return;
-    if (isLoggedIn && currentCustomerId()) {
-      await runAuthenticatedCartMutation(current, 'update', delta);
-      return;
-    }
-    const nextQuantity = Number(current.quantity || 0) + Number(delta || 0);
-    applyGuestCartItems(readGuestCartItems().flatMap(item => !sameCatalogItem(item, match) ? [item]
-      : nextQuantity > 0 ? [{ ...item, quantity: nextQuantity, totalPrice: Number(item.unitPrice || item.price || 0) * nextQuantity }] : []));
-=======
     const current = cartItems.find((item) => sameCatalogItem(item, match));
     const nextQuantity = Number(current?.quantity || 0) + Number(delta || 0);
     logCartDiagnostic('cart.quantity.change', {
@@ -756,27 +655,11 @@ export const AppProvider = ({ children }) => {
       setCartLoading(false);
     }
     return true;
->>>>>>> Stashed changes
   };
 
   const removeFromCart = async (productId, variantId, storeId = '') => {
     if (cartMutationPending.current) return false;
     const match = { productId, variantId, storeId };
-<<<<<<< Updated upstream
-    const current = cartItems.find(item => sameCatalogItem(item, match));
-    if (!current) return;
-    if (isLoggedIn && currentCustomerId()) {
-      await runAuthenticatedCartMutation(current, 'remove');
-      return;
-    }
-    applyGuestCartItems(readGuestCartItems().filter(item => !sameCatalogItem(item, match)));
-  };
-
-  const clearCart = async () => {
-    if (!isLoggedIn || !currentCustomerId()) { applyGuestCartItems([]); return; }
-    const stores = [...new Set(cartItems.map(item => item.storeId))];
-    for (const storeId of stores) await runAuthenticatedCartMutation({ storeId }, 'clear');
-=======
     const current = cartItems.find((item) => sameCatalogItem(item, match));
     logCartDiagnostic('cart.remove', {
       storeId: current?.storeId || storeId,
@@ -849,7 +732,6 @@ export const AppProvider = ({ children }) => {
       cartMutationPending.current = false;
       setCartLoading(false);
     }
->>>>>>> Stashed changes
   };
   const toggleWishlist = (product) => setWishlistItems((items) => {
     const itemPayload = buildCartItem(product);
@@ -907,10 +789,6 @@ export const AppProvider = ({ children }) => {
     const itemPayload = adaptCartItem(product);
     if (!itemPayload?.productId) return;
     const quantity = Math.max(1, Number(itemPayload.quantity || 1));
-<<<<<<< Updated upstream
-    if (!isLoggedIn || !currentCustomerId()) {
-      const items = readGuestCartItems().map(item => adaptCartItem(item));
-=======
     if (isLoggedIn && itemPayload.cartId && itemPayload.id && itemPayload.id !== GUEST_CART_ID) {
       try {
         applyCartResponse(await moveSavedCartItemToCart(itemPayload.cartId, itemPayload.id));
@@ -922,7 +800,6 @@ export const AppProvider = ({ children }) => {
     }
     if (!isLoggedIn || activeCart?.id === GUEST_CART_ID) {
       const items = readGuestCartItems().map(adaptCartItem);
->>>>>>> Stashed changes
       const existingIndex = items.findIndex((item) => sameCatalogItem(item, itemPayload));
       const nextItems = [...items];
       if (existingIndex >= 0) {
@@ -936,10 +813,6 @@ export const AppProvider = ({ children }) => {
       setSavedForLater((items) => items.filter((item) => !sameCatalogItem(item, itemPayload)));
       return true;
     }
-<<<<<<< Updated upstream
-    if (await runAuthenticatedCartMutation({ ...itemPayload, quantity }, 'add')) {
-      setSavedForLater(items => items.filter(item => !sameCatalogItem(item, itemPayload)));
-=======
     cartMutationPending.current = true;
     setCartLoading(true);
     try {
@@ -969,7 +842,6 @@ export const AppProvider = ({ children }) => {
     } finally {
       cartMutationPending.current = false;
       setCartLoading(false);
->>>>>>> Stashed changes
     }
   };
   const addAddress = async (address) => {

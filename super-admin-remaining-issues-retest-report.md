@@ -1,8 +1,8 @@
 # Super Admin QA — Remaining Issues Retest
 
-**Run date:** 2026-10-23  
-**Frontend:** `http://localhost:5173`  
-**Scope:** SA-12, SA-15, SA-38, SA-39, SA-43, SA-44, SA-45, SA-46, SA-51 only.  
+**Run date:** 2026-10-23
+**Frontend:** `http://localhost:5173`
+**Scope:** SA-12, SA-15, SA-38, SA-39, SA-43, SA-44, SA-45, SA-46, SA-51 only.
 **Exclusions respected:** SA-23, SA-34, SA-36, SA-49, SA-50, SA-54, SA-65, SA-71, and all payment cases were not tested.
 
 ## Baseline and live environment

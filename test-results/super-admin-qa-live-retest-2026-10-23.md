@@ -1,8 +1,8 @@
 # Super Admin QA Live Retest — Failed and Blocked Cases
 
-**Run date:** 2026-10-23  
-**Frontend:** `http://localhost:5173`  
-**Scope:** SA-15, SA-38, SA-39, SA-43, SA-44, SA-45, and SA-46, SA-51  
+**Run date:** 2026-10-23
+**Frontend:** `http://localhost:5173`
+**Scope:** SA-15, SA-38, SA-39, SA-43, SA-44, SA-45, and SA-46, SA-51
 **Method:** Browser-level retest could not start because this Codex session exposes no browser automation tools. No application credentials were supplied, and no isolated disposable records were identified. No UI mutation was attempted.
 
 ## Environment checks

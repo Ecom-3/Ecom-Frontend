@@ -1,10 +1,5 @@
-<<<<<<< Updated upstream
 import { useEffect, useRef, useState } from 'react';
-import { Alert, Box, Button, CircularProgress, IconButton, Rating, TextField, Typography } from '@mui/material';
-=======
-import { useEffect, useState } from 'react';
 import { Alert, Box, Button, CircularProgress, IconButton, MenuItem, Rating, Select, TextField, Typography } from '@mui/material';
->>>>>>> Stashed changes
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CloseIcon from '@mui/icons-material/Close';
 import AddAPhotoOutlinedIcon from '@mui/icons-material/AddAPhotoOutlined';
@@ -12,13 +7,9 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutlineOutlin
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import BottomNav from '../../components/BottomNav/BottomNav';
-<<<<<<< Updated upstream
-import { getOrder, getOrderReview, normalizeOrder, reconcileOrderDelivery, saveOrderReview } from '../../services/orderApi';
-import { reviewEligible } from '../../utils/reviewEligibility.js';
-=======
 import { getOrder, getOrderReviews, normalizeOrder, saveOrderReview } from '../../services/orderApi';
 import { getFulfillmentByOrderId, getShipmentByOrderId, normalizeFulfillment, normalizeShipment } from '../../services/fulfillmentApi';
->>>>>>> Stashed changes
+import { reviewEligible } from '../../utils/reviewEligibility.js';
 
 const MAX_PHOTOS = 3;
 const MAX_FILE_BYTES = 120 * 1024;
@@ -43,31 +34,11 @@ export default function OrderReviewPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const [deliveryRetry, setDeliveryRetry] = useState(0);
+  const [deliveryComplete, setDeliveryComplete] = useState(false);
   const submissionBusy = useRef(false);
 
   useEffect(() => {
     let active = true;
-<<<<<<< Updated upstream
-    const loadOrder = async () => {
-      const saved = await getOrder(orderId);
-      if (reviewEligible(saved) || saved.status === 'CANCELLED') return saved;
-      try { return await reconcileOrderDelivery(orderId); }
-      catch (reason) {
-        if (active) setError(reason.message || 'Delivery status could not be checked. Please retry.');
-        return saved;
-      }
-    };
-    const optional = (request) => request.catch((requestError) => requestError?.status === 404 ? null : null);
-    Promise.all([loadOrder(), optional(getOrderReview(orderId))])
-      .then(([savedOrder, review]) => {
-        if (!active) return;
-        setOrder(normalizeOrder(savedOrder));
-        if (review) {
-          setRating(Number(review.rating) || 0);
-          setComment(review.comment || '');
-          setPhotos(Array.isArray(review.photoUrls) ? review.photoUrls : []);
-=======
     const optional = (request) => request.catch((requestError) => {
       if (requestError?.status === 404) return null;
       throw requestError;
@@ -93,14 +64,13 @@ export default function OrderReviewPage() {
           setRating(Number(currentReview.rating) || 0);
           setComment(currentReview.comment || '');
           setPhotos(Array.isArray(currentReview.photoUrls) ? currentReview.photoUrls : []);
->>>>>>> Stashed changes
           setSubmitted(true);
         }
       })
       .catch((requestError) => active && setError(requestError.message || 'Unable to load this order.'))
       .finally(() => active && setLoading(false));
     return () => { active = false; };
-  }, [orderId, deliveryRetry]);
+  }, [orderId]);
 
   const addPhotos = async (event) => {
     const files = Array.from(event.target.files || []);
@@ -134,10 +104,6 @@ export default function OrderReviewPage() {
   const page = (content) => <Box sx={{ height: '100%', minHeight: 0, display: 'flex', flexDirection: 'column', bgcolor: '#f6f8f7' }}><Box sx={{ flex: 1, minHeight: 0, overflowY: 'auto' }}><Header /><Box component="main" sx={{ maxWidth: 620, mx: 'auto', px: { xs: 2, sm: 3 }, py: 3 }}>{content}</Box></Box><Box sx={{ flexShrink: 0 }}><BottomNav /></Box></Box>;
   if (loading) return page(<Box sx={{ textAlign: 'center', pt: 8 }}><CircularProgress /><Typography sx={{ mt: 2 }}>Loading order...</Typography></Box>);
   if (error && !order) return page(<><Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/orders')}>Orders</Button><Alert severity="error" sx={{ mt: 2 }}>{error}</Alert></>);
-<<<<<<< Updated upstream
-  if (!reviewEligible(order)) return page(<><Button startIcon={<ArrowBackIcon />} onClick={() => navigate(`/order-details/${orderId}`)}>Back to order</Button><Box sx={{ mt: 5, textAlign: 'center' }}><Typography variant="h5" fontWeight={700}>Review available after delivery</Typography><Typography color="text.secondary" sx={{ mt: 1 }}>You can rate this order when its delivery is complete. Payment can still be pending.</Typography>{error && <Alert severity="warning" sx={{ mt: 2 }}>{error}</Alert>}<Button sx={{ mt: 2 }} onClick={() => { setError(''); setDeliveryRetry(value => value + 1); }}>Check delivery status again</Button></Box></>);
-  if (submitted) return page(<><Button startIcon={<ArrowBackIcon />} onClick={() => navigate(`/order-details/${orderId}`)}>Back to order</Button><Box sx={{ bgcolor: '#fff', mt: 3, p: { xs: 3, sm: 5 }, textAlign: 'center', border: '1px solid #dde6e1', borderRadius: 2 }}><CheckCircleOutlineIcon sx={{ fontSize: 54, color: '#087f5b' }} /><Typography variant="h4" fontWeight={800} sx={{ mt: 1 }}>Thanks for sharing</Typography><Typography color="text.secondary" sx={{ mt: 1.5 }}>Your review for {order.items?.[0]?.title || 'this order'} has been saved.</Typography><Rating value={rating} readOnly sx={{ mt: 2 }} /><Box sx={{ mt: 3 }}><Button variant="contained" onClick={() => setSubmitted(false)}>Edit review</Button><Button sx={{ ml: 1 }} onClick={() => navigate('/orders')}>View orders</Button></Box></Box></>);
-=======
   if (order?.status !== 'DELIVERED' && !deliveryComplete) return page(<><Button startIcon={<ArrowBackIcon />} onClick={() => navigate(`/order-details/${orderId}`)}>Back to order</Button><Box sx={{ mt: 5, textAlign: 'center' }}><Typography variant="h5" fontWeight={700}>Review available after delivery</Typography><Typography color="text.secondary" sx={{ mt: 1 }}>You can rate this order when its delivery is complete.</Typography></Box></>);
   const selectedItem = order?.items?.find((item) => item.productId === productId) || order?.items?.[0];
   const nextReviewItem = order?.items?.find((item) => !savedReviews.some((review) => review.productId === item.productId));
@@ -147,7 +113,6 @@ export default function OrderReviewPage() {
     setPhotos(Array.isArray(existing?.photoUrls) ? existing.photoUrls : []); setSubmitted(Boolean(existing)); setError('');
   };
   if (submitted) return page(<><Button startIcon={<ArrowBackIcon />} onClick={() => navigate(`/order-details/${orderId}`)}>Back to order</Button><Box sx={{ bgcolor: '#fff', mt: 3, p: { xs: 3, sm: 5 }, textAlign: 'center', border: '1px solid #dde6e1', borderRadius: 2 }}><CheckCircleOutlineIcon sx={{ fontSize: 54, color: '#087f5b' }} /><Typography variant="h4" fontWeight={800} sx={{ mt: 1 }}>Thanks for sharing</Typography><Typography color="text.secondary" sx={{ mt: 1.5 }}>Your review for {selectedItem?.title || 'this product'} has been saved for moderation.</Typography><Rating value={rating} readOnly sx={{ mt: 2 }} />{order?.items?.length > 1 && <Select fullWidth value={productId} onChange={(event) => selectProduct(event.target.value)} sx={{ mt: 2 }} aria-label="Select product review">{order.items.map((item) => <MenuItem key={item.productId || item.id} value={item.productId}>{item.title} · {savedReviews.some((review) => review.productId === item.productId) ? 'Review saved' : 'Not reviewed'}</MenuItem>)}</Select>}<Box sx={{ mt: 3 }}><Button variant="outlined" onClick={() => setSubmitted(false)}>Edit review</Button>{nextReviewItem && nextReviewItem.productId !== productId && <Button sx={{ ml: 1 }} variant="contained" onClick={() => selectProduct(nextReviewItem.productId)}>Review next product</Button>}<Button sx={{ ml: 1 }} onClick={() => navigate('/orders')}>View orders</Button></Box></Box></>);
->>>>>>> Stashed changes
 
   return page(<><Button startIcon={<ArrowBackIcon />} onClick={() => navigate(`/order-details/${orderId}`)}>Back to order</Button><Box component="form" onSubmit={submit} sx={{ mt: 2, bgcolor: '#fff', border: '1px solid #dde6e1', borderRadius: 2, overflow: 'hidden' }}><Box sx={{ p: { xs: 2.5, sm: 4 }, textAlign: 'center' }}><Typography variant="h5" fontWeight={800}>Rate a product from this order</Typography>{order.items?.length > 1 ? <Select fullWidth value={productId} onChange={(event) => selectProduct(event.target.value)} sx={{ mt: 2 }} inputProps={{ 'aria-label': 'Product to review' }}>{order.items.map((item) => <MenuItem key={item.productId || item.id} value={item.productId}>{item.title} · {item.quantity} purchased</MenuItem>)}</Select> : <Typography color="text.secondary" sx={{ mt: 1 }}>{order.items?.[0]?.title || 'Your delivered order'}</Typography>}<Rating name="order-rating" value={rating} onChange={(_, value) => { setRating(value || 0); setError(''); }} size="large" sx={{ mt: 2 }} /><Typography variant="body2" color="text.secondary">{rating ? `${rating} out of 5` : 'Tap a star to rate'}</Typography></Box><Box sx={{ borderTop: '1px solid #e5e7eb', p: { xs: 2.5, sm: 4 } }}><TextField fullWidth multiline minRows={4} label="Tell us about your experience" value={comment} inputProps={{ maxLength: 1000 }} onChange={(event) => setComment(event.target.value)} helperText={`${comment.length}/1000`} /><Box sx={{ mt: 2 }}><Button component="label" variant="outlined" startIcon={<AddAPhotoOutlinedIcon />} disabled={photos.length >= MAX_PHOTOS}>Add photos ({photos.length}/{MAX_PHOTOS})<input hidden type="file" accept="image/*" multiple onChange={addPhotos} /></Button><Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mt: 1.5 }}>{photos.map((photo, index) => <Box key={photo.slice(-24) + index} sx={{ position: 'relative' }}><Box component="img" src={photo} alt={`Review attachment ${index + 1}`} sx={{ width: 82, height: 82, objectFit: 'cover', borderRadius: 1, border: '1px solid #cbd5e1' }} /><IconButton size="small" aria-label={`Remove photo ${index + 1}`} onClick={() => setPhotos((current) => current.filter((_, photoIndex) => photoIndex !== index))} sx={{ position: 'absolute', top: -10, right: -10, bgcolor: '#fff', border: '1px solid #cbd5e1' }}><CloseIcon fontSize="small" /></IconButton></Box>)}</Box></Box>{error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}<Button type="submit" variant="contained" fullWidth disabled={saving || !productId} sx={{ mt: 3, py: 1.35 }}>{saving ? 'Saving review...' : savedReviews.some((review) => review.productId === productId) ? 'Update review' : 'Submit review'}</Button></Box></Box></>);
 }

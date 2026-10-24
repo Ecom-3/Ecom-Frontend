@@ -108,22 +108,12 @@ const OrderDetailViewPage = () => {
   }, [requestedOrderId]);
 
   useEffect(() => {
-<<<<<<< Updated upstream
-    if (!reviewPromptOpen) return;
+    if (!deliveryCompleted || !order?.id) return;
     const timer = window.setTimeout(() => {
       navigate(`/order-details/${encodeURIComponent(order.id)}/review`);
     }, 700);
     return () => window.clearTimeout(timer);
-  }, [reviewPromptOpen, navigate, order?.id]);
-=======
-    if (!deliveryCompleted || !order?.id) return;
-    const promptTimer = window.setTimeout(() => setReviewPromptOpen(true), 0);
-    const timer = window.setTimeout(() => {
-      navigate(`/order-details/${encodeURIComponent(order.id)}/review`);
-    }, 700);
-    return () => { window.clearTimeout(promptTimer); window.clearTimeout(timer); };
   }, [deliveryCompleted, navigate, order?.id]);
->>>>>>> Stashed changes
 
   const dismissReviewPrompt = () => {
     setDismissedReviewOrderId(order.id);

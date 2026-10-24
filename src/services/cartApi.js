@@ -1,18 +1,9 @@
-<<<<<<< Updated upstream
-import { serviceBaseUrl } from './apiConfig.js';
-import { requestId } from '../utils/requestId.js';
-=======
 import { serviceBaseUrl } from '../config/serviceRoutes.js';
->>>>>>> Stashed changes
 import { apiRequest } from './apiClient';
 import { createCartDiagnosticId, logCartDiagnostic, logCartSnapshot } from '../utils/cartDiagnostics.js';
 import { createUuid } from '../utils/uuid.js';
 
-<<<<<<< Updated upstream
-const CART_BASE_URL = serviceBaseUrl(import.meta.env, 'VITE_CART_URL', '/cart-api');
-=======
 const CART_BASE_URL = serviceBaseUrl('cart', import.meta.env);
->>>>>>> Stashed changes
 
 const buildQueryString = (params = {}) => {
   const search = new URLSearchParams();
@@ -82,13 +73,9 @@ export const getCart = async (cartId) => request(`/api/v1/carts/${encodeURICompo
 
 export const getActiveCart = async ({ customerId, storeId }) => request(`/api/v1/carts/active${buildQueryString({ customerId, storeId })}`);
 
-<<<<<<< Updated upstream
-export const addCartItem = async (cartId, data, key = requestId()) => request(`/api/v1/carts/${encodeURIComponent(cartId)}/items`, { method: 'POST', body: JSON.stringify(data), headers: { 'Idempotency-Key': key } });
-=======
 export const getActiveCarts = async (customerId) => request(`/api/v1/carts/customer/${encodeURIComponent(customerId)}/active`);
 
 export const addCartItem = async (cartId, data, key = createUuid()) => request(`/api/v1/carts/${encodeURIComponent(cartId)}/items`, { method: 'POST', body: JSON.stringify(data), headers: { 'Idempotency-Key': key } });
->>>>>>> Stashed changes
 
 export const updateCartItem = async (cartId, itemId, data) => request(`/api/v1/carts/${encodeURIComponent(cartId)}/items/${encodeURIComponent(itemId)}`, { method: 'PATCH', body: JSON.stringify(data) });
 

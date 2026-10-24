@@ -74,14 +74,10 @@ export default function CheckoutGroupPage() {
     load();
     return () => { active = false; clearTimeout(timer); };
   }, [groupId, user?.id, retry]);
-<<<<<<< Updated upstream
-  return <Box component="main" sx={{ width: '100%', boxSizing: 'border-box', height: '100%', minHeight: 0, overflowY: 'auto', flex: '1 1 auto', border: '2px solid #087454', borderTopWidth: 6, bgcolor: '#f3f7f5', px: { xs: 2, md: 5 }, py: 2, color: '#173b2e' }}>
-=======
   useEffect(() => {
     if (group?.state === 'COMPLETED') sessionStorage.setItem(COMPLETED_CHECKOUT_RETURN_KEY, group.id);
   }, [group?.id, group?.state]);
   return <Box component="main" sx={{ width: '100%', boxSizing: 'border-box', minHeight: '100vh', border: '2px solid #087454', borderTopWidth: 6, bgcolor: '#f3f7f5', px: { xs: 2, md: 5 }, py: 2, color: '#173b2e' }}>
->>>>>>> Stashed changes
     <Box sx={{ width: '100%', mx: 'auto' }}>
     <Button startIcon={<ArrowBackIcon />} sx={{ color: '#087454', textTransform: 'none' }} onClick={() => navigate('/orders')}>Orders</Button>
     {!user?.id ? <Button onClick={() => navigate('/login')}>Sign In</Button> : group?.id === groupId && group?.customerId === user.id

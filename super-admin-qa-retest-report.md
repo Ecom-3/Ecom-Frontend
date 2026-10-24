@@ -1,8 +1,8 @@
 # Super Admin QA Retest Report
 
-**Environment:** `http://localhost:5173`  
-**Retest date:** 2026-10-23  
-**Scope:** SA-12, SA-13, SA-34, SA-36, SA-39, SA-43–46, SA-50–54, SA-65, and SA-71 only.  
+**Environment:** `http://localhost:5173`
+**Retest date:** 2026-10-23
+**Scope:** SA-12, SA-13, SA-34, SA-36, SA-39, SA-43–46, SA-50–54, SA-65, and SA-71 only.
 **Safety:** No live business records were created, edited, deleted, activated, deactivated, assigned, or otherwise changed. Automated write-path tests ran against their isolated test fixtures. No source code was changed.
 
 ## Results at a glance

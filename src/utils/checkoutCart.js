@@ -1,9 +1,5 @@
-<<<<<<< Updated upstream
-import { requestId } from './requestId.js';
-=======
 import { createUuid } from './uuid.js';
 
->>>>>>> Stashed changes
 export const prepareCheckoutCart = async (customerId, storeId, items, api, storage = sessionStorage, allowContentChange = false) => {
   const slot = `checkout-cart:${customerId}:${storeId}`;
   const body = JSON.stringify(items);
@@ -31,20 +27,6 @@ export const prepareCheckoutCart = async (customerId, storeId, items, api, stora
   if (cart.customerId !== customerId || cart.storeId !== storeId) throw new Error('Cart ownership or store mismatch.');
   const same = (left, right) => left.productId === right.productId && (left.variantId ?? null) === (right.variantId ?? null);
   if (changing) {
-<<<<<<< Updated upstream
-    if (cart.status !== 'ACTIVE') throw new Error('The previous cart is claimed by checkout. Open its saved checkout before changing items.');
-    const previous = JSON.parse(saved.body);
-    if (!cart.items.every(line => previous.some(item => same(line, item) && line.quantity === item.quantity))) {
-      throw new Error('The saved cart changed in another session. Review it before replacing items.');
-    }
-    saved = { body, cartId: cart.id, keys: items.map(() => requestId()) };
-    storage.setItem(slot, JSON.stringify(saved));
-    for (const line of cart.items) {
-      if (!items.some(item => same(line, item))) cart = await api.removeCartItem(cart.id, line.id);
-    }
-  }
-  const plan = saved || { body, cartId: cart.id, keys: items.map(() => requestId()) };
-=======
     if (cart.status === 'CHECKED_OUT') {
       // A checkout claim makes the old cart immutable. Keep it intact and open
       // a new active cart for the customer's changed cart contents.
@@ -73,7 +55,6 @@ export const prepareCheckoutCart = async (customerId, storeId, items, api, stora
     }
   }
   const plan = saved || { body, cartId: cart.id, keys: items.map(() => createUuid()) };
->>>>>>> Stashed changes
   storage.setItem(slot, JSON.stringify(plan));
   if (cart.status === 'CHECKED_OUT') return cart;
   if (cart.items.some(line => !items.some(item => same(line, item)))) throw new Error('Your saved cart contains other items. Review it before checkout.');

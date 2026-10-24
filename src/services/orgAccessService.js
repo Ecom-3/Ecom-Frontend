@@ -1,12 +1,6 @@
-<<<<<<< Updated upstream
-import { serviceBaseUrl } from './apiConfig.js';
-import { apiRequest } from './apiClient';
-const ORG_ACCESS_BASE_URL = serviceBaseUrl(import.meta.env, 'VITE_ORG_ACCESS_URL', '/org-access');
-=======
 import { serviceBaseUrl } from '../config/serviceRoutes.js';
 import { apiRequest } from './apiClient.js';
 const ORG_ACCESS_BASE_URL = serviceBaseUrl('orgAccess', import.meta.env);
->>>>>>> Stashed changes
 
 const normalizeRole = (role) => {
   if (!role) return null;

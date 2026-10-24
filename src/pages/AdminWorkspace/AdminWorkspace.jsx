@@ -451,15 +451,8 @@ const AdminWorkspace = () => {
       if(user?.role==='store-manager'&&!storeId)throw new Error('No store is assigned to this manager.');
       try {
         const backendOrders = (await getOrders(user?.role==='store-manager'&&storeId?{storeId}:{})).map((order)=>adminOrder(normalizeOrder(order), stores));
-<<<<<<< Updated upstream
-        const backendIds = new Set(backendOrders.map((order)=>order.id));
-        source = user?.role === 'store-manager' ? backendOrders : [...backendOrders, ...localScoped.filter((order)=>!backendIds.has(order.id))];
-      } catch (error) {
-        if (user?.role === 'store-manager') source = [];
-=======
         source = backendOrders;
       } catch (error) {
->>>>>>> Stashed changes
         setMessage(error.message);
       }
       if (user?.role === 'store-manager') {

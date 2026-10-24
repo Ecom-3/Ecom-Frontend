@@ -1,21 +1,11 @@
-<<<<<<< Updated upstream
-import { serviceBaseUrl } from './apiConfig.js';
-import { apiRequest } from './apiClient';
-import { createOrderAttempt } from '../utils/orderCreationAttempt';
-=======
 import { serviceBaseUrl } from '../config/serviceRoutes.js';
 import { apiRequest } from './apiClient.js';
 import { createOrderAttempt, retrySavedOrderAttempt } from '../utils/orderCreationAttempt.js';
->>>>>>> Stashed changes
 
 export const ORDER_STATUSES = ['CREATED', 'CONFIRMED', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED'];
 export const PAYMENT_STATUSES = ['PENDING', 'SUCCESS', 'PAID', 'FAILED', 'REFUNDED'];
 
-<<<<<<< Updated upstream
-const ORDER_BASE_URL = serviceBaseUrl(import.meta.env, 'VITE_ORDER_URL', '/order-api');
-=======
 const ORDER_BASE_URL = serviceBaseUrl('order', import.meta.env || {});
->>>>>>> Stashed changes
 
 const request = (path, options = {}) => apiRequest(ORDER_BASE_URL, path, options);
 

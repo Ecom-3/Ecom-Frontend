@@ -1,10 +1,10 @@
 # Global Admin Local QA Report
 
-**Execution date:** 2026-10-23  
-**Scope:** Local development environment only  
-**Frontend:** `http://localhost:5173`  
-**Configured gateway target:** `http://localhost:8082` (Vite proxy; gateway health endpoint did not return a usable response during the initial check)  
-**Database:** MySQL at `localhost:3306`. The Org Access datasource uses `MYSQL_DB`, which was not set in the backend `.env`; its configured default is `users_roles`.  
+**Execution date:** 2026-10-23
+**Scope:** Local development environment only
+**Frontend:** `http://localhost:5173`
+**Configured gateway target:** `http://localhost:8082` (Vite proxy; gateway health endpoint did not return a usable response during the initial check)
+**Database:** MySQL at `localhost:3306`. The Org Access datasource uses `MYSQL_DB`, which was not set in the backend `.env`; its configured default is `users_roles`.
 **Credentials:** The supplied local QA account was used. No password, token, cookie, or authentication payload is recorded here.
 
 ## Summary
@@ -112,8 +112,8 @@ try { $r=Invoke-WebRequest -Uri 'http://localhost:8082/actuator/health' -Timeout
 
 ## Global Admin Retest — 2026-10-24
 
-**Environment:** `http://localhost:5173` with local gateway proxy at `http://localhost:8082`  
-**Authentication:** Reused the already authenticated local Global Admin browser session. This retest did not repeat the login form flow.  
+**Environment:** `http://localhost:5173` with local gateway proxy at `http://localhost:8082`
+**Authentication:** Reused the already authenticated local Global Admin browser session. This retest did not repeat the login form flow.
 **Safety:** Existing orders, inventory, profile, payments, and customer records were not modified. One uniquely tagged disposable product and one inactive disposable coupon were created for UI verification, then deleted. The product's store mapping was also verified absent after product deletion. No order status, assignment, rejection, stock adjustment, payment, or notification delivery was submitted.
 
 ### Results

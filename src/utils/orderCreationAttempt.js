@@ -1,9 +1,5 @@
-<<<<<<< Updated upstream
-import { requestId } from './requestId.js';
-=======
 import { createUuid } from './uuid.js';
 
->>>>>>> Stashed changes
 export const createOrderAttempt = async (data, send, storage = sessionStorage) => {
   const slot = `order-attempt:${data.customerId}:${data.storeId}`;
   const saved = JSON.parse(storage.getItem(slot) || 'null');
@@ -13,11 +9,7 @@ export const createOrderAttempt = async (data, send, storage = sessionStorage) =
   if (saved && saved.body !== body) {
     throw new Error('An earlier checkout has an unresolved result. Retry that checkout before changing the order.');
   }
-<<<<<<< Updated upstream
-  const attempt = saved || { body, key: requestId() };
-=======
   const attempt = saved || { body, key: createUuid() };
->>>>>>> Stashed changes
   // Persist before sending: a lost response or page reload must reuse the key.
   storage.setItem(slot, JSON.stringify(attempt));
   let result;
