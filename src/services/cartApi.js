@@ -1,8 +1,18 @@
+<<<<<<< Updated upstream
+import { serviceBaseUrl } from './apiConfig.js';
+import { requestId } from '../utils/requestId.js';
+=======
 import { serviceBaseUrl } from '../config/serviceRoutes.js';
+>>>>>>> Stashed changes
 import { apiRequest } from './apiClient';
 import { createCartDiagnosticId, logCartDiagnostic, logCartSnapshot } from '../utils/cartDiagnostics.js';
+import { createUuid } from '../utils/uuid.js';
 
+<<<<<<< Updated upstream
+const CART_BASE_URL = serviceBaseUrl(import.meta.env, 'VITE_CART_URL', '/cart-api');
+=======
 const CART_BASE_URL = serviceBaseUrl('cart', import.meta.env);
+>>>>>>> Stashed changes
 
 const buildQueryString = (params = {}) => {
   const search = new URLSearchParams();
@@ -72,14 +82,22 @@ export const getCart = async (cartId) => request(`/api/v1/carts/${encodeURICompo
 
 export const getActiveCart = async ({ customerId, storeId }) => request(`/api/v1/carts/active${buildQueryString({ customerId, storeId })}`);
 
+<<<<<<< Updated upstream
+export const addCartItem = async (cartId, data, key = requestId()) => request(`/api/v1/carts/${encodeURIComponent(cartId)}/items`, { method: 'POST', body: JSON.stringify(data), headers: { 'Idempotency-Key': key } });
+=======
 export const getActiveCarts = async (customerId) => request(`/api/v1/carts/customer/${encodeURIComponent(customerId)}/active`);
 
-export const addCartItem = async (cartId, data, key = crypto.randomUUID()) => request(`/api/v1/carts/${encodeURIComponent(cartId)}/items`, { method: 'POST', body: JSON.stringify(data), headers: { 'Idempotency-Key': key } });
+export const addCartItem = async (cartId, data, key = createUuid()) => request(`/api/v1/carts/${encodeURIComponent(cartId)}/items`, { method: 'POST', body: JSON.stringify(data), headers: { 'Idempotency-Key': key } });
+>>>>>>> Stashed changes
 
 export const updateCartItem = async (cartId, itemId, data) => request(`/api/v1/carts/${encodeURIComponent(cartId)}/items/${encodeURIComponent(itemId)}`, { method: 'PATCH', body: JSON.stringify(data) });
 
 export const removeCartItem = async (cartId, itemId) => request(`/api/v1/carts/${encodeURIComponent(cartId)}/items/${encodeURIComponent(itemId)}`, { method: 'DELETE' });
 
 export const clearCartItems = async (cartId) => request(`/api/v1/carts/${encodeURIComponent(cartId)}/items`, { method: 'DELETE' });
+
+export const saveCartItemForLater = async (cartId, itemId) => request(`/api/v1/carts/${encodeURIComponent(cartId)}/items/${encodeURIComponent(itemId)}/save-for-later`, { method: 'PATCH' });
+
+export const moveSavedCartItemToCart = async (cartId, itemId) => request(`/api/v1/carts/${encodeURIComponent(cartId)}/items/${encodeURIComponent(itemId)}/move-to-cart`, { method: 'PATCH' });
 
 export const calculateCartTotal = async (cartId) => request(`/api/v1/carts/${encodeURIComponent(cartId)}/calculate-total`, { method: 'POST' });

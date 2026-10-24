@@ -1,10 +1,11 @@
 import { logCartDiagnostic, logCartSnapshot } from './cartDiagnostics.js';
+import { createUuid } from './uuid.js';
 
 // Keep retry identities until all guest lines have been acknowledged by the server.
-export const migrateGuestCart = async (cart, items, addItem, storage = localStorage, isCurrent = () => true) => {
+export const migrateGuestCart = async (cart, items, addItem, storage = sessionStorage, isCurrent = () => true, onAcknowledged = () => {}, persistGuestItems = true) => {
   const pending = items.filter(item => item.storeId === cart.storeId && item.quantity > 0);
   if (!pending.length) return cart;
-  logCartSnapshot('guest.migration.before', pending, 'guest localStorage');
+  logCartSnapshot('guest.migration.before', pending, 'guest in-memory cart');
   const slot = `guest-cart-migration:${cart.customerId}:${cart.id}`;
   const keys = JSON.parse(storage.getItem(slot) || '{}');
   const remaining = [...items];
@@ -17,14 +18,14 @@ export const migrateGuestCart = async (cart, items, addItem, storage = localStor
       unitPrice: item.unitPrice ?? item.price,
     };
     const identity = JSON.stringify(body);
-    keys[identity] ||= crypto.randomUUID();
+    keys[identity] ||= createUuid();
     storage.setItem(slot, JSON.stringify(keys));
     logCartDiagnostic('guest.migration.add', {
       storeId: cart.storeId,
       productId: body.productId,
       variantId: body.variantId,
       quantity: body.quantity,
-      source: 'guest localStorage',
+      source: 'guest in-memory cart',
       idempotencyId: keys[identity],
     });
     try {
@@ -35,7 +36,7 @@ export const migrateGuestCart = async (cart, items, addItem, storage = localStor
         productId: body.productId,
         variantId: body.variantId,
         quantity: body.quantity,
-        source: 'guest localStorage',
+      source: 'guest in-memory cart',
         idempotencyId: keys[identity],
       });
       throw error;
@@ -43,9 +44,10 @@ export const migrateGuestCart = async (cart, items, addItem, storage = localStor
     // Preserve unacknowledged lines on failure without displaying successful
     // additions twice when the complete server cart is fetched afterward.
     remaining.splice(remaining.indexOf(item), 1);
-    storage.setItem('guestCartItems', JSON.stringify(remaining));
+    onAcknowledged(item, remaining);
+    if (persistGuestItems) storage.setItem('guestCartItems', JSON.stringify(remaining));
   }
-  logCartSnapshot('guest.migration.after', remaining, 'guest localStorage');
+  logCartSnapshot('guest.migration.after', remaining, 'guest in-memory cart');
   storage.removeItem(slot);
   return updated;
 };

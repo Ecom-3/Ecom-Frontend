@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
+import { serviceBaseUrl } from './apiConfig.js';
+=======
 import { serviceBaseUrl } from '../config/serviceRoutes.js';
+>>>>>>> Stashed changes
 import { apiRequest } from './apiClient';
 
 export const NOTIFICATION_STATUSES = ['PENDING', 'SENT', 'FAILED', 'CANCELLED'];
@@ -15,7 +19,11 @@ export const NOTIFICATION_TYPES = [
   'SHIPMENT_DELIVERED',
 ];
 
+<<<<<<< Updated upstream
+const NOTIFICATION_BASE_URL = serviceBaseUrl(import.meta.env, 'VITE_NOTIFICATION_URL', '/notification-service');
+=======
 const NOTIFICATION_BASE_URL = serviceBaseUrl('notification', import.meta.env);
+>>>>>>> Stashed changes
 
 const request = (path, options = {}) => apiRequest(NOTIFICATION_BASE_URL, path, options);
 

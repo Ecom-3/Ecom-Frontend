@@ -6,7 +6,6 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import LanguageIcon from '@mui/icons-material/Language';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
-import { profileStore } from '../../services/localDataService';
 import logo from '../../assets/images/logo.png';
 import './LanguageSelectionPage.css';
 
@@ -15,7 +14,7 @@ const languages = Object.keys(resources).map((value) => ({ value, native: resour
 const LanguageSelectionPage = () => {
   const navigate = useNavigate();
   const route = useLocation();
-  const { locale, updateLocale, user, setUser } = useContext(AppContext);
+  const { locale, updateLocale } = useContext(AppContext);
   const [language, setLanguage] = useState(locale.language);
   const [currency, setCurrency] = useState(locale.currency);
   const [timeZone, setTimeZone] = useState(locale.timeZone);
@@ -28,10 +27,6 @@ const LanguageSelectionPage = () => {
     const nextLocale = { language, currency, timeZone };
     updateLocale(nextLocale);
     try {
-      if (user) {
-        const saved = await profileStore.update({ locale: nextLocale, localeConfigured: true });
-        setUser(saved);
-      }
       navigate(onboarding ? '/profile' : (route.state?.returnTo || '/home'), onboarding ? { replace: true, state: { completeProfile: true, returnTo: route.state?.returnTo || '/home' } } : { replace: true });
     } finally { setSaving(false); }
   };

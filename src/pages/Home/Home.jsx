@@ -25,12 +25,14 @@ import { adaptProductList } from '../../services/catalogAdapter';
 import { deliverySummary, storeDeliversTo, deliveryDistanceKm, deliveryProducts, isGlobalStore } from '../../utils/storeDelivery';
 import { filterAndSortProducts, prepareBrowseProduct, parseDeliveryEstimate } from '../../utils/productBrowsing.js';
 import { useBrowseDeliveryQuotes } from '../../hooks/useBrowseDeliveryQuotes';
+import { getProductReviewsBatch } from '../../services/reviewApi';
 import './Home.css';
 
 const OTHER_SUBCATEGORY_CATEGORIES = ['Traditional Pickles', 'Premium Dry Fruits', 'Fresh Vegetables', 'Fresh Non-Veg'];
 
 
 const Home = () => {
+  const [reviews, setReviews] = useState([]);
   const location = useLocation();
   const [selectedSubcategory, setSelectedSubcategory] = useState('All');
   const [showSearchFilters, setShowSearchFilters] = useState(false);
@@ -68,7 +70,14 @@ const Home = () => {
     loadCatalog,
     formatCurrency,
     setDeliveryMode,
+    selectStore,
   } = useContext(AppContext);
+  useEffect(() => {
+    let active = true;
+    const ids = catalogProducts.map((product) => product.productId || product.id).filter(Boolean);
+    getProductReviewsBatch(ids).then((rows) => { if (active) setReviews(rows || []); }).catch(() => { if (active) setReviews([]); });
+    return () => { active = false; };
+  }, [catalogProducts]);
   useLayoutEffect(() => {
     if (location.state?.resetHome) {
       setHomeSearchQuery('');
@@ -137,8 +146,7 @@ const Home = () => {
     if (item.category === 'Dry Fruits') return /raisin|date/i.test(item.name || item.title) ? 'Dried Fruits' : 'Nuts';
     return 'Other';
   };
-  // localStorage-backed reference data â€” read once per session, not on every render.
-  const reviews = [];
+  // Reference data comes from the catalog service.
   const banners = catalogBanners;
 
   const allMasterProducts = useMemo(() => catalogProducts
@@ -352,7 +360,7 @@ const Home = () => {
                 {[{id:'all',label:'All'}, {id:'offers',label:'Offers'}, {id:'under30',label:'Under 30 mins'}, {id:'above30',label:'Above 30 mins'}, {id:'new',label:'New'}].map((filter) => <Chip key={filter.id} clickable label={filter.label} color={storeFilter === filter.id ? 'success' : 'default'} onClick={() => setStoreFilter(filter.id)} />)}
               </Box>
               <Box sx={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(128px, 1fr))', gap:2 }}>
-                {visibleStores.map((store) => { const delivery = deliverySummary(store, formatCurrency); const openStore = () => { if (!store.id) return; const targetStoreId = store.id; setDeliveryMode('delivery'); localStorage.setItem('selectedStoreId', targetStoreId); localStorage.setItem('selectedStore', store.name || targetStoreId); navigate(`/stores/${encodeURIComponent(targetStoreId)}`); }; return <Box key={store.id} role="button" tabIndex={0} onClick={openStore} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openStore(); } }} sx={{ cursor:'pointer', textAlign:'center', p:1, border:'1px solid #e2e8f0', borderRadius:3, bgcolor:'#fff' }}>
+                {visibleStores.map((store) => { const delivery = deliverySummary(store, formatCurrency); const openStore = () => { if (!store.id) return; const targetStoreId = store.id; setDeliveryMode('delivery'); selectStore(targetStoreId); navigate(`/stores/${encodeURIComponent(targetStoreId)}`); }; return <Box key={store.id} role="button" tabIndex={0} onClick={openStore} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openStore(); } }} sx={{ cursor:'pointer', textAlign:'center', p:1, border:'1px solid #e2e8f0', borderRadius:3, bgcolor:'#fff' }}>
                   <Box sx={{ width:64, height:64, mx:'auto', borderRadius:'50%', bgcolor:'#eef8f3', display:'grid', placeItems:'center', overflow:'hidden', border:'1px solid #d8eee5' }}><StorefrontOutlinedIcon sx={{ color:'#075F40' }} /></Box>
                   <Typography sx={{ mt:1, fontWeight:800, fontSize:13 }} noWrap>{store.name}</Typography>
                   {store.hasOffer && <Typography sx={{ color:'#dc2626', fontSize:11, fontWeight:800 }}>Offer</Typography>}

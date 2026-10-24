@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import './CartPage.css';
 import { hasCompleteProfile } from '../../utils/profileCompletion';
 import { buildCartDeliveryLines } from '../../services/cartDeliveryLines';
-import { PENDING_COUPON_KEY, calculateCouponDiscount, cartPromotionContext, validateCouponCode } from '../../services/couponService';
+import { peekPendingCouponCode, calculateCouponDiscount, cartPromotionContext, validateCouponCode } from '../../services/couponService';
 import { isGlobalProduct } from '../../utils/storeDelivery';
 
 const COMPLETED_CHECKOUT_RETURN_KEY = 'freshcart.completedCheckoutReturnToCart';
@@ -23,7 +23,7 @@ const CartPage = () => {
   const { cartItems, updateQuantity, removeFromCart, clearCart, saveItemForLater, savedForLater, restoreSavedItem, removeSavedForLater, formatCurrency, cartTotal, cartLoading, cartError, cartUnavailable, isLoggedIn, user, addresses, catalogProducts, catalogItemKey, deliveryMode, setDeliveryMode, selectedLocation } = useContext(AppContext);
   const [deliveryLines, setDeliveryLines] = useState([]);
   const [deliveryError, setDeliveryError] = useState('');
-  const [offerCode] = useState(() => localStorage.getItem(PENDING_COUPON_KEY) || '');
+  const [offerCode] = useState(() => peekPendingCouponCode());
   const [couponResult, setCouponResult] = useState(null);
   const goToCheckout = () => {
     sessionStorage.removeItem(COMPLETED_CHECKOUT_RETURN_KEY);
@@ -62,16 +62,17 @@ const CartPage = () => {
   }, [hasGlobalCart, deliveryMode, setDeliveryMode]);
   const deliveryCharge = 0;
   const couponContext = cartPromotionContext({ cartItems, catalogProducts });
+  const couponKey = JSON.stringify([offerCode, grandTotal, couponContext.location, couponContext.store]);
   useEffect(() => {
     let ignore=false;
-    if(!offerCode){setCouponResult(null);return undefined;}
-    setCouponResult(null);
-    validateCouponCode(offerCode,{subtotal:grandTotal,location:couponContext.location,store:couponContext.store}).then((result)=>{if(!ignore)setCouponResult(result);});
+    if(!offerCode)return undefined;
+    validateCouponCode(offerCode,{subtotal:grandTotal,location:couponContext.location,store:couponContext.store}).then((result)=>{if(!ignore)setCouponResult({key:couponKey,result});});
     return()=>{ignore=true;};
-  },[offerCode,grandTotal,couponContext.location,couponContext.store]);
-  const offerDiscount = couponResult?.valid ? calculateCouponDiscount(couponResult.coupon, grandTotal) : 0;
+  },[offerCode,grandTotal,couponContext.location,couponContext.store,couponKey]);
+  const currentCouponResult = couponResult?.key === couponKey ? couponResult.result : null;
+  const offerDiscount = currentCouponResult?.valid ? calculateCouponDiscount(currentCouponResult.coupon, grandTotal) : 0;
   const cartTotalWithDelivery = grandTotal + deliveryCharge - offerDiscount;
-  const offerMessage = offerCode ? (couponResult?.valid ? `${offerCode} applied. You saved ${formatCurrency(offerDiscount)}.` : couponResult?.message || 'Offer could not be applied.') : '';
+  const offerMessage = offerCode ? (currentCouponResult?.valid ? `${offerCode} applied. You saved ${formatCurrency(offerDiscount)}.` : currentCouponResult?.message || 'Offer could not be applied.') : '';
   const itemLineKey = (item) => `${item.storeId || item.sourceStoreId || item.store || item.storeName || 'store'}:${item.productId || item.id || ''}:${item.variantId ?? 'product'}`;
   const lineFor = (item) =>
     deliveryLines.find((line) => line.key === itemLineKey(item))
@@ -252,9 +253,9 @@ const CartPage = () => {
 
               {offerCode && <Box className="bill-data-row">
                 <Typography className="bill-item-label">Offer {offerCode}</Typography>
-                <Typography className={couponResult?.valid ? 'bill-item-free' : 'bill-item-value'}>{couponResult?.valid ? `-${formatCurrency(offerDiscount)}` : 'Not applied'}</Typography>
+                <Typography className={currentCouponResult?.valid ? 'bill-item-free' : 'bill-item-value'}>{currentCouponResult?.valid ? `-${formatCurrency(offerDiscount)}` : 'Not applied'}</Typography>
               </Box>}
-              {offerMessage && <Typography role="status" sx={{ color: couponResult?.valid ? '#075F40' : 'error.main', fontSize: 13 }}>{offerMessage}</Typography>}
+              {offerMessage && <Typography role="status" sx={{ color: currentCouponResult?.valid ? '#075F40' : 'error.main', fontSize: 13 }}>{offerMessage}</Typography>}
 
               <Box className="grand-total-row">
                 <Typography className="grand-total-label">Amount to be paid</Typography>

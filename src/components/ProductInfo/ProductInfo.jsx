@@ -12,6 +12,7 @@ import { getProduct, getProductVariants, getProductImages } from '../../services
 import { adaptProduct, adaptImage, adaptVariant, variantChoiceLabel } from '../../services/catalogAdapter';
 import { findInventoryForItem } from '../../services/inventoryApi';
 import { loadProductStock } from '../../utils/productStock.js';
+import { getProductReviews } from '../../services/reviewApi';
 import { resolveProductStore } from '../../services/productStoreResolver';
 import SafeProductImage from '../SafeProductImage/SafeProductImage';
 import './ProductInfo.css';
@@ -29,7 +30,14 @@ const ProductInfo = () => {
   const [imageIndex, setImageIndex] = useState(0);
   const [imageFallbackSrc, setImageFallbackSrc] = useState('');
   const [activeLink, setActiveLink] = useState(null);
+  const [productReviews, setProductReviews] = useState([]);
   const targetId = productId || selectedProduct?.productId || selectedProduct?.id || selectedProduct?.sku;
+  useEffect(() => {
+    let active = true;
+    if (!targetId) return () => { active = false; };
+    getProductReviews(targetId).then((rows) => { if (active) setProductReviews(Array.isArray(rows) ? rows : []); }).catch(() => { if (active) setProductReviews([]); });
+    return () => { active = false; };
+  }, [targetId]);
   const [productResult, setProductResult] = useState(null);
   const [variantResult, setVariantResult] = useState(null);
   const [imageResult, setImageResult] = useState(null);
@@ -144,7 +152,7 @@ const ProductInfo = () => {
   const productVideos = [product.videoUrl, ...String(product.videoUrls || '').split('\n')].map(validWebUrl).filter((url,index,items) => url && items.indexOf(url) === index);
   const specifications = String(product.specifications || '').split('\n').map((line) => line.trim()).filter(Boolean);
   const tags = (Array.isArray(product.tags) ? product.tags : String(product.tags || '').split(',')).map((tag) => String(tag).trim()).filter(Boolean);
-  const approvedRatings = (Array.isArray(product.reviews) ? product.reviews : []).filter((review) => review.status === 'Approved' && review.active !== false);
+  const approvedRatings = (Array.isArray(productReviews) ? productReviews : Array.isArray(product.reviews) ? product.reviews : []).filter((review) => String(review.status || '').toUpperCase() === 'APPROVED' && review.active !== false);
   const averageRating = approvedRatings.length
     ? approvedRatings.reduce((sum,review) => sum + Number(review.rating || 0),0) / approvedRatings.length
     : Number(product.averageRating ?? product.rating ?? 0);
@@ -240,6 +248,7 @@ const ProductInfo = () => {
           <Box className="info-block"><Typography className="info-block-heading">Tags</Typography>{tags.length ? <Box className="tag-list">{tags.map((tag) => <Chip key={tag} label={tag} size="small" />)}</Box> : <Typography>Not specified</Typography>}</Box>
           {(productVideos.length > 0 || externalLinks.length > 0) && <Box className="info-block"><Typography className="info-block-heading">Product Media & Links</Typography><Box className="product-video-grid">{productVideos.map((url) => url.includes('youtu') ? <iframe key={url} title={`${product.title} video`} src={youtubeEmbedUrl(url)} allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowFullScreen /> : <video key={url} controls src={url} />)}</Box><Box className="media-link-list">{externalLinks.map((link) => <Box key={link.label} className="media-link-row"><Typography>{link.label}</Typography><Box><Button size="small" startIcon={<VisibilityOutlinedIcon />} onClick={() => setActiveLink(link)}>Open here</Button><Button size="small" startIcon={<LaunchOutlinedIcon />} onClick={() => window.open(link.url,'_blank','noopener,noreferrer')}>External</Button></Box></Box>)}</Box></Box>}
           <Button variant="outlined" onClick={() => navigate('/reviews')} sx={{ justifyContent:'flex-start',gap:1,textTransform:'none' }}><Rating readOnly size="small" precision={0.1} value={averageRating} /> {averageRating ? `${averageRating.toFixed(1)} · ${Number(product.reviewCount ?? approvedRatings.length)} reviews` : 'No approved reviews yet'}</Button>
+          {approvedRatings.length > 0 && <Box className="info-block" aria-label="Approved customer reviews"><Typography className="info-block-heading">Customer reviews</Typography>{approvedRatings.map((review) => <Box key={review.id} sx={{ py:1.5,borderBottom:'1px solid #e2e8f0',display:'grid',gap:0.75 }}><Rating value={Number(review.rating)||0} readOnly size="small" /><Typography sx={{ whiteSpace:'pre-wrap' }}>{review.comment || 'Customer rated this product.'}</Typography>{!!review.photoUrls?.length && <Box sx={{ display:'flex',gap:1,flexWrap:'wrap' }}>{review.photoUrls.map((photo,index)=><Box component="img" key={`${review.id}:${index}`} src={photo} alt={`Customer review photo ${index+1}`} sx={{ width:70,height:70,objectFit:'cover',borderRadius:1 }} />)}</Box>}{review.adminReply && <Box sx={{ pl:1.5,borderLeft:'3px solid #087f5b' }}><Typography variant="caption" fontWeight={700}>Response</Typography><Typography>{review.adminReply}</Typography></Box>}</Box>)}</Box>}
 
           {/* Highlights */}
           <Box className="info-block">

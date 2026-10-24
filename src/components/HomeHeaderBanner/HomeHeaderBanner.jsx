@@ -28,15 +28,16 @@ const HomeHeaderBanner = () => {
   const navigate = useNavigate();
   const animatedPlaceholder = useAnimatedPlaceholder();
   const { userCity, selectedCategory, setSelectedCategory, homeSearchQuery, setHomeSearchQuery, cartCount, savedForLater, user, isLoggedIn } = useContext(AppContext);
-  const [unreadNotifications, setUnreadNotifications] = useState(0);
+  const [unreadNotifications, setUnreadNotifications] = useState({ userId: null, count: 0 });
+  const unreadNotificationCount = isLoggedIn && user?.id && unreadNotifications.userId === user.id ? unreadNotifications.count : 0;
   useEffect(() => {
-    if (!isLoggedIn || !user?.id) { setUnreadNotifications(0); return undefined; }
+    if (!isLoggedIn || !user?.id) return undefined;
     let active = true;
     const loadUnread = async () => {
       try {
         const rows = await getAllCustomerNotifications(user.id);
-        if (active) setUnreadNotifications(rows.map(normalizeNotification).filter((item) => !item.read).length);
-      } catch { if (active) setUnreadNotifications(0); }
+        if (active) setUnreadNotifications({ userId: user.id, count: rows.map(normalizeNotification).filter((item) => !item.read).length });
+      } catch { if (active) setUnreadNotifications({ userId: user.id, count: 0 }); }
     };
     loadUnread();
     const timer = window.setInterval(loadUnread, 60000);
@@ -98,8 +99,8 @@ const HomeHeaderBanner = () => {
             </Badge>
             <Typography className="banner-action-label">Saved</Typography>
           </Box>
-          <Box className="banner-action-item" role="button" tabIndex={0} aria-label={`Notifications${unreadNotifications ? `, ${unreadNotifications} unread` : ''}`} onClick={() => navigate('/notifications')} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); navigate('/notifications'); } }}>
-            <Badge badgeContent={unreadNotifications} color="error" className="banner-cart-badge"><NotificationsNoneOutlinedIcon style={{ fontSize: 22, color: '#ffffff' }} /></Badge>
+          <Box className="banner-action-item" role="button" tabIndex={0} aria-label={`Notifications${unreadNotificationCount ? `, ${unreadNotificationCount} unread` : ''}`} onClick={() => navigate('/notifications')} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); navigate('/notifications'); } }}>
+            <Badge badgeContent={unreadNotificationCount} color="error" className="banner-cart-badge"><NotificationsNoneOutlinedIcon style={{ fontSize: 22, color: '#ffffff' }} /></Badge>
             <Typography className="banner-action-label">Notifications</Typography>
           </Box>
           <Box className="banner-action-item" onClick={() => navigate('/cart')}>

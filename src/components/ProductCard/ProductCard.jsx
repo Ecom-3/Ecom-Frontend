@@ -20,9 +20,11 @@ const ProductCard = ({ title, weight, price, image, ...details }) => {
   const cardImage = image || '';
   const [imageSrc, setImageSrc] = useState(cardImage || fallbackProductImage);
   const productVariants = (Array.isArray(details.variants) && details.variants.length ? details.variants : [details.selectedVariant || details]).filter((variant) => variant?.active !== false);
+  const productVariantsRef = useRef(productVariants);
+  useEffect(() => { productVariantsRef.current = productVariants; }, [productVariants]);
   const baseVariant = details.selectedVariant || productVariants[0] || {};
   const productId = details.productId || details.id || baseVariant.productId;
-  const variantScope = productVariants.map((variant) => variant.variantId || variant.id || 'product').join(',');
+  const variantScope = productVariants.map((variant) => `${variant.variantId || variant.id || 'product'}:${variant.active !== false}`).join(',');
   const [availableVariantResult, setAvailableVariantResult] = useState(null);
   const [stock, setStock] = useState(null);
   const [stockAttempt, setStockAttempt] = useState(0);
@@ -31,7 +33,6 @@ const ProductCard = ({ title, weight, price, image, ...details }) => {
   const stockForScope = stock?.scope === stockScope && stock?.attempt === stockAttempt ? stock : null;
   const selectedVariant = availableVariantResult?.scope === stockScope ? availableVariantResult.variant : baseVariant;
   const variantId = selectedVariant.variantId ?? selectedVariant.id ?? details.variantId ?? null;
-  const inventoryVariantId = dbVariantId(variantId);
   const hasProductIdentity = Boolean(productId) && variantId !== undefined;
   const store = catalogStores.find((item) => details.storeId ? item.id === details.storeId : item.name === details.store || item.name === details.storeName);
   const delivery = deliverySummary(store || details, formatCurrency);
@@ -48,7 +49,7 @@ const ProductCard = ({ title, weight, price, image, ...details }) => {
     (async () => {
       let firstUnavailable = null;
       let lookupFailed = false;
-      for (const variant of productVariants) {
+      for (const variant of productVariantsRef.current) {
         const candidateId = variant.variantId ?? variant.id ?? null;
         const result = await loadProductStock(findInventoryForItem, { storeId: stockStoreId, productId, variantId: dbVariantId(candidateId) });
         if (!active) return;

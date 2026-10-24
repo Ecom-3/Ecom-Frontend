@@ -29,16 +29,32 @@ test('unsubmitted owned active cart can reconcile changed items with new add key
   assert.deepEqual(result.items.map(item=>item.productId),['new']);
 });
 
-test('claimed or concurrently changed carts cannot be overwritten while reconciling', async () => {
-  for(const cart of [
-    {id:'cart',customerId:'owner',storeId:'store',status:'CHECKED_OUT',items:[{productId:'old',quantity:1}]},
-    {id:'cart',customerId:'owner',storeId:'store',status:'ACTIVE',items:[{productId:'other-session',quantity:1}]},
-  ]){
-    const storage=memory();const old=JSON.stringify({body:JSON.stringify([{productId:'old',quantity:1}]),cartId:'cart',keys:['keep']});
-    storage.setItem('checkout-cart:owner:store',old);
-    await assert.rejects(prepareCheckoutCart('owner','store',[{productId:'new',quantity:1}],{
-      getCart:async()=>cart,removeCartItem:async()=>assert.fail('No mutation allowed'),addCartItem:async()=>assert.fail('No mutation allowed'),
-    },storage,true));
-    assert.equal(storage.getItem('checkout-cart:owner:store'),old);
-  }
+test('changed items after checkout use a new cart and leave the claimed cart untouched', async () => {
+  const storage=memory();
+  storage.setItem('checkout-cart:owner:store',JSON.stringify({body:JSON.stringify([{productId:'old',quantity:1}]),cartId:'claimed',keys:['old-key']}));
+  const claimed={id:'claimed',customerId:'owner',storeId:'store',status:'CHECKED_OUT',items:[{productId:'old',quantity:1}]};
+  let active=null;
+  const api={
+    getCart:async(id)=>id==='claimed'?claimed:active,
+    getActiveCart:async()=>{if(!active){const error=new Error('not found');error.status=404;throw error;}return active;},
+    createCart:async({customerId,storeId})=>{active={id:'fresh',customerId,storeId,status:'ACTIVE',items:[]};return active;},
+    addCartItem:async(_id,item)=>{active={...active,items:[{...item,id:'fresh-line'}]};return active;},
+  };
+  const result=await prepareCheckoutCart('owner','store',[{productId:'new',quantity:1}],api,storage,true);
+  assert.equal(result.id,'fresh');
+  assert.equal(claimed.status,'CHECKED_OUT');
+  assert.deepEqual(claimed.items.map(item=>item.productId),['old']);
+  assert.deepEqual(result.items.map(item=>item.productId),['new']);
+  assert.equal(JSON.parse(storage.getItem('checkout-cart:owner:store')).cartId,'fresh');
+});
+
+test('unexpected active cart contents are never overwritten when starting changed checkout', async () => {
+  const storage=memory();const old=JSON.stringify({body:JSON.stringify([{productId:'old',quantity:1}]),cartId:'claimed',keys:['keep']});
+  storage.setItem('checkout-cart:owner:store',old);
+  await assert.rejects(prepareCheckoutCart('owner','store',[{productId:'new',quantity:1}],{
+    getCart:async()=>({id:'claimed',customerId:'owner',storeId:'store',status:'CHECKED_OUT',items:[{productId:'old',quantity:1}]}),
+    getActiveCart:async()=>({id:'active',customerId:'owner',storeId:'store',status:'ACTIVE',items:[{productId:'other-session',quantity:1}]}),
+    removeCartItem:async()=>assert.fail('No mutation allowed'),addCartItem:async()=>assert.fail('No mutation allowed'),
+  },storage,true),/other items/);
+  assert.equal(JSON.parse(storage.getItem('checkout-cart:owner:store')).cartId,'active');
 });

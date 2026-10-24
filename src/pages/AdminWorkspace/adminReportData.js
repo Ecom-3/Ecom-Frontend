@@ -1,6 +1,33 @@
 const ALL = 'All';
 
+export const loadReportOrders = async (fetchBackendOrders, adaptOrder = (order) => order) => {
+  const response = await fetchBackendOrders();
+  if (!Array.isArray(response)) throw new Error('Order service returned an invalid report collection.');
+  const unique = new Map();
+  response.forEach((order) => {
+    const adapted = adaptOrder(order);
+    const id = String(adapted?.id ?? '').trim();
+    if (!id) throw new Error('Order service returned a report order without an ID.');
+    unique.set(id, adapted);
+  });
+  return [...unique.values()];
+};
+
 const orderDate = (order) => String(order.createdAt || order.created_at || '').slice(0, 10);
+export const orderTotal = (order) => {
+  const total = Number(order?.totalAmount ?? order?.total ?? 0);
+  return Number.isFinite(total) ? total : 0;
+};
+const orderStatus = (order) => String(order?.status || '').trim().toUpperCase();
+export const isCancelledOrder = (order) => ['CANCELLED', 'CANCELED'].includes(orderStatus(order));
+
+export const summarizeOrders = (orders) => ({
+  total: orders.length,
+  created: orders.filter((order) => orderStatus(order) === 'CREATED').length,
+  delivered: orders.filter((order) => orderStatus(order) === 'DELIVERED').length,
+  cancelled: orders.filter(isCancelledOrder).length,
+  revenue: orders.filter((order) => !isCancelledOrder(order)).reduce((sum, order) => sum + orderTotal(order), 0),
+});
 const orderStores = (order) => [
   order.sourceStore,
   order.store,
@@ -23,8 +50,8 @@ export const calculateStorePerformance = (stores, orders, sort = 'revenue') => s
       name: store.name,
       location: store.location,
       orders: rows.length,
-      revenue: rows.filter((order) => order.status !== 'Cancelled' && order.status !== 'CANCELLED')
-        .reduce((sum, order) => sum + Number(order.total || 0), 0),
+      revenue: rows.filter((order) => !isCancelledOrder(order))
+        .reduce((sum, order) => sum + orderTotal(order), 0),
     };
   })
   .sort((left, right) => sort === 'name'
@@ -33,13 +60,13 @@ export const calculateStorePerformance = (stores, orders, sort = 'revenue') => s
 
 // Exports deliberately omit customer contact details, addresses, payment data, and order items.
 export const buildReportExport = ({ filters, orders, storePerformance }) => {
-  const revenueOrders = orders.filter((order) => order.status !== 'Cancelled' && order.status !== 'CANCELLED');
+  const summary = summarizeOrders(orders);
   return {
     filters: { ...filters },
     summary: {
-      orders: orders.length,
-      revenue: revenueOrders.reduce((sum, order) => sum + Number(order.total || 0), 0),
-      delivered: orders.filter((order) => order.status === 'Delivered' || order.status === 'DELIVERED').length,
+      orders: summary.total,
+      revenue: summary.revenue,
+      delivered: summary.delivered,
     },
     storePerformance,
     orders: orders.map((order) => ({
@@ -47,7 +74,7 @@ export const buildReportExport = ({ filters, orders, storePerformance }) => {
       orderNumber: order.orderNumber || null,
       createdAt: order.createdAt || order.created_at || null,
       status: order.status || null,
-      total: Number(order.total || 0),
+      total: orderTotal(order),
       store: order.sourceStore || order.store || null,
       location: order.sourceLocation || order.location || null,
       fulfillmentType: order.fulfillmentType || null,

@@ -227,6 +227,6 @@ export const adaptBannerList = (payload) => {
 };
 
 export const adaptStoreProductList = (payload) => {
-  const items = Array.isArray(payload) ? payload : payload?.content || payload?.items || payload?.data || payload?.storeProducts || [];
+  const items = Array.isArray(payload) ? payload : payload?.content || payload?.items || payload?.data || payload?.storeProducts || payload?.value || [];
   return items.map((storeProduct) => adaptStoreProduct(storeProduct));
 };

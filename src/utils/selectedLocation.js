@@ -1,4 +1,4 @@
-const KEY = 'selectedLocation';
+let selectedLocation = null;
 export const validLocation = (value) => Boolean(value &&
   ['manual', 'gps'].includes(value.source) &&
   ((typeof value.city === 'string' && value.city.trim()) || (typeof value.address === 'string' && value.address.trim()) || (typeof value.title === 'string' && value.title.trim())) &&
@@ -6,14 +6,11 @@ export const validLocation = (value) => Boolean(value &&
   Number.isFinite(value.longitude) && Math.abs(value.longitude) <= 180
 );
 
-export const readSelectedLocation = () => {
-  try {
-    const value = JSON.parse(localStorage.getItem(KEY));
-    return validLocation(value) ? value : null;
-  } catch { return null; }
-};
+export const readSelectedLocation = () => selectedLocation;
 
 export const storeSelectedLocation = (value) => {
   if (!validLocation(value)) throw new Error('Please enter a valid location.');
-  localStorage.setItem(KEY, JSON.stringify(value));
+  selectedLocation = value;
 };
+
+export const clearSelectedLocation = () => { selectedLocation = null; };

@@ -1,6 +1,54 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildReportExport, calculateStorePerformance, downloadJsonReport, filterReportOrders } from './adminReportData.js';
+import { buildReportExport, calculateStorePerformance, downloadJsonReport, filterReportOrders, loadReportOrders, summarizeOrders } from './adminReportData.js';
+
+test('reports load backend orders that are absent from browser-local order storage', async () => {
+  const backendOrder = { id: 'backend-only-order', status: 'DELIVERED', total: 75 };
+  const localOrders = [];
+  const orders = await loadReportOrders(async () => [backendOrder]);
+  assert.deepEqual(localOrders, []);
+  assert.deepEqual(orders, [backendOrder]);
+  assert.equal(filterReportOrders(orders, { from: '', to: '', location: 'All', store: 'All' }).length, 1);
+});
+
+test('reports reject invalid backend order responses instead of treating them as an empty collection', async () => {
+  await assert.rejects(loadReportOrders(async () => ({ content: [] })), /invalid report collection/);
+});
+
+test('backend order loading counts an order ID once after adaptation', async () => {
+  const orders = await loadReportOrders(async () => [
+    { id: 'same-id', status: 'CREATED', totalAmount: 10 },
+    { id: 'same-id', status: 'DELIVERED', totalAmount: 25 },
+  ], (order) => order);
+  assert.deepEqual(orders, [{ id: 'same-id', status: 'DELIVERED', totalAmount: 25 }]);
+  assert.deepEqual(summarizeOrders(orders), { total: 1, created: 0, delivered: 1, cancelled: 0, revenue: 25 });
+});
+
+test('backend order loading rejects a malformed order rather than silently omitting it', async () => {
+  await assert.rejects(loadReportOrders(async () => [{ id: '  ', status: 'DELIVERED' }]), /without an ID/);
+});
+
+test('report totals use backend totalAmount when total is absent', () => {
+  const payload = buildReportExport({
+    filters: { from: '', to: '', location: 'All', store: 'All' },
+    orders: [{ id: 'backend-1', status: 'DELIVERED', totalAmount: 125 }],
+    storePerformance: [],
+  });
+  assert.equal(payload.summary.revenue, 125);
+  assert.equal(payload.orders[0].total, 125);
+});
+
+test('dashboard and reports share order counts, delivered status, and cancelled revenue rules', () => {
+  const summary = summarizeOrders([
+    { id: 'created', status: 'created', totalAmount: 10 },
+    { id: 'delivered', status: 'DELIVERED', total: 25 },
+    { id: 'cancelled', status: 'CANCELLED', totalAmount: 100 },
+    { id: 'canceled', status: 'Canceled', total: 50 },
+    { id: 'missing-total', status: 'PROCESSING' },
+    { id: 'invalid-total', status: 'PROCESSING', total: 'not-a-number' },
+  ]);
+  assert.deepEqual(summary, { total: 6, created: 1, delivered: 1, cancelled: 2, revenue: 35 });
+});
 
 test('report filters apply the selected date range, location, and store', () => {
   const orders = [

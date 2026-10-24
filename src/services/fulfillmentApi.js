@@ -1,11 +1,19 @@
+<<<<<<< Updated upstream
+import { serviceBaseUrl } from './apiConfig.js';
+=======
 import { serviceBaseUrl } from '../config/serviceRoutes.js';
+>>>>>>> Stashed changes
 import { apiRequest } from './apiClient';
 
 export const FULFILLMENT_STATUSES = ['PENDING', 'ALLOCATED', 'PACKING', 'READY_TO_SHIP', 'SHIPPED', 'DELIVERED', 'CANCELLED', 'FAILED'];
-export const FULFILLMENT_TYPES = ['SHIP_TO_HOME', 'STORE_PICKUP', 'DIGITAL'];
+export const FULFILLMENT_TYPES = ['SHIP_TO_HOME', 'STORE_PICKUP', 'GLOBAL', 'DIGITAL'];
 export const SHIPMENT_STATUSES = ['CREATED', 'IN_TRANSIT', 'OUT_FOR_DELIVERY', 'DELIVERED', 'FAILED', 'RETURNED', 'CANCELLED'];
 
+<<<<<<< Updated upstream
+const FULFILLMENT_BASE_URL = serviceBaseUrl(import.meta.env, 'VITE_FULFILLMENT_URL', '/fulfillment-service');
+=======
 const FULFILLMENT_BASE_URL = serviceBaseUrl('fulfillment', import.meta.env);
+>>>>>>> Stashed changes
 
 const request = (path, options = {}) => apiRequest(FULFILLMENT_BASE_URL, path, options);
 

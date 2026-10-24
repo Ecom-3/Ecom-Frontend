@@ -4,13 +4,13 @@ import { checkoutPolicyError, checkoutReviewError } from './checkoutPolicy.js';
 
 test('multi-store carts may reach payment review without enabling order creation', () => {
   assert.equal(checkoutReviewError({ groupCount: 2, handlingFee: 5 }), '');
-  assert.notEqual(checkoutPolicyError({ groupCount: 2, handlingFee: 5 }), '');
+  assert.match(checkoutPolicyError({ groupCount: 2, handlingFee: 10 }), /separate orders/);
   assert.notEqual(checkoutReviewError({ groupCount: 0 }), '');
   assert.notEqual(checkoutReviewError({ groupCount: 2, handlingFee: NaN }), '');
 });
 
 test('single verified group with supported totals may proceed', () => {
-  assert.equal(checkoutPolicyError({ groupCount: 1 }), '');
+  assert.equal(checkoutPolicyError({ groupCount: 1, handlingFee: 5 }), '');
 });
 test('mixed and multi-store checkout is blocked before creation', () => {
   assert.match(checkoutPolicyError({ groupCount: 2 }), /separate orders/);

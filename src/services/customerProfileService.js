@@ -1,7 +1,14 @@
+<<<<<<< Updated upstream
+import { serviceBaseUrl } from './apiConfig.js';
+import { customerAuthService } from './customerAuthService';
+import { apiRequest } from './apiClient';
+const PROFILE_BASE_URL = serviceBaseUrl(import.meta.env, 'VITE_CUSTOMER_PROFILE_URL', '/customer-profile');
+=======
 import { serviceBaseUrl } from '../config/serviceRoutes.js';
 import { customerAuthService } from './customerAuthService';
 import { apiRequest } from './apiClient';
 const PROFILE_BASE_URL = serviceBaseUrl('customerProfile', import.meta.env);
+>>>>>>> Stashed changes
 const request = (path, options = {}) => apiRequest(PROFILE_BASE_URL, path, options);
 
 const genderToApi = { Female: 'FEMALE', Male: 'MALE', Other: 'OTHER', 'Prefer not to say': 'PREFER_NOT_TO_SAY' };

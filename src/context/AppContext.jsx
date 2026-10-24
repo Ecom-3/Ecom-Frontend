@@ -1,13 +1,19 @@
+import { mutateAuthenticatedCart } from '../utils/authenticatedCart.js';
 import { translate, normalizeLanguage, languageCode } from '../i18n/index';
 import { readLanguage, persistLanguage } from '../i18n/preferences';
 import { customerAuthService } from '../services/customerAuthService';
-import { createContext, useState, useEffect, useRef } from 'react';
-import { readSelectedLocation, storeSelectedLocation } from '../utils/selectedLocation';
+import { orgAccessService } from '../services/orgAccessService';
+import { createContext, useState, useEffect, useMemo, useRef } from 'react';
+import { readSelectedLocation, storeSelectedLocation, clearSelectedLocation as resetSelectedLocation } from '../utils/selectedLocation';
 import { customerProfileService } from '../services/customerProfileService';
 import { getCustomerOrders, normalizeOrder, orderDeliveryAddress } from '../services/orderApi';
 import { getProducts, getCategories, getCategoryProducts, getStoreProducts, getStores, getBanners } from '../services/catalogApi';
 import { adaptProductList, adaptCategoryList, adaptStoreProductList, adaptBannerList } from '../services/catalogAdapter';
-import { addCartItem, calculateCartTotal, clearCartItems, createCart, getActiveCart, getActiveCarts, getCart, removeCartItem, updateCartItem } from '../services/cartApi';
+<<<<<<< Updated upstream
+import { addCartItem, clearCartItems, createCart, getActiveCart, removeCartItem, updateCartItem } from '../services/cartApi';
+=======
+import { addCartItem, calculateCartTotal, clearCartItems, createCart, getActiveCart, getActiveCarts, getCart, moveSavedCartItemToCart, removeCartItem, saveCartItemForLater, updateCartItem } from '../services/cartApi';
+>>>>>>> Stashed changes
 import { rememberProductStore, resolveProductStore } from '../services/productStoreResolver';
 import { cleanDisplayText } from '../utils/textEncoding';
 import { findInventoryForItem } from '../services/inventoryApi';
@@ -16,11 +22,11 @@ import { loadCustomerCart } from '../utils/loadCustomerCart.js';
 import { planCartLineMutation, sameCartLine } from '../utils/cartLineMutation.js';
 import { logCartDiagnostic, logCartSnapshot } from '../utils/cartDiagnostics.js';
 import { validateCheckoutAvailability } from '../utils/checkoutAvailability';
+import { isCustomerSession, resolveCustomerId } from '../utils/customerSession.js';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AppContext = createContext();
 
-const GUEST_CART_KEY = 'guestCartItems';
 const GUEST_CART_ID = 'guest-local-cart';
 const cleanLocationText = (value) => String(value || '')
   .split(',')
@@ -29,26 +35,6 @@ const cleanLocationText = (value) => String(value || '')
   .join(', ')
   .replace(/\s+/g, ' ')
   .trim();
-
-const readStoredArray = (key) => {
-  try {
-    const saved = JSON.parse(localStorage.getItem(key) || '[]');
-    return Array.isArray(saved) ? saved : [];
-  } catch {
-    localStorage.removeItem(key);
-    return [];
-  }
-};
-
-const readStoredObject = (storage, key) => {
-  try {
-    const saved = storage.getItem(key);
-    return saved ? JSON.parse(saved) : null;
-  } catch {
-    storage.removeItem(key);
-    return null;
-  }
-};
 
 const tokenCustomerId = () => {
   try {
@@ -60,18 +46,18 @@ const tokenCustomerId = () => {
 
 export const AppProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    const saved = sessionStorage.getItem('isLoggedIn');
     try {
       const token = sessionStorage.getItem('authToken');
       const claims = JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
-      return saved === 'true' && claims.exp * 1000 > Date.now();
+      return claims.exp * 1000 > Date.now();
     } catch { return false; }
   });
 
+<<<<<<< Updated upstream
   const readGuestCartItems = () => {
     try {
       const saved = localStorage.getItem(GUEST_CART_KEY);
-      return saved ? JSON.parse(saved) : [];
+      return saved ? JSON.parse(saved).map(item => ({ ...item, id: null, cartSource: 'guest' })) : [];
     } catch {
       return [];
     }
@@ -82,6 +68,12 @@ export const AppProvider = ({ children }) => {
     const items = readGuestCartItems();
     return items.length ? { id: GUEST_CART_ID, status: 'GUEST', totalAmount: items.reduce((sum, item) => sum + Number(item.price || item.unitPrice || 0) * Number(item.quantity || 0), 0) } : null;
   });
+=======
+  const guestCartItemsRef = useRef([]);
+  const readGuestCartItems = () => guestCartItemsRef.current;
+  const [cartItems, setCartItems] = useState([]);
+  const [activeCart, setActiveCart] = useState(null);
+>>>>>>> Stashed changes
   const [cartLoading, setCartLoading] = useState(false);
   const cartMutationPending = useRef(false);
   const cartHydrationRequest = useRef(0);
@@ -89,23 +81,10 @@ export const AppProvider = ({ children }) => {
   const [cartError, setCartError] = useState('');
   const [cartUnavailable, setCartUnavailable] = useState(false);
 
-  const [user, setUser] = useState(() => {
-    const stored = readStoredObject(sessionStorage, 'user');
-    const customerId = tokenCustomerId();
-    return stored && customerId ? { ...stored, id: customerId } : stored;
-  });
-  const [wishlistItems, setWishlistItems] = useState(() => {
-    const key = user?.id && isLoggedIn ? 'wishlist:' + user.id : 'wishlistItems';
-    return readStoredArray(key);
-  });
-  const [addresses, setAddresses] = useState(() => {
-    const saved = localStorage.getItem('addresses');
-    return saved ? JSON.parse(saved) : [];
-  });
-  const [savedForLater, setSavedForLater] = useState(() => {
-    const saved = localStorage.getItem('savedForLater');
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [user, setUser] = useState(null);
+  const [wishlistItems, setWishlistItems] = useState([]);
+  const [addresses, setAddresses] = useState([]);
+  const [savedForLater, setSavedForLater] = useState([]);
   // Delivery addresses derived from this customer's previous orders (not persisted, refreshed on login).
   const [orderAddresses, setOrderAddresses] = useState([]);
 
@@ -124,28 +103,27 @@ export const AppProvider = ({ children }) => {
   const [homeSearchQuery, setHomeSearchQuery] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState(() => {
     const savedLocation = readSelectedLocation();
-    if (savedLocation) return cleanLocationText(savedLocation.address || [savedLocation.title, savedLocation.city].filter(Boolean).join(', '));
-    try {
-      const saved = localStorage.getItem('addresses');
-      const parsed = saved ? JSON.parse(saved) : [];
-      return (parsed.find((item) => item.isDefault || item.defaultAddress) || parsed[0])?.address || '';
-    } catch {
-      return '';
-    }
+    return savedLocation ? cleanLocationText(savedLocation.address || [savedLocation.title, savedLocation.city].filter(Boolean).join(', ')) : '';
   });
   const [showLocationModal, setShowLocationModal] = useState(false);
-  const [deliveryMode, setDeliveryModeState] = useState(() => localStorage.getItem('deliveryMode') || 'delivery');
+  const [deliveryMode, setDeliveryModeState] = useState('delivery');
+  const [selectedStoreId, setSelectedStoreId] = useState('');
   const setDeliveryMode = (mode) => {
     const next = mode === 'pickup' ? 'pickup' : 'delivery';
-    localStorage.setItem('deliveryMode', next);
     setDeliveryModeState(next);
   };
 
   const cartCount = cartItems.reduce((sum, item) => sum + Number(item.quantity || 0), 0);
   const localCartTotal = (items = cartItems) => items.reduce((sum, item) => sum + Number(item.price || item.unitPrice || 0) * Number(item.quantity || 0), 0);
-  // activeCart represents only one store. Sum visible lines for a multi-store cart.
+<<<<<<< Updated upstream
   const cartTotal = localCartTotal();
   const currentCustomerId = () => tokenCustomerId() || user?.id || null;
+=======
+  // activeCart represents only one store. Sum visible lines for a multi-store cart.
+  const cartTotal = localCartTotal();
+  const activeCustomerId = useMemo(() => resolveCustomerId({ role: user?.role, tokenCustomerId: tokenCustomerId(), userId: user?.id }), [user?.id, user?.role]);
+  const currentCustomerId = () => activeCustomerId;
+>>>>>>> Stashed changes
 
   const resolveProductIdentity = (product) => {
     const variant = product?.variant || product?.selectedVariant || product?.variants?.[0] || {};
@@ -175,8 +153,13 @@ export const AppProvider = ({ children }) => {
       storeId: item?.storeId || cartStore.storeId || source.storeId,
       store: item?.store || item?.storeName || cartStore.store || source.store,
       storeName: item?.storeName || item?.store || cartStore.storeName || source.storeName,
+<<<<<<< Updated upstream
+      id: cart?.id ? item?.id || null : null,
+      cartSource: cart?.id ? 'server' : 'guest',
+=======
       id: item?.id || null,
       cartId: item?.cartId || cart?.id || null,
+>>>>>>> Stashed changes
       productId: item?.productId || null,
       variantId: item?.variantId ?? null,
       productName: cleanDisplayText(item?.productName || item?.title || 'Product'),
@@ -194,9 +177,13 @@ export const AppProvider = ({ children }) => {
     return items.map((item) => adaptCartItem(item, cart));
   };
 
+  const savedItemsFromResponse = (cart) => (Array.isArray(cart?.savedForLaterItems) ? cart.savedForLaterItems : [])
+    .map((item) => adaptCartItem(item, cart));
+
   const applyCartResponse = (cart) => {
     setActiveCart(cart || null);
     setCartItems(cartItemsFromResponse(cart));
+    if (cart?.id) setSavedForLater((items) => [...items.filter((item) => item.cartId !== cart.id), ...savedItemsFromResponse(cart)]);
     setCartUnavailable(false);
     setCartError('');
     return cart;
@@ -207,6 +194,7 @@ export const AppProvider = ({ children }) => {
     const storeId = cart?.storeId || incoming.find((item) => item.storeId)?.storeId || '';
     const cartId = cart?.id || '';
     setActiveCart(cart || null);
+    if (cartId) setSavedForLater((items) => [...items.filter((item) => item.cartId !== cartId), ...savedItemsFromResponse(cart)]);
     setCartItems((current) => [
       ...current.filter((item) => {
         if (cartId && item.cartId) return item.cartId !== cartId;
@@ -220,8 +208,13 @@ export const AppProvider = ({ children }) => {
   };
 
   const applyGuestCartItems = (items) => {
-    const normalized = items.map(adaptCartItem).filter((item) => item.productId && item.quantity > 0);
+<<<<<<< Updated upstream
+    const normalized = items.map(item => adaptCartItem(item)).filter((item) => item.productId && item.quantity > 0);
     localStorage.setItem(GUEST_CART_KEY, JSON.stringify(normalized));
+=======
+    const normalized = items.map(adaptCartItem).filter((item) => item.productId && item.quantity > 0);
+    guestCartItemsRef.current = normalized;
+>>>>>>> Stashed changes
     setCartItems(normalized);
     setActiveCart(normalized.length ? { id: GUEST_CART_ID, status: 'GUEST', totalAmount: localCartTotal(normalized) } : null);
     setCartUnavailable(false);
@@ -230,8 +223,12 @@ export const AppProvider = ({ children }) => {
   };
 
   const upsertGuestCartItem = (itemPayload) => {
+<<<<<<< Updated upstream
+    const items = readGuestCartItems().map(item => adaptCartItem(item));
+=======
     const items = readGuestCartItems().map(adaptCartItem);
-    logCartSnapshot('guest.add.before', items, 'guest localStorage');
+    logCartSnapshot('guest.add.before', items, 'guest in-memory cart');
+>>>>>>> Stashed changes
     const existingIndex = items.findIndex((item) => sameCatalogItem(item, itemPayload));
     const nextItems = [...items];
     if (existingIndex >= 0) {
@@ -242,7 +239,7 @@ export const AppProvider = ({ children }) => {
       nextItems.push({ ...itemPayload, quantity: 1, totalPrice: itemPayload.unitPrice });
     }
     const updated = applyGuestCartItems(nextItems);
-    logCartSnapshot('guest.add.after', updated, 'guest localStorage');
+    logCartSnapshot('guest.add.after', updated, 'guest in-memory cart');
     return updated;
   };
 
@@ -257,10 +254,15 @@ export const AppProvider = ({ children }) => {
     return {
       ...source,
       ...product,
+<<<<<<< Updated upstream
+      id: null,
+      cartSource: 'guest',
+=======
       storeId: product.storeId || source.storeId,
       store: product.store || source.store,
       storeName: product.storeName || source.storeName,
       id: identity.productId,
+>>>>>>> Stashed changes
       productId: identity.productId,
       variantId: identity.variantId,
       productName: cleanDisplayText(product.productName || product.title || product.name || 'Product'),
@@ -274,7 +276,7 @@ export const AppProvider = ({ children }) => {
 
   const resolveCartStoreId = (product) => {
     if (product?.storeId) return product.storeId;
-    const selectedStore = localStorage.getItem('selectedStoreId') || localStorage.getItem('selectedStore');
+    const selectedStore = selectedStoreId;
     const stores = catalogStores;
     const match = stores.find((store) => store.id === selectedStore || store.name === selectedStore);
     return match?.id || stores.find((store) => store.status !== 'Inactive' && store.active !== false)?.id || null;
@@ -362,26 +364,43 @@ export const AppProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    sessionStorage.setItem('isLoggedIn', isLoggedIn);
+    let active = true;
+    const token = sessionStorage.getItem('authToken');
+    if (!isLoggedIn || !token) return undefined;
+    const customerId = tokenCustomerId();
+    const request = customerId ? customerAuthService.me() : orgAccessService.me();
+    request.then((account) => {
+      if (!active) return;
+      setUser({ ...account, id: customerId || account.id, role: customerId ? 'customer' : account.role });
+    }).catch((error) => {
+      if (!active) return;
+      if (error.status === 401) {
+        sessionStorage.removeItem('authToken');
+        setIsLoggedIn(false);
+        setUser(null);
+      }
+      // Keep the session token during a temporary service outage; the account
+      // can be loaded again from its database after the service recovers.
+    });
+    return () => { active = false; };
   }, [isLoggedIn]);
-
-  useEffect(() => sessionStorage.setItem('user', JSON.stringify(user)), [user]);
-  useEffect(() => {
-    if (!isLoggedIn) localStorage.setItem('wishlistItems', JSON.stringify(wishlistItems));
-  }, [wishlistItems, isLoggedIn]);
-  useEffect(() => localStorage.setItem('addresses', JSON.stringify(addresses)), [addresses]);
   useEffect(() => {
     const token = sessionStorage.getItem('authToken');
-    if (!isLoggedIn || !token || token.startsWith('local-')) return;
+    if (!isLoggedIn || !isCustomerSession({ role: user?.role, tokenCustomerId: tokenCustomerId() }) || !token || token.startsWith('local-')) return;
     customerProfileService.addresses().then((items) => {
       const mapped = items.map((item) => ({ ...item, isDefault: item.defaultAddress, coordinates: item.latitude != null && item.longitude != null ? { lat:item.latitude, lng:item.longitude } : null, manualLocation: item.street ? { street:item.street, city:item.city || '', state:item.state || '', pincode:item.pincode || '' } : null }));
       setAddresses(mapped);
     }).catch((error) => console.warn('Could not load addresses:', error.message));
-  }, [isLoggedIn]);
+  }, [isLoggedIn, user?.role]);
   useEffect(() => {
     const token = sessionStorage.getItem('authToken');
+<<<<<<< Updated upstream
     const customerId = tokenCustomerId() || user?.id || null;
     if (!isLoggedIn || !token || token.startsWith('local-') || !customerId) return;
+=======
+    const customerId = activeCustomerId;
+    if (!isLoggedIn || !isCustomerSession({ role: user?.role, tokenCustomerId: tokenCustomerId() }) || !token || token.startsWith('local-') || !customerId) return;
+>>>>>>> Stashed changes
     getCustomerOrders(customerId, { expireSession: false }).then((orders) => {
       const seen = new Set();
       const derived = (Array.isArray(orders) ? orders : [])
@@ -397,9 +416,7 @@ export const AppProvider = ({ children }) => {
         }, []);
       setOrderAddresses(derived);
     }).catch((error) => { console.warn('Could not load previous order addresses:', error.message); setOrderAddresses([]); });
-  }, [isLoggedIn, user?.id]);
-  useEffect(() => localStorage.setItem('savedForLater', JSON.stringify(savedForLater)), [savedForLater]);
-
+  }, [activeCustomerId, isLoggedIn, user?.id, user?.role]);
   const login = (authenticatedUser, token) => {
     cartHydrationRequest.current += 1;
     setCartLoading(false);
@@ -410,13 +427,8 @@ export const AppProvider = ({ children }) => {
       setCartItems(readGuestCartItems());
       setActiveCart(null);
     }
-    let accountLikes = readStoredArray('wishlist:' + accountUser.id);
-    const combinedLikes = [...accountLikes, ...(!isLoggedIn ? wishlistItems : [])];
-    const mergedLikes = combinedLikes.filter((item, index, items) => items.findIndex((other) => sameCatalogItem(other, item)) === index);
-    localStorage.setItem('wishlist:' + accountUser.id, JSON.stringify(mergedLikes));
-    localStorage.removeItem('wishlistItems');
-    setWishlistItems(mergedLikes);
-    setSavedForLater(readStoredArray('saved:' + authenticatedUser.id));
+    setWishlistItems(isLoggedIn && accountUser?.id !== user?.id ? [] : wishlistItems);
+    setSavedForLater([]);
     setAddresses([]);
     setOrderAddresses([]);
     setUser(accountUser || null);
@@ -428,13 +440,12 @@ export const AppProvider = ({ children }) => {
     setCartLoading(false);
     const token = sessionStorage.getItem('authToken');
     if (token && !token.startsWith('local-')) customerAuthService.logout().catch(() => {});
-    sessionStorage.removeItem('user');
-    sessionStorage.setItem('isLoggedIn', 'false');
     setWishlistItems([]); setSavedForLater([]); setAddresses([]); setOrderAddresses([]);
     setIsLoggedIn(false);
     setUser(null);
     sessionStorage.removeItem('authToken');
     setCartItems([]);
+    guestCartItemsRef.current = [];
     setActiveCart(null);
   };
 
@@ -451,8 +462,6 @@ export const AppProvider = ({ children }) => {
     }
     return () => { clearTimeout(timer); window.removeEventListener('customer-session-expired', expire); };
   }, [isLoggedIn]);
-  useEffect(() => { if (user?.id && isLoggedIn) localStorage.setItem('wishlist:' + user.id, JSON.stringify(wishlistItems)); }, [wishlistItems, user?.id, isLoggedIn]);
-  useEffect(() => { if (user?.id && isLoggedIn) localStorage.setItem('saved:' + user.id, JSON.stringify(savedForLater)); }, [savedForLater, user?.id, isLoggedIn]);
 
   const [addedToCartPopup, setAddedToCartPopup] = useState(null);
 
@@ -498,6 +507,36 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+<<<<<<< Updated upstream
+  const cartMutationQueue = useRef(Promise.resolve());
+  const runAuthenticatedCartMutation = (item, operation, delta = 0) => {
+    const customerId = currentCustomerId();
+    const storeId = resolveCartStoreId(item);
+    const pending = cartMutationQueue.current.catch(() => {}).then(async () => {
+      if (currentCustomerId() !== customerId) return false;
+      setCartLoading(true);
+      const applyOwnedCart = cart => {
+        if (currentCustomerId() === customerId) mergeCartResponse(cart);
+      };
+      try {
+        const cart = await mutateAuthenticatedCart({ customerId, storeId, item, operation, delta,
+          api: { getActiveCart, createCart, addCartItem, updateCartItem, removeCartItem, clearCartItems },
+          checkInventory: stores => validateCheckoutAvailability(stores, findInventoryForItem),
+          onReconciled: applyOwnedCart,
+        });
+        applyOwnedCart(cart);
+        return true;
+      } catch (error) {
+        if (currentCustomerId() === customerId) {
+          setCartUnavailable(isCartServiceUnavailable(error));
+          setCartError(error.message || 'Cart Service is unavailable.');
+        }
+        return false;
+      } finally { setCartLoading(false); }
+    });
+    cartMutationQueue.current = pending;
+    return pending;
+=======
   const ensureCart = async (scopeProduct, options = {}) => {
     const scope = cartScopeFor(scopeProduct);
     if (!scope.customerId) throw new Error('Log in to use your cart.');
@@ -530,6 +569,7 @@ export const AppProvider = ({ children }) => {
     if (!Array.isArray(cart?.items) && !Array.isArray(cart?.cartItems)) cart = await getCart(cartId);
     if (options.mergeStoreItems) return mergeCartResponse(cart);
     return applyCartResponse(cart);
+>>>>>>> Stashed changes
   };
 
   useEffect(() => {
@@ -553,16 +593,19 @@ export const AppProvider = ({ children }) => {
         const adapted = adaptCartItem(item);
         return { ...adapted, storeId: adapted.storeId || resolveCartStoreId(adapted) };
       }).filter((item) => item.productId && item.quantity > 0);
-      logCartSnapshot('cart.hydration.guest.read', readGuestItems(), 'guest localStorage');
+      logCartSnapshot('cart.hydration.guest.read', readGuestItems(), 'guest in-memory cart');
       const result = await loadCustomerCart({
         customerId, readGuestItems, isCurrent,
         api: { getActiveCart, getActiveCarts, createCart, addCartItem },
+        onGuestItemMigrated: (item) => { guestCartItemsRef.current = guestCartItemsRef.current.filter((entry) => !sameCatalogItem(entry, item)); },
+        persistGuestItems: false,
       });
       if (!result || !isCurrent()) return;
       const { carts, guestItems: failedGuestItems, errors: failures } = result;
       const serverItems = carts.flatMap(cartItemsFromResponse);
+      setSavedForLater(carts.flatMap(savedItemsFromResponse));
       logCartSnapshot('cart.hydration.server', serverItems, 'server API');
-      logCartSnapshot('cart.hydration.unmigrated-guest', failedGuestItems, 'guest localStorage');
+      logCartSnapshot('cart.hydration.unmigrated-guest', failedGuestItems, 'guest in-memory cart');
       const visibleItems = [...serverItems, ...failedGuestItems];
       const populatedCarts = carts.filter((cart) => cartItemsFromResponse(cart).length > 0);
       setCartItems(visibleItems);
@@ -583,6 +626,13 @@ export const AppProvider = ({ children }) => {
   }, [isLoggedIn, user?.id, catalogStores]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const addToCart = async (product) => {
+<<<<<<< Updated upstream
+    const itemPayload = buildCartItem(product);
+    if (!itemPayload) return;
+    if (isLoggedIn && currentCustomerId()) {
+      if (await runAuthenticatedCartMutation({ ...itemPayload, quantity: 1 }, 'add')) triggerAddedPopup(itemPayload);
+      return;
+=======
     // Serialize every cart mutation before React can disable the controls.
     if (cartMutationPending.current) return false;
     cartMutationPending.current = true;
@@ -599,7 +649,7 @@ export const AppProvider = ({ children }) => {
         productId: itemPayload.productId,
         variantId: itemPayload.variantId,
         quantity: 1,
-        source: isLoggedIn ? 'server API' : 'guest localStorage',
+        source: isLoggedIn ? 'server API' : 'guest in-memory cart',
       });
       if (isLoggedIn && currentCustomerId()) {
         itemPayload.storeId = resolveCartStoreId(itemPayload);
@@ -607,7 +657,7 @@ export const AppProvider = ({ children }) => {
         let cart = await ensureCart(itemPayload, { preserveVisibleItems: true, forceRefresh: true });
         const guestItems = readGuestCartItems().map(adaptCartItem);
         if (guestItems.some(item => item.storeId === cart.storeId)) {
-          await migrateGuestCart(cart, guestItems, addCartItem);
+          await migrateGuestCart(cart, guestItems, addCartItem, sessionStorage, () => true, (item) => { guestCartItemsRef.current = guestCartItemsRef.current.filter((entry) => !sameCatalogItem(entry, item)); }, false);
           cart = await getActiveCart({ customerId: currentCustomerId(), storeId: itemPayload.storeId });
         }
         const mutation = planCartLineMutation([...cartItemsFromResponse(cart), ...cartItems], itemPayload, 1, cart.id);
@@ -645,12 +695,24 @@ export const AppProvider = ({ children }) => {
     } finally {
       cartMutationPending.current = false;
       setCartLoading(false);
+>>>>>>> Stashed changes
     }
   };
 
   const updateQuantity = async (productId, variantId, delta, storeId = '') => {
     if (cartMutationPending.current) return false;
     const match = { productId, variantId, storeId };
+<<<<<<< Updated upstream
+    const current = cartItems.find(item => sameCatalogItem(item, match));
+    if (!current) return;
+    if (isLoggedIn && currentCustomerId()) {
+      await runAuthenticatedCartMutation(current, 'update', delta);
+      return;
+    }
+    const nextQuantity = Number(current.quantity || 0) + Number(delta || 0);
+    applyGuestCartItems(readGuestCartItems().flatMap(item => !sameCatalogItem(item, match) ? [item]
+      : nextQuantity > 0 ? [{ ...item, quantity: nextQuantity, totalPrice: Number(item.unitPrice || item.price || 0) * nextQuantity }] : []));
+=======
     const current = cartItems.find((item) => sameCatalogItem(item, match));
     const nextQuantity = Number(current?.quantity || 0) + Number(delta || 0);
     logCartDiagnostic('cart.quantity.change', {
@@ -659,15 +721,15 @@ export const AppProvider = ({ children }) => {
       variantId,
       cartItemId: current?.id,
       quantity: nextQuantity,
-      source: isLoggedIn && current?.cartId ? 'server API' : 'guest localStorage',
+      source: isLoggedIn && current?.cartId ? 'server API' : 'guest in-memory cart',
     });
     if (!isLoggedIn || !current?.cartId) {
-      logCartSnapshot('guest.quantity.before', cartItems, 'guest localStorage');
+      logCartSnapshot('guest.quantity.before', cartItems, 'guest in-memory cart');
       applyGuestCartItems(cartItems.flatMap((item) => {
         if (!sameCatalogItem(item, match)) return [item];
         return nextQuantity > 0 ? [{ ...item, quantity: nextQuantity, totalPrice: Number(item.unitPrice || item.price || 0) * nextQuantity }] : [];
       }));
-      logCartSnapshot('guest.quantity.after', readGuestCartItems().map(adaptCartItem), 'guest localStorage');
+      logCartSnapshot('guest.quantity.after', readGuestCartItems().map(adaptCartItem), 'guest in-memory cart');
       return true;
     }
     const cartId = current.cartId;
@@ -694,11 +756,27 @@ export const AppProvider = ({ children }) => {
       setCartLoading(false);
     }
     return true;
+>>>>>>> Stashed changes
   };
 
   const removeFromCart = async (productId, variantId, storeId = '') => {
     if (cartMutationPending.current) return false;
     const match = { productId, variantId, storeId };
+<<<<<<< Updated upstream
+    const current = cartItems.find(item => sameCatalogItem(item, match));
+    if (!current) return;
+    if (isLoggedIn && currentCustomerId()) {
+      await runAuthenticatedCartMutation(current, 'remove');
+      return;
+    }
+    applyGuestCartItems(readGuestCartItems().filter(item => !sameCatalogItem(item, match)));
+  };
+
+  const clearCart = async () => {
+    if (!isLoggedIn || !currentCustomerId()) { applyGuestCartItems([]); return; }
+    const stores = [...new Set(cartItems.map(item => item.storeId))];
+    for (const storeId of stores) await runAuthenticatedCartMutation({ storeId }, 'clear');
+=======
     const current = cartItems.find((item) => sameCatalogItem(item, match));
     logCartDiagnostic('cart.remove', {
       storeId: current?.storeId || storeId,
@@ -706,12 +784,12 @@ export const AppProvider = ({ children }) => {
       variantId,
       cartItemId: current?.id,
       quantity: current?.quantity,
-      source: isLoggedIn && current?.cartId ? 'server API' : 'guest localStorage',
+      source: isLoggedIn && current?.cartId ? 'server API' : 'guest in-memory cart',
     });
     if (!isLoggedIn || !current?.cartId) {
-      logCartSnapshot('guest.remove.before', cartItems, 'guest localStorage');
+      logCartSnapshot('guest.remove.before', cartItems, 'guest in-memory cart');
       applyGuestCartItems(cartItems.filter((item) => !sameCatalogItem(item, match)));
-      logCartSnapshot('guest.remove.after', readGuestCartItems().map(adaptCartItem), 'guest localStorage');
+      logCartSnapshot('guest.remove.after', readGuestCartItems().map(adaptCartItem), 'guest in-memory cart');
       return true;
     }
     const cartId = current.cartId;
@@ -735,9 +813,9 @@ export const AppProvider = ({ children }) => {
   const clearCart = async () => {
     if (cartMutationPending.current) return false;
     if (!isLoggedIn || cartItems.every((item) => !item.cartId || item.cartId === GUEST_CART_ID)) {
-      logCartSnapshot('guest.clear.before', cartItems, 'guest localStorage');
+      logCartSnapshot('guest.clear.before', cartItems, 'guest in-memory cart');
       applyGuestCartItems([]);
-      logCartSnapshot('guest.clear.after', [], 'guest localStorage');
+      logCartSnapshot('guest.clear.after', [], 'guest in-memory cart');
       return true;
     }
     const cartIds = [...new Set(cartItems.map((item) => item.cartId).filter((id) => id && id !== GUEST_CART_ID))];
@@ -752,7 +830,7 @@ export const AppProvider = ({ children }) => {
       const clearedCartIds = cartIds.filter((_, index) => results[index].status === 'fulfilled');
       setCartItems((items) => items.filter((item) => !clearedCartIds.includes(item.cartId)));
       if (clearedCartIds.length === cartIds.length) {
-        localStorage.removeItem(GUEST_CART_KEY);
+        guestCartItemsRef.current = [];
         setCartItems([]);
         setActiveCart(null);
         setCartError('');
@@ -771,6 +849,7 @@ export const AppProvider = ({ children }) => {
       cartMutationPending.current = false;
       setCartLoading(false);
     }
+>>>>>>> Stashed changes
   };
   const toggleWishlist = (product) => setWishlistItems((items) => {
     const itemPayload = buildCartItem(product);
@@ -788,6 +867,15 @@ export const AppProvider = ({ children }) => {
   const saveItemForLater = async (product) => {
     const itemPayload = adaptCartItem(product);
     if (!itemPayload?.productId) return;
+    if (isLoggedIn && itemPayload.cartId && itemPayload.id && itemPayload.id !== GUEST_CART_ID) {
+      try {
+        applyCartResponse(await saveCartItemForLater(itemPayload.cartId, itemPayload.id));
+        return true;
+      } catch (error) {
+        setCartError(error.message || 'Could not save this item for later.');
+        return false;
+      }
+    }
     const removed = await removeFromCart(itemPayload.productId, itemPayload.variantId, itemPayload.storeId);
     if (!removed) return false;
     setSavedForLater((items) => {
@@ -797,18 +885,44 @@ export const AppProvider = ({ children }) => {
     });
     return true;
   };
-  const removeSavedForLater = (product) => {
+  const removeSavedForLater = async (product) => {
     const itemPayload = adaptCartItem(product);
     if (!itemPayload?.productId) return;
+    if (isLoggedIn && itemPayload.cartId && itemPayload.id && itemPayload.id !== GUEST_CART_ID) {
+      try {
+        const cart = await removeCartItem(itemPayload.cartId, itemPayload.id);
+        setSavedForLater((items) => items.filter((item) => !sameCatalogItem(item, itemPayload)));
+        setActiveCart(cart);
+        return true;
+      } catch (error) {
+        setCartError(error.message || 'Could not remove this saved item.');
+        return false;
+      }
+    }
     setSavedForLater((items) => items.filter((item) => !sameCatalogItem(item, itemPayload)));
+    return true;
   };
   const restoreSavedItem = async (product) => {
     if (cartMutationPending.current) return false;
     const itemPayload = adaptCartItem(product);
     if (!itemPayload?.productId) return;
     const quantity = Math.max(1, Number(itemPayload.quantity || 1));
+<<<<<<< Updated upstream
+    if (!isLoggedIn || !currentCustomerId()) {
+      const items = readGuestCartItems().map(item => adaptCartItem(item));
+=======
+    if (isLoggedIn && itemPayload.cartId && itemPayload.id && itemPayload.id !== GUEST_CART_ID) {
+      try {
+        applyCartResponse(await moveSavedCartItemToCart(itemPayload.cartId, itemPayload.id));
+        return true;
+      } catch (error) {
+        setCartError(error.message || 'Could not move item back to cart.');
+        return false;
+      }
+    }
     if (!isLoggedIn || activeCart?.id === GUEST_CART_ID) {
       const items = readGuestCartItems().map(adaptCartItem);
+>>>>>>> Stashed changes
       const existingIndex = items.findIndex((item) => sameCatalogItem(item, itemPayload));
       const nextItems = [...items];
       if (existingIndex >= 0) {
@@ -822,6 +936,10 @@ export const AppProvider = ({ children }) => {
       setSavedForLater((items) => items.filter((item) => !sameCatalogItem(item, itemPayload)));
       return true;
     }
+<<<<<<< Updated upstream
+    if (await runAuthenticatedCartMutation({ ...itemPayload, quantity }, 'add')) {
+      setSavedForLater(items => items.filter(item => !sameCatalogItem(item, itemPayload)));
+=======
     cartMutationPending.current = true;
     setCartLoading(true);
     try {
@@ -829,7 +947,7 @@ export const AppProvider = ({ children }) => {
       const cart = await ensureCart(itemPayload, { preserveVisibleItems: true, forceRefresh: true });
       const guestItems = readGuestCartItems().map(adaptCartItem);
       if (guestItems.some((item) => item.storeId === cart.storeId)) {
-        await migrateGuestCart(cart, guestItems, addCartItem);
+        await migrateGuestCart(cart, guestItems, addCartItem, sessionStorage, () => true, (item) => { guestCartItemsRef.current = guestCartItemsRef.current.filter((entry) => !sameCatalogItem(entry, item)); }, false);
       }
       const latestCart = await getActiveCart({ customerId: currentCustomerId(), storeId: cart.storeId });
       const mutation = planCartLineMutation(cartItemsFromResponse(latestCart), itemPayload, quantity, latestCart.id);
@@ -851,6 +969,7 @@ export const AppProvider = ({ children }) => {
     } finally {
       cartMutationPending.current = false;
       setCartLoading(false);
+>>>>>>> Stashed changes
     }
   };
   const addAddress = async (address) => {
@@ -866,11 +985,11 @@ export const AppProvider = ({ children }) => {
   const setDefaultAddress = async (id) => { const saved=await customerProfileService.setDefaultAddress(id); setAddresses((items)=>items.map((item)=>({...item,isDefault:item.id===id}))); setDeliveryAddress(saved.address); };
   const updateAddress = async (id,address) => { const saved=await customerProfileService.updateAddress(id,{...address,isDefault:addresses.find((item)=>item.id===id)?.isDefault}); const next={...saved,isDefault:saved.defaultAddress,coordinates:saved.latitude!=null?{lat:saved.latitude,lng:saved.longitude}:null,manualLocation:saved.street?{street:saved.street,city:saved.city||'',state:saved.state||'',pincode:saved.pincode||''}:null}; setAddresses((items)=>items.map((item)=>item.id===id?next:item)); if(next.isDefault)setDeliveryAddress(next.address); return next; };
 
-  const [locale, setLocale] = useState(() => ({ language:readLanguage(localStorage), currency:localStorage.getItem('currency') || 'INR', timeZone:localStorage.getItem('timeZone') || Intl.DateTimeFormat().resolvedOptions().timeZone }));
+  const [locale, setLocale] = useState(() => ({ language:readLanguage(), currency:'INR', timeZone:Intl.DateTimeFormat().resolvedOptions().timeZone }));
   const updateLocale = (next) => {
     const value = { ...locale, ...next, language: normalizeLanguage(next.language || locale.language) };
     setLocale(value);
-    persistLanguage(localStorage,value.language); localStorage.setItem('currency',value.currency); localStorage.setItem('timeZone',value.timeZone);
+    persistLanguage(null,value.language);
     document.documentElement.lang = languageCode(value.language);
   };
   const t = (key, values) => translate(locale.language, key, values);
@@ -880,7 +999,7 @@ export const AppProvider = ({ children }) => {
   const openCart = () => setIsCartOpen(true);
   const closeCart = () => setIsCartOpen(false);
 
-  const saveSelectedLocation = (value, { persistAddress = true } = {}) => {
+  const saveSelectedLocation = (value) => {
     const next = {
       ...value,
       title: cleanLocationText(value.title),
@@ -889,46 +1008,23 @@ export const AppProvider = ({ children }) => {
       pincode: cleanLocationText(value.pincode),
     };
     const locationAddress = cleanLocationText(next.address || [next.title && next.title !== next.city ? next.title : '', next.city].filter(Boolean).join(', '));
-    const nextCoordinates = next.latitude != null && next.longitude != null ? { lat: Number(next.latitude), lng: Number(next.longitude) } : null;
     storeSelectedLocation(next);
     setSelectedLocation(next);
     setUserCity(locationAddress || cleanLocationText([next.title && next.title !== next.city ? next.title : '', next.city].filter(Boolean).join(', ')));
     setDeliveryAddress(locationAddress);
-    if (persistAddress) setAddresses((items) => {
-      const normalized = items.map((item) => ({ ...item, isDefault: false }));
-      const matchIndex = normalized.findIndex((item) => cleanLocationText(item.address) === locationAddress);
-      if (matchIndex >= 0) {
-        return normalized.map((item, index) => index === matchIndex ? {
-          ...item,
-          isDefault: true,
-          address: locationAddress,
-          latitude: Number(next.latitude),
-          longitude: Number(next.longitude),
-          coordinates: nextCoordinates,
-          manualLocation: item.manualLocation || { street: next.address || '', city: next.city || '', state: next.state || '', pincode: next.pincode || '' },
-        } : item);
-      }
-      return [{
-        id: `selected-location-${Date.now()}`,
-        type: 'Delivery location',
-        address: locationAddress,
-        isDefault: true,
-        latitude: Number(next.latitude),
-        longitude: Number(next.longitude),
-        coordinates: nextCoordinates,
-        manualLocation: { street: next.address || '', city: next.city || '', state: next.state || '', pincode: next.pincode || '' },
-      }, ...normalized];
-    });
+    // A selected delivery point is temporary UI state. Saved addresses are
+    // created only through Customer Profile Service and persisted in MySQL.
     setShowLocationModal(false);
   };
 
   const clearSelectedLocation = () => {
-    localStorage.removeItem('selectedLocation');
+    resetSelectedLocation();
     setSelectedLocation(null);
     setUserCity('');
     setDeliveryAddress('');
     setShowLocationModal(false);
   };
+  const selectStore = (store) => setSelectedStoreId(String(store?.id || store || ''));
   return (
     <AppContext.Provider
       value={{
@@ -995,6 +1091,8 @@ export const AppProvider = ({ children }) => {
         showLocationModal,
         setShowLocationModal,
         selectedLocation,
+        selectedStoreId,
+        selectStore,
         deliveryMode,
         setDeliveryMode,
         saveSelectedLocation,

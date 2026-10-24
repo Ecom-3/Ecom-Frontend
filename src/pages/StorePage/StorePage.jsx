@@ -16,7 +16,7 @@ import { AppContext } from '../../context/AppContext';
 import { promotionApplies } from '../../services/promotionScope';
 import { getCachedStoreDeliveryQuote, getStoreProducts } from '../../services/catalogApi';
 import { adaptStoreProductList } from '../../services/catalogAdapter';
-import { deliverySummary, isGlobalProduct, isGlobalStore, storeDeliversTo } from '../../utils/storeDelivery';
+import { deliverySummary, isGlobalProduct, isGlobalStore, isProductEligibleForStore, storeDeliversTo } from '../../utils/storeDelivery';
 import StoreServiceAreaMap from '../../components/StoreServiceAreaMap/StoreServiceAreaMap';
 import './StorePage.css';
 
@@ -30,7 +30,7 @@ const lineStringCoordinates = (geometry) => {
 const StorePage = () => {
   const { storeId } = useParams();
   const navigate = useNavigate();
-  const { userCity, catalogProducts, catalogBanners, formatCurrency, addresses, selectedLocation, setShowLocationModal, catalogStores, catalogLoading, deliveryMode, setDeliveryMode, cartCount } = useContext(AppContext);
+  const { userCity, catalogProducts, catalogBanners, formatCurrency, addresses, selectedLocation, setShowLocationModal, catalogStores, catalogLoading, deliveryMode, setDeliveryMode, cartCount, selectStore } = useContext(AppContext);
   const [storeProducts, setStoreProducts] = useState([]);
   const [productSearch, setProductSearch] = useState('');
   const [quote, setQuote] = useState(null);
@@ -50,10 +50,8 @@ const StorePage = () => {
   const store = catalogStores.find((item) => item.id === storeId) || null;
   const globalStore = isGlobalStore(store);
   useEffect(() => {
-    if (!store?.id) return;
-    localStorage.setItem('selectedStoreId', store.id);
-    localStorage.setItem('selectedStore', store.name || store.id);
-  }, [store?.id, store?.name]);
+    if (store?.id) selectStore(store);
+  }, [store?.id, store?.name]); // eslint-disable-line react-hooks/exhaustive-deps
   const defaultAddress = addresses.find((address) => address.isDefault) || addresses[0] || {};
   const customerLat = Number(selectedLocation?.latitude ?? defaultAddress.coordinates?.lat ?? defaultAddress.latitude);
   const customerLng = Number(selectedLocation?.longitude ?? defaultAddress.coordinates?.lng ?? defaultAddress.longitude);
@@ -75,8 +73,9 @@ const StorePage = () => {
     .filter((item) => item.product)
     .map((item) => ({ ...item.product, storeId: item.storeId, store: item.storeName || store?.name, storeName: item.storeName || store?.name }));
   const products = store ? [
-    ...mappedProducts,
-    ...catalogProducts.filter((item) => mappedProductIds.has(item.productId) || item.storeId === storeId || item.store === store.name || item.storeName === store.name || (globalStore && isGlobalProduct(item))),
+    ...mappedProducts.filter((product) => isProductEligibleForStore(product, store)),
+    ...catalogProducts.filter((item) => mappedProductIds.has(item.productId) || item.storeId === storeId || item.store === store.name || item.storeName === store.name || (globalStore && isGlobalProduct(item)))
+      .filter((product) => isProductEligibleForStore(product, store)),
   ].filter((product, index, items) => product.active !== false && items.findIndex((item) => (item.productId ?? item.id) === (product.productId ?? product.id)) === index) : [];
   const normalizedProductSearch = productSearch.trim().toLowerCase();
   const visibleProducts = normalizedProductSearch

@@ -34,7 +34,7 @@ const categoryMatches = (product, category) => normalized(product.category?.name
 export const prepareBrowseProduct = (product, stores = [], reviews = []) => {
   // A store mapping wins over names on the master product.
   const store = stores.find(item => product.storeId ? item.id === product.storeId : item.name === product.store || item.name === product.storeName) || {};
-  const productReviews = reviews.filter(review => review.status === 'Approved' && review.active !== false
+  const productReviews = reviews.filter(review => String(review.status || '').toUpperCase() === 'APPROVED' && review.active !== false
     && (review.productId === (product.productId || product.id) || review.product === product.title)
     && numericValue(review.rating) > 0 && numericValue(review.rating) <= 5);
   const suppliedRating = numericValue(product.rating);

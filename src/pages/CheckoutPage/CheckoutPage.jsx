@@ -224,8 +224,10 @@ const CheckoutPage = () => {
     }));
   }), [cartStoreGroups, deliveryQuotesByStore, savedFulfillmentByStore, customerLat, customerLng]);
   const isGlobalReview = deliveryLines.some((line) => line.fulfillmentType === 'global');
-  const hasDraftDeliverySelection = cartStoreGroups.some((group) => !group.global && selectionForStore(fulfillmentByStore, group.id, initialFulfillment).fulfillment === 'delivery');
+  const hasGlobalDelivery = cartStoreGroups.some((group) => group.global);
+  const hasDraftDeliverySelection = hasGlobalDelivery || cartStoreGroups.some((group) => !group.global && selectionForStore(fulfillmentByStore, group.id, initialFulfillment).fulfillment === 'delivery');
   const hasDeliverySelection = cartStoreGroups.some((group) => !group.global && savedFulfillmentByStore[group.id]?.fulfillment === 'delivery');
+  const requiresDeliveryAddress = hasGlobalDelivery || hasDeliverySelection;
   const deliveryFee = totalDeliveryCharge(deliveryLines);
   const handlingFee = cartStoreGroups.length * 5;
   const deliveryGroups = deliveryLines.reduce((groups, line) => {
@@ -236,7 +238,34 @@ const CheckoutPage = () => {
     if (!existing) groups.push(group);
     return groups;
   }, []);
+<<<<<<< Updated upstream
+  const selectedQuoteMethod = quote?.methods?.find((item) => deliveryMethodId(item.deliveryType) === activeMethod);
+  const quoteEta = selectedQuoteMethod?.estimatedTime || (quote?.estimatedDeliveryMin && quote?.estimatedDeliveryMax ? `${quote.estimatedDeliveryMin}-${quote.estimatedDeliveryMax} minutes` : '');
+  const deliveryWindow = deliveryGroups.length > 1 ? 'See estimates for each store above' : deliveryLines[0]?.estimatedDelivery || quoteEta || 'Estimate unavailable';
+  const availableQuoteMethod = (quote?.methods || []).some((item) => deliveryMethodId(item.deliveryType) === activeMethod);
+  const selectedMethodUnavailable = quote?.deliveryAvailable === false && quote?.deliveryZoneId && quote?.methods?.length && !availableQuoteMethod;
+  const availableMethods = useMemo(() => {
+    if (isGlobalReview) {
+      return [{ id: 'global', label: 'Global Delivery', caption: 'Delivered in 5-7 days' }];
+    }
+    if (quote && quote.deliveryAvailable === false && !quote.deliveryZoneId) {
+      return [{ id: activeMethod, label: '5-7 days delivery', caption: 'Long distance delivery' }];
+    }
+    const quoted = sortDeliveryMethods(quote?.methods || []).map((item) => ({
+      id: deliveryMethodId(item.deliveryType),
+      label: item.deliveryType,
+      caption: [item.estimatedTime, Number(item.deliveryCharge || 0) > 0 ? formatCurrency(item.deliveryCharge) : 'Free'].filter(Boolean).join(' - '),
+    })).filter((item) => item.id !== 'express' && item.id !== 'same-day');
+    const methodById = new Map((quoted.length ? quoted : fallbackMethods).map((item) => [item.id, item]));
+    return [
+      methodById.get('instant') || { id: 'instant', label: 'Instant Delivery', caption: deliveryWindow },
+      methodById.get('standard') || { id: 'standard', label: 'Standard Delivery', caption: deliveryWindow },
+      methodById.get('scheduled') || { id: 'scheduled', label: 'Scheduled Delivery', caption: 'Choose date & time' },
+    ];
+  }, [activeMethod, deliveryWindow, formatCurrency, isGlobalReview, quote]);
+=======
   const summaryStoreGroups = cartStoreGroups.map((group) => ({ ...group, key: group.id, lines: deliveryLines.filter((line) => line.storeId === group.storeId) }));
+>>>>>>> Stashed changes
   const discount = appliedCoupon ? calculateCouponDiscount(appliedCoupon, subtotal) : 0;
   const total = subtotal + deliveryFee + handlingFee - discount;
   const chooseSavedAddress = (address) => {
@@ -355,7 +384,7 @@ const CheckoutPage = () => {
     if (!cartItems.length) return setError('Your cart is empty.');
     const policyError = checkoutReviewError({ groupCount: deliveryGroups.length, handlingFee, discount, coupon: appliedCoupon?.name, promotionVerified:Boolean(appliedCoupon) });
     if (policyError) return setError(policyError);
-    if (hasDeliverySelection && !(selectedLocation?.address || deliveryAddress)) return setError('Select a delivery address for the stores using delivery.');
+    if (requiresDeliveryAddress && !(selectedLocation?.address || deliveryAddress)) return setError('Select a delivery address before continuing.');
     if (quoteLoading) return setError('Store delivery availability is still loading.');
     for (const group of cartStoreGroups) {
       if (group.global) continue;
@@ -381,7 +410,7 @@ const CheckoutPage = () => {
     if (!isValidIndianMobile(contactPhone)) return setError('Enter a valid 10-digit Contact Number.');
     const firstLine = deliveryLines[0] || {};
     const deliveryModeForCheckout = cartStoreGroups.some((group) => !group.global && savedFulfillmentByStore[group.id]?.fulfillment === 'pickup')
-      ? (hasDeliverySelection ? 'mixed' : 'pickup') : 'delivery';
+      ? (hasDeliverySelection || hasGlobalDelivery ? 'mixed' : 'pickup') : 'delivery';
     const firstSelection = cartStoreGroups[0] ? (savedFulfillmentByStore[cartStoreGroups[0].id] || {}) : {};
     navigate('/payment-options', { state: { checkout: {
       method: deliveryLines.length === 1 ? firstLine.deliveryType : 'mixed', deliveryMode: deliveryModeForCheckout,
@@ -390,7 +419,7 @@ const CheckoutPage = () => {
       sourceStoreId: sourceStoreId, sourceStore: sourceStoreName, sourceLocation: selectedStore?.location || '', sourceState: selectedStore?.state || '',
       date: firstLine.scheduleDate || '', slot: firstLine.scheduleSlot || '',
       notes: notes.trim(), coupon: appliedCoupon?.name || '', discount, promotionVerified:Boolean(appliedCoupon), subtotal, deliveryFee,
-      handlingFee, total, deliveryAddress: hasDeliverySelection ? (selectedLocation?.address || deliveryAddress) : '',
+      handlingFee, total, deliveryAddress: requiresDeliveryAddress ? (selectedLocation?.address || deliveryAddress) : '',
       contactNumber: contactPhone, customerLocation: userCity,
       deliveryQuote: deliveryLines.find((line) => line.fulfillmentType !== 'global' && line.quote)?.quote || null,
       customerLatitude: Number.isFinite(customerLat) ? customerLat : null, customerLongitude: Number.isFinite(customerLng) ? customerLng : null,
@@ -439,7 +468,7 @@ const CheckoutPage = () => {
           <Box component="section" className="checkout-panel">
             <Box className="checkout-section-heading">
               <span className="checkout-section-icon"><LocationOnOutlinedIcon /></span>
-              <Box><Typography component="h2">1. Delivery address</Typography><small>{hasDraftDeliverySelection ? 'Used by each store offering delivery' : 'No delivery address is needed for store pickup'}</small></Box>
+              <Box><Typography component="h2">1. Delivery address</Typography><small>{hasGlobalDelivery ? 'Required for Global delivery and stores offering delivery' : hasDraftDeliverySelection ? 'Used by each store offering delivery' : 'No delivery address is needed for store pickup'}</small></Box>
               {hasDraftDeliverySelection && <Button onClick={() => navigate('/address-form', { state: { returnTo: '/checkout', location: selectedLocation } })}><AddLocationAltOutlinedIcon /> Add New Address</Button>}
             </Box>
             {hasDraftDeliverySelection ? <Box className="checkout-address-layout">

@@ -1,3 +1,5 @@
+import { createUuid } from './uuid.js';
+
 const cents = (value) => {
   const number = Number(value);
   if (!Number.isFinite(number) || number < 0) throw new Error('Invalid demo checkout amount.');
@@ -21,9 +23,9 @@ export const simulateCheckout = ({ storage, customerId, groups, handling, total,
   const previous = JSON.parse(storage.getItem(key) || 'null');
   const fingerprint = JSON.stringify(snapshot);
   if (previous?.fingerprint === fingerprint) return previous.result;
-  const id = `DEMO-${crypto.randomUUID()}`;
-  const paymentId = `DEMO-PAYMENT-${crypto.randomUUID()}`;
-  const result = { ...snapshot, id, paymentId, status: 'SIMULATED', createdAt: new Date().toISOString(), orders: orders.map((order) => ({ ...order, id: `DEMO-ORDER-${crypto.randomUUID()}`, checkoutId: id, paymentId, paymentStatus: 'SIMULATED' })) };
+  const id = `DEMO-${createUuid()}`;
+  const paymentId = `DEMO-PAYMENT-${createUuid()}`;
+  const result = { ...snapshot, id, paymentId, status: 'SIMULATED', createdAt: new Date().toISOString(), orders: orders.map((order) => ({ ...order, id: `DEMO-ORDER-${createUuid()}`, checkoutId: id, paymentId, paymentStatus: 'SIMULATED' })) };
   storage.setItem(key, JSON.stringify({ fingerprint, result }));
   return result;
 };

@@ -1,6 +1,12 @@
+<<<<<<< Updated upstream
+import { serviceBaseUrl } from './apiConfig.js';
+import { apiRequest } from './apiClient';
+const base = serviceBaseUrl(import.meta.env, 'VITE_ORG_ACCESS_URL', '/org-access');
+=======
 import { serviceBaseUrl } from '../config/serviceRoutes.js';
 import { apiRequest } from './apiClient';
 const base = serviceBaseUrl('orgAccess', import.meta.env);
+>>>>>>> Stashed changes
 export const getDeliveryPartners = () => apiRequest(base, '/api/delivery-partners');
 export const createDeliveryPartner = (partner) => apiRequest(base, '/api/delivery-partners', { method: 'POST', body: JSON.stringify(partner) });
 export const setDeliveryPartnerActive = (id, active) => apiRequest(base, `/api/delivery-partners/${encodeURIComponent(id)}/status`, { method: 'PUT', body: JSON.stringify({ active }) });

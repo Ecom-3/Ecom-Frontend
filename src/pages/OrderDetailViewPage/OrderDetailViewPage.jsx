@@ -33,12 +33,13 @@ const OrderDetailViewPage = () => {
   const [confirmCancel, setConfirmCancel] = useState(false);
   const [payment, setPayment] = useState(null);
   const [paymentError, setPaymentError] = useState('');
-  const [reviewPromptOpen, setReviewPromptOpen] = useState(false);
+  const [dismissedReviewOrderId, setDismissedReviewOrderId] = useState(null);
   const requestedOrderId = routeOrderId || location.state?.orderId || location.state?.order?.id;
   const fulfillmentTracking = useFulfillmentTracking(order?.id || requestedOrderId, order);
   const deliveryCompleted = ['DELIVERED', 'Delivered'].includes(order?.status)
     || ['DELIVERED', 'Delivered'].includes(fulfillmentTracking.shipment?.status)
     || ['DELIVERED', 'Delivered'].includes(fulfillmentTracking.fulfillment?.status);
+  const reviewPromptOpen = Boolean(deliveryCompleted && order?.id === requestedOrderId && dismissedReviewOrderId !== order?.id);
   const loadOrder = useCallback(async ({ silent = false } = {}) => {
     if (!requestedOrderId) return;
     if (!silent) {
@@ -107,16 +108,25 @@ const OrderDetailViewPage = () => {
   }, [requestedOrderId]);
 
   useEffect(() => {
-    if (!deliveryCompleted || !order?.id) return;
-    setReviewPromptOpen(true);
+<<<<<<< Updated upstream
+    if (!reviewPromptOpen) return;
     const timer = window.setTimeout(() => {
       navigate(`/order-details/${encodeURIComponent(order.id)}/review`);
     }, 700);
     return () => window.clearTimeout(timer);
+  }, [reviewPromptOpen, navigate, order?.id]);
+=======
+    if (!deliveryCompleted || !order?.id) return;
+    const promptTimer = window.setTimeout(() => setReviewPromptOpen(true), 0);
+    const timer = window.setTimeout(() => {
+      navigate(`/order-details/${encodeURIComponent(order.id)}/review`);
+    }, 700);
+    return () => { window.clearTimeout(promptTimer); window.clearTimeout(timer); };
   }, [deliveryCompleted, navigate, order?.id]);
+>>>>>>> Stashed changes
 
   const dismissReviewPrompt = () => {
-    setReviewPromptOpen(false);
+    setDismissedReviewOrderId(order.id);
   };
 
   const handleCancel = async () => {

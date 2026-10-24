@@ -1,7 +1,7 @@
 import { migrateGuestCart } from './migrateGuestCart.js';
 
 // Store selection is a browsing preference, not an index of the customer's carts.
-export const loadCustomerCart = async ({ customerId, readGuestItems, api, isCurrent = () => true, storage = localStorage }) => {
+export const loadCustomerCart = async ({ customerId, readGuestItems, api, isCurrent = () => true, storage = sessionStorage, onGuestItemMigrated, persistGuestItems = true }) => {
   const errors = [];
   const storeIds = [...new Set(readGuestItems().map((item) => item.storeId).filter(Boolean))];
 
@@ -17,7 +17,7 @@ export const loadCustomerCart = async ({ customerId, readGuestItems, api, isCurr
         cart = await api.createCart({ customerId, storeId });
       }
       if (!isCurrent()) return null;
-      await migrateGuestCart(cart, readGuestItems(), api.addCartItem, storage, isCurrent);
+      await migrateGuestCart(cart, readGuestItems(), api.addCartItem, storage, isCurrent, onGuestItemMigrated, persistGuestItems);
     } catch (error) {
       errors.push(error);
     }

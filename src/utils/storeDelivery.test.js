@@ -1,6 +1,6 @@
-`import test from 'node:test';
+import test from 'node:test';
 import assert from 'node:assert/strict';
-import { deliveryProducts, isGlobalProduct } from './storeDelivery.js';
+import { deliveryProducts, isGlobalProduct, isProductEligibleForStore } from './storeDelivery.js';
 import { balancedStoreProductPreview } from './storeProductListings.js';
 
 test('preview includes nearby stores and global offers without changing prices', () => {
@@ -18,4 +18,19 @@ test('global API flag retains India-wide offer beside a local offer', () => {
   const rows = deliveryProducts([product], mappings, stores, { latitude: 17, longitude: 78 });
   assert.deepEqual(rows.map((row) => row.storeId), ['local', 'global-store']);
   assert.equal(rows[1].price, 100);
+});
+
+<<<<<<< Updated upstream
+import { deliverySlotLabel } from './storeDelivery.js';
+test('delivery labels do not invent tomorrow estimates', () => {
+ assert.equal(deliverySlotLabel('Standard Delivery'), 'Standard delivery available');
+ assert.equal(deliverySlotLabel('Scheduled Delivery'), 'Scheduled delivery available');
+=======
+test('global store eligibility uses the same product flag as checkout', () => {
+  const globalStore = { id: 'global-store', name: 'India-wide Global Store', active: true };
+  const localStore = { id: 'local-store', name: 'Local Store', active: true };
+  assert.equal(isProductEligibleForStore({ globalProduct: true }, globalStore), true);
+  assert.equal(isProductEligibleForStore({ globalProduct: false }, globalStore), false);
+  assert.equal(isProductEligibleForStore({ globalProduct: false }, localStore), true);
+>>>>>>> Stashed changes
 });

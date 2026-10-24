@@ -2,6 +2,7 @@ import { addTrackingEvent, createFulfillment, createShipment, getFulfillmentByOr
 import { createNotification, sendNotification } from './notificationApi';
 import { updateOrderStatus } from './orderApi';
 import { shipmentRequest } from '../utils/shipmentRequest';
+import { fulfillmentTypeForOrder } from './orderWorkflowRouting.js';
 
 const notificationFor = async (order, type, subject, message) => {
   if (!order?.customerId || !order?.id) return;
@@ -33,7 +34,7 @@ const getOrCreateFulfillment = async (order) => {
       customerId: order.customerId,
       storeId: order.storeId,
       shippingAddressId,
-      fulfillmentType: 'SHIP_TO_HOME',
+      fulfillmentType: fulfillmentTypeForOrder(order),
     });
     await notificationFor(order, 'FULFILLMENT_CREATED', `Fulfillment created for ${order.orderNumber || order.id}`, 'Your order is now in fulfillment.');
     return fulfillment;
@@ -131,11 +132,12 @@ export const runOrderServiceWorkflow = async (order, action) => {
   }
 
   if (action === 'DELIVER') {
-    await progressOrderStatus(order, 'DELIVERED');
     let shipment = await getOrCreateShipment(order);
     if (shipment.status === 'CREATED') shipment = await updateShipmentStatus(shipment.id, 'IN_TRANSIT');
+    if (order.status !== 'SHIPPED' && order.status !== 'DELIVERED') await progressOrderStatus(order, 'SHIPPED');
     if (shipment.status === 'IN_TRANSIT') shipment = await updateShipmentStatus(shipment.id, 'OUT_FOR_DELIVERY');
     if (shipment.status === 'OUT_FOR_DELIVERY') shipment = await updateShipmentStatus(shipment.id, 'DELIVERED');
+    if (order.status !== 'DELIVERED') await progressOrderStatus({ ...order, status: 'SHIPPED' }, 'DELIVERED');
     await addTracking(order, shipment, 'DELIVERED', 'Shipment delivered successfully.');
     await notificationFor(order, 'SHIPMENT_DELIVERED', `Order ${order.orderNumber || order.id} delivered`, 'Your order was delivered successfully.');
   }

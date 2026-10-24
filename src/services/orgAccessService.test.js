@@ -31,6 +31,26 @@ test('staff update rejects an invalid ID before making a request', async () => {
   await assert.rejects(orgAccessService.updateUser('not-a-database-id', {}), /valid staff account ID/);
 });
 
+test('Super Admin profile update sends only the authenticated user name', async () => {
+  const originalFetch = globalThis.fetch;
+  const originalStorage = globalThis.sessionStorage;
+  const originalWindow = globalThis.window;
+  globalThis.sessionStorage = { getItem: () => 'header.eyJleHAiOjQxMDI0NDQ4MDB9.signature' };
+  globalThis.window = { dispatchEvent: () => {} };
+  let request;
+  globalThis.fetch = async (url, options) => {
+    request = { url, options };
+    return new Response(JSON.stringify({ id: '1', username: 'root-admin', name: 'Root Admin', role: 'super-admin' }), { status: 200 });
+  };
+  try {
+    const response = await orgAccessService.updateMyName(' Root Admin ');
+    assert.match(request.url, /\/api\/users\/me\/profile\/name$/);
+    assert.equal(request.options.method, 'PUT');
+    assert.deepEqual(JSON.parse(request.options.body), { name: 'Root Admin' });
+    assert.equal(response.name, 'Root Admin');
+  } finally { globalThis.fetch = originalFetch; globalThis.sessionStorage = originalStorage; globalThis.window = originalWindow; }
+});
+
 test('staff update surfaces validation and permission errors from the API', async () => {
   const originalFetch = globalThis.fetch;
   const originalStorage = globalThis.sessionStorage;

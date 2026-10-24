@@ -15,7 +15,7 @@ const stateName = (store = {}) => isGlobalStore(store) ? 'All India' : String(st
 
 const StoresListPage = () => {
   const navigate = useNavigate();
-  const { catalogStores, formatCurrency, setDeliveryMode } = useContext(AppContext);
+  const { catalogStores, formatCurrency, setDeliveryMode, selectStore } = useContext(AppContext);
   const [selectedState, setSelectedState] = useState('All States');
   const activeStores = useMemo(() => catalogStores
     .filter((store) => store.active !== false && !['inactive', 'closed'].includes(String(store.status || '').toLowerCase()))
@@ -32,8 +32,7 @@ const StoresListPage = () => {
   }, [activeStores, selectedState]);
   const openStore = (store) => {
     setDeliveryMode('delivery');
-    localStorage.setItem('selectedStoreId', store.id);
-    localStorage.setItem('selectedStore', store.name);
+    selectStore(store);
     navigate(`/stores/${encodeURIComponent(store.id)}`);
   };
 

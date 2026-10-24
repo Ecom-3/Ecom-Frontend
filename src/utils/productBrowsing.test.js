@@ -87,6 +87,7 @@ test('valid catalog ratings survive absent reviews; malformed values never quali
   const product = { id: 'p', rating: 4.8, price: 100 };
   assert.equal(prepareBrowseProduct(product).rating, 4.8);
   assert.equal(prepareBrowseProduct(product, [], [{ productId: 'p', rating: 5, status: 'Approved' }]).rating, 5);
+  assert.equal(prepareBrowseProduct(product, [], [{ productId: 'p', rating: 4, status: 'APPROVED' }]).rating, 4);
   assert.equal(prepareBrowseProduct({ rating: 7 }).rating, null);
   const unknown = prepareBrowseProduct({ price: 0, priceKnown: false });
   assert.equal(filterAndSortProducts([unknown], { maxPrice: '150' }).length, 0);

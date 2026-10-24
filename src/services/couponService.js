@@ -3,15 +3,18 @@ import { validateCouponPromotion } from './catalogApi';
 
 export const PENDING_COUPON_KEY = 'checkout:pendingCouponCode';
 export const listCoupons = async () => [];
+let pendingCouponCode = '';
 
 export const savePendingCouponCode = (code) => {
   const normalized = String(code || '').trim().toUpperCase();
-  if (normalized) localStorage.setItem(PENDING_COUPON_KEY, normalized);
+  pendingCouponCode = normalized;
 };
 
+export const peekPendingCouponCode = () => pendingCouponCode;
+
 export const consumePendingCouponCode = () => {
-  const code = localStorage.getItem(PENDING_COUPON_KEY) || '';
-  if (code) localStorage.removeItem(PENDING_COUPON_KEY);
+  const code = pendingCouponCode;
+  pendingCouponCode = '';
   return code;
 };
 

@@ -1,11 +1,21 @@
+<<<<<<< Updated upstream
+import NotificationPermission from '../../components/NotificationPermission';
+import { useContext, useEffect, useMemo, useState } from 'react';
+import { Box, Button, Chip, LinearProgress, MenuItem, Rating, Select, TextField, Typography } from '@mui/material';
+import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
+import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
+import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
+=======
 import { useContext, useEffect, useState } from 'react';
-import { Alert, Box, Button, Chip, MenuItem, Select, Typography } from '@mui/material';
+import { Alert, Box, Button, Chip, MenuItem, Rating, Select, Typography } from '@mui/material';
+>>>>>>> Stashed changes
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import { getCustomerOrderHistory, isOrderServiceUnavailable, normalizeOrder, ORDER_STATUSES } from '../../services/orderApi';
 import { clearCustomerNotifications, getAllCustomerNotifications, markNotificationRead, normalizeNotification } from '../../services/notificationApi';
 import FulfillmentTrackingPanel from '../../components/FulfillmentTrackingPanel/FulfillmentTrackingPanel';
 import { useFulfillmentTracking } from '../../hooks/useFulfillmentTracking';
+import { getMyReviews } from '../../services/reviewApi';
 
 const content = {
   notifications: { title: 'Notifications', empty: 'You have no notifications yet.' },
@@ -31,6 +41,20 @@ const CustomerFeaturePage = ({ type }) => {
   const [trackingOrders, setTrackingOrders] = useState([]);
   const [trackingLoading, setTrackingLoading] = useState(false);
   const [trackingError, setTrackingError] = useState('');
+  const [customerReviews, setCustomerReviews] = useState([]);
+  const [reviewsError, setReviewsError] = useState('');
+  const [reviewsLoading, setReviewsLoading] = useState(false);
+  useEffect(() => {
+    if (type !== 'reviews') return undefined;
+    let active = true;
+    Promise.resolve().then(() => {
+      if (active) { setReviewsLoading(true); setReviewsError(''); }
+      return getMyReviews();
+    }).then((rows) => { if (active) setCustomerReviews(Array.isArray(rows) ? rows : []); })
+      .catch((error) => { if (active) setReviewsError(error.message || 'Your reviews could not be loaded.'); })
+      .finally(() => { if (active) setReviewsLoading(false); });
+    return () => { active = false; };
+  }, [type, user?.id]);
   useEffect(() => {
     if (type !== 'notifications' || !user?.id) return undefined;
     let active = true;
@@ -104,6 +128,18 @@ const CustomerFeaturePage = ({ type }) => {
         <Box sx={{ bgcolor: 'white', borderRadius: 3, p: 3, boxShadow: '0 4px 16px rgba(15,23,42,.08)' }}>
           <Typography sx={{ color: '#64748b', mb: 2 }}>{config.empty}</Typography>
 
+<<<<<<< Updated upstream
+          {type === 'notifications' && <Box><NotificationPermission />{notifications.length === 0 ? <Typography>No notifications.</Typography> : notifications.map((item) => <Box key={item.id} onClick={() => { notificationStore.markRead(item.id); setNotifications(notificationStore.list()); }} sx={{ p:2,mb:1,border:'1px solid #e2e8f0',borderRadius:2,cursor:'pointer',bgcolor:item.read ? '#fff' : '#ecfdf5' }}><Typography fontWeight={700}>{item.title}</Typography><Typography>{item.message}</Typography><Typography variant="caption">{new Date(item.createdAt).toLocaleString()}</Typography></Box>)}{notifications.length > 0 && <Button color="error" onClick={() => { notificationStore.clear(); setNotifications([]); }}>Clear All</Button>}</Box>}
+
+          {type === 'legacy-reviews' && <Box sx={{ display: 'grid', gap: 2 }}>
+            <Rating value={rating} onChange={(_, value) => setRating(value || 0)} aria-label="Product rating" />
+            <TextField label="Write your review" multiline minRows={4} value={text} onChange={(e) => setText(e.target.value)} />
+            <Button component="label" variant="outlined">Add Review Image<input hidden type="file" accept="image/*" onChange={(e) => { const file=e.target.files?.[0]; if(file){ const reader=new FileReader(); reader.onload=()=>setReviewImage(reader.result); reader.readAsDataURL(file); } }} /></Button>
+            {reviewImage && <img src={reviewImage} alt="Review preview" style={{ width:100,height:100,objectFit:'cover',borderRadius:8 }} />}
+            <Button variant="contained" disabled={!canReview} onClick={() => { const next=[{ id:crypto.randomUUID(),name:'Customer Review',rating,text,image:reviewImage,helpful:0,status:'Pending',active:true },...reviews]; localStorage.setItem('local:reviews',JSON.stringify(next)); setReviews(next); setMessage('Review saved locally for approval.'); setRating(0); setText(''); setReviewImage(''); }}>Submit Review</Button>
+            <Typography variant="h6">Customer Reviews {reviews.length > 0 && `· ${(reviews.reduce((sum,item)=>sum+item.rating,0)/reviews.length).toFixed(1)} average`}</Typography>
+            {reviews.filter((review) => review.status === 'Approved').map((review) => <Box key={review.id} sx={{ border:'1px solid #e2e8f0',p:2,borderRadius:2 }}><Rating readOnly value={review.rating} />{review.image && <img src={review.image} alt="Customer review" style={{ width:80,height:80,objectFit:'cover',display:'block' }} />}<Typography>{review.text}</Typography>{review.reply && <Typography color="text.secondary">Store reply: {review.reply}</Typography>}<Button onClick={() => { const next=reviews.map((item)=>item.id===review.id?{...item,helpful:item.helpful+1}:item);localStorage.setItem('local:reviews',JSON.stringify(next));setReviews(next); }}>Helpful ({review.helpful})</Button></Box>)}
+=======
           {type === 'notifications' && <Box sx={{ display: 'grid', gap: 1.5 }}>
             {notificationsError && <Alert severity="error" role="alert">{notificationsError}</Alert>}
             {notifications.length > 0 && <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}><Button color="inherit" disabled={notificationsBusy} onClick={clearNotifications}>Clear all</Button></Box>}
@@ -116,9 +152,23 @@ const CustomerFeaturePage = ({ type }) => {
                 {!item.read && <Button size="small" disabled={notificationsBusy} onClick={() => markRead(item)}>Mark as read</Button>}
               </Box>
             </Box>)}
+>>>>>>> Stashed changes
           </Box>}
 
-          {type === 'reviews' && <Box sx={{ display:'grid',gap:2 }}><Typography color="text.secondary">Reviews are shown when provided by the product or order service. Submit a review from a completed order.</Typography><Button variant="outlined" onClick={() => navigate('/orders')}>Open order history</Button></Box>}
+          {type === 'reviews' && <Box sx={{ display:'grid',gap:2 }}>
+            {reviewsLoading && <Typography role="status">Loading your reviews...</Typography>}
+            {reviewsError && <Alert severity="error" role="alert">{reviewsError}</Alert>}
+            {!reviewsLoading && !reviewsError && !customerReviews.length && <Typography>{config.empty}</Typography>}
+            {customerReviews.map((review) => <Box key={review.id} sx={{ p:2,border:'1px solid #e2e8f0',borderRadius:2,display:'grid',gap:1 }}>
+              <Box sx={{ display:'flex',justifyContent:'space-between',gap:1,flexWrap:'wrap' }}><Typography fontWeight={700}>{review.productName}</Typography><Chip size="small" label={review.status} color={review.status==='APPROVED'?'success':review.status==='REJECTED'?'error':'warning'} /></Box>
+              <Rating value={Number(review.rating)||0} readOnly size="small" />
+              {review.comment && <Typography sx={{ whiteSpace:'pre-wrap' }}>{review.comment}</Typography>}
+              {!!review.photoUrls?.length && <Box sx={{ display:'flex',gap:1,flexWrap:'wrap' }}>{review.photoUrls.map((photo,index)=><Box component="img" key={`${review.id}:${index}`} src={photo} alt={`Review photo ${index+1}`} sx={{ width:72,height:72,objectFit:'cover',borderRadius:1 }} />)}</Box>}
+              {review.adminReply && <Alert severity="info"><strong>Store response:</strong> {review.adminReply}</Alert>}
+              <Typography variant="caption" color="text.secondary">Order {review.orderNumber}</Typography>
+            </Box>)}
+            <Button variant="outlined" onClick={() => navigate('/orders')}>Open order history</Button>
+          </Box>}
           {type === 'localization' && <Box sx={{ display: 'grid', gap: 2 }}>
             <Select value={language} onChange={(e) => setLanguage(e.target.value)} inputProps={{ 'aria-label': 'Language' }}>
               {['English', 'Hindi', 'Telugu'].map((item) => <MenuItem key={item} value={item}>{item}</MenuItem>)}

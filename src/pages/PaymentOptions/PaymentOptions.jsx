@@ -11,7 +11,7 @@ import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { checkoutPolicyError } from '../../utils/checkoutPolicy';
 import { AppContext } from '../../context/AppContext';
-import { buildOrderAddressesPayload, buildOrderItemsPayload, createOrder, getOrder, normalizeOrder } from '../../services/orderApi';
+import { buildOrderAddressesPayload, buildOrderItemsPayload, createOrder, getOrder, normalizeOrder, retrySavedOrder } from '../../services/orderApi';
 import { createPayment, getPayment, getPaymentByOrder, getPaymentStatus, normalizePayment } from '../../services/paymentApi';
 import { getProduct } from '../../services/catalogApi';
 import { checkoutErrorMessage, validateGlobalCheckout } from '../../utils/globalCheckout';
@@ -20,7 +20,7 @@ import { getPaymentCapabilities } from '../../services/paymentApi';
 import { requirePaymentProcessing } from '../../utils/paymentAvailability';
 import * as cartApi from '../../services/cartApi';
 import { prepareCheckoutCart, finishCheckoutCart } from '../../utils/checkoutCart';
-import { createCheckoutGroup, getCheckoutGroupByKey } from '../../services/orderApi';
+import { createCheckoutGroup, getCheckoutGroupByKey, getCheckoutGroupByCart } from '../../services/orderApi';
 import { persistStoreCheckout } from '../../utils/persistedStoreCheckout';
 import { findInventoryForItem } from '../../services/inventoryApi';
 import { validateCheckoutAvailability } from '../../utils/checkoutAvailability';
@@ -85,13 +85,14 @@ const resolveCheckoutStoreId = ({ activeCart, checkout = {}, cartItems = [] } = 
 const PaymentOptions = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { activeCart, addresses, cartItems, clearCart, formatCurrency, user, catalogStores } = useContext(AppContext);
+  const { activeCart, addresses, cartItems, formatCurrency, user, catalogStores } = useContext(AppContext);
   const customerId = tokenCustomerId() || user?.id || '';
   const checkout = useMemo(() => location.state?.checkout || {}, [location.state]);
   const existingOrderId = location.state?.orderId || location.state?.order?.id || '';
   const existingOrder = useMemo(() => location.state?.order ? normalizeOrder(location.state.order) : null, [location.state]);
-  const [method,setMethod] = useState('cod');
+  const [preferredMethod,setMethod] = useState('cod');
   const [onlinePaymentsEnabled,setOnlinePaymentsEnabled] = useState(false);
+  const method = onlinePaymentsEnabled ? preferredMethod : 'cod';
   const [status,setStatus] = useState('selecting');
   const [summaryOpen,setSummaryOpen] = useState(true);
   const [error,setError] = useState('');
@@ -128,8 +129,11 @@ const PaymentOptions = () => {
     [onlinePaymentsEnabled],
   );
 
+<<<<<<< Updated upstream
+=======
   const selectedMethod = selectableMethods.some((item) => item.id === method) ? method : 'cod';
 
+>>>>>>> Stashed changes
   const summary = useMemo(() => {
     const subtotal = cartItems.reduce((sum,item)=>sum+Number(item.price)*Number(item.quantity),0);
     const delivery = Number(checkout.deliveryFee || 0);
@@ -168,18 +172,24 @@ const PaymentOptions = () => {
     getProduct,
   );
 
-  const validate = () => {
+  const validate = (retrySaved = false) => {
     if (!customerId) return 'Log in before placing an order.';
     if (!selectableMethods.some((item) => item.id === selectedMethod)) return 'Select a supported payment method.';
     if (existingOrderId) return '';
+    if (retrySaved) return '';
     if (!cartItems.length) return 'Your cart is empty.';
     if (!activeCart?.id && !checkout.deliveryLines?.length) return 'Cart Service has not returned an active cart yet.';
     if (!resolveCheckoutStoreId({ activeCart, checkout, cartItems })) return 'Select a store before placing an order.';
     return '';
   };
 
-  const createOrLoadOrder = async () => {
+  const createOrLoadOrder = async (retrySaved = false) => {
     if (existingOrderId) return normalizeOrder(await getOrder(existingOrderId));
+    if (retrySaved) {
+      const storeId = resolveCheckoutStoreId({ activeCart, checkout, cartItems });
+      if (!storeId) throw new Error('Select the store for the saved checkout before retrying.');
+      return normalizeOrder(await retrySavedOrder(customerId, storeId));
+    }
     await verifyGlobalItems();
     const deliveryLines = checkout.deliveryLines || [];
     const splitKeys = splitKeysFor(cartItems, deliveryLines);
@@ -259,7 +269,7 @@ const PaymentOptions = () => {
     const primaryLine = deliveryLines[0] || {};
     const storeId = resolveCheckoutStoreId({ activeCart, checkout, cartItems }) || primaryLine.storeId;
     if (!storeId) throw new Error('Store ID is required before placing this order.');
-    const serverCart = await prepareCheckoutCart(customerId, storeId, buildOrderItemsPayload(cartItems), cartApi);
+    const serverCart = await prepareCheckoutCart(customerId, storeId, buildOrderItemsPayload(cartItems), cartApi, sessionStorage, true);
       return normalizeOrder(await createOrder({
         customerId,
         cartId: serverCart.id,
@@ -312,18 +322,22 @@ const PaymentOptions = () => {
     return findInventoryForItem(query);
   };
 
-  const pay = async () => {
+  const pay = async (retrySaved = false) => {
     if (status === 'submitting' || submissionBusy.current) return;
     if (checkoutBlock) return;
     const selectedPaymentMethod = selectableMethods.find((item) => item.id === method)?.paymentMethod || 'DEMO_COD';
-    if (!existingOrderId && selectedPaymentMethod === 'DEMO_COD') {
+<<<<<<< Updated upstream
+    if (persistedMultiStore && !existingOrderId) {
       const validation = validate();
+=======
+    if (!existingOrderId && selectedPaymentMethod === 'DEMO_COD') {
+      const validation = validate(retrySaved);
       if (validation) { setError(validation); setStatus('failed'); return; }
       submissionBusy.current = true;
       setStatus('submitting');
       setError('');
       try {
-        const order = await createOrLoadOrder();
+        const order = await createOrLoadOrder(retrySaved);
         const payableAmount = Number(order.totalAmount || order.total || summary.total || 0);
         if (!order.id || !(payableAmount > 0)) throw new Error('Order Service did not return a valid saved order.');
         let pendingPayment = null;
@@ -337,7 +351,7 @@ const PaymentOptions = () => {
         }
         if (!existingOrderId) {
           finishCheckoutCart(customerId, order.storeId);
-          await clearCart();
+          if (!retrySaved) await clearCart();
         }
         setResult({ order, payment: pendingPayment || { status: 'PENDING', amount: payableAmount, paymentMethod: selectedPaymentMethod, paymentId: '' } });
         sessionStorage.setItem(COMPLETED_CHECKOUT_RETURN_KEY, order.id);
@@ -351,13 +365,19 @@ const PaymentOptions = () => {
       return;
     }
     if (persistedMultiStore && multiStoreCart && !existingOrderId) {
-      const validation = validate();
+      const validation = validate(retrySaved);
+>>>>>>> Stashed changes
       if (validation) { setError(validation); setStatus('failed'); return; }
       submissionBusy.current = true;
       setStatus('submitting');
       setError('');
       try {
+<<<<<<< Updated upstream
+        if (selectedPaymentMethod !== 'DEMO_COD') throw new Error('Online payments are unavailable for combined checkout. Choose cash on delivery.');
+        if (summary.discount || checkout.coupon) throw new Error('Promotions must be verified before combined checkout.');
+=======
         await verifyGlobalItems();
+>>>>>>> Stashed changes
         const address = addresses.find(entry => entry.isDefault) || addresses[0] || {};
         const groups = splitGroupsFor(cartItems, checkout.deliveryLines || []).reduce((stores, group) => {
           const storeId = group.line.storeId || group.items[0].storeId || group.items[0].sourceStoreId;
@@ -379,7 +399,7 @@ const PaymentOptions = () => {
           addresses: buildOrderAddressesPayload(address, checkout.deliveryAddress, { name: user.name, phone: checkout.contactNumber || user.phone || user.mobile }),
           deliveryMethod: group.line.fulfillmentType === 'global' ? 'global' : group.line.selectedDeliveryMethod || group.line.deliveryType || checkout.method || 'standard',
           fulfillmentType: group.line.fulfillmentType === 'global' ? 'global' : group.line.deliveryType === 'pickup' || checkout.method === 'pickup' ? 'pickup' : 'nearby',
-          deliveryCharge: group.line.deliveryType === 'pickup' || checkout.method === 'pickup' ? 0 : Number(group.line.deliveryCharge || 0),
+          deliveryCharge: group.line.deliveryType === 'pickup' || checkout.method === 'pickup' ? 0 : Number(group.line.deliveryCharge ?? (groups.length === 1 ? checkout.deliveryFee : 0) ?? 0),
           customerLatitude: checkout.customerLatitude ?? null,
           customerLongitude: checkout.customerLongitude ?? null,
           scheduledDeliveryDate: checkout.date || null,
@@ -387,7 +407,7 @@ const PaymentOptions = () => {
           couponCode:index===0?(checkout.coupon||''):'',
           promotionLocation:checkout.customerLocation||'',
         }));
-        const group = await persistStoreCheckout({ customerId, stores, cartApi, request: createCheckoutGroup, lookup: getCheckoutGroupByKey, checkInventory: entries => validateCheckoutAvailability(entries, lookupCheckoutInventory) });
+        const group = await persistStoreCheckout({ customerId, stores, cartApi, request: createCheckoutGroup, lookup: getCheckoutGroupByKey, lookupCart: getCheckoutGroupByCart, checkInventory: entries => validateCheckoutAvailability(entries, lookupCheckoutInventory) });
         navigate(`/checkout-group/${encodeURIComponent(group.id)}`);
       } catch (reason) {
         setError(`${resolveError(reason)} Retry checks the existing checkout before submitting again.`);
@@ -395,16 +415,22 @@ const PaymentOptions = () => {
       } finally { submissionBusy.current = false; }
       return;
     }
-    const validation = validate();
+    const validation = validate(retrySaved);
     if (validation) { setError(validation);setStatus('failed');return; }
-      setError('');setStatus('submitting');
+    submissionBusy.current = true;
+    setError('');setStatus('submitting');
     try {
       const paymentMethod = selectedPaymentMethod;
       const isCashOnDelivery = paymentMethod === 'DEMO_COD';
       if (!isCashOnDelivery) {
         await requirePaymentProcessing(getPaymentCapabilities);
       }
+<<<<<<< Updated upstream
+      if (!existingOrderId) await validateCheckoutAvailability([{ storeId: resolveCheckoutStoreId({ activeCart, checkout, cartItems }), items: buildOrderItemsPayload(cartItems) }], lookupCheckoutInventory);
       const order = await createOrLoadOrder();
+=======
+      const order = await createOrLoadOrder(retrySaved);
+>>>>>>> Stashed changes
       if (!order.id) throw new Error('Order Service did not return an order ID.');
       const payableAmount = Number(order.totalAmount || order.total || 0);
       if (!(payableAmount > 0)) throw new Error('Order Service did not return a valid order total.');
@@ -414,7 +440,10 @@ const PaymentOptions = () => {
       if (isCashOnDelivery) {
         if (!existingOrderId) {
           finishCheckoutCart(customerId, order.storeId);
-          await clearCart();
+<<<<<<< Updated upstream
+=======
+          if (!retrySaved) await clearCart();
+>>>>>>> Stashed changes
         }
         setResult({ order, payment: { status: 'PENDING', amount: payableAmount, paymentMethod, paymentId: '' } });
         sessionStorage.setItem(COMPLETED_CHECKOUT_RETURN_KEY, order.id);
@@ -454,7 +483,6 @@ const PaymentOptions = () => {
         }
         if (!existingOrderId) {
           finishCheckoutCart(customerId, order.storeId);
-          await clearCart();
         }
         setResult({ order: paidOrder, payment: latestPayment });
         sessionStorage.setItem(COMPLETED_CHECKOUT_RETURN_KEY, order.id);
@@ -467,7 +495,7 @@ const PaymentOptions = () => {
     } catch (reason) {
       setError(resolveError(reason));
       setStatus('failed');
-    }
+    } finally { submissionBusy.current = false; }
   };
 
   const activePaymentStatus = payment?.status || (status === 'pending' ? 'PENDING' : status === 'refunded' ? 'REFUNDED' : status === 'failed' && payment?.paymentId ? 'FAILED' : '');
@@ -484,7 +512,11 @@ const PaymentOptions = () => {
         <Box className="method-form"><Typography variant="h6">{selectableMethods.find((item)=>item.id===method)?.label} Payment</Typography><Typography color="text.secondary">Select your preferred payment method to place the order.</Typography><Box className="option-list">{selectableMethods.map((item)=><button type="button" key={item.id} className={method===item.id?'selected':''} onClick={()=>setMethod(item.id)}><span className="option-mark">{item.label.slice(0,2)}</span><span><strong>{item.displayMethod}</strong><small>{item.caption}</small></span><i>{method===item.id?'●':'○'}</i></button>)}</Box></Box>
         {activePaymentStatus&&<Box className="payment-state-note" role="status"><strong>{activePaymentStatus}</strong><span>{paymentStatusText[activePaymentStatus] || 'Payment status received from Payment Service.'}</span>{payment?.paymentId&&<span>Payment ID: {payment.paymentId}</span>}</Box>}
         {checkoutBlock ? <Box className="payment-state-note" role="status"><strong>Checkout unavailable for this cart</strong><span>{checkoutBlock}</span><span>No payment was attempted.</span><Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/cart')}>Edit Cart</Button></Box>
-          : status==='failed'&&<Box className="payment-error" role="alert"><ErrorOutlinedIcon/><Box><strong>{payment?.paymentId ? 'Payment Failed' : 'Checkout Could Not Proceed'}</strong><span>{error || 'Please try again in a moment.'}</span></Box><Button onClick={()=>{if (error.toLowerCase().includes('unresolved checkout')) { Object.keys(sessionStorage).filter((key) => key === 'checkout-group-attempt' || key.startsWith('checkout-cart:')).forEach((key) => sessionStorage.removeItem(key)); } setStatus('selecting');setError('');}}>Start Fresh Checkout</Button></Box>}
+<<<<<<< Updated upstream
+          : status==='failed'&&<Box className="payment-error" role="alert"><ErrorOutlinedIcon/><Box><strong>{payment?.paymentId ? 'Payment Failed' : 'Checkout Could Not Proceed'}</strong><span>{error || 'Please try again in a moment.'}</span></Box><Button onClick={()=>{setStatus('selecting');setError('');}}>Retry Checkout</Button></Box>}
+=======
+          : status==='failed'&&<Box className="payment-error" role="alert"><ErrorOutlinedIcon/><Box><strong>{payment?.paymentId ? 'Payment Failed' : 'Checkout Could Not Proceed'}</strong><span>{error || 'Please try again in a moment.'}</span>{!multiStoreCart && /previous cart is claimed by checkout|earlier checkout has an unresolved result|retry that checkout/i.test(error) && <span>Retry Saved Checkout resubmits the original saved order. The different item currently shown will not be submitted by that action.</span>}</Box>{!multiStoreCart && /previous cart is claimed by checkout|earlier checkout has an unresolved result|retry that checkout/i.test(error) ? <Button onClick={()=>pay(true)}>Retry Saved Checkout</Button> : <Button onClick={()=>{setStatus('selecting');setError('');}}>Try Again</Button>}</Box>}
+>>>>>>> Stashed changes
         <Button className="payment-button" variant="contained" disabled={status==='submitting' || Boolean(checkoutBlock)} onClick={()=>pay()}>{status==='submitting'?<><CircularProgress size={19} color="inherit"/>{persistedMultiStore && multiStoreCart ? 'Saving Checkout...' : 'Placing Order...'}</>:`Place Order ${formatCurrency(summary.total)}`}</Button>
       </Box></Box></section>
     </main>

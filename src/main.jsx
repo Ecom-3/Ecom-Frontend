@@ -1,4 +1,7 @@
 import { StrictMode } from 'react'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const brandTheme = createTheme({ palette: { primary: { main: '#087454', dark: '#065d43' }, secondary: { main: '#087454' } } });
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from "react-router-dom";
 import './index.css'
@@ -8,22 +11,19 @@ import { AppProvider } from './context/AppContext';
 import { languageCode } from './i18n/index';
 import { readLanguage } from './i18n/preferences';
 
-document.documentElement.lang = languageCode(readLanguage(localStorage));
+document.documentElement.lang = languageCode(readLanguage());
 
-// Remove the legacy demo fixture written by earlier builds. Customer-owned
-// browser state (guest cart, addresses, wishlist and preferences) is preserved.
-if (localStorage.getItem('demo-data-version')) {
-  [
-    'demo-data-version', 'local:locations', 'local:stores', 'local:users',
-    'local:delivery', 'local:customers', 'local:reviews', 'local:coupons',
-    'local:orders', 'orders', 'notifications',
-  ].forEach((key) => localStorage.removeItem(key));
+// Business records and persistent preferences belong in backend services and
+// MySQL. Clear browser-local state left by older builds on this app origin.
+localStorage.clear();
+for (const key of Object.keys(sessionStorage)) {
+  if (key !== 'authToken') sessionStorage.removeItem(key);
 }
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <AppProvider>
+    <ThemeProvider theme={brandTheme}><AppProvider>
       <RouterProvider router={router} />
-    </AppProvider>
+    </AppProvider></ThemeProvider>
   </StrictMode>,
 )

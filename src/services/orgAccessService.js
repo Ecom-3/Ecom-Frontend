@@ -1,6 +1,12 @@
+<<<<<<< Updated upstream
+import { serviceBaseUrl } from './apiConfig.js';
+import { apiRequest } from './apiClient';
+const ORG_ACCESS_BASE_URL = serviceBaseUrl(import.meta.env, 'VITE_ORG_ACCESS_URL', '/org-access');
+=======
 import { serviceBaseUrl } from '../config/serviceRoutes.js';
 import { apiRequest } from './apiClient.js';
 const ORG_ACCESS_BASE_URL = serviceBaseUrl('orgAccess', import.meta.env);
+>>>>>>> Stashed changes
 
 const normalizeRole = (role) => {
   if (!role) return null;
@@ -52,7 +58,17 @@ export const orgAccessService = {
       }),
     });
   },
-  async me() { return apiRequest(ORG_ACCESS_BASE_URL, '/api/users/me'); },
+  async me() {
+    const user = await apiRequest(ORG_ACCESS_BASE_URL, '/api/users/me');
+    user.role = normalizeRole(user.role);
+    return user;
+  },
+  async updateMyName(name) {
+    return apiRequest(ORG_ACCESS_BASE_URL, '/api/users/me/profile/name', {
+      method: 'PUT',
+      body: JSON.stringify({ name: String(name || '').trim() }),
+    });
+  },
   async validate() { return apiRequest(ORG_ACCESS_BASE_URL, '/api/auth/validate'); },
   async listUsers() { return apiRequest(ORG_ACCESS_BASE_URL, '/api/users'); },
   async createUser(user) {

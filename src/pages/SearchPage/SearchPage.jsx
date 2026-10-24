@@ -14,6 +14,7 @@ import { filterAndSortProducts, prepareBrowseProduct } from '../../utils/product
 import { useBrowseDeliveryQuotes } from '../../hooks/useBrowseDeliveryQuotes';
 import BottomNav from '../../components/BottomNav/BottomNav';
 import { useSearchBrowseState } from '../../hooks/useSearchBrowseState';
+import { getProductReviewsBatch } from '../../services/reviewApi';
 import './SearchPage.css';
 
 const SearchPage = () => {
@@ -37,6 +38,7 @@ const SearchPage = () => {
   const [apiProducts, setApiProducts] = useState([]);
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchError, setSearchError] = useState('');
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => inputRef.current?.focus(), 50);
@@ -86,7 +88,13 @@ const SearchPage = () => {
     };
   }, [searchTerm, categoryFilter, catalogCategories]);
 
-  const reviews = [];
+  useEffect(() => {
+    let active = true;
+    const ids = catalogProducts.map((product) => product.productId || product.id).filter(Boolean);
+    getProductReviewsBatch(ids).then((rows) => { if (active) setReviews(rows || []); }).catch(() => { if (active) setReviews([]); });
+    return () => { active = false; };
+  }, [catalogProducts]);
+
   const categories = catalogCategories.map((category) => category.name || category.title || category);
   const allProducts = deliveryProducts(catalogProducts, catalogStoreProducts, stores, selectedLocation)
     .map((product) => ({

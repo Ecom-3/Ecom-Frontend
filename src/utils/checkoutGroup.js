@@ -1,3 +1,9 @@
+<<<<<<< Updated upstream
+import { requestId } from './requestId.js';
+=======
+import { createUuid } from './uuid.js';
+
+>>>>>>> Stashed changes
 export const checkoutGroupView = (group) => {
   const children = Array.isArray(group?.children) ? group.children : [];
   const states = ['PREPARED', 'RESERVING', 'COMMITTING', 'COMPENSATING', 'COMPLETED', 'FAILED'];
@@ -63,7 +69,11 @@ export const submitCheckoutGroup = async (stores, request, storage = sessionStor
     }
   }
   if (!attempt || attempt.body !== body) {
-    attempt = { body, key: crypto.randomUUID() };
+<<<<<<< Updated upstream
+    attempt = { body, key: requestId() };
+=======
+    attempt = { body, key: createUuid() };
+>>>>>>> Stashed changes
     storage.setItem(name, JSON.stringify(attempt));
   }
   if (attempt.submitted && lookup) {

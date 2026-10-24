@@ -1,17 +1,30 @@
-import { serviceBaseUrl } from '../config/serviceRoutes.js';
+<<<<<<< Updated upstream
+import { serviceBaseUrl } from './apiConfig.js';
 import { apiRequest } from './apiClient';
 import { createOrderAttempt } from '../utils/orderCreationAttempt';
+=======
+import { serviceBaseUrl } from '../config/serviceRoutes.js';
+import { apiRequest } from './apiClient.js';
+import { createOrderAttempt, retrySavedOrderAttempt } from '../utils/orderCreationAttempt.js';
+>>>>>>> Stashed changes
 
 export const ORDER_STATUSES = ['CREATED', 'CONFIRMED', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED'];
 export const PAYMENT_STATUSES = ['PENDING', 'SUCCESS', 'PAID', 'FAILED', 'REFUNDED'];
 
-const ORDER_BASE_URL = serviceBaseUrl('order', import.meta.env);
+<<<<<<< Updated upstream
+const ORDER_BASE_URL = serviceBaseUrl(import.meta.env, 'VITE_ORDER_URL', '/order-api');
+=======
+const ORDER_BASE_URL = serviceBaseUrl('order', import.meta.env || {});
+>>>>>>> Stashed changes
 
 const request = (path, options = {}) => apiRequest(ORDER_BASE_URL, path, options);
 
 export const isOrderServiceUnavailable = (error) => error?.name === 'TypeError' || Number(error?.status) >= 500;
 
 export const createOrder = async (data) => createOrderAttempt(data, (body, key) =>
+  request('/api/v1/orders', { method: 'POST', body, headers: { 'Idempotency-Key': key } }));
+
+export const retrySavedOrder = (customerId, storeId) => retrySavedOrderAttempt(customerId, storeId, (body, key) =>
   request('/api/v1/orders', { method: 'POST', body, headers: { 'Idempotency-Key': key } }));
 
 export const getOrders = async (params = {}) => {
@@ -22,8 +35,16 @@ export const getOrders = async (params = {}) => {
 
 export const getOrder = async (orderId) => request(`/api/v1/orders/${encodeURIComponent(orderId)}`);
 
+export const getGlobalStoreAssignmentOptions = async (orderId) => request(`/api/v1/orders/${encodeURIComponent(orderId)}/global-store-assignment-options`);
+
+export const assignGlobalStore = async (orderId, storeId) => request(`/api/v1/orders/${encodeURIComponent(orderId)}/global-store-assignment`, {
+  method: 'POST',
+  body: JSON.stringify({ storeId }),
+});
+
 export const getCheckoutGroup = async (groupId) => request(`/api/v1/checkouts/${encodeURIComponent(groupId)}`);
 export const getCheckoutGroupByKey = async (key) => request(`/api/v1/checkouts/by-key/${encodeURIComponent(key)}`);
+export const getCheckoutGroupByCart = async (cartId) => request(`/api/v1/checkouts/by-cart/${encodeURIComponent(cartId)}`);
 export const retryCheckoutGroup = async (groupId) => request(`/api/v1/checkouts/${encodeURIComponent(groupId)}/retry`, { method: 'POST' });
 export const createCheckoutGroup = async (body, key) => request('/api/v1/checkouts', {
   method: 'POST', body, headers: { 'Idempotency-Key': key },
@@ -48,10 +69,13 @@ export const cancelOrder = async (orderId) => request(`/api/v1/orders/${encodeUR
 
 export const getOrderItems = async (orderId) => request(`/api/v1/orders/${encodeURIComponent(orderId)}/items`);
 
+export const reconcileOrderDelivery = async (orderId) => request(`/api/v1/orders/${encodeURIComponent(orderId)}/reconcile-delivery`, { method: 'POST' });
+
 export const getOrderReview = async (orderId) => request(`/api/v1/orders/${encodeURIComponent(orderId)}/review`);
+export const getOrderReviews = async (orderId) => request(`/api/v1/orders/${encodeURIComponent(orderId)}/reviews`);
 
 export const saveOrderReview = async (orderId, review) =>
-  request(`/api/v1/orders/${encodeURIComponent(orderId)}/review`, {
+  request(`/api/v1/orders/${encodeURIComponent(orderId)}/reviews`, {
     method: 'POST',
     body: JSON.stringify(review),
   });
