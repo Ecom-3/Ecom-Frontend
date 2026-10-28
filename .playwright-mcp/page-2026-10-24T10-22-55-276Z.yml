@@ -1,0 +1,112 @@
+- generic [ref=f3e20]:
+  - navigation [ref=f3e21]:
+    - generic [ref=f3e22]:
+      - img "Spices and Pickles" [ref=f3e23]
+      - generic [ref=f3e24]:
+        - heading "Location Admin Portal" [level=6] [ref=f3e25]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f3e26] [cursor=pointer]
+    - generic [ref=f3e29]:
+      - generic [ref=f3e30]:
+        - paragraph [ref=f3e31]: Main
+        - button "Dashboard" [ref=f3e32] [cursor=pointer]
+      - generic [ref=f3e37]:
+        - paragraph [ref=f3e38]: Management
+        - button "Stores" [ref=f3e39] [cursor=pointer]
+        - button "Products" [ref=f3e44] [cursor=pointer]
+        - button "Banners" [ref=f3e50] [cursor=pointer]
+        - button "Inventory" [ref=f3e55] [cursor=pointer]
+      - generic [ref=f3e61]:
+        - paragraph [ref=f3e62]: Orders & Payments
+        - button "Orders" [ref=f3e63] [cursor=pointer]
+        - button "Payments" [ref=f3e68] [cursor=pointer]
+        - button "Delivery" [ref=f3e74] [cursor=pointer]
+      - generic [ref=f3e79]:
+        - paragraph [ref=f3e80]: Customer
+        - button "Coupons" [ref=f3e81] [cursor=pointer]
+      - generic [ref=f3e87]:
+        - paragraph [ref=f3e88]: Analytics
+        - button "Reports" [ref=f3e89] [cursor=pointer]
+    - button "View Customer App" [ref=f3e94] [cursor=pointer]
+  - main [ref=f3e95]:
+    - generic [ref=f3e96]:
+      - generic [ref=f3e97]:
+        - button [ref=f3e98] [cursor=pointer]
+        - generic [ref=f3e101]:
+          - text: Location Admin /
+          - strong [ref=f3e102]: Dashboard
+      - generic [ref=f3e103]:
+        - textbox "Search portal" [ref=f3e108]
+        - button "Notifications" [ref=f3e109] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [active] [ref=f3e112] [cursor=pointer]:
+          - generic [ref=f3e113]: H
+          - generic [ref=f3e114]: Hyderabad Location Admin
+        - generic [ref=f3e208]:
+          - button "Profile & Settings" [ref=f3e209] [cursor=pointer]
+          - button "Sign out" [ref=f3e210] [cursor=pointer]
+    - generic [ref=f3e115]:
+      - generic [ref=f3e116]:
+        - heading "Welcome back, Hyderabad Location Admin" [level=4] [ref=f3e117]
+        - paragraph [ref=f3e118]: Live operational data for hyderabad.
+      - button "View Customer App" [ref=f3e119] [cursor=pointer]
+    - alert [ref=f3e120]:
+      - generic [ref=f3e124]: Access denied
+    - alert [ref=f3e125]:
+      - generic [ref=f3e129]: "Customer metric unavailable: This account does not have permission for this action. Please sign in again."
+    - generic [ref=f3e130]:
+      - generic [ref=f3e131]:
+        - paragraph [ref=f3e135]: Total Orders
+        - heading "—" [level=5] [ref=f3e136]
+        - text: Backend data
+      - generic [ref=f3e137]:
+        - paragraph [ref=f3e141]: Created Orders
+        - heading "—" [level=5] [ref=f3e142]
+        - text: Backend data
+      - generic [ref=f3e143]:
+        - paragraph [ref=f3e147]: Completed Orders
+        - heading "—" [level=5] [ref=f3e148]
+        - text: Backend data
+      - generic [ref=f3e149]:
+        - paragraph [ref=f3e153]: Cancelled Orders
+        - heading "—" [level=5] [ref=f3e154]
+        - text: Backend data
+      - generic [ref=f3e155]:
+        - paragraph [ref=f3e159]: Customers
+        - heading "—" [level=5] [ref=f3e160]
+        - text: Backend data
+      - generic [ref=f3e161]:
+        - paragraph [ref=f3e166]: Products
+        - heading "0" [level=5] [ref=f3e167]
+        - text: Backend data
+      - generic [ref=f3e168]:
+        - paragraph [ref=f3e173]: Low Stock
+        - heading "0" [level=5] [ref=f3e174]
+        - text: Backend data
+      - generic [ref=f3e175]:
+        - paragraph [ref=f3e179]: Revenue
+        - heading "—" [level=5] [ref=f3e180]
+        - text: Backend data
+    - generic [ref=f3e181]:
+      - generic [ref=f3e182]:
+        - generic [ref=f3e183]:
+          - heading "Revenue Overview" [level=6] [ref=f3e184]
+          - generic [ref=f3e185]: Order totals
+        - paragraph [ref=f3e187]: Revenue chart unavailable until the order request succeeds.
+      - generic [ref=f3e188]:
+        - generic [ref=f3e189]:
+          - heading "Order Status" [level=6] [ref=f3e190]
+          - generic [ref=f3e191]: Live distribution
+        - paragraph [ref=f3e192]: Order status metrics unavailable until the order request succeeds.
+    - generic [ref=f3e193]:
+      - generic [ref=f3e194]:
+        - generic [ref=f3e195]:
+          - heading "Recent Orders" [level=6] [ref=f3e196]
+          - button "View All" [ref=f3e197] [cursor=pointer]
+        - paragraph [ref=f3e198]: Order data unavailable.
+      - generic [ref=f3e199]:
+        - generic [ref=f3e200]:
+          - heading "Low Stock Products" [level=6] [ref=f3e201]
+          - button "View Inventory" [ref=f3e202] [cursor=pointer]
+        - generic [ref=f3e203]:
+          - paragraph [ref=f3e206]: Inventory looks healthy
+          - generic [ref=f3e207]: All products are sufficiently stocked.

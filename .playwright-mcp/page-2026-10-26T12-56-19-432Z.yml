@@ -1,0 +1,230 @@
+- generic [ref=f47e1]:
+  - generic [ref=f47e8]:
+    - navigation [ref=f47e9]:
+      - generic [ref=f47e10]:
+        - generic [ref=f47e12]:
+          - heading [level=6] [ref=f47e437]: Super Admin Portal
+          - text: All locations
+        - button [ref=f47e438] [cursor=pointer]
+      - generic [ref=f47e17]:
+        - generic [ref=f47e18]:
+          - paragraph [ref=f47e19]: Main
+          - button [ref=f47e439] [cursor=pointer]:
+            - generic [ref=f47e24]: Dashboard
+        - generic [ref=f47e25]:
+          - paragraph [ref=f47e26]: Management
+          - button [ref=f47e440] [cursor=pointer]:
+            - generic [ref=f47e32]: Locations
+          - button [ref=f47e441] [cursor=pointer]:
+            - generic [ref=f47e37]: Users
+          - button [ref=f47e442] [cursor=pointer]:
+            - generic [ref=f47e42]: Stores
+          - button [ref=f47e443] [cursor=pointer]:
+            - generic [ref=f47e48]: Products
+          - button [ref=f47e444] [cursor=pointer]:
+            - generic [ref=f47e53]: Categories
+          - button [ref=f47e445] [cursor=pointer]:
+            - generic [ref=f47e58]: Banners
+          - button [ref=f47e446] [cursor=pointer]:
+            - generic [ref=f47e64]: Inventory
+        - generic [ref=f47e65]:
+          - paragraph [ref=f47e66]: Orders & Payments
+          - button [ref=f47e447] [cursor=pointer]:
+            - generic [ref=f47e71]: Orders
+          - button [ref=f47e448] [cursor=pointer]:
+            - generic [ref=f47e77]: Payments
+          - button [ref=f47e449] [cursor=pointer]:
+            - generic [ref=f47e82]: Delivery
+        - generic [ref=f47e83]:
+          - paragraph [ref=f47e84]: Customer
+          - button [ref=f47e450] [cursor=pointer]:
+            - generic [ref=f47e89]: Customers
+          - button [ref=f47e451] [cursor=pointer]:
+            - generic [ref=f47e94]: Reviews
+          - button [ref=f47e452] [cursor=pointer]:
+            - generic [ref=f47e100]: Coupons
+          - button [ref=f47e453] [cursor=pointer]:
+            - generic [ref=f47e105]: Notifications
+        - generic [ref=f47e106]:
+          - paragraph [ref=f47e107]: Analytics
+          - button [ref=f47e454] [cursor=pointer]:
+            - generic [ref=f47e112]: Reports
+        - generic [ref=f47e113]:
+          - paragraph [ref=f47e114]: System
+          - button [ref=f47e455] [cursor=pointer]:
+            - generic [ref=f47e119]: Security
+          - button [ref=f47e456] [cursor=pointer]:
+            - generic [ref=f47e124]: Audit Logs
+      - button [ref=f47e457] [cursor=pointer]: View Customer App
+    - main [ref=f47e126]:
+      - generic [ref=f47e127]:
+        - generic [ref=f47e128]:
+          - button [ref=f47e129] [cursor=pointer]
+          - generic [ref=f47e132]:
+            - text: Super Admin /
+            - strong [ref=f47e133]: Users
+        - generic [ref=f47e134]:
+          - textbox [ref=f47e458]:
+            - /placeholder: Search portal
+          - button [ref=f47e459] [cursor=pointer]
+          - button [ref=f47e460] [cursor=pointer]:
+            - generic [ref=f47e144]: A
+            - generic [ref=f47e145]: Admin
+      - generic [ref=f47e146]:
+        - generic [ref=f47e147]:
+          - heading [level=4] [ref=f47e461]: Users
+          - paragraph [ref=f47e149]: Manage users within your assigned scope.
+        - button [ref=f47e462] [cursor=pointer]: View Customer App
+      - generic [ref=f47e151]:
+        - generic [ref=f47e152]:
+          - generic [ref=f47e153]:
+            - generic: Search
+            - generic [ref=f47e154]:
+              - textbox [ref=f47e463]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f47e156]:
+            - combobox [ref=f47e157] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f47e158]:
+            - combobox [ref=f47e159] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f47e464] [cursor=pointer]: Create
+          - button [ref=f47e465] [cursor=pointer]: Export
+        - status [ref=f47e636]: Select an existing store before creating a Store Manager account
+        - generic [ref=f47e409]:
+          - generic [ref=f47e410]:
+            - paragraph [ref=f47e411]: Global Admin
+            - paragraph [ref=f47e412]: global.admin@example.test
+          - generic [ref=f47e413]:
+            - button [ref=f47e466] [cursor=pointer]: View
+            - button [ref=f47e467] [cursor=pointer]: Edit
+            - button [ref=f47e468] [cursor=pointer]: Deactivate
+            - button [ref=f47e469] [cursor=pointer]: Delete
+        - generic [ref=f47e418]:
+          - generic [ref=f47e419]:
+            - paragraph [ref=f47e420]: Hyderabad Location Admin
+            - paragraph [ref=f47e421]: hyderabad.admin@example.test
+          - generic [ref=f47e422]:
+            - button [ref=f47e470] [cursor=pointer]: View
+            - button [ref=f47e471] [cursor=pointer]: Edit
+            - button [ref=f47e472] [cursor=pointer]: Deactivate
+            - button [ref=f47e473] [cursor=pointer]: Delete
+        - generic [ref=f47e427]:
+          - generic [ref=f47e428]:
+            - paragraph [ref=f47e429]: Gachibowli Store Manager
+            - paragraph [ref=f47e430]: gachibowli.manager@example.test
+          - generic [ref=f47e431]:
+            - button [ref=f47e474] [cursor=pointer]: View
+            - button [ref=f47e475] [cursor=pointer]: Edit
+            - button [ref=f47e476] [cursor=pointer]: Deactivate
+            - button [ref=f47e477] [cursor=pointer]: Delete
+        - generic [ref=f47e180]:
+          - button [disabled]: Previous
+          - paragraph [ref=f47e181]: Page 1 of 1
+          - button [disabled]: Next
+  - dialog [ref=f47e618]:
+    - heading "Create Users" [level=2] [ref=f47e619]
+    - generic [ref=f47e482]:
+      - alert [ref=f47e637]:
+        - generic [ref=f47e641]: Select an existing store before creating a Store Manager account
+      - generic [ref=f47e484]:
+        - generic [ref=f47e579]:
+          - text: Name
+          - generic [aria-hidden] [ref=f47e580]: "*"
+        - generic [ref=f47e485]:
+          - textbox "Name" [ref=f47e620]: Sangareddy Store Manager
+          - group [aria-hidden]:
+            - generic: Name *
+      - generic [ref=f47e488]:
+        - generic [ref=f47e581]: Login username
+        - generic [ref=f47e489]:
+          - textbox "Login username" [ref=f47e621]: sangareddy.manager
+          - group [aria-hidden]:
+            - generic: Login username
+      - generic [ref=f47e492]:
+        - generic [ref=f47e582]:
+          - text: Email
+          - generic [aria-hidden] [ref=f47e583]: "*"
+        - generic [ref=f47e493]:
+          - textbox "Email" [ref=f47e622]: sangareddy.manager@example.test
+          - group [aria-hidden]:
+            - generic: Email *
+      - generic [ref=f47e496]:
+        - generic [ref=f47e584]:
+          - text: Mobile
+          - generic [aria-hidden] [ref=f47e585]: "*"
+        - generic [ref=f47e497]:
+          - textbox "Mobile" [ref=f47e623]: "9876500004"
+          - group [aria-hidden]:
+            - generic: Mobile *
+      - generic [ref=f47e500]:
+        - combobox [ref=f47e501] [cursor=pointer]: store-manager
+        - textbox [aria-hidden]: store-manager
+        - group [aria-hidden]
+      - generic [ref=f47e504]:
+        - generic: Location
+        - generic [ref=f47e505]:
+          - combobox "Location" [ref=f47e624]
+          - group [aria-hidden]:
+            - generic: Location
+      - generic [ref=f47e510]:
+        - generic [ref=f47e586]: Store
+        - generic [ref=f47e511]:
+          - combobox "Store" [ref=f47e625]: Sangareddy Fresh Hu=
+          - group [aria-hidden]:
+            - generic: Store
+      - generic [ref=f47e552]:
+        - generic: New store name
+        - generic [ref=f47e553]:
+          - textbox "New store name" [ref=f47e626]
+          - group [aria-hidden]:
+            - generic: New store name
+      - generic [ref=f47e556]:
+        - paragraph [ref=f47e557]: Store map location
+        - generic [ref=f47e558]:
+          - generic [ref=f47e559]:
+            - generic: Search store location
+            - generic [ref=f47e560]:
+              - textbox "Search store location" [ref=f47e627]
+              - group [aria-hidden]:
+                - generic: Search store location
+            - paragraph [ref=f47e562]: Search with area, city, landmark or full address.
+          - button "Search" [ref=f47e628] [cursor=pointer]
+          - button "Use current map point" [ref=f47e629] [cursor=pointer]
+        - generic [ref=f47e565]:
+          - generic [ref=f47e566]:
+            - generic: Latitude
+            - generic [ref=f47e567]:
+              - spinbutton "Latitude" [ref=f47e630]
+              - group [aria-hidden]:
+                - generic: Latitude
+          - generic [ref=f47e569]:
+            - generic: Longitude
+            - generic [ref=f47e570]:
+              - spinbutton "Longitude" [ref=f47e631]
+              - group [aria-hidden]:
+                - generic: Longitude
+      - generic [ref=f47e573]:
+        - generic: New store address
+        - generic [ref=f47e574]:
+          - textbox "New store address" [ref=f47e632]
+          - group [aria-hidden]:
+            - generic: New store address
+      - generic [ref=f47e515]:
+        - generic [ref=f47e590]:
+          - text: Password
+          - generic [aria-hidden] [ref=f47e591]: "*"
+        - generic [ref=f47e516]:
+          - textbox "Password" [ref=f47e633]: SangaStore!Oct2026
+          - group [aria-hidden]:
+            - generic: Password *
+      - generic [ref=f47e519]:
+        - combobox [ref=f47e520] [cursor=pointer]: Active
+        - textbox [aria-hidden]: Active
+        - group [aria-hidden]
+    - generic [ref=f47e522]:
+      - button "Cancel" [ref=f47e634] [cursor=pointer]
+      - button "Save" [ref=f47e635] [cursor=pointer]

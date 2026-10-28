@@ -1,0 +1,145 @@
+- generic [ref=f9e1]:
+  - generic [ref=f9e8]:
+    - navigation [ref=f9e9]:
+      - generic [ref=f9e10]:
+        - generic [ref=f9e12]:
+          - heading [level=6] [ref=f9e192]: Location Admin Portal
+          - text: hyderabad
+        - button [ref=f9e193] [cursor=pointer]
+      - generic [ref=f9e17]:
+        - generic [ref=f9e18]:
+          - paragraph [ref=f9e19]: Main
+          - button [ref=f9e194] [cursor=pointer]:
+            - generic [ref=f9e24]: Dashboard
+        - generic [ref=f9e25]:
+          - paragraph [ref=f9e26]: Management
+          - button [ref=f9e195] [cursor=pointer]:
+            - generic [ref=f9e31]: Stores
+          - button [ref=f9e196] [cursor=pointer]:
+            - generic [ref=f9e37]: Products
+          - button [ref=f9e197] [cursor=pointer]:
+            - generic [ref=f9e42]: Banners
+          - button [ref=f9e198] [cursor=pointer]:
+            - generic [ref=f9e48]: Inventory
+        - generic [ref=f9e49]:
+          - paragraph [ref=f9e50]: Orders & Payments
+          - button [ref=f9e199] [cursor=pointer]:
+            - generic [ref=f9e55]: Orders
+          - button [ref=f9e200] [cursor=pointer]:
+            - generic [ref=f9e61]: Payments
+          - button [ref=f9e201] [cursor=pointer]:
+            - generic [ref=f9e66]: Delivery
+        - generic [ref=f9e67]:
+          - paragraph [ref=f9e68]: Customer
+          - button [ref=f9e202] [cursor=pointer]:
+            - generic [ref=f9e74]: Coupons
+        - generic [ref=f9e75]:
+          - paragraph [ref=f9e76]: Analytics
+          - button [ref=f9e203] [cursor=pointer]:
+            - generic [ref=f9e81]: Reports
+      - button [ref=f9e204] [cursor=pointer]: View Customer App
+    - main [ref=f9e83]:
+      - generic [ref=f9e84]:
+        - generic [ref=f9e85]:
+          - button [ref=f9e86] [cursor=pointer]
+          - generic [ref=f9e89]:
+            - text: Location Admin /
+            - strong [ref=f9e90]: Banners
+        - generic [ref=f9e91]:
+          - textbox [ref=f9e205]:
+            - /placeholder: Search portal
+          - button [ref=f9e206] [cursor=pointer]
+          - button [ref=f9e207] [cursor=pointer]:
+            - generic [ref=f9e101]: H
+            - generic [ref=f9e102]: Hyderabad Location Admin
+      - generic [ref=f9e103]:
+        - generic [ref=f9e104]:
+          - heading [level=4] [ref=f9e208]: Banners
+          - paragraph [ref=f9e106]: Manage banners within your assigned scope.
+        - button [ref=f9e209] [cursor=pointer]: View Customer App
+      - generic [ref=f9e108]:
+        - generic [ref=f9e109]:
+          - generic [ref=f9e110]:
+            - generic: Search
+            - generic [ref=f9e111]:
+              - textbox [ref=f9e210]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f9e113]:
+            - combobox [ref=f9e114] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f9e115]:
+            - combobox [ref=f9e116] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f9e211] [cursor=pointer]: Create
+          - button [ref=f9e212] [cursor=pointer]: Export
+        - paragraph [ref=f9e189]: No matching records. Use Create to add the first record.
+        - generic [ref=f9e128]:
+          - button [disabled]: Previous
+          - paragraph [ref=f9e129]: Page 1 of 1
+          - button [disabled]: Next
+  - dialog [ref=f9e269]:
+    - heading [level=2] [ref=f9e270]: Create Banners
+    - generic [ref=f9e217]:
+      - generic [ref=f9e219]:
+        - generic [ref=f9e264]:
+          - text: Banner title
+          - generic [aria-hidden] [ref=f9e265]: "*"
+        - generic [ref=f9e220]:
+          - textbox [ref=f9e271]: LA QA Hyderabad inactive banner 20261025
+          - group [aria-hidden]:
+            - generic: Banner title *
+      - generic [ref=f9e223]:
+        - generic [ref=f9e266]: Description
+        - generic [ref=f9e224]:
+          - textbox [ref=f9e272]: Disposable local QA record
+          - group [aria-hidden]:
+            - generic: Description
+      - generic [ref=f9e227]:
+        - button [ref=f9e273] [cursor=pointer]: Select Desktop image
+        - button [ref=f9e275] [cursor=pointer]: Remove
+      - button [ref=f9e276] [cursor=pointer]: Select Mobile image
+      - generic [ref=f9e233]:
+        - generic: Start date
+        - generic [ref=f9e234]:
+          - textbox [ref=f9e277]
+          - group [aria-hidden]:
+            - generic: Start date
+      - generic [ref=f9e237]:
+        - generic: End date
+        - generic [ref=f9e238]:
+          - textbox [ref=f9e278]
+          - group [aria-hidden]:
+            - generic: End date
+      - generic [ref=f9e241]:
+        - generic [ref=f9e267]: Sort order
+        - generic [ref=f9e242]:
+          - spinbutton [ref=f9e279]: "99"
+          - group [aria-hidden]:
+            - generic: Sort order
+      - generic [ref=f9e245]:
+        - generic: Target URL
+        - generic [ref=f9e246]:
+          - textbox [ref=f9e280]
+          - group [aria-hidden]:
+            - generic: Target URL
+      - generic [ref=f9e249]:
+        - combobox [expanded] [ref=f9e250] [cursor=pointer]: Status
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+      - generic [ref=f9e253]:
+        - generic: Specific store (optional)
+        - generic [ref=f9e254]:
+          - combobox [ref=f9e281]
+          - group [aria-hidden]:
+            - generic: Specific store (optional)
+    - generic [ref=f9e258]:
+      - button [ref=f9e282] [cursor=pointer]: Cancel
+      - button [ref=f9e283] [cursor=pointer]: Save
+  - listbox [ref=f9e286]:
+    - option "Status" [disabled] [selected]
+    - option "Active" [active] [ref=f9e287] [cursor=pointer]
+    - option "Scheduled" [ref=f9e288] [cursor=pointer]
+    - option "Inactive" [ref=f9e289] [cursor=pointer]

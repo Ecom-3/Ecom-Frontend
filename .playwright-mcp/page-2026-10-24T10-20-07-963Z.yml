@@ -1,0 +1,90 @@
+- generic [ref=e20]:
+  - navigation [ref=e21]:
+    - generic [ref=e22]:
+      - img "Spices and Pickles" [ref=e23]
+      - generic [ref=e24]:
+        - heading "Location Admin Portal" [level=6] [ref=e25]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=e26] [cursor=pointer]
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - paragraph [ref=e31]: Main
+        - button "Dashboard" [ref=e32] [cursor=pointer]
+      - generic [ref=e37]:
+        - paragraph [ref=e38]: Management
+        - button "Stores" [ref=e39] [cursor=pointer]
+        - button "Products" [ref=e44] [cursor=pointer]
+        - button "Banners" [ref=e50] [cursor=pointer]
+        - button "Inventory" [ref=e55] [cursor=pointer]
+      - generic [ref=e61]:
+        - paragraph [ref=e62]: Orders & Payments
+        - button "Orders" [ref=e63] [cursor=pointer]
+        - button "Payments" [ref=e68] [cursor=pointer]
+        - button "Delivery" [ref=e74] [cursor=pointer]
+      - generic [ref=e79]:
+        - paragraph [ref=e80]: Customer
+        - button "Coupons" [active] [ref=e81] [cursor=pointer]
+      - generic [ref=e87]:
+        - paragraph [ref=e88]: Analytics
+        - button "Reports" [ref=e89] [cursor=pointer]
+    - button "View Customer App" [ref=e94] [cursor=pointer]
+  - main [ref=e95]:
+    - generic [ref=e96]:
+      - generic [ref=e97]:
+        - button [ref=e98] [cursor=pointer]
+        - generic [ref=e101]:
+          - text: Location Admin /
+          - strong [ref=e102]: Coupons
+      - generic [ref=e103]:
+        - textbox "Search portal" [ref=e108]
+        - button "Notifications" [ref=e109] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=e112] [cursor=pointer]:
+          - generic [ref=e113]: H
+          - generic [ref=e114]: Hyderabad Location Admin
+    - generic [ref=e115]:
+      - generic [ref=e116]:
+        - heading "Coupons" [level=4] [ref=e401]
+        - paragraph [ref=e118]: Manage coupons within your assigned scope.
+      - button "View Customer App" [ref=e119] [cursor=pointer]
+    - generic [ref=e209]:
+      - generic [ref=e210]:
+        - generic [ref=e211]:
+          - generic: Search
+          - generic [ref=e212]:
+            - textbox "Search" [ref=e399]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=e214]:
+          - combobox [ref=e215] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=e216]:
+          - combobox [ref=e217] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create" [ref=e400] [cursor=pointer]
+        - button "Export" [ref=e219] [cursor=pointer]
+      - generic [ref=e402]:
+        - generic [ref=e403]:
+          - paragraph [ref=e404]: TEST10
+          - paragraph [ref=e405]: Active
+        - generic [ref=e406]:
+          - button "View" [ref=e407] [cursor=pointer]
+          - button "Edit" [ref=e408] [cursor=pointer]
+          - button "Duplicate" [ref=e409] [cursor=pointer]
+          - button "Deactivate" [ref=e410] [cursor=pointer]
+          - button "Delete" [ref=e411] [cursor=pointer]
+      - generic [ref=e412]:
+        - generic [ref=e413]:
+          - paragraph [ref=e414]: TEST100
+          - paragraph [ref=e415]: Active
+        - generic [ref=e416]:
+          - button "View" [ref=e417] [cursor=pointer]
+          - button "Edit" [ref=e418] [cursor=pointer]
+          - button "Duplicate" [ref=e419] [cursor=pointer]
+          - button "Deactivate" [ref=e420] [cursor=pointer]
+          - button "Delete" [ref=e421] [cursor=pointer]
+      - generic [ref=e280]:
+        - button "Previous" [disabled]
+        - paragraph [ref=e281]: Page 1 of 1
+        - button "Next" [disabled]

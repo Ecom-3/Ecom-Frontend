@@ -103,7 +103,8 @@ export const normalizeOrder = (order = {}) => {
   const fulfillmentType = order.fulfillmentType || (order.deliveryMethod === 'global' || order.storeId === 'global-store' ? 'global' : order.deliveryMethod);
   const normalized = { ...order, fulfillmentType };
   const global = isGlobalOrder(normalized);
-  const deliveryLabel = global ? '7-10 days delivery' : order.deliveryLabel;
+  const pickup = !global && (String(order.deliveryType || order.deliveryMethod || '').toLowerCase() === 'pickup' || items.length > 0 && items.every((item) => String(item.deliveryType || item.deliveryMethod || '').toLowerCase() === 'pickup'));
+  const deliveryLabel = global ? '7-10 days delivery' : pickup ? 'Store Pickup' : order.deliveryLabel;
   return {
     ...normalized,
     id: order.id || order.orderId || '',
@@ -111,11 +112,12 @@ export const normalizeOrder = (order = {}) => {
     status: ORDER_STATUSES.includes(order.status) ? order.status : 'CREATED',
     paymentStatus: order.paymentStatus === 'PAID' ? 'SUCCESS' : PAYMENT_STATUSES.includes(order.paymentStatus) ? order.paymentStatus : 'PENDING',
     totalAmount: Number(order.totalAmount ?? order.total ?? 0),
-    items: items.map((item) => ({ ...item, ...(global ? { deliveryLabel: item.deliveryLabel || deliveryLabel, sourceStore: item.sourceStore || order.sourceStore || order.store || 'India-wide Global Store' } : {}) })),
+    items: items.map((item) => ({ ...item, ...(global ? { deliveryLabel: item.deliveryLabel || deliveryLabel, sourceStore: item.sourceStore || order.sourceStore || order.store || 'India-wide Global Store' } : pickup ? { deliveryLabel: 'Store Pickup' } : {}) })),
     addresses,
     shippingAddress,
     billingAddress,
     fulfillmentType,
+    deliveryType: pickup ? 'pickup' : order.deliveryType,
     deliveryLabel,
     estimatedDelivery: global ? '7-10 days' : order.estimatedDelivery,
     channel: order.channel || (global ? '7-10 Days Delivery' : order.channel),

@@ -1,0 +1,73 @@
+- generic [ref=f40e5]:
+  - navigation [ref=f40e6]:
+    - generic [ref=f40e7]:
+      - img "Spices and Pickles" [ref=f40e8]
+      - generic [ref=f40e9]:
+        - heading "Location Admin Portal" [level=6] [ref=f40e10]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f40e11] [cursor=pointer]
+    - generic [ref=f40e14]:
+      - generic [ref=f40e15]:
+        - paragraph [ref=f40e16]: Main
+        - button "Dashboard" [ref=f40e17] [cursor=pointer]
+      - generic [ref=f40e22]:
+        - paragraph [ref=f40e23]: Management
+        - button "Stores" [ref=f40e24] [cursor=pointer]
+        - button "Products" [ref=f40e29] [cursor=pointer]
+        - button "Banners" [ref=f40e35] [cursor=pointer]
+        - button "Inventory" [ref=f40e40] [cursor=pointer]
+      - generic [ref=f40e46]:
+        - paragraph [ref=f40e47]: Orders & Payments
+        - button "Orders" [ref=f40e48] [cursor=pointer]
+        - button "Payments" [ref=f40e53] [cursor=pointer]
+        - button "Delivery" [ref=f40e59] [cursor=pointer]
+      - generic [ref=f40e64]:
+        - paragraph [ref=f40e65]: Customer
+        - button "Coupons" [ref=f40e66] [cursor=pointer]
+      - generic [ref=f40e72]:
+        - paragraph [ref=f40e73]: Analytics
+        - button "Reports" [ref=f40e74] [cursor=pointer]
+    - button "View Customer App" [ref=f40e79] [cursor=pointer]
+  - main [ref=f40e80]:
+    - generic [ref=f40e81]:
+      - generic [ref=f40e82]:
+        - button [ref=f40e83] [cursor=pointer]
+        - generic [ref=f40e86]:
+          - text: Location Admin /
+          - strong [ref=f40e87]: Orders
+      - generic [ref=f40e88]:
+        - textbox "Search portal" [ref=f40e93]
+        - button "Notifications" [ref=f40e94] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=f40e97] [cursor=pointer]:
+          - generic [ref=f40e98]: H
+          - generic [ref=f40e99]: Hyderabad Location Admin
+    - generic [ref=f40e100]:
+      - generic [ref=f40e101]:
+        - heading "Orders" [level=4] [ref=f40e102]
+        - paragraph [ref=f40e103]: Manage orders within your assigned scope.
+      - button "View Customer App" [ref=f40e104] [cursor=pointer]
+    - status [ref=f40e105]:
+      - paragraph [ref=f40e106]: Loading Orders...
+    - generic [ref=f40e107]:
+      - generic [ref=f40e108]:
+        - generic [ref=f40e109]:
+          - generic: Search or paste order ID
+          - generic [ref=f40e110]:
+            - textbox "Search or paste order ID" [ref=f40e111]
+            - group [aria-hidden]:
+              - generic: Search or paste order ID
+        - button "Fetch Order" [ref=f40e112] [cursor=pointer]
+        - generic [ref=f40e113]:
+          - combobox [ref=f40e114] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f40e115]:
+          - combobox [ref=f40e116] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Export" [ref=f40e117] [cursor=pointer]
+      - paragraph [ref=f40e118]: No matching records. Use Create to add the first record.
+      - generic [ref=f40e119]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f40e120]: Page 1 of 1
+        - button "Next" [disabled]

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { assignGlobalStore, getGlobalStoreAssignmentOptions, getOrder } from './orderApi.js';
+import { assignGlobalStore, getGlobalStoreAssignmentOptions, getOrder, normalizeOrder } from './orderApi.js';
 
 const withFetch = async (fetchImpl, callback) => {
   const previousFetch = globalThis.fetch;
@@ -14,6 +14,18 @@ const withFetch = async (fetchImpl, callback) => {
 const jsonResponse = (body, status = 200) => new Response(JSON.stringify(body), {
   status,
   headers: { 'Content-Type': 'application/json' },
+});
+
+test('normalizes pickup orders as Store Pickup instead of showing a delivery ETA', () => {
+  const order = normalizeOrder({
+    id: 'pickup-order',
+    deliveryMethod: 'pickup',
+    items: [{ productId: 'product-1', deliveryMethod: 'pickup' }],
+  });
+
+  assert.equal(order.deliveryType, 'pickup');
+  assert.equal(order.deliveryLabel, 'Store Pickup');
+  assert.equal(order.items[0].deliveryLabel, 'Store Pickup');
 });
 
 test('global assignment workflow loads a backend-only order and stocked options without local order storage', async () => {

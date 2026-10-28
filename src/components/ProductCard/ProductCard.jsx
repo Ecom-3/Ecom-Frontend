@@ -8,7 +8,7 @@ import { getCachedStoreDeliveryQuote } from '../../services/catalogApi';
 import { deliverySummary } from '../../utils/storeDelivery';
 import fallbackProductImage from '../../assets/images/mango_pickle_jar.png';
 import './ProductCard.css';
-import { findInventoryForItem } from '../../services/inventoryApi';
+import { getPublicInventoryAvailability } from '../../services/inventoryApi';
 import { loadProductStock } from '../../utils/productStock.js';
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -41,6 +41,7 @@ const ProductCard = ({ title, weight, price, image, ...details }) => {
   const customerLat = Number(selectedLocation?.latitude ?? defaultAddress.coordinates?.lat ?? defaultAddress.latitude);
   const customerLng = Number(selectedLocation?.longitude ?? defaultAddress.coordinates?.lng ?? defaultAddress.longitude);
   const quoteScope = `${store?.id || details.storeId}:${customerLat}:${customerLng}`;
+  const isGlobalOffer = details.fulfillmentType === 'global' || details.storeId === 'global-store';
   const cardRef = useRef(null);
   const [inView, setInView] = useState(typeof IntersectionObserver === 'undefined');
   useEffect(() => {
@@ -51,7 +52,7 @@ const ProductCard = ({ title, weight, price, image, ...details }) => {
       let lookupFailed = false;
       for (const variant of productVariantsRef.current) {
         const candidateId = variant.variantId ?? variant.id ?? null;
-        const result = await loadProductStock(findInventoryForItem, { storeId: stockStoreId, productId, variantId: dbVariantId(candidateId) });
+        const result = await loadProductStock(getPublicInventoryAvailability, { storeId: stockStoreId, productId, variantId: dbVariantId(candidateId) });
         if (!active) return;
         if (result.state === 'available') {
           setAvailableVariantResult({ scope: stockScope, variant });
@@ -80,13 +81,13 @@ const ProductCard = ({ title, weight, price, image, ...details }) => {
   }, [inView]);
   useEffect(() => {
     const quoteStoreId = store?.id || details.storeId;
-    if (details.deliveryQuote || !inView || !quoteStoreId || !Number.isFinite(customerLat) || !Number.isFinite(customerLng)) return undefined;
+    if (isGlobalOffer || details.deliveryQuote || !inView || !quoteStoreId || !Number.isFinite(customerLat) || !Number.isFinite(customerLng)) return undefined;
     let ignore = false;
     getCachedStoreDeliveryQuote(quoteStoreId, { latitude:customerLat, longitude:customerLng })
       .then((payload) => { if (!ignore) setCardQuote({ scope: quoteScope, value: payload }); })
       .catch(() => { if (!ignore) setCardQuote({ scope: quoteScope, value: null }); });
     return () => { ignore = true; };
-  }, [inView, details.deliveryQuote, details.storeId, store?.id, customerLat, customerLng, quoteScope]);
+  }, [isGlobalOffer, inView, details.deliveryQuote, details.storeId, store?.id, customerLat, customerLng, quoteScope]);
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setImageSrc(cardImage || fallbackProductImage);
@@ -110,8 +111,6 @@ const ProductCard = ({ title, weight, price, image, ...details }) => {
   const cartItem = cartItems.find((item) => sameCatalogItem(item, product));
   const quantity = cartItem ? cartItem.quantity : 0;
   const isWishlisted = wishlistItems.some((item) => sameCatalogItem(item, product));
-
-  if (user?.id && quantity === 0 && ['missing', 'out'].includes(currentStock?.state)) return null;
 
   const handleCardClick = () => {
     const resolvedProduct = {
@@ -191,7 +190,7 @@ const ProductCard = ({ title, weight, price, image, ...details }) => {
                 -
               </button>
               <Typography className="qty-count-text">{quantity}</Typography>
-              <button type="button" className="qty-action-btn" disabled={cartLoading || checkingStock || noStock || (user?.id && currentStock?.available <= quantity)} onClick={handleIncrement}>
+              <button type="button" className="qty-action-btn" disabled={cartLoading || checkingStock || noStock} onClick={handleIncrement}>
                 +
               </button>
             </Box>

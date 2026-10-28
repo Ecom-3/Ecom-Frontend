@@ -1,0 +1,107 @@
+- generic [ref=f1e8]:
+  - navigation [ref=f1e9]:
+    - generic [ref=f1e10]:
+      - img "Spices and Pickles" [ref=f1e1021]
+      - generic [ref=f1e12]:
+        - heading "Location Admin Portal" [level=6] [ref=f1e1022]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f1e1023] [cursor=pointer]
+    - generic [ref=f1e17]:
+      - generic [ref=f1e18]:
+        - paragraph [ref=f1e19]: Main
+        - button "Dashboard" [ref=f1e1024] [cursor=pointer]
+      - generic [ref=f1e25]:
+        - paragraph [ref=f1e26]: Management
+        - button "Stores" [ref=f1e1025] [cursor=pointer]
+        - button "Products" [ref=f1e1026] [cursor=pointer]
+        - button "Banners" [ref=f1e1027] [cursor=pointer]
+        - button "Inventory" [ref=f1e1028] [cursor=pointer]
+      - generic [ref=f1e49]:
+        - paragraph [ref=f1e50]: Orders & Payments
+        - button "Orders" [ref=f1e1029] [cursor=pointer]
+        - button "Payments" [ref=f1e1030] [cursor=pointer]
+        - button "Delivery" [ref=f1e1031] [cursor=pointer]
+      - generic [ref=f1e67]:
+        - paragraph [ref=f1e68]: Customer
+        - button "Coupons" [ref=f1e1032] [cursor=pointer]
+      - generic [ref=f1e75]:
+        - paragraph [ref=f1e76]: Analytics
+        - button "Reports" [ref=f1e1033] [cursor=pointer]
+    - button "View Customer App" [ref=f1e1034] [cursor=pointer]
+  - main [ref=f1e83]:
+    - generic [ref=f1e84]:
+      - generic [ref=f1e85]:
+        - button [ref=f1e86] [cursor=pointer]
+        - generic [ref=f1e89]:
+          - text: Location Admin /
+          - strong [ref=f1e90]: Stores
+      - generic [ref=f1e91]:
+        - textbox "Search portal" [ref=f1e1035]
+        - button "Notifications" [ref=f1e1036] [cursor=pointer]
+        - button "H Hyderabad Location Admin QA" [ref=f1e1037] [cursor=pointer]:
+          - generic [ref=f1e101]: H
+          - generic [ref=f1e102]: Hyderabad Location Admin QA
+    - generic [ref=f1e103]:
+      - generic [ref=f1e104]:
+        - heading "Stores" [level=4] [ref=f1e1038]
+        - paragraph [ref=f1e106]: Manage stores within your assigned scope.
+      - button "View Customer App" [ref=f1e1039] [cursor=pointer]
+    - generic [ref=f1e108]:
+      - generic [ref=f1e109]:
+        - generic [ref=f1e110]:
+          - generic: Search
+          - generic [ref=f1e111]:
+            - textbox "Search" [ref=f1e1040]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f1e113]:
+          - combobox [ref=f1e114] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f1e115]:
+          - combobox [ref=f1e116] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create" [active] [ref=f1e1041] [cursor=pointer]
+        - button "Export" [ref=f1e1042] [cursor=pointer]
+      - status [ref=f1e1043]: Saved successfully.
+      - generic [ref=f1e119]:
+        - generic [ref=f1e120]:
+          - paragraph [ref=f1e121]: Gachibowli Fresh Hub
+          - paragraph [ref=f1e122]: +91 91000 20001
+        - generic [ref=f1e123]:
+          - button "View" [ref=f1e1044] [cursor=pointer]
+          - button "Edit" [ref=f1e1045] [cursor=pointer]
+          - button "Deactivate" [ref=f1e1046] [cursor=pointer]
+          - button "Delete" [ref=f1e1047] [cursor=pointer]
+      - generic [ref=f1e1048]:
+        - generic [ref=f1e1049]:
+          - paragraph [ref=f1e1050]: Kondapur Market Hub
+          - paragraph [ref=f1e1051]: +91 9100020011
+        - generic [ref=f1e1052]:
+          - button "View" [ref=f1e1053] [cursor=pointer]
+          - button "Edit" [ref=f1e1054] [cursor=pointer]
+          - button "Deactivate" [ref=f1e1055] [cursor=pointer]
+          - button "Delete" [ref=f1e1056] [cursor=pointer]
+      - generic [ref=f1e585]:
+        - generic [ref=f1e586]:
+          - paragraph [ref=f1e587]: Banjara Hills Fresh Hub
+          - paragraph [ref=f1e588]: +91 9100020010
+        - generic [ref=f1e589]:
+          - button "View" [ref=f1e1057] [cursor=pointer]
+          - button "Edit" [ref=f1e1058] [cursor=pointer]
+          - button "Deactivate" [ref=f1e1059] [cursor=pointer]
+          - button "Delete" [ref=f1e1060] [cursor=pointer]
+      - generic [ref=f1e128]:
+        - generic [ref=f1e129]:
+          - paragraph [ref=f1e130]: Madhapur Fresh Hub
+          - paragraph [ref=f1e131]: +91 91000 20003
+        - generic [ref=f1e132]:
+          - button "View" [ref=f1e1061] [cursor=pointer]
+          - button "Edit" [ref=f1e1062] [cursor=pointer]
+          - button "Deactivate" [ref=f1e1063] [cursor=pointer]
+          - button "Delete" [ref=f1e1064] [cursor=pointer]
+      - generic [ref=f1e137]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f1e138]: Page 1 of 1
+        - button "Next" [disabled]

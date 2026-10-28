@@ -1,0 +1,71 @@
+- generic [ref=f74e8]:
+  - navigation [ref=f74e9]:
+    - generic [ref=f74e10]:
+      - img "Spices and Pickles" [ref=f74e11]
+      - generic [ref=f74e12]:
+        - heading "Location Admin Portal" [level=6] [ref=f74e13]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f74e14] [cursor=pointer]
+    - generic [ref=f74e17]:
+      - generic [ref=f74e18]:
+        - paragraph [ref=f74e19]: Main
+        - button "Dashboard" [ref=f74e20] [cursor=pointer]
+      - generic [ref=f74e25]:
+        - paragraph [ref=f74e26]: Management
+        - button "Stores" [ref=f74e27] [cursor=pointer]
+        - button "Products" [ref=f74e32] [cursor=pointer]
+        - button "Banners" [ref=f74e38] [cursor=pointer]
+        - button "Inventory" [ref=f74e43] [cursor=pointer]
+      - generic [ref=f74e49]:
+        - paragraph [ref=f74e50]: Orders & Payments
+        - button "Orders" [ref=f74e51] [cursor=pointer]
+        - button "Payments" [ref=f74e56] [cursor=pointer]
+        - button "Delivery" [ref=f74e62] [cursor=pointer]
+      - generic [ref=f74e67]:
+        - paragraph [ref=f74e68]: Customer
+        - button "Coupons" [ref=f74e69] [cursor=pointer]
+      - generic [ref=f74e75]:
+        - paragraph [ref=f74e76]: Analytics
+        - button "Reports" [ref=f74e77] [cursor=pointer]
+    - button "View Customer App" [ref=f74e82] [cursor=pointer]
+  - main [ref=f74e83]:
+    - generic [ref=f74e84]:
+      - generic [ref=f74e85]:
+        - button [ref=f74e86] [cursor=pointer]
+        - generic [ref=f74e89]:
+          - text: Location Admin /
+          - strong [ref=f74e90]: Delivery
+      - generic [ref=f74e91]:
+        - textbox "Search portal" [ref=f74e96]
+        - button "Notifications" [ref=f74e97] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=f74e100] [cursor=pointer]:
+          - generic [ref=f74e101]: H
+          - generic [ref=f74e102]: Hyderabad Location Admin
+    - generic [ref=f74e103]:
+      - generic [ref=f74e104]:
+        - heading "Delivery" [level=4] [ref=f74e105]
+        - paragraph [ref=f74e106]: Manage delivery within your assigned scope.
+      - button "View Customer App" [ref=f74e107] [cursor=pointer]
+    - generic [ref=f74e108]:
+      - generic [ref=f74e109]:
+        - generic [ref=f74e110]:
+          - generic: Search
+          - generic [ref=f74e111]:
+            - textbox "Search" [ref=f74e112]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f74e113]:
+          - combobox [ref=f74e114] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f74e115]:
+          - combobox [ref=f74e116] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create" [ref=f74e117] [cursor=pointer]
+        - button "Export" [ref=f74e118] [cursor=pointer]
+      - paragraph [ref=f74e119]: No matching records. Use Create to add the first record.
+      - generic [ref=f74e120]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f74e121]: Page 1 of 1
+        - button "Next" [disabled]

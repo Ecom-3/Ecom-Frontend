@@ -1,0 +1,331 @@
+- generic [ref=f40e1]:
+  - generic [ref=f40e5]:
+    - navigation [ref=f40e6]:
+      - generic [ref=f40e7]:
+        - generic [ref=f40e9]:
+          - heading [level=6] [ref=f40e209]: Location Admin Portal
+          - text: hyderabad
+        - button [ref=f40e210] [cursor=pointer]
+      - generic [ref=f40e14]:
+        - generic [ref=f40e15]:
+          - paragraph [ref=f40e16]: Main
+          - button [ref=f40e211] [cursor=pointer]:
+            - generic [ref=f40e21]: Dashboard
+        - generic [ref=f40e22]:
+          - paragraph [ref=f40e23]: Management
+          - button [ref=f40e212] [cursor=pointer]:
+            - generic [ref=f40e28]: Stores
+          - button [ref=f40e213] [cursor=pointer]:
+            - generic [ref=f40e34]: Products
+          - button [ref=f40e214] [cursor=pointer]:
+            - generic [ref=f40e39]: Banners
+          - button [ref=f40e215] [cursor=pointer]:
+            - generic [ref=f40e45]: Inventory
+        - generic [ref=f40e46]:
+          - paragraph [ref=f40e47]: Orders & Payments
+          - button [ref=f40e216] [cursor=pointer]:
+            - generic [ref=f40e52]: Orders
+          - button [ref=f40e217] [cursor=pointer]:
+            - generic [ref=f40e58]: Payments
+          - button [ref=f40e218] [cursor=pointer]:
+            - generic [ref=f40e63]: Delivery
+        - generic [ref=f40e64]:
+          - paragraph [ref=f40e65]: Customer
+          - button [ref=f40e219] [cursor=pointer]:
+            - generic [ref=f40e71]: Coupons
+        - generic [ref=f40e72]:
+          - paragraph [ref=f40e73]: Analytics
+          - button [ref=f40e220] [cursor=pointer]:
+            - generic [ref=f40e78]: Reports
+      - button [ref=f40e221] [cursor=pointer]: View Customer App
+    - main [ref=f40e80]:
+      - generic [ref=f40e81]:
+        - generic [ref=f40e82]:
+          - button [ref=f40e83] [cursor=pointer]
+          - generic [ref=f40e86]:
+            - text: Location Admin /
+            - strong [ref=f40e87]: Orders
+        - generic [ref=f40e88]:
+          - textbox [ref=f40e222]:
+            - /placeholder: Search portal
+          - button [ref=f40e223] [cursor=pointer]
+          - button [ref=f40e224] [cursor=pointer]:
+            - generic [ref=f40e98]: H
+            - generic [ref=f40e99]: Hyderabad Location Admin
+      - generic [ref=f40e100]:
+        - generic [ref=f40e101]:
+          - heading [level=4] [ref=f40e225]: Orders
+          - paragraph [ref=f40e103]: Manage orders within your assigned scope.
+        - button [ref=f40e226] [cursor=pointer]: View Customer App
+      - generic [ref=f40e107]:
+        - generic [ref=f40e108]:
+          - generic [ref=f40e109]:
+            - generic: Search or paste order ID
+            - generic [ref=f40e110]:
+              - textbox [ref=f40e227]
+              - group [aria-hidden]:
+                - generic: Search or paste order ID
+          - button [ref=f40e228] [cursor=pointer]: Fetch Order
+          - generic [ref=f40e113]:
+            - combobox [ref=f40e114] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f40e115]:
+            - combobox [ref=f40e116] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f40e229] [cursor=pointer]: Export
+        - generic [ref=f40e121]:
+          - generic [ref=f40e122]:
+            - paragraph [ref=f40e123]: ORD-20261023-10641B43
+            - paragraph [ref=f40e124]: Hyderabad Main Store
+          - generic [ref=f40e125]:
+            - button [ref=f40e230] [cursor=pointer]: View
+            - generic [ref=f40e127]:
+              - combobox [ref=f40e128] [cursor=pointer]: SHIPPED
+              - textbox [aria-hidden]: SHIPPED
+              - group [aria-hidden]
+            - button [ref=f40e231] [cursor=pointer]: Pack
+            - button [ref=f40e232] [cursor=pointer]: Out
+            - button [ref=f40e233] [cursor=pointer]: Delivered
+            - button [ref=f40e234] [cursor=pointer]: Assign
+            - button [ref=f40e235] [cursor=pointer]: Reject
+        - generic [ref=f40e137]:
+          - generic [ref=f40e138]:
+            - paragraph [ref=f40e139]: ORD-20261022-42A90977
+            - paragraph [ref=f40e140]: Gachibowli Fresh Hub
+          - generic [ref=f40e141]:
+            - button [ref=f40e236] [cursor=pointer]: View
+            - generic [ref=f40e143]:
+              - combobox [ref=f40e144] [cursor=pointer]: CREATED
+              - textbox [aria-hidden]: CREATED
+              - group [aria-hidden]
+            - button [ref=f40e237] [cursor=pointer]: Accept
+            - button [ref=f40e238] [cursor=pointer]: Assign
+            - button [ref=f40e239] [cursor=pointer]: Reject
+        - generic [ref=f40e151]:
+          - generic [ref=f40e152]:
+            - paragraph [ref=f40e153]: ORD-20261021-B1052432
+            - paragraph [ref=f40e154]: Gachibowli Fresh Hub
+          - generic [ref=f40e155]:
+            - button [ref=f40e240] [cursor=pointer]: View
+            - generic [ref=f40e157]:
+              - combobox [ref=f40e158] [cursor=pointer]: CREATED
+              - textbox [aria-hidden]: CREATED
+              - group [aria-hidden]
+            - button [ref=f40e241] [cursor=pointer]: Accept
+            - button [ref=f40e242] [cursor=pointer]: Assign
+            - button [ref=f40e243] [cursor=pointer]: Reject
+        - generic [ref=f40e165]:
+          - generic [ref=f40e166]:
+            - paragraph [ref=f40e167]: ORD-20261021-BE5B49AF
+            - paragraph [ref=f40e168]: SR Nagar Store
+          - generic [ref=f40e169]:
+            - button [ref=f40e244] [cursor=pointer]: View
+            - generic [ref=f40e171]:
+              - combobox [ref=f40e172] [cursor=pointer]: CREATED
+              - textbox [aria-hidden]: CREATED
+              - group [aria-hidden]
+            - button [ref=f40e245] [cursor=pointer]: Accept
+            - button [ref=f40e246] [cursor=pointer]: Assign
+            - button [ref=f40e247] [cursor=pointer]: Reject
+        - generic [ref=f40e179]:
+          - generic [ref=f40e180]:
+            - paragraph [ref=f40e181]: ORD-20261021-DB9FA27C
+            - paragraph [ref=f40e182]: Gachibowli Fresh Hub
+          - generic [ref=f40e183]:
+            - button [ref=f40e248] [cursor=pointer]: View
+            - generic [ref=f40e185]:
+              - combobox [ref=f40e186] [cursor=pointer]: CREATED
+              - textbox [aria-hidden]: CREATED
+              - group [aria-hidden]
+            - button [ref=f40e249] [cursor=pointer]: Accept
+            - button [ref=f40e250] [cursor=pointer]: Assign
+            - button [ref=f40e251] [cursor=pointer]: Reject
+        - generic [ref=f40e193]:
+          - generic [ref=f40e194]:
+            - paragraph [ref=f40e195]: ORD-20261021-60D571D2
+            - paragraph [ref=f40e196]: SR Nagar Store
+          - generic [ref=f40e197]:
+            - button [ref=f40e252] [cursor=pointer]: View
+            - generic [ref=f40e199]:
+              - combobox [ref=f40e200] [cursor=pointer]: CREATED
+              - textbox [aria-hidden]: CREATED
+              - group [aria-hidden]
+            - button [ref=f40e253] [cursor=pointer]: Accept
+            - button [ref=f40e254] [cursor=pointer]: Assign
+            - button [ref=f40e255] [cursor=pointer]: Reject
+        - generic [ref=f40e119]:
+          - button [disabled]: Previous
+          - paragraph [ref=f40e120]: Page 1 of 7
+          - button [ref=f40e256] [cursor=pointer]: Next
+  - dialog [active] [ref=f40e259]:
+    - heading "Details Orders" [level=2] [ref=f40e260]
+    - generic [ref=f40e261]:
+      - generic [ref=f40e262]:
+        - text: customerId
+        - paragraph [ref=f40e263]: b01256e1-d541-4af4-8899-2bde03e9612b
+      - generic [ref=f40e264]:
+        - text: cartId
+        - paragraph [ref=f40e265]: e0801e48-8b00-4698-9d9b-53f3a3167cce
+      - generic [ref=f40e266]:
+        - text: storeId
+        - paragraph [ref=f40e267]: india-store-1-1
+      - generic [ref=f40e268]:
+        - text: deliveryZoneId
+        - paragraph [ref=f40e269]: "2"
+      - generic [ref=f40e270]:
+        - text: calculatedDistanceKm
+        - paragraph [ref=f40e271]: "5.6"
+      - generic [ref=f40e272]:
+        - text: routeDistanceMeters
+        - paragraph [ref=f40e273]: "5603"
+      - generic [ref=f40e274]:
+        - text: routeDurationSeconds
+        - paragraph [ref=f40e275]: "917"
+      - generic [ref=f40e276]:
+        - text: routeDurationMinutes
+        - paragraph [ref=f40e277]: "16"
+      - generic [ref=f40e278]:
+        - text: matchedZoneLabel
+        - paragraph [ref=f40e279]: 0-10 KM
+      - generic [ref=f40e280]:
+        - text: customerLatitude
+        - paragraph [ref=f40e281]: "17.4427084"
+      - generic [ref=f40e282]:
+        - text: customerLongitude
+        - paragraph [ref=f40e283]: "78.4439738"
+      - generic [ref=f40e284]:
+        - text: storeLatitude
+        - paragraph [ref=f40e285]: "17.4482948"
+      - generic [ref=f40e286]:
+        - text: storeLongitude
+        - paragraph [ref=f40e287]: "78.391485"
+      - generic [ref=f40e288]:
+        - text: deliveryMethod
+        - paragraph [ref=f40e289]: Instant Delivery
+      - generic [ref=f40e290]:
+        - text: fulfillmentType
+        - paragraph [ref=f40e291]: nearby
+      - generic [ref=f40e292]:
+        - text: globalApproval
+        - paragraph [ref=f40e293]: Not Required
+      - generic [ref=f40e294]:
+        - text: deliveryCharge
+        - paragraph [ref=f40e295]: "60"
+      - generic [ref=f40e296]:
+        - text: estimatedDeliveryMin
+        - paragraph [ref=f40e297]: "12"
+      - generic [ref=f40e298]:
+        - text: estimatedDeliveryMax
+        - paragraph [ref=f40e299]: "28"
+      - generic [ref=f40e300]:
+        - text: freeDeliveryAbove
+        - paragraph [ref=f40e301]: "499"
+      - generic [ref=f40e302]:
+        - text: freeDeliveryApplied
+        - paragraph [ref=f40e303]: "false"
+      - generic [ref=f40e304]:
+        - text: globalAssignedStoreId
+        - paragraph [ref=f40e305]: —
+      - generic [ref=f40e306]:
+        - text: globalAssignedAt
+        - paragraph [ref=f40e307]: —
+      - generic [ref=f40e308]:
+        - text: scheduledDeliveryDate
+        - paragraph [ref=f40e309]: —
+      - generic [ref=f40e310]:
+        - text: scheduledDeliverySlot
+        - paragraph [ref=f40e311]: —
+      - generic [ref=f40e312]:
+        - text: pickupDetails
+        - paragraph [ref=f40e313]: —
+      - generic [ref=f40e314]:
+        - text: orderNumber
+        - paragraph [ref=f40e315]: ORD-20261023-10641B43
+      - generic [ref=f40e316]:
+        - text: status
+        - paragraph [ref=f40e317]: SHIPPED
+      - generic [ref=f40e318]:
+        - text: totalAmount
+        - paragraph [ref=f40e319]: "107"
+      - generic [ref=f40e320]:
+        - text: handlingFee
+        - paragraph [ref=f40e321]: "5"
+      - generic [ref=f40e322]:
+        - text: couponCode
+        - paragraph [ref=f40e323]: —
+      - generic [ref=f40e324]:
+        - text: discountAmount
+        - paragraph [ref=f40e325]: "0"
+      - generic [ref=f40e326]:
+        - text: paymentStatus
+        - paragraph [ref=f40e327]: PENDING
+      - generic [ref=f40e328]:
+        - text: items
+        - paragraph [ref=f40e329]: "productName: Fresh Tomatoes | title: Fresh Tomatoes | quantity: 1 | unitPrice: 42 | totalPrice: 42"
+      - generic [ref=f40e330]:
+        - text: addresses
+        - paragraph [ref=f40e331]: "{\"id\":\"5c50e62e-10f2-4e26-9ec0-344b4b8e10f9\",\"orderId\":\"b339ffd4-1e08-4998-a11c-4ba664dafd06\",\"addressType\":\"SHIPPING\",\"addressLine1\":\"Srinivas Nagar, SR Nagar, Ward 98 Ameerpet, Greater Hyderabad Municipal Corporation Central Zone, Hyderabad, Khairatabad mandal, Hyderabad, Telangana, 500038, India\",\"addressLine2\":\"slokam tech, 4, axsis bank\",\"city\":\"Hyderabad\",\"state\":\"Telangana\",\"country\":\"India\",\"postalCode\":\"500038\",\"recipientName\":\"GIRIVARDHAN REDDY V\",\"recipientPhone\":\"+91 8639616977\"}, {\"id\":\"74311365-d0b1-4d26-a49f-b8ea05d4d94a\",\"orderId\":\"b339ffd4-1e08-4998-a11c-4ba664dafd06\",\"addressType\":\"BILLING\",\"addressLine1\":\"Srinivas Nagar, SR Nagar, Ward 98 Ameerpet, Greater Hyderabad Municipal Corporation Central Zone, Hyderabad, Khairatabad mandal, Hyderabad, Telangana, 500038, India\",\"addressLine2\":\"slokam tech, 4, axsis bank\",\"city\":\"Hyderabad\",\"state\":\"Telangana\",\"country\":\"India\",\"postalCode\":\"500038\",\"recipientName\":\"GIRIVARDHAN REDDY V\",\"recipientPhone\":\"+91 8639616977\"}"
+      - generic [ref=f40e332]:
+        - text: createdAt
+        - paragraph [ref=f40e333]: 2026-10-23T10:36:21.518728Z
+      - generic [ref=f40e334]:
+        - text: updatedAt
+        - paragraph [ref=f40e335]: 2026-10-23T10:37:58.812930Z
+      - generic [ref=f40e336]:
+        - text: orderId
+        - paragraph [ref=f40e337]: b339ffd4-1e08-4998-a11c-4ba664dafd06
+      - generic [ref=f40e338]:
+        - text: shippingAddress
+        - paragraph [ref=f40e339]: "{\"id\":\"5c50e62e-10f2-4e26-9ec0-344b4b8e10f9\",\"orderId\":\"b339ffd4-1e08-4998-a11c-4ba664dafd06\",\"addressType\":\"SHIPPING\",\"addressLine1\":\"Srinivas Nagar, SR Nagar, Ward 98 Ameerpet, Greater Hyderabad Municipal Corporation Central Zone, Hyderabad, Khairatabad mandal, Hyderabad, Telangana, 500038, India\",\"addressLine2\":\"slokam tech, 4, axsis bank\",\"city\":\"Hyderabad\",\"state\":\"Telangana\",\"country\":\"India\",\"postalCode\":\"500038\",\"recipientName\":\"GIRIVARDHAN REDDY V\",\"recipientPhone\":\"+91 8639616977\"}"
+      - generic [ref=f40e340]:
+        - text: billingAddress
+        - paragraph [ref=f40e341]: "{\"id\":\"74311365-d0b1-4d26-a49f-b8ea05d4d94a\",\"orderId\":\"b339ffd4-1e08-4998-a11c-4ba664dafd06\",\"addressType\":\"BILLING\",\"addressLine1\":\"Srinivas Nagar, SR Nagar, Ward 98 Ameerpet, Greater Hyderabad Municipal Corporation Central Zone, Hyderabad, Khairatabad mandal, Hyderabad, Telangana, 500038, India\",\"addressLine2\":\"slokam tech, 4, axsis bank\",\"city\":\"Hyderabad\",\"state\":\"Telangana\",\"country\":\"India\",\"postalCode\":\"500038\",\"recipientName\":\"GIRIVARDHAN REDDY V\",\"recipientPhone\":\"+91 8639616977\"}"
+      - generic [ref=f40e342]:
+        - text: deliveryLabel
+        - paragraph [ref=f40e343]: —
+      - generic [ref=f40e344]:
+        - text: estimatedDelivery
+        - paragraph [ref=f40e345]: —
+      - generic [ref=f40e346]:
+        - text: channel
+        - paragraph [ref=f40e347]: —
+      - generic [ref=f40e348]:
+        - text: store
+        - paragraph [ref=f40e349]: Hyderabad Main Store
+      - generic [ref=f40e350]:
+        - text: sourceStore
+        - paragraph [ref=f40e351]: Hyderabad Main Store
+      - generic [ref=f40e352]:
+        - text: location
+        - paragraph [ref=f40e353]: Hyderabad
+      - generic [ref=f40e354]:
+        - text: sourceLocation
+        - paragraph [ref=f40e355]: Hyderabad
+      - generic [ref=f40e356]:
+        - text: fulfillment
+        - paragraph [ref=f40e357]: "fulfillmentType: SHIP_TO_HOME | status: SHIPPED | storeId: india-store-1-1"
+      - generic [ref=f40e358]:
+        - text: shipment
+        - paragraph [ref=f40e359]: "status: IN_TRANSIT | carrier: Store Delivery | trackingNumber: 816624af-b47f-4904-80e5-fe5332db3d3d | shippedAt: 2026-10-23T10:37:58.798601Z | estimatedDeliveryDate: 2026-10-23"
+      - generic [ref=f40e360]:
+        - text: deliveryPartnerId
+        - paragraph
+      - generic [ref=f40e361]:
+        - text: deliveryPartner
+        - paragraph [ref=f40e362]: —
+      - generic [ref=f40e363]:
+        - text: trackingHistory
+        - paragraph [ref=f40e364]: IN_TRANSIT | Hyderabad | Shipment picked up for store delivery. | 2026-10-23T10:37:58.820Z
+      - generic [ref=f40e365]:
+        - text: notificationHistory
+        - paragraph [ref=f40e366]: "ORDER_STATUS_UPDATED | SENT | E-commerce update: ORDER_STATUS_UPDATED | 2026-10-23T10:37:59.536926Z SHIPMENT_CREATED | SENT | Order ORD-20261023-10641B43 shipped | 2026-10-23T10:37:58.850344Z SHIPMENT_CREATED | SENT | Your pickle order has shipped | 2026-10-23T10:37:57.747901Z SHIPMENT_CREATED | SENT | Shipment created for ORD-20261023-10641B43 | 2026-10-23T10:37:54.146081Z ORDER_STATUS_UPDATED | SENT | E-commerce update: ORDER_STATUS_UPDATED | 2026-10-23T10:37:49.445572Z ORDER_STATUS_UPDATED | SENT | Order ORD-20261023-10641B43 is packing | 2026-10-23T10:37:48.166611Z ORDER_STATUS_UPDATED | SENT | Order ORD-20261023-10641B43 confirmed | 2026-10-23T10:37:34.419337Z FULFILLMENT_CREATED | SENT | E-commerce update: FULFILLMENT_CREATED | 2026-10-23T10:37:31.542868Z ORDER_STATUS_UPDATED | SENT | E-commerce update: ORDER_STATUS_UPDATED | 2026-10-23T10:37:31.296436Z FULFILLMENT_CREATED | SENT | Fulfillment created for ORD-20261023-10641B43 | 2026-10-23T10:37:29.587514Z ORDER_CREATED | SENT | Your pickle order ORD-20261023-10641B43 is confirmed | 2026-10-23T10:36:22.860452Z"
+    - generic [ref=f40e367]:
+      - generic [ref=f40e368]:
+        - button "Pack" [ref=f40e369] [cursor=pointer]
+        - button "Ready" [ref=f40e370] [cursor=pointer]
+        - button "Ship" [ref=f40e371] [cursor=pointer]
+        - button "Out" [ref=f40e372] [cursor=pointer]
+        - button "Delivered" [ref=f40e373] [cursor=pointer]
+      - button "Cancel" [ref=f40e375] [cursor=pointer]

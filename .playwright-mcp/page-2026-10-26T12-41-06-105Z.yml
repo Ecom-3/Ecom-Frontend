@@ -1,0 +1,99 @@
+- generic [ref=f41e8]:
+  - navigation [ref=f41e9]:
+    - generic [ref=f41e10]:
+      - img "Spices and Pickles" [ref=f41e501]
+      - generic [ref=f41e12]:
+        - heading "Super Admin Portal" [level=6] [ref=f41e502]
+        - text: All locations
+      - button "Collapse sidebar" [ref=f41e503] [cursor=pointer]
+    - generic [ref=f41e17]:
+      - generic [ref=f41e18]:
+        - paragraph [ref=f41e19]: Main
+        - button "Dashboard" [ref=f41e504] [cursor=pointer]
+      - generic [ref=f41e25]:
+        - paragraph [ref=f41e26]: Management
+        - button "Locations" [ref=f41e505] [cursor=pointer]
+        - button "Users" [ref=f41e506] [cursor=pointer]
+        - button "Stores" [ref=f41e507] [cursor=pointer]
+        - button "Products" [ref=f41e508] [cursor=pointer]
+        - button "Categories" [ref=f41e509] [cursor=pointer]
+        - button "Banners" [ref=f41e510] [cursor=pointer]
+        - button "Inventory" [ref=f41e511] [cursor=pointer]
+      - generic [ref=f41e65]:
+        - paragraph [ref=f41e66]: Orders & Payments
+        - button "Orders" [ref=f41e512] [cursor=pointer]
+        - button "Payments" [ref=f41e513] [cursor=pointer]
+        - button "Delivery" [ref=f41e514] [cursor=pointer]
+      - generic [ref=f41e83]:
+        - paragraph [ref=f41e84]: Customer
+        - button "Customers" [ref=f41e515] [cursor=pointer]
+        - button "Reviews" [ref=f41e516] [cursor=pointer]
+        - button "Coupons" [ref=f41e517] [cursor=pointer]
+        - button "Notifications" [ref=f41e518] [cursor=pointer]
+      - generic [ref=f41e106]:
+        - paragraph [ref=f41e107]: Analytics
+        - button "Reports" [ref=f41e519] [cursor=pointer]
+      - generic [ref=f41e113]:
+        - paragraph [ref=f41e114]: System
+        - button "Security" [ref=f41e520] [cursor=pointer]
+        - button "Audit Logs" [ref=f41e521] [cursor=pointer]
+    - button "View Customer App" [ref=f41e522] [cursor=pointer]
+  - main [ref=f41e126]:
+    - generic [ref=f41e127]:
+      - generic [ref=f41e128]:
+        - button [ref=f41e129] [cursor=pointer]
+        - generic [ref=f41e132]:
+          - text: Super Admin /
+          - strong [ref=f41e133]: Users
+      - generic [ref=f41e134]:
+        - textbox "Search portal" [ref=f41e523]
+        - button "Notifications" [ref=f41e524] [cursor=pointer]
+        - button "A Admin" [ref=f41e525] [cursor=pointer]:
+          - generic [ref=f41e144]: A
+          - generic [ref=f41e145]: Admin
+    - generic [ref=f41e146]:
+      - generic [ref=f41e147]:
+        - heading "Users" [level=4] [ref=f41e526]
+        - paragraph [ref=f41e149]: Manage users within your assigned scope.
+      - button "View Customer App" [ref=f41e527] [cursor=pointer]
+    - generic [ref=f41e151]:
+      - generic [ref=f41e152]:
+        - generic [ref=f41e153]:
+          - generic: Search
+          - generic [ref=f41e154]:
+            - textbox "Search" [ref=f41e528]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f41e156]:
+          - combobox [ref=f41e157] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f41e158]:
+          - combobox [ref=f41e159] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create" [active] [ref=f41e529] [cursor=pointer]
+        - button "Export" [ref=f41e530] [cursor=pointer]
+      - status [ref=f41e531]: Saved successfully.
+      - generic [ref=f41e532]:
+        - generic [ref=f41e533]:
+          - paragraph [ref=f41e534]: Global Admin
+          - paragraph [ref=f41e535]: global.admin@example.test
+        - generic [ref=f41e536]:
+          - button "View" [ref=f41e537] [cursor=pointer]
+          - button "Edit" [ref=f41e538] [cursor=pointer]
+          - button "Deactivate" [ref=f41e539] [cursor=pointer]
+          - button "Delete" [ref=f41e540] [cursor=pointer]
+      - generic [ref=f41e541]:
+        - generic [ref=f41e542]:
+          - paragraph [ref=f41e543]: Hyderabad Location Admin
+          - paragraph [ref=f41e544]: hyderabad.admin@example.test
+        - generic [ref=f41e545]:
+          - button "View" [ref=f41e546] [cursor=pointer]
+          - button "Edit" [ref=f41e547] [cursor=pointer]
+          - button "Deactivate" [ref=f41e548] [cursor=pointer]
+          - button "Delete" [ref=f41e549] [cursor=pointer]
+      - generic [ref=f41e163]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f41e164]: Page 1 of 1
+        - button "Next" [disabled]

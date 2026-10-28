@@ -1,0 +1,302 @@
+- generic [ref=f1e1]:
+  - generic [ref=f1e8]:
+    - navigation [ref=f1e9]:
+      - generic [ref=f1e10]:
+        - generic [ref=f1e12]:
+          - heading [level=6] [ref=f1e140]: Location Admin Portal
+          - text: hyderabad
+        - button [ref=f1e141] [cursor=pointer]
+      - generic [ref=f1e17]:
+        - generic [ref=f1e18]:
+          - paragraph [ref=f1e19]: Main
+          - button [ref=f1e142] [cursor=pointer]:
+            - generic [ref=f1e24]: Dashboard
+        - generic [ref=f1e25]:
+          - paragraph [ref=f1e26]: Management
+          - button [ref=f1e143] [cursor=pointer]:
+            - generic [ref=f1e31]: Stores
+          - button [ref=f1e144] [cursor=pointer]:
+            - generic [ref=f1e37]: Products
+          - button [ref=f1e145] [cursor=pointer]:
+            - generic [ref=f1e42]: Banners
+          - button [ref=f1e146] [cursor=pointer]:
+            - generic [ref=f1e48]: Inventory
+        - generic [ref=f1e49]:
+          - paragraph [ref=f1e50]: Orders & Payments
+          - button [ref=f1e147] [cursor=pointer]:
+            - generic [ref=f1e55]: Orders
+          - button [ref=f1e148] [cursor=pointer]:
+            - generic [ref=f1e61]: Payments
+          - button [ref=f1e149] [cursor=pointer]:
+            - generic [ref=f1e66]: Delivery
+        - generic [ref=f1e67]:
+          - paragraph [ref=f1e68]: Customer
+          - button [ref=f1e150] [cursor=pointer]:
+            - generic [ref=f1e74]: Coupons
+        - generic [ref=f1e75]:
+          - paragraph [ref=f1e76]: Analytics
+          - button [ref=f1e151] [cursor=pointer]:
+            - generic [ref=f1e81]: Reports
+      - button [ref=f1e152] [cursor=pointer]: View Customer App
+    - main [ref=f1e83]:
+      - generic [ref=f1e84]:
+        - generic [ref=f1e85]:
+          - button [ref=f1e86] [cursor=pointer]
+          - generic [ref=f1e89]:
+            - text: Location Admin /
+            - strong [ref=f1e90]: Stores
+        - generic [ref=f1e91]:
+          - textbox [ref=f1e153]:
+            - /placeholder: Search portal
+          - button [ref=f1e154] [cursor=pointer]
+          - button [ref=f1e155] [cursor=pointer]:
+            - generic [ref=f1e101]: H
+            - generic [ref=f1e102]: Hyderabad Location Admin QA
+      - generic [ref=f1e103]:
+        - generic [ref=f1e104]:
+          - heading [level=4] [ref=f1e156]: Stores
+          - paragraph [ref=f1e106]: Manage stores within your assigned scope.
+        - button [ref=f1e157] [cursor=pointer]: View Customer App
+      - generic [ref=f1e108]:
+        - generic [ref=f1e109]:
+          - generic [ref=f1e110]:
+            - generic: Search
+            - generic [ref=f1e111]:
+              - textbox [ref=f1e158]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f1e113]:
+            - combobox [ref=f1e114] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f1e115]:
+            - combobox [ref=f1e116] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f1e159] [cursor=pointer]: Create
+          - button [ref=f1e160] [cursor=pointer]: Export
+        - generic [ref=f1e119]:
+          - generic [ref=f1e120]:
+            - paragraph [ref=f1e121]: Gachibowli Fresh Hub
+            - paragraph [ref=f1e122]: +91 91000 20001
+          - generic [ref=f1e123]:
+            - button [ref=f1e161] [cursor=pointer]: View
+            - button [ref=f1e162] [cursor=pointer]: Edit
+            - button [ref=f1e163] [cursor=pointer]: Deactivate
+            - button [ref=f1e164] [cursor=pointer]: Delete
+        - generic [ref=f1e128]:
+          - generic [ref=f1e129]:
+            - paragraph [ref=f1e130]: Madhapur Fresh Hub
+            - paragraph [ref=f1e131]: +91 91000 20003
+          - generic [ref=f1e132]:
+            - button [ref=f1e165] [cursor=pointer]: View
+            - button [ref=f1e166] [cursor=pointer]: Edit
+            - button [ref=f1e167] [cursor=pointer]: Deactivate
+            - button [ref=f1e168] [cursor=pointer]: Delete
+        - generic [ref=f1e137]:
+          - button [disabled]: Previous
+          - paragraph [ref=f1e138]: Page 1 of 1
+          - button [disabled]: Next
+  - dialog [ref=f1e171]:
+    - heading "Create Stores" [level=2] [ref=f1e172]
+    - generic [ref=f1e173]:
+      - generic [ref=f1e175]:
+        - generic [ref=f1e304]:
+          - text: Store name
+          - generic [aria-hidden] [ref=f1e305]: "*"
+        - generic [ref=f1e176]:
+          - textbox "Store name" [ref=f1e177]: Banjara Hills Fresh Hub
+          - group [aria-hidden]:
+            - generic: Store name *
+      - generic [ref=f1e179]:
+        - generic [ref=f1e306]: Store code
+        - generic [ref=f1e180]:
+          - textbox "Store code" [ref=f1e181]: HYD-BANJARA-QA
+          - group [aria-hidden]:
+            - generic: Store code
+      - generic [ref=f1e183]:
+        - generic [ref=f1e307]: Store description
+        - generic [ref=f1e184]:
+          - textbox "Store description" [ref=f1e185]: Disposable QA store for Hyderabad location portal testing.
+          - group [aria-hidden]:
+            - generic: Store description
+      - generic [ref=f1e187]:
+        - generic [ref=f1e308]: Store manager name
+        - generic [ref=f1e188]:
+          - textbox "Store manager name" [ref=f1e189]: Banjara Hills QA Manager
+          - group [aria-hidden]:
+            - generic: Store manager name
+      - generic [ref=f1e191]:
+        - paragraph [ref=f1e192]: Store map location
+        - generic [ref=f1e193]:
+          - generic [ref=f1e194]:
+            - generic [ref=f1e309]: Search store location
+            - generic [ref=f1e195]:
+              - textbox "Search store location" [ref=f1e196]: Banjara Hills, Hyderabad, Telangana, India
+              - group [aria-hidden]:
+                - generic: Search store location
+            - paragraph [ref=f1e197]: Search with area, city, landmark or full address.
+          - button "Search" [ref=f1e198] [cursor=pointer]
+          - button "Use current map point" [ref=f1e199] [cursor=pointer]
+          - button "Open map" [ref=f1e310] [cursor=pointer]
+        - generic [ref=f1e311]:
+          - iframe [ref=f1e312]
+          - generic: 8 km
+        - generic [ref=f1e200]:
+          - generic [ref=f1e201]:
+            - generic [ref=f1e313]: Latitude
+            - generic [ref=f1e202]:
+              - spinbutton "Latitude" [ref=f1e203]: "17.4177464"
+              - group [aria-hidden]:
+                - generic: Latitude
+          - generic [ref=f1e204]:
+            - generic [ref=f1e314]: Longitude
+            - generic [ref=f1e205]:
+              - spinbutton "Longitude" [ref=f1e206]: "78.4399014"
+              - group [aria-hidden]:
+                - generic: Longitude
+      - generic [ref=f1e208]:
+        - generic [ref=f1e315]: Address
+        - generic [ref=f1e209]:
+          - textbox "Address" [ref=f1e210]: Banjara Hills, Ward 92 Venkateshwara Colony, Greater Hyderabad Municipal Corporation Central Zone, Hyderabad, Shaikpet mandal, Hyderabad, Telangana, 500034, India
+          - group [aria-hidden]:
+            - generic: Address
+      - generic [ref=f1e212]:
+        - generic: Door number
+        - generic [ref=f1e213]:
+          - textbox "Door number" [ref=f1e214]
+          - group [aria-hidden]:
+            - generic: Door number
+      - generic [ref=f1e216]:
+        - generic: Street / road name
+        - generic [ref=f1e217]:
+          - textbox "Street / road name" [ref=f1e218]
+          - group [aria-hidden]:
+            - generic: Street / road name
+      - generic [ref=f1e220]:
+        - generic [ref=f1e316]: Area
+        - generic [ref=f1e221]:
+          - textbox "Area" [ref=f1e222]: Banjara Hills
+          - group [aria-hidden]:
+            - generic: Area
+      - generic [ref=f1e224]:
+        - generic: Landmark
+        - generic [ref=f1e225]:
+          - textbox "Landmark" [ref=f1e226]
+          - group [aria-hidden]:
+            - generic: Landmark
+      - generic [ref=f1e228]:
+        - generic [ref=f1e317]: City
+        - generic [ref=f1e229]:
+          - textbox "City" [ref=f1e230]: Hyderabad
+          - group [aria-hidden]:
+            - generic: City
+      - generic [ref=f1e232]:
+        - generic [ref=f1e318]: District
+        - generic [ref=f1e233]:
+          - textbox "District" [ref=f1e234]: Hyderabad
+          - group [aria-hidden]:
+            - generic: District
+      - generic [ref=f1e236]:
+        - generic [ref=f1e319]: State
+        - generic [ref=f1e237]:
+          - textbox "State" [ref=f1e238]: Telangana
+          - group [aria-hidden]:
+            - generic: State
+      - generic [ref=f1e240]:
+        - generic [ref=f1e320]: Pincode
+        - generic [ref=f1e241]:
+          - textbox "Pincode" [ref=f1e242]: "500034"
+          - group [aria-hidden]:
+            - generic: Pincode
+      - generic [ref=f1e244]:
+        - generic [ref=f1e321]: Store mobile number
+        - generic [ref=f1e245]:
+          - textbox "Store mobile number" [ref=f1e246]: +91 9100020010
+          - group [aria-hidden]:
+            - generic: Store mobile number
+      - generic [ref=f1e248]:
+        - generic: Alternate mobile number
+        - generic [ref=f1e249]:
+          - textbox "Alternate mobile number" [ref=f1e250]
+          - group [aria-hidden]:
+            - generic: Alternate mobile number
+      - generic [ref=f1e252]:
+        - generic [ref=f1e322]: Store email
+        - generic [ref=f1e253]:
+          - textbox "Store email" [ref=f1e254]: banjara.qa@example.test
+          - group [aria-hidden]:
+            - generic: Store email
+      - generic [ref=f1e256]:
+        - generic: GST number
+        - generic [ref=f1e257]:
+          - textbox "GST number" [ref=f1e258]
+          - group [aria-hidden]:
+            - generic: GST number
+      - generic [ref=f1e260]:
+        - generic: Store rating
+        - generic [ref=f1e261]:
+          - spinbutton "Store rating" [ref=f1e262]
+          - group [aria-hidden]:
+            - generic: Store rating
+      - generic [ref=f1e264]:
+        - generic: Store logo/image URL
+        - generic [ref=f1e265]:
+          - textbox "Store logo/image URL" [ref=f1e266]
+          - group [aria-hidden]:
+            - generic: Store logo/image URL
+      - generic [ref=f1e268]:
+        - combobox [ref=f1e269] [cursor=pointer]: Delivery available
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+      - generic [ref=f1e271]:
+        - combobox [ref=f1e272] [cursor=pointer]: Pickup available
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+      - generic [ref=f1e274]:
+        - combobox [ref=f1e275] [cursor=pointer]: Store status
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+      - generic [ref=f1e277]:
+        - generic [ref=f1e323]:
+          - text: Order radius in KM
+          - generic [aria-hidden] [ref=f1e324]: "*"
+        - generic [ref=f1e278]:
+          - spinbutton "Order radius in KM" [ref=f1e279]: "8"
+          - group [aria-hidden]:
+            - generic: Order radius in KM *
+      - generic [ref=f1e281]:
+        - generic [ref=f1e325]:
+          - text: Delivery ETA minutes
+          - generic [aria-hidden] [ref=f1e326]: "*"
+        - generic [ref=f1e282]:
+          - spinbutton "Delivery ETA minutes" [ref=f1e283]: "30"
+          - group [aria-hidden]:
+            - generic: Delivery ETA minutes *
+      - generic [ref=f1e285]:
+        - generic [ref=f1e327]: Delivery charge
+        - generic [ref=f1e286]:
+          - spinbutton "Delivery charge" [ref=f1e287]: "35"
+          - group [aria-hidden]:
+            - generic: Delivery charge
+      - generic [ref=f1e289]:
+        - generic [ref=f1e328]: Free delivery above order value
+        - generic [ref=f1e290]:
+          - spinbutton "Free delivery above order value" [ref=f1e291]: "499"
+          - group [aria-hidden]:
+            - generic: Free delivery above order value
+      - generic [ref=f1e293]:
+        - generic [ref=f1e329]: Delivery modes (comma separated)
+        - generic [ref=f1e294]:
+          - textbox "Delivery modes (comma separated)" [ref=f1e295]: Standard Delivery, Instant Delivery, Store Pickup
+          - group [aria-hidden]:
+            - generic: Delivery modes (comma separated)
+      - generic [ref=f1e297]:
+        - generic [ref=f1e330]: Delivery notes
+        - generic [ref=f1e298]:
+          - textbox "Delivery notes" [ref=f1e299]: QA testing only; contact customer before dispatch.
+          - group [aria-hidden]:
+            - generic: Delivery notes
+    - generic [ref=f1e301]:
+      - button "Cancel" [ref=f1e302] [cursor=pointer]
+      - button "Save" [ref=f1e303] [cursor=pointer]

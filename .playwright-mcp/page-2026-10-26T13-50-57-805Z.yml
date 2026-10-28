@@ -1,0 +1,332 @@
+- generic [ref=f1e1]:
+  - generic [ref=f1e8]:
+    - navigation [ref=f1e9]:
+      - generic [ref=f1e10]:
+        - generic [ref=f1e12]:
+          - heading [level=6] [ref=f1e599]: Location Admin Portal
+          - text: hyderabad
+        - button [ref=f1e600] [cursor=pointer]
+      - generic [ref=f1e17]:
+        - generic [ref=f1e18]:
+          - paragraph [ref=f1e19]: Main
+          - button [ref=f1e601] [cursor=pointer]:
+            - generic [ref=f1e24]: Dashboard
+        - generic [ref=f1e25]:
+          - paragraph [ref=f1e26]: Management
+          - button [ref=f1e602] [cursor=pointer]:
+            - generic [ref=f1e31]: Stores
+          - button [ref=f1e603] [cursor=pointer]:
+            - generic [ref=f1e37]: Products
+          - button [ref=f1e604] [cursor=pointer]:
+            - generic [ref=f1e42]: Banners
+          - button [ref=f1e605] [cursor=pointer]:
+            - generic [ref=f1e48]: Inventory
+        - generic [ref=f1e49]:
+          - paragraph [ref=f1e50]: Orders & Payments
+          - button [ref=f1e606] [cursor=pointer]:
+            - generic [ref=f1e55]: Orders
+          - button [ref=f1e607] [cursor=pointer]:
+            - generic [ref=f1e61]: Payments
+          - button [ref=f1e608] [cursor=pointer]:
+            - generic [ref=f1e66]: Delivery
+        - generic [ref=f1e67]:
+          - paragraph [ref=f1e68]: Customer
+          - button [ref=f1e609] [cursor=pointer]:
+            - generic [ref=f1e74]: Coupons
+        - generic [ref=f1e75]:
+          - paragraph [ref=f1e76]: Analytics
+          - button [ref=f1e610] [cursor=pointer]:
+            - generic [ref=f1e81]: Reports
+      - button [ref=f1e611] [cursor=pointer]: View Customer App
+    - main [ref=f1e83]:
+      - generic [ref=f1e84]:
+        - generic [ref=f1e85]:
+          - button [ref=f1e86] [cursor=pointer]
+          - generic [ref=f1e89]:
+            - text: Location Admin /
+            - strong [ref=f1e90]: Stores
+        - generic [ref=f1e91]:
+          - textbox [ref=f1e612]:
+            - /placeholder: Search portal
+          - button [ref=f1e613] [cursor=pointer]
+          - button [ref=f1e614] [cursor=pointer]:
+            - generic [ref=f1e101]: H
+            - generic [ref=f1e102]: Hyderabad Location Admin QA
+      - generic [ref=f1e103]:
+        - generic [ref=f1e104]:
+          - heading [level=4] [ref=f1e615]: Stores
+          - paragraph [ref=f1e106]: Manage stores within your assigned scope.
+        - button [ref=f1e616] [cursor=pointer]: View Customer App
+      - generic [ref=f1e108]:
+        - generic [ref=f1e109]:
+          - generic [ref=f1e110]:
+            - generic: Search
+            - generic [ref=f1e111]:
+              - textbox [ref=f1e617]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f1e113]:
+            - combobox [ref=f1e114] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f1e115]:
+            - combobox [ref=f1e116] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f1e618] [cursor=pointer]: Create
+          - button [ref=f1e619] [cursor=pointer]: Export
+        - generic [ref=f1e119]:
+          - generic [ref=f1e120]:
+            - paragraph [ref=f1e121]: Gachibowli Fresh Hub
+            - paragraph [ref=f1e122]: +91 91000 20001
+          - generic [ref=f1e123]:
+            - button [ref=f1e620] [cursor=pointer]: View
+            - button [ref=f1e621] [cursor=pointer]: Edit
+            - button [ref=f1e622] [cursor=pointer]: Deactivate
+            - button [ref=f1e623] [cursor=pointer]: Delete
+        - generic [ref=f1e585]:
+          - generic [ref=f1e586]:
+            - paragraph [ref=f1e587]: Banjara Hills Fresh Hub
+            - paragraph [ref=f1e588]: +91 9100020010
+          - generic [ref=f1e589]:
+            - button [ref=f1e624] [cursor=pointer]: View
+            - button [ref=f1e625] [cursor=pointer]: Edit
+            - button [ref=f1e626] [cursor=pointer]: Deactivate
+            - button [ref=f1e627] [cursor=pointer]: Delete
+        - generic [ref=f1e128]:
+          - generic [ref=f1e129]:
+            - paragraph [ref=f1e130]: Madhapur Fresh Hub
+            - paragraph [ref=f1e131]: +91 91000 20003
+          - generic [ref=f1e132]:
+            - button [ref=f1e628] [cursor=pointer]: View
+            - button [ref=f1e629] [cursor=pointer]: Edit
+            - button [ref=f1e630] [cursor=pointer]: Deactivate
+            - button [ref=f1e631] [cursor=pointer]: Delete
+        - generic [ref=f1e137]:
+          - button [disabled]: Previous
+          - paragraph [ref=f1e138]: Page 1 of 1
+          - button [disabled]: Next
+  - dialog [ref=f1e910]:
+    - heading "Create Stores" [level=2] [ref=f1e911]
+    - generic [ref=f1e636]:
+      - generic [ref=f1e638]:
+        - generic [ref=f1e768]:
+          - text: Store name
+          - generic [aria-hidden] [ref=f1e769]: "*"
+        - generic [ref=f1e639]:
+          - textbox "Store name" [ref=f1e912]: Kondapur Market Hub
+          - group [aria-hidden]:
+            - generic: Store name *
+      - generic [ref=f1e642]:
+        - generic [ref=f1e770]: Store code
+        - generic [ref=f1e643]:
+          - textbox "Store code" [ref=f1e913]: HYD-KONDAPUR-QA
+          - group [aria-hidden]:
+            - generic: Store code
+      - generic [ref=f1e646]:
+        - generic [ref=f1e771]: Store description
+        - generic [ref=f1e647]:
+          - textbox "Store description" [ref=f1e914]: Disposable QA store for Hyderabad location portal testing.
+          - group [aria-hidden]:
+            - generic: Store description
+      - generic [ref=f1e650]:
+        - generic [ref=f1e772]: Store manager name
+        - generic [ref=f1e651]:
+          - textbox "Store manager name" [ref=f1e915]: Kondapur QA Manager
+          - group [aria-hidden]:
+            - generic: Store manager name
+      - generic [ref=f1e654]:
+        - paragraph [ref=f1e655]: Store map location
+        - generic [ref=f1e656]:
+          - generic [ref=f1e657]:
+            - generic [ref=f1e658]: Search store location
+            - generic [ref=f1e659]:
+              - textbox "Search store location" [ref=f1e916]: Kondapur, Hyderabad, Telangana, India
+              - group [aria-hidden]:
+                - generic: Search store location
+            - paragraph [ref=f1e661]: Search with area, city, landmark or full address.
+          - button "Search" [ref=f1e917] [cursor=pointer]
+          - button "Use current map point" [ref=f1e918] [cursor=pointer]
+          - button "Open map" [ref=f1e919] [cursor=pointer]
+        - generic [ref=f1e774]:
+          - iframe [ref=f1e775]:
+            - generic [ref=f3e2]:
+              - generic:
+                - region "Map" [ref=f3e3]
+                - button "Map marker" [ref=f3e4]
+              - generic:
+                - generic [ref=f3e8]:
+                  - button "Zoom In" [ref=f3e9] [cursor=pointer]
+                  - button "Zoom Out" [ref=f3e11] [cursor=pointer]
+                - group [ref=f3e13]:
+                  - generic [ref=f3e14]:
+                    - link "Report a problem" [ref=f3e15] [cursor=pointer]:
+                      - /url: /fixthemap?lat=17.45879&lon=78.37306&zoom=13
+                    - text: "| ©"
+                    - link "OpenStreetMap contributors" [ref=f3e16] [cursor=pointer]:
+                      - /url: /copyright
+                    - text: ♥️
+                    - link "Make a Donation" [ref=f3e17] [cursor=pointer]:
+                      - /url: https://supporting.openstreetmap.org
+                    - text: .
+                    - link "Website and API terms" [ref=f3e18] [cursor=pointer]:
+                      - /url: https://wiki.osmfoundation.org/wiki/Terms_of_Use
+          - generic: 8 km
+        - generic [ref=f1e664]:
+          - generic [ref=f1e665]:
+            - generic [ref=f1e776]: Latitude
+            - generic [ref=f1e666]:
+              - spinbutton "Latitude" [ref=f1e920]: "17.4587912"
+              - group [aria-hidden]:
+                - generic: Latitude
+          - generic [ref=f1e668]:
+            - generic [ref=f1e777]: Longitude
+            - generic [ref=f1e669]:
+              - spinbutton "Longitude" [ref=f1e921]: "78.3730556"
+              - group [aria-hidden]:
+                - generic: Longitude
+      - generic [ref=f1e672]:
+        - generic [ref=f1e778]: Address
+        - generic [ref=f1e673]:
+          - textbox "Address" [ref=f1e922]: Kondapur, Ward 107 Madhapur, Greater Hyderabad Municipal Corporation West Zone, Hyderabad, Serilingampalle mandal, Ranga Reddy, Telangana, 500084, India
+          - group [aria-hidden]:
+            - generic: Address
+      - generic [ref=f1e676]:
+        - generic: Door number
+        - generic [ref=f1e677]:
+          - textbox "Door number" [ref=f1e923]
+          - group [aria-hidden]:
+            - generic: Door number
+      - generic [ref=f1e680]:
+        - generic: Street / road name
+        - generic [ref=f1e681]:
+          - textbox "Street / road name" [ref=f1e924]
+          - group [aria-hidden]:
+            - generic: Street / road name
+      - generic [ref=f1e684]:
+        - generic [ref=f1e779]: Area
+        - generic [ref=f1e685]:
+          - textbox "Area" [ref=f1e925]: Kondapur
+          - group [aria-hidden]:
+            - generic: Area
+      - generic [ref=f1e688]:
+        - generic: Landmark
+        - generic [ref=f1e689]:
+          - textbox "Landmark" [ref=f1e926]
+          - group [aria-hidden]:
+            - generic: Landmark
+      - generic [ref=f1e692]:
+        - generic [ref=f1e780]: City
+        - generic [ref=f1e693]:
+          - textbox "City" [ref=f1e927]: Hyderabad
+          - group [aria-hidden]:
+            - generic: City
+      - generic [ref=f1e696]:
+        - generic [ref=f1e781]: District
+        - generic [ref=f1e697]:
+          - textbox "District" [ref=f1e928]: Hyderabad
+          - group [aria-hidden]:
+            - generic: District
+      - generic [ref=f1e700]:
+        - generic [ref=f1e782]: State
+        - generic [ref=f1e701]:
+          - textbox "State" [ref=f1e929]: Telangana
+          - group [aria-hidden]:
+            - generic: State
+      - generic [ref=f1e704]:
+        - generic [ref=f1e783]: Pincode
+        - generic [ref=f1e705]:
+          - textbox "Pincode" [ref=f1e930]: "500084"
+          - group [aria-hidden]:
+            - generic: Pincode
+      - generic [ref=f1e708]:
+        - generic [ref=f1e784]: Store mobile number
+        - generic [ref=f1e709]:
+          - textbox "Store mobile number" [ref=f1e931]: +91 9100020011
+          - group [aria-hidden]:
+            - generic: Store mobile number
+      - generic [ref=f1e712]:
+        - generic: Alternate mobile number
+        - generic [ref=f1e713]:
+          - textbox "Alternate mobile number" [ref=f1e932]
+          - group [aria-hidden]:
+            - generic: Alternate mobile number
+      - generic [ref=f1e716]:
+        - generic [ref=f1e785]: Store email
+        - generic [ref=f1e717]:
+          - textbox "Store email" [ref=f1e933]: kondapur.qa@example.test
+          - group [aria-hidden]:
+            - generic: Store email
+      - generic [ref=f1e720]:
+        - generic: GST number
+        - generic [ref=f1e721]:
+          - textbox "GST number" [ref=f1e934]
+          - group [aria-hidden]:
+            - generic: GST number
+      - generic [ref=f1e724]:
+        - generic: Store rating
+        - generic [ref=f1e725]:
+          - spinbutton "Store rating" [ref=f1e935]
+          - group [aria-hidden]:
+            - generic: Store rating
+      - generic [ref=f1e728]:
+        - generic: Store logo/image URL
+        - generic [ref=f1e729]:
+          - textbox "Store logo/image URL" [ref=f1e936]
+          - group [aria-hidden]:
+            - generic: Store logo/image URL
+      - generic [ref=f1e732]:
+        - combobox [ref=f1e733] [cursor=pointer]: "Yes"
+        - textbox [aria-hidden]: "Yes"
+        - group [aria-hidden]
+      - generic [ref=f1e735]:
+        - combobox [active] [ref=f1e736] [cursor=pointer]: "Yes"
+        - textbox [aria-hidden]: "Yes"
+        - group [aria-hidden]
+      - generic [ref=f1e738]:
+        - combobox [ref=f1e739] [cursor=pointer]: Store status
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+      - generic [ref=f1e741]:
+        - generic [ref=f1e786]:
+          - text: Order radius in KM
+          - generic [aria-hidden] [ref=f1e787]: "*"
+        - generic [ref=f1e742]:
+          - spinbutton "Order radius in KM" [ref=f1e937]: "8"
+          - group [aria-hidden]:
+            - generic: Order radius in KM *
+      - generic [ref=f1e745]:
+        - generic [ref=f1e788]:
+          - text: Delivery ETA minutes
+          - generic [aria-hidden] [ref=f1e789]: "*"
+        - generic [ref=f1e746]:
+          - spinbutton "Delivery ETA minutes" [ref=f1e938]: "30"
+          - group [aria-hidden]:
+            - generic: Delivery ETA minutes *
+      - generic [ref=f1e749]:
+        - generic [ref=f1e790]: Delivery charge
+        - generic [ref=f1e750]:
+          - spinbutton "Delivery charge" [ref=f1e939]: "35"
+          - group [aria-hidden]:
+            - generic: Delivery charge
+      - generic [ref=f1e753]:
+        - generic [ref=f1e791]: Free delivery above order value
+        - generic [ref=f1e754]:
+          - spinbutton "Free delivery above order value" [ref=f1e940]: "499"
+          - group [aria-hidden]:
+            - generic: Free delivery above order value
+      - generic [ref=f1e757]:
+        - generic [ref=f1e792]: Delivery modes (comma separated)
+        - generic [ref=f1e758]:
+          - textbox "Delivery modes (comma separated)" [ref=f1e941]: Standard Delivery, Instant Delivery, Store Pickup
+          - group [aria-hidden]:
+            - generic: Delivery modes (comma separated)
+      - generic [ref=f1e761]:
+        - generic [ref=f1e793]: Delivery notes
+        - generic [ref=f1e762]:
+          - textbox "Delivery notes" [ref=f1e942]: QA testing only; contact customer before dispatch.
+          - group [aria-hidden]:
+            - generic: Delivery notes
+    - generic [ref=f1e765]:
+      - button "Cancel" [ref=f1e943] [cursor=pointer]
+      - button "Save" [ref=f1e944] [cursor=pointer]

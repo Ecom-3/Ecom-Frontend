@@ -1,0 +1,97 @@
+- generic [ref=f25e8]:
+  - navigation [ref=f25e9]:
+    - generic [ref=f25e10]:
+      - img "Spices and Pickles" [ref=f25e11]
+      - generic [ref=f25e12]:
+        - heading "Location Admin Portal" [level=6] [ref=f25e13]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f25e14] [cursor=pointer]
+    - generic [ref=f25e17]:
+      - generic [ref=f25e18]:
+        - paragraph [ref=f25e19]: Main
+        - button "Dashboard" [ref=f25e20] [cursor=pointer]
+      - generic [ref=f25e25]:
+        - paragraph [ref=f25e26]: Management
+        - button "Stores" [ref=f25e27] [cursor=pointer]
+        - button "Products" [ref=f25e32] [cursor=pointer]
+        - button "Banners" [ref=f25e38] [cursor=pointer]
+        - button "Inventory" [ref=f25e43] [cursor=pointer]
+      - generic [ref=f25e49]:
+        - paragraph [ref=f25e50]: Orders & Payments
+        - button "Orders" [ref=f25e51] [cursor=pointer]
+        - button "Payments" [ref=f25e56] [cursor=pointer]
+        - button "Delivery" [ref=f25e62] [cursor=pointer]
+      - generic [ref=f25e67]:
+        - paragraph [ref=f25e68]: Customer
+        - button "Coupons" [ref=f25e69] [cursor=pointer]
+      - generic [ref=f25e75]:
+        - paragraph [ref=f25e76]: Analytics
+        - button "Reports" [ref=f25e77] [cursor=pointer]
+    - button "View Customer App" [ref=f25e82] [cursor=pointer]
+  - main [ref=f25e83]:
+    - generic [ref=f25e84]:
+      - generic [ref=f25e85]:
+        - button [ref=f25e86] [cursor=pointer]
+        - generic [ref=f25e89]:
+          - text: Location Admin /
+          - strong [ref=f25e90]: Banners
+      - generic [ref=f25e91]:
+        - textbox "Search portal" [ref=f25e96]
+        - button "Notifications" [ref=f25e97] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=f25e100] [cursor=pointer]:
+          - generic [ref=f25e101]: H
+          - generic [ref=f25e102]: Hyderabad Location Admin
+    - generic [ref=f25e103]:
+      - generic [ref=f25e104]:
+        - heading "Banners" [level=4] [ref=f25e105]
+        - paragraph [ref=f25e106]: Manage banners within your assigned scope.
+      - button "View Customer App" [ref=f25e107] [cursor=pointer]
+    - generic [ref=f25e108]:
+      - generic [ref=f25e109]:
+        - generic [ref=f25e110]:
+          - generic: Search
+          - generic [ref=f25e111]:
+            - textbox "Search" [ref=f25e112]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f25e113]:
+          - combobox [ref=f25e114] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f25e115]:
+          - combobox [ref=f25e116] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create" [ref=f25e117] [cursor=pointer]
+        - button "Export" [ref=f25e118] [cursor=pointer]
+      - generic [ref=f25e119]:
+        - generic [ref=f25e120]:
+          - paragraph [ref=f25e121]: Fresh Pickles Sale
+          - paragraph [ref=f25e122]: Active
+        - generic [ref=f25e123]:
+          - button "View" [ref=f25e124] [cursor=pointer]
+          - button "Edit" [ref=f25e125] [cursor=pointer]
+          - button "Deactivate" [ref=f25e126] [cursor=pointer]
+          - button "Delete" [ref=f25e127] [cursor=pointer]
+      - generic [ref=f25e128]:
+        - generic [ref=f25e129]:
+          - paragraph [ref=f25e130]: Free Delivery Above 499
+          - paragraph [ref=f25e131]: Active
+        - generic [ref=f25e132]:
+          - button "View" [ref=f25e133] [cursor=pointer]
+          - button "Edit" [ref=f25e134] [cursor=pointer]
+          - button "Deactivate" [ref=f25e135] [cursor=pointer]
+          - button "Delete" [ref=f25e136] [cursor=pointer]
+      - generic [ref=f25e137]:
+        - generic [ref=f25e138]:
+          - paragraph [ref=f25e139]: Hyderabad karthik
+          - paragraph [ref=f25e140]: Active
+        - generic [ref=f25e141]:
+          - button "View" [ref=f25e142] [cursor=pointer]
+          - button "Edit" [ref=f25e143] [cursor=pointer]
+          - button "Deactivate" [ref=f25e144] [cursor=pointer]
+          - button "Delete" [ref=f25e145] [cursor=pointer]
+      - generic [ref=f25e146]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f25e147]: Page 1 of 1
+        - button "Next" [disabled]

@@ -1,0 +1,141 @@
+- generic [ref=f46e8]:
+  - navigation [ref=f46e9]:
+    - generic [ref=f46e10]:
+      - img "Spices and Pickles" [ref=f46e704]
+      - generic [ref=f46e12]:
+        - heading "Super Admin Portal" [level=6] [ref=f46e705]
+        - text: All locations
+      - button "Collapse sidebar" [ref=f46e706] [cursor=pointer]
+    - generic [ref=f46e17]:
+      - generic [ref=f46e18]:
+        - paragraph [ref=f46e19]: Main
+        - button "Dashboard" [ref=f46e707] [cursor=pointer]
+      - generic [ref=f46e25]:
+        - paragraph [ref=f46e26]: Management
+        - button "Locations" [ref=f46e708] [cursor=pointer]
+        - button "Users" [ref=f46e709] [cursor=pointer]
+        - button "Stores" [ref=f46e710] [cursor=pointer]
+        - button "Products" [ref=f46e711] [cursor=pointer]
+        - button "Categories" [ref=f46e712] [cursor=pointer]
+        - button "Banners" [ref=f46e713] [cursor=pointer]
+        - button "Inventory" [ref=f46e714] [cursor=pointer]
+      - generic [ref=f46e65]:
+        - paragraph [ref=f46e66]: Orders & Payments
+        - button "Orders" [ref=f46e715] [cursor=pointer]
+        - button "Payments" [ref=f46e716] [cursor=pointer]
+        - button "Delivery" [ref=f46e717] [cursor=pointer]
+      - generic [ref=f46e83]:
+        - paragraph [ref=f46e84]: Customer
+        - button "Customers" [ref=f46e718] [cursor=pointer]
+        - button "Reviews" [ref=f46e719] [cursor=pointer]
+        - button "Coupons" [ref=f46e720] [cursor=pointer]
+        - button "Notifications" [ref=f46e721] [cursor=pointer]
+      - generic [ref=f46e106]:
+        - paragraph [ref=f46e107]: Analytics
+        - button "Reports" [ref=f46e722] [cursor=pointer]
+      - generic [ref=f46e113]:
+        - paragraph [ref=f46e114]: System
+        - button "Security" [ref=f46e723] [cursor=pointer]
+        - button "Audit Logs" [ref=f46e724] [cursor=pointer]
+    - button "View Customer App" [ref=f46e725] [cursor=pointer]
+  - main [ref=f46e126]:
+    - generic [ref=f46e127]:
+      - generic [ref=f46e128]:
+        - button [ref=f46e129] [cursor=pointer]
+        - generic [ref=f46e132]:
+          - text: Super Admin /
+          - strong [ref=f46e133]: Products
+      - generic [ref=f46e134]:
+        - textbox "Search portal" [ref=f46e726]
+        - button "Notifications" [ref=f46e727] [cursor=pointer]
+        - button "A Admin" [ref=f46e728] [cursor=pointer]:
+          - generic [ref=f46e144]: A
+          - generic [ref=f46e145]: Admin
+    - generic [ref=f46e146]:
+      - generic [ref=f46e147]:
+        - heading "Products" [level=4] [ref=f46e729]
+        - paragraph [ref=f46e149]: Manage products within your assigned scope.
+      - button "View Customer App" [ref=f46e730] [cursor=pointer]
+    - generic [ref=f46e151]:
+      - generic [ref=f46e152]:
+        - generic [ref=f46e153]:
+          - generic: Search
+          - generic [ref=f46e154]:
+            - textbox "Search" [ref=f46e731]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f46e156]:
+          - combobox [ref=f46e157] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f46e158]:
+          - combobox [ref=f46e159] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create" [ref=f46e732] [cursor=pointer]
+        - button "Export" [ref=f46e733] [cursor=pointer]
+      - status [ref=f46e325]: Deleted successfully.
+      - generic [ref=f46e202]:
+        - generic [ref=f46e203]:
+          - paragraph [ref=f46e204]: Chicken Breast
+          - paragraph [ref=f46e205]: NV-CHICKEN-BREAST
+        - generic [ref=f46e206]:
+          - button "View" [ref=f46e734] [cursor=pointer]
+          - button "Edit" [ref=f46e735] [cursor=pointer]
+          - button "Duplicate" [ref=f46e736] [cursor=pointer]
+          - button "Deactivate" [ref=f46e737] [cursor=pointer]
+          - button "Delete" [ref=f46e738] [cursor=pointer]
+      - generic [ref=f46e212]:
+        - generic [ref=f46e213]:
+          - paragraph [ref=f46e214]: Chicken Curry Cut
+          - paragraph [ref=f46e215]: NV-CHICKEN-CURRY
+        - generic [ref=f46e216]:
+          - button "View" [ref=f46e739] [cursor=pointer]
+          - button "Edit" [ref=f46e740] [cursor=pointer]
+          - button "Duplicate" [ref=f46e741] [cursor=pointer]
+          - button "Deactivate" [ref=f46e742] [cursor=pointer]
+          - button "Delete" [ref=f46e743] [cursor=pointer]
+      - generic [ref=f46e351]:
+        - generic [ref=f46e352]:
+          - paragraph [ref=f46e353]: Fresh Brinjal
+          - paragraph [ref=f46e354]: VEG-FRESH-BRINJAL
+        - generic [ref=f46e355]:
+          - button "View" [ref=f46e744] [cursor=pointer]
+          - button "Edit" [ref=f46e745] [cursor=pointer]
+          - button "Duplicate" [ref=f46e746] [cursor=pointer]
+          - button "Deactivate" [ref=f46e747] [cursor=pointer]
+          - button "Delete" [ref=f46e748] [cursor=pointer]
+      - generic [ref=f46e487]:
+        - generic [ref=f46e488]:
+          - paragraph [ref=f46e489]: Fresh Carrots
+          - paragraph [ref=f46e490]: VEG-FRESH-CARROT
+        - generic [ref=f46e491]:
+          - button "View" [ref=f46e749] [cursor=pointer]
+          - button "Edit" [ref=f46e750] [cursor=pointer]
+          - button "Duplicate" [ref=f46e751] [cursor=pointer]
+          - button "Deactivate" [ref=f46e752] [cursor=pointer]
+          - button "Delete" [ref=f46e753] [cursor=pointer]
+      - generic [ref=f46e623]:
+        - generic [ref=f46e624]:
+          - paragraph [ref=f46e625]: Fresh Fish Fillet
+          - paragraph [ref=f46e626]: NV-FISH-FILLET
+        - generic [ref=f46e627]:
+          - button "View" [ref=f46e754] [cursor=pointer]
+          - button "Edit" [ref=f46e755] [cursor=pointer]
+          - button "Duplicate" [ref=f46e756] [cursor=pointer]
+          - button "Deactivate" [ref=f46e757] [cursor=pointer]
+          - button "Delete" [ref=f46e758] [cursor=pointer]
+      - generic [ref=f46e759]:
+        - generic [ref=f46e760]:
+          - paragraph [ref=f46e761]: Fresh Lady Finger
+          - paragraph [ref=f46e762]: VEG-LADY-FINGER
+        - generic [ref=f46e763]:
+          - button "View" [ref=f46e764] [cursor=pointer]
+          - button "Edit" [ref=f46e765] [cursor=pointer]
+          - button "Duplicate" [ref=f46e766] [cursor=pointer]
+          - button "Deactivate" [ref=f46e767] [cursor=pointer]
+          - button "Delete" [ref=f46e768] [cursor=pointer]
+      - generic [ref=f46e222]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f46e223]: Page 1 of 4
+        - button "Next" [ref=f46e769] [cursor=pointer]

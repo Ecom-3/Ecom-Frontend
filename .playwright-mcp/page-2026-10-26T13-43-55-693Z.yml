@@ -1,0 +1,231 @@
+- generic [ref=f2e1]:
+  - generic [ref=f2e8]:
+    - navigation [ref=f2e9]:
+      - generic [ref=f2e10]:
+        - generic [ref=f2e12]:
+          - heading [level=6] [ref=f2e150]: Global Admin Portal
+          - text: All locations
+        - button [ref=f2e151] [cursor=pointer]
+      - generic [ref=f2e17]:
+        - generic [ref=f2e18]:
+          - paragraph [ref=f2e19]: Main
+          - button [ref=f2e152] [cursor=pointer]:
+            - generic [ref=f2e24]: Dashboard
+        - generic [ref=f2e25]:
+          - paragraph [ref=f2e26]: Management
+          - button [ref=f2e153] [cursor=pointer]:
+            - generic [ref=f2e31]: Stores
+          - button [ref=f2e154] [cursor=pointer]:
+            - generic [ref=f2e37]: Products
+          - button [ref=f2e155] [cursor=pointer]:
+            - generic [ref=f2e42]: Banners
+          - button [ref=f2e156] [cursor=pointer]:
+            - generic [ref=f2e48]: Inventory
+        - generic [ref=f2e49]:
+          - paragraph [ref=f2e50]: Orders & Payments
+          - button [ref=f2e157] [cursor=pointer]:
+            - generic [ref=f2e55]: Orders
+          - button [ref=f2e158] [cursor=pointer]:
+            - generic [ref=f2e61]: Payments
+          - button [ref=f2e159] [cursor=pointer]:
+            - generic [ref=f2e66]: Delivery
+        - generic [ref=f2e67]:
+          - paragraph [ref=f2e68]: Customer
+          - button [ref=f2e160] [cursor=pointer]:
+            - generic [ref=f2e73]: Customers
+          - button [ref=f2e161] [cursor=pointer]:
+            - generic [ref=f2e78]: Reviews
+          - button [ref=f2e162] [cursor=pointer]:
+            - generic [ref=f2e84]: Coupons
+          - button [ref=f2e163] [cursor=pointer]:
+            - generic [ref=f2e89]: Notifications
+        - generic [ref=f2e90]:
+          - paragraph [ref=f2e91]: Analytics
+          - button [ref=f2e164] [cursor=pointer]:
+            - generic [ref=f2e96]: Reports
+        - generic [ref=f2e97]:
+          - paragraph [ref=f2e98]: System
+          - button [ref=f2e165] [cursor=pointer]:
+            - generic [ref=f2e103]: Audit Logs
+      - button [ref=f2e166] [cursor=pointer]: View Customer App
+    - main [ref=f2e105]:
+      - generic [ref=f2e106]:
+        - generic [ref=f2e107]:
+          - button [ref=f2e108] [cursor=pointer]
+          - generic [ref=f2e111]:
+            - text: Global Admin /
+            - strong [ref=f2e112]: Products
+        - generic [ref=f2e113]:
+          - textbox [ref=f2e167]:
+            - /placeholder: Search portal
+          - button [ref=f2e168] [cursor=pointer]
+          - button [ref=f2e169] [cursor=pointer]:
+            - generic [ref=f2e123]: G
+            - generic [ref=f2e124]: Global Admin QA
+      - generic [ref=f2e125]:
+        - generic [ref=f2e126]:
+          - heading [level=4] [ref=f2e170]: Products
+          - paragraph [ref=f2e128]: Manage products within your assigned scope.
+        - button [ref=f2e171] [cursor=pointer]: View Customer App
+      - generic [ref=f2e130]:
+        - generic [ref=f2e131]:
+          - generic [ref=f2e132]:
+            - generic: Search
+            - generic [ref=f2e133]:
+              - textbox [ref=f2e172]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f2e135]:
+            - combobox [ref=f2e136] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f2e137]:
+            - combobox [ref=f2e138] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f2e173] [cursor=pointer]: Create
+          - button [ref=f2e174] [cursor=pointer]: Export
+        - alert [ref=f2e141]:
+          - generic [ref=f2e145]: 23 product IDs are present in inventory but missing from the catalog. Inventory stock records do not create product records. Recreate the products in this page before assigning new stock.
+        - paragraph [ref=f2e146]: No matching records. Use Create to add the first record.
+        - generic [ref=f2e147]:
+          - button [disabled]: Previous
+          - paragraph [ref=f2e148]: Page 1 of 1
+          - button [disabled]: Next
+  - dialog [ref=f2e177]:
+    - heading "Create Products" [level=2] [ref=f2e178]
+    - generic [ref=f2e179]:
+      - generic [ref=f2e181]:
+        - generic:
+          - text: Product name
+          - generic [aria-hidden]: "*"
+        - generic [ref=f2e182]:
+          - textbox "Product name" [ref=f2e183]
+          - group [aria-hidden]:
+            - generic: Product name *
+      - generic [ref=f2e185]:
+        - generic:
+          - text: Master SKU
+          - generic [aria-hidden]: "*"
+        - generic [ref=f2e186]:
+          - textbox "Master SKU" [ref=f2e187]
+          - group [aria-hidden]:
+            - generic: Master SKU *
+      - generic [ref=f2e190]:
+        - generic [ref=f2e269]: Category
+        - generic [ref=f2e191]:
+          - combobox "Category" [active] [ref=f2e192]: Premium Dry Fruits
+          - button "Clear" [ref=f2e270] [cursor=pointer]
+          - group [aria-hidden]:
+            - generic: Category
+      - generic [ref=f2e195]:
+        - generic: Sub-category
+        - generic [ref=f2e196]:
+          - textbox "Sub-category" [ref=f2e197]
+          - group [aria-hidden]:
+            - generic: Sub-category
+      - generic [ref=f2e199]:
+        - generic:
+          - text: Description
+          - generic [aria-hidden]: "*"
+        - generic [ref=f2e200]:
+          - textbox "Description" [ref=f2e201]
+          - group [aria-hidden]:
+            - generic: Description *
+      - generic [ref=f2e203]:
+        - generic: Brand
+        - generic [ref=f2e204]:
+          - textbox "Brand" [ref=f2e205]
+          - group [aria-hidden]:
+            - generic: Brand
+      - generic [ref=f2e207]:
+        - generic: Ingredients
+        - generic [ref=f2e208]:
+          - textbox "Ingredients" [ref=f2e209]
+          - group [aria-hidden]:
+            - generic: Ingredients
+      - generic [ref=f2e211]:
+        - generic: Specifications
+        - generic [ref=f2e212]:
+          - textbox "Specifications" [ref=f2e213]
+          - group [aria-hidden]:
+            - generic: Specifications
+      - generic [ref=f2e215]:
+        - generic: Pack
+        - generic [ref=f2e216]:
+          - textbox "Pack" [ref=f2e217]
+          - group [aria-hidden]:
+            - generic: Pack
+      - generic [ref=f2e219]:
+        - generic: Type
+        - generic [ref=f2e220]:
+          - textbox "Type" [ref=f2e221]
+          - group [aria-hidden]:
+            - generic: Type
+      - generic [ref=f2e223]:
+        - generic: Shelf life
+        - generic [ref=f2e224]:
+          - textbox "Shelf life" [ref=f2e225]
+          - group [aria-hidden]:
+            - generic: Shelf life
+      - generic [ref=f2e227]:
+        - generic: Tags
+        - generic [ref=f2e228]:
+          - textbox "Tags" [ref=f2e229]
+          - group [aria-hidden]:
+            - generic: Tags
+      - generic [ref=f2e231]:
+        - generic: Highlights
+        - generic [ref=f2e232]:
+          - textbox "Highlights" [ref=f2e233]
+          - group [aria-hidden]:
+            - generic: Highlights
+      - generic [ref=f2e235]:
+        - generic: About the Source
+        - generic [ref=f2e236]:
+          - textbox "About the Source" [ref=f2e237]
+          - group [aria-hidden]:
+            - generic: About the Source
+      - generic [ref=f2e239]:
+        - generic: "Variants (one per line: Label | SKU | Price)"
+        - generic [ref=f2e240]:
+          - 'textbox "Variants (one per line: Label | SKU | Price)" [ref=f2e241]'
+          - group [aria-hidden]:
+            - generic: "Variants (one per line: Label | SKU | Price)"
+      - generic [ref=f2e243]:
+        - generic:
+          - text: Default price
+          - generic [aria-hidden]: "*"
+        - generic [ref=f2e244]:
+          - spinbutton "Default price" [ref=f2e245]
+          - group [aria-hidden]:
+            - generic: Default price *
+      - generic [ref=f2e247]:
+        - generic: Main image URL
+        - generic [ref=f2e248]:
+          - textbox "Main image URL" [ref=f2e249]
+          - group [aria-hidden]:
+            - generic: Main image URL
+      - generic [ref=f2e251]:
+        - combobox [ref=f2e252] [cursor=pointer]: Featured product
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+      - generic [ref=f2e254]:
+        - combobox [ref=f2e255] [cursor=pointer]: Special product
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+      - generic [ref=f2e257]:
+        - combobox [ref=f2e258] [cursor=pointer]: New arrival
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+      - generic [ref=f2e260]:
+        - combobox [ref=f2e261] [cursor=pointer]: Best seller
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+      - generic [ref=f2e263]:
+        - combobox [ref=f2e264] [cursor=pointer]: Status
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+    - generic [ref=f2e266]:
+      - button "Cancel" [ref=f2e267] [cursor=pointer]
+      - button "Save" [ref=f2e268] [cursor=pointer]

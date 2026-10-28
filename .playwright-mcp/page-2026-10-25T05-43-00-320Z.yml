@@ -1,0 +1,80 @@
+- generic [ref=f2e8]:
+  - navigation [ref=f2e9]:
+    - generic [ref=f2e10]:
+      - img "Spices and Pickles" [ref=f2e531]
+      - generic [ref=f2e12]:
+        - heading "Location Admin Portal" [level=6] [ref=f2e532]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f2e533] [cursor=pointer]
+    - generic [ref=f2e17]:
+      - generic [ref=f2e18]:
+        - paragraph [ref=f2e19]: Main
+        - button "Dashboard" [ref=f2e534] [cursor=pointer]
+      - generic [ref=f2e25]:
+        - paragraph [ref=f2e26]: Management
+        - button "Stores" [ref=f2e535] [cursor=pointer]
+        - button "Products" [ref=f2e536] [cursor=pointer]
+        - button "Banners" [ref=f2e537] [cursor=pointer]
+        - button "Inventory" [ref=f2e538] [cursor=pointer]
+      - generic [ref=f2e49]:
+        - paragraph [ref=f2e50]: Orders & Payments
+        - button "Orders" [ref=f2e539] [cursor=pointer]
+        - button "Payments" [ref=f2e540] [cursor=pointer]
+        - button "Delivery" [ref=f2e541] [cursor=pointer]
+      - generic [ref=f2e67]:
+        - paragraph [ref=f2e68]: Customer
+        - button "Coupons" [ref=f2e542] [cursor=pointer]
+      - generic [ref=f2e75]:
+        - paragraph [ref=f2e76]: Analytics
+        - button "Reports" [ref=f2e543] [cursor=pointer]
+    - button "View Customer App" [ref=f2e544] [cursor=pointer]
+  - main [ref=f2e83]:
+    - generic [ref=f2e84]:
+      - generic [ref=f2e85]:
+        - button [ref=f2e86] [cursor=pointer]
+        - generic [ref=f2e89]:
+          - text: Location Admin /
+          - strong [ref=f2e90]: Stores
+      - generic [ref=f2e91]:
+        - textbox "Search portal" [ref=f2e545]
+        - button "Notifications" [ref=f2e546] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=f2e547] [cursor=pointer]:
+          - generic [ref=f2e101]: H
+          - generic [ref=f2e102]: Hyderabad Location Admin
+    - generic [ref=f2e103]:
+      - generic [ref=f2e104]:
+        - heading "Stores" [level=4] [ref=f2e548]
+        - paragraph [ref=f2e106]: Manage stores within your assigned scope.
+      - button "View Customer App" [ref=f2e549] [cursor=pointer]
+    - generic [ref=f2e108]:
+      - generic [ref=f2e109]:
+        - generic [ref=f2e110]:
+          - generic: Search
+          - generic [ref=f2e111]:
+            - textbox "Search" [ref=f2e550]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f2e113]:
+          - combobox [ref=f2e114] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f2e115]:
+          - combobox [ref=f2e116] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create" [active] [ref=f2e551] [cursor=pointer]
+        - button "Export" [ref=f2e552] [cursor=pointer]
+      - status [ref=f2e553]: Saved successfully.
+      - generic [ref=f2e554]:
+        - generic [ref=f2e555]:
+          - paragraph [ref=f2e556]: QA LA0407 Disposable Store 20261025
+          - paragraph [ref=f2e557]: Hyderabad
+        - generic [ref=f2e558]:
+          - button "View" [ref=f2e559] [cursor=pointer]
+          - button "Edit" [ref=f2e560] [cursor=pointer]
+          - button "Deactivate" [ref=f2e561] [cursor=pointer]
+          - button "Delete" [ref=f2e562] [cursor=pointer]
+      - generic [ref=f2e120]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f2e121]: Page 1 of 1
+        - button "Next" [disabled]

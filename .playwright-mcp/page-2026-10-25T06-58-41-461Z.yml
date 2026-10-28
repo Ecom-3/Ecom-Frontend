@@ -1,0 +1,80 @@
+- generic [ref=f9e8]:
+  - navigation [ref=f9e9]:
+    - generic [ref=f9e10]:
+      - img "Spices and Pickles" [ref=f9e924]
+      - generic [ref=f9e12]:
+        - heading "Location Admin Portal" [level=6] [ref=f9e925]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f9e926] [cursor=pointer]
+    - generic [ref=f9e17]:
+      - generic [ref=f9e18]:
+        - paragraph [ref=f9e19]: Main
+        - button "Dashboard" [ref=f9e927] [cursor=pointer]
+      - generic [ref=f9e25]:
+        - paragraph [ref=f9e26]: Management
+        - button "Stores" [ref=f9e928] [cursor=pointer]
+        - button "Products" [ref=f9e929] [cursor=pointer]
+        - button "Banners" [ref=f9e930] [cursor=pointer]
+        - button "Inventory" [ref=f9e931] [cursor=pointer]
+      - generic [ref=f9e49]:
+        - paragraph [ref=f9e50]: Orders & Payments
+        - button "Orders" [ref=f9e932] [cursor=pointer]
+        - button "Payments" [ref=f9e933] [cursor=pointer]
+        - button "Delivery" [ref=f9e934] [cursor=pointer]
+      - generic [ref=f9e67]:
+        - paragraph [ref=f9e68]: Customer
+        - button "Coupons" [ref=f9e935] [cursor=pointer]
+      - generic [ref=f9e75]:
+        - paragraph [ref=f9e76]: Analytics
+        - button "Reports" [ref=f9e936] [cursor=pointer]
+    - button "View Customer App" [ref=f9e937] [cursor=pointer]
+  - main [ref=f9e83]:
+    - generic [ref=f9e84]:
+      - generic [ref=f9e85]:
+        - button [ref=f9e86] [cursor=pointer]
+        - generic [ref=f9e89]:
+          - text: Location Admin /
+          - strong [ref=f9e90]: Banners
+      - generic [ref=f9e91]:
+        - textbox "Search portal" [ref=f9e938]
+        - button "Notifications" [ref=f9e939] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=f9e940] [cursor=pointer]:
+          - generic [ref=f9e101]: H
+          - generic [ref=f9e102]: Hyderabad Location Admin
+    - generic [ref=f9e103]:
+      - generic [ref=f9e104]:
+        - heading "Banners" [level=4] [ref=f9e941]
+        - paragraph [ref=f9e106]: Manage banners within your assigned scope.
+      - button "View Customer App" [ref=f9e942] [cursor=pointer]
+    - generic [ref=f9e108]:
+      - generic [ref=f9e109]:
+        - generic [ref=f9e110]:
+          - generic: Search
+          - generic [ref=f9e111]:
+            - textbox "Search" [ref=f9e943]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f9e113]:
+          - combobox [ref=f9e114] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f9e115]:
+          - combobox [ref=f9e116] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create" [ref=f9e944] [cursor=pointer]
+        - button "Export" [ref=f9e945] [cursor=pointer]
+      - status [ref=f9e946]: Saved successfully.
+      - generic [ref=f9e828]:
+        - generic [ref=f9e829]:
+          - paragraph [ref=f9e830]: LA16QA Campaign Hyderabad Edited
+          - paragraph [ref=f9e831]: Active
+        - generic [ref=f9e832]:
+          - button "View" [ref=f9e947] [cursor=pointer]
+          - button "Edit" [active] [ref=f9e948] [cursor=pointer]
+          - button "Deactivate" [ref=f9e949] [cursor=pointer]
+          - button "Delete" [ref=f9e950] [cursor=pointer]
+      - generic [ref=f9e128]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f9e129]: Page 1 of 1
+        - button "Next" [disabled]

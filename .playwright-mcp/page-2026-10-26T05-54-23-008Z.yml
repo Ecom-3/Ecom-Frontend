@@ -1,0 +1,222 @@
+- generic [ref=e1]:
+  - generic [ref=e140]:
+    - complementary [ref=e141]:
+      - generic [ref=e144]:
+        - heading [level=6] [ref=e393]: Store Manager
+        - paragraph [ref=e146]: Gachibowli Fresh Hub
+      - navigation [ref=e147]:
+        - button [ref=e394] [cursor=pointer]:
+          - generic [ref=e152]: Dashboard
+        - button [ref=e395] [cursor=pointer]:
+          - generic [ref=e158]: Products
+        - button [ref=e396] [cursor=pointer]:
+          - generic [ref=e163]: Banners
+        - button [ref=e397] [cursor=pointer]:
+          - generic [ref=e169]: Inventory
+        - button [ref=e398] [cursor=pointer]:
+          - generic [ref=e174]: Orders
+        - button [ref=e399] [cursor=pointer]:
+          - generic [ref=e179]: Delivery Partners
+        - button [ref=e400] [cursor=pointer]:
+          - generic [ref=e184]: Delivery Radius
+        - button [ref=e401] [cursor=pointer]:
+          - generic [ref=e189]: Delivery Settings
+        - button [ref=e402] [cursor=pointer]:
+          - generic [ref=e194]: Change Password
+        - button [ref=e403] [cursor=pointer]:
+          - generic [ref=e199]: Profile
+        - button [ref=e404] [cursor=pointer]:
+          - generic [ref=e204]: Logout
+      - button [ref=e405] [cursor=pointer]: View Customer App
+    - main [ref=e206]:
+      - generic [ref=e207]:
+        - button [ref=e406] [cursor=pointer]: Store Manager
+        - button [ref=e407] [cursor=pointer]:
+          - generic [ref=e213]: S
+          - generic [ref=e214]: Sravani Gachibowli
+        - button [ref=e408] [cursor=pointer]: Sign out
+      - generic [ref=e216]:
+        - generic [ref=e217]:
+          - heading [level=4] [ref=e409]: Store Products
+          - paragraph [ref=e219]: Manage products assigned only to Gachibowli Fresh Hub.
+        - button [ref=e410] [cursor=pointer]: Create Product
+      - alert [ref=e376]:
+        - generic [ref=e380]: Product created for your assigned store.
+      - generic [ref=e221]:
+        - generic [ref=e222]:
+          - generic: Search your products
+          - generic [ref=e223]:
+            - textbox [ref=e411]
+            - group [aria-hidden]:
+              - generic: Search your products
+        - paragraph [ref=e225]: 1 products
+      - generic [ref=e383]:
+        - generic [ref=e384]:
+          - paragraph [ref=e385]: QA SM09 Browser Product 1792994041019
+          - paragraph [ref=e386]: SMQA-1792994041019 · Traditional Pickles · Local QA
+        - generic [ref=e387]: ACTIVE
+        - button [ref=e412] [cursor=pointer]: Available
+        - button [ref=e413] [cursor=pointer]: Edit
+        - button [ref=e414] [cursor=pointer]: Delete
+  - dialog [active] [ref=e417]:
+    - heading "Edit Store Product" [level=2] [ref=e418]
+    - generic [ref=e419]:
+      - generic [ref=e420]:
+        - generic [ref=e421]: Category
+        - generic [ref=e422]:
+          - combobox "Category" [ref=e423] [cursor=pointer]: Traditional Pickles
+          - textbox [aria-hidden]: 11000000-0000-0000-0000-000000000001
+          - group [aria-hidden]:
+            - generic: Category
+      - generic [ref=e424]:
+        - generic [ref=e425]: Product name
+        - generic [ref=e426]:
+          - textbox "Product name" [ref=e427]: QA SM09 Browser Product 1792994041019
+          - group [aria-hidden]:
+            - generic: Product name
+      - generic [ref=e428]:
+        - generic [ref=e429]: SKU
+        - generic [ref=e430]:
+          - textbox "SKU" [ref=e431]: SMQA-1792994041019
+          - group [aria-hidden]:
+            - generic: SKU
+      - generic [ref=e432]:
+        - generic [ref=e433]: Brand
+        - generic [ref=e434]:
+          - textbox "Brand" [ref=e435]: Local QA
+          - group [aria-hidden]:
+            - generic: Brand
+      - generic [ref=e436]:
+        - generic [ref=e437]: URL slug (optional)
+        - generic [ref=e438]:
+          - textbox "URL slug (optional)" [ref=e439]: qa-sm09-browser-product-1792994041019
+          - group [aria-hidden]:
+            - generic: URL slug (optional)
+      - generic [ref=e440]:
+        - generic [ref=e441]: Subcategory
+        - generic [ref=e442]:
+          - textbox "Subcategory" [ref=e443]: Other
+          - group [aria-hidden]:
+            - generic: Subcategory
+      - generic [ref=e444]:
+        - generic: Pack
+        - generic [ref=e445]:
+          - textbox "Pack" [ref=e446]
+          - group [aria-hidden]:
+            - generic: Pack
+      - generic [ref=e447]:
+        - generic: Product type
+        - generic [ref=e448]:
+          - textbox "Product type" [ref=e449]
+          - group [aria-hidden]:
+            - generic: Product type
+      - generic [ref=e450]:
+        - generic: Shelf life
+        - generic [ref=e451]:
+          - textbox "Shelf life" [ref=e452]
+          - group [aria-hidden]:
+            - generic: Shelf life
+      - generic [ref=e453]:
+        - generic [ref=e454]: Status
+        - generic [ref=e455]:
+          - combobox "Status" [ref=e456] [cursor=pointer]: Active
+          - textbox [aria-hidden]: ACTIVE
+          - group [aria-hidden]:
+            - generic: Status
+      - generic [ref=e457]:
+        - generic [ref=e458]: Description
+        - generic [ref=e459]:
+          - textbox "Description" [ref=e460]: Disposable Store Manager browser QA product
+          - group [aria-hidden]:
+            - generic: Description
+      - generic [ref=e461]:
+        - generic: Ingredients
+        - generic [ref=e462]:
+          - textbox "Ingredients" [ref=e463]
+          - group [aria-hidden]:
+            - generic: Ingredients
+      - generic [ref=e464]:
+        - generic: Specifications
+        - generic [ref=e465]:
+          - textbox "Specifications" [ref=e466]
+          - group [aria-hidden]:
+            - generic: Specifications
+      - generic [ref=e467]:
+        - generic: Highlights
+        - generic [ref=e468]:
+          - textbox "Highlights" [ref=e469]
+          - group [aria-hidden]:
+            - generic: Highlights
+      - generic [ref=e470]:
+        - generic: Tags
+        - generic [ref=e471]:
+          - textbox "Tags" [ref=e472]
+          - group [aria-hidden]:
+            - generic: Tags
+      - generic [ref=e473]:
+        - generic [ref=e474]:
+          - paragraph [ref=e475]: Variants and prices
+          - button "Add Variant" [ref=e476] [cursor=pointer]
+        - generic [ref=e477]:
+          - generic [ref=e478]:
+            - generic [ref=e479]: Variant SKU
+            - generic [ref=e480]:
+              - textbox "Variant SKU" [ref=e481]: SMQA-1792994041019-V1
+              - group [aria-hidden]:
+                - generic: Variant SKU
+          - generic [ref=e482]:
+            - generic [ref=e483]: Variant / pack name
+            - generic [ref=e484]:
+              - textbox "Variant / pack name" [ref=e485]: QA 250 g
+              - group [aria-hidden]:
+                - generic: Variant / pack name
+          - generic [ref=e486]:
+            - generic [ref=e487]: Price
+            - generic [ref=e488]:
+              - spinbutton "Price" [ref=e489]: "12.5"
+              - group [aria-hidden]:
+                - generic: Price
+          - generic [ref=e490]:
+            - generic [ref=e491]: Compare-at price
+            - generic [ref=e492]:
+              - spinbutton "Compare-at price" [ref=e493]: "15"
+              - group [aria-hidden]:
+                - generic: Compare-at price
+          - generic [ref=e494]:
+            - generic [ref=e495] [cursor=pointer]:
+              - checkbox "Active" [checked] [ref=e497]
+              - generic [ref=e500]: Active
+            - button "Remove" [ref=e501] [cursor=pointer]
+          - generic [ref=e502]:
+            - generic [ref=e503]: Variant attributes (JSON or text)
+            - generic [ref=e504]:
+              - textbox "Variant attributes (JSON or text)" [ref=e505]: "{\"qa\": true, \"weight\": \"250 g\"}"
+              - group [aria-hidden]:
+                - generic: Variant attributes (JSON or text)
+        - generic [ref=e506]: Active products need at least one active, priced variant.
+      - generic [ref=e507]:
+        - generic [ref=e508]:
+          - paragraph [ref=e509]: Product images
+          - button "Add Image" [ref=e510] [cursor=pointer]
+        - generic [ref=e511]:
+          - generic [ref=e512]:
+            - generic [ref=e513]: Image URL
+            - generic [ref=e514]:
+              - textbox "Image URL" [ref=e515]:
+                - /placeholder: https://…
+                - text: https://example.invalid/1792994041019.png
+              - group [aria-hidden]:
+                - generic: Image URL
+          - generic [ref=e516]:
+            - generic [ref=e517]: Alt text
+            - generic [ref=e518]:
+              - textbox "Alt text" [ref=e519]: Disposable local QA image
+              - group [aria-hidden]:
+                - generic: Alt text
+          - button "Remove" [ref=e520] [cursor=pointer]
+      - generic [ref=e521] [cursor=pointer]:
+        - checkbox "Available in my store" [checked] [ref=e523]
+        - generic [ref=e526]: Available in my store
+    - generic [ref=e527]:
+      - button "Cancel" [ref=e528] [cursor=pointer]
+      - button "Save Product" [ref=e529] [cursor=pointer]

@@ -1,0 +1,96 @@
+- generic [ref=f9e1]:
+  - generic [ref=f9e8]:
+    - navigation [ref=f9e9]:
+      - generic [ref=f9e10]:
+        - generic [ref=f9e12]:
+          - heading [level=6] [ref=f9e132]: Location Admin Portal
+          - text: hyderabad
+        - button [ref=f9e133] [cursor=pointer]
+      - generic [ref=f9e17]:
+        - generic [ref=f9e18]:
+          - paragraph [ref=f9e19]: Main
+          - button [ref=f9e134] [cursor=pointer]:
+            - generic [ref=f9e24]: Dashboard
+        - generic [ref=f9e25]:
+          - paragraph [ref=f9e26]: Management
+          - button [ref=f9e135] [cursor=pointer]:
+            - generic [ref=f9e31]: Stores
+          - button [ref=f9e136] [cursor=pointer]:
+            - generic [ref=f9e37]: Products
+          - button [ref=f9e137] [cursor=pointer]:
+            - generic [ref=f9e42]: Banners
+          - button [ref=f9e138] [cursor=pointer]:
+            - generic [ref=f9e48]: Inventory
+        - generic [ref=f9e49]:
+          - paragraph [ref=f9e50]: Orders & Payments
+          - button [ref=f9e139] [cursor=pointer]:
+            - generic [ref=f9e55]: Orders
+          - button [ref=f9e140] [cursor=pointer]:
+            - generic [ref=f9e61]: Payments
+          - button [ref=f9e141] [cursor=pointer]:
+            - generic [ref=f9e66]: Delivery
+        - generic [ref=f9e67]:
+          - paragraph [ref=f9e68]: Customer
+          - button [ref=f9e142] [cursor=pointer]:
+            - generic [ref=f9e74]: Coupons
+        - generic [ref=f9e75]:
+          - paragraph [ref=f9e76]: Analytics
+          - button [ref=f9e143] [cursor=pointer]:
+            - generic [ref=f9e81]: Reports
+      - button [ref=f9e144] [cursor=pointer]: View Customer App
+    - main [ref=f9e83]:
+      - generic [ref=f9e84]:
+        - generic [ref=f9e85]:
+          - button [ref=f9e86] [cursor=pointer]
+          - generic [ref=f9e89]:
+            - text: Location Admin /
+            - strong [ref=f9e90]: Stores
+        - generic [ref=f9e91]:
+          - textbox [ref=f9e145]:
+            - /placeholder: Search portal
+          - button [ref=f9e146] [cursor=pointer]
+          - button [ref=f9e147] [cursor=pointer]:
+            - generic [ref=f9e101]: H
+            - generic [ref=f9e102]: Hyderabad Location Admin
+      - generic [ref=f9e103]:
+        - generic [ref=f9e104]:
+          - heading [level=4] [ref=f9e148]: Stores
+          - paragraph [ref=f9e106]: Manage stores within your assigned scope.
+        - button [ref=f9e149] [cursor=pointer]: View Customer App
+      - generic [ref=f9e108]:
+        - generic [ref=f9e109]:
+          - generic [ref=f9e110]:
+            - generic: Search
+            - generic [ref=f9e111]:
+              - textbox [ref=f9e150]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f9e113]:
+            - combobox [ref=f9e114] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f9e115]:
+            - combobox [ref=f9e116] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f9e151] [cursor=pointer]: Create
+          - button [ref=f9e152] [cursor=pointer]: Export
+        - generic [ref=f9e119]:
+          - generic [ref=f9e120]:
+            - paragraph [ref=f9e121]: LA QA next5 lifecycle store
+            - paragraph [ref=f9e122]: Inactive
+          - generic [ref=f9e123]:
+            - button [ref=f9e153] [cursor=pointer]: View
+            - button [ref=f9e154] [cursor=pointer]: Edit
+            - button [ref=f9e155] [cursor=pointer]: Activate
+            - button [ref=f9e156] [cursor=pointer]: Delete
+        - generic [ref=f9e128]:
+          - button [disabled]: Previous
+          - paragraph [ref=f9e129]: Page 1 of 1
+          - button [disabled]: Next
+  - dialog [active] [ref=f9e159]:
+    - heading "Confirm action" [level=2] [ref=f9e160]
+    - paragraph [ref=f9e162]: Delete this record? This action updates local data immediately.
+    - generic [ref=f9e163]:
+      - button "Cancel" [ref=f9e164] [cursor=pointer]
+      - button "Confirm" [ref=f9e165] [cursor=pointer]

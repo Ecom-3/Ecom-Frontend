@@ -14,6 +14,19 @@ const matchesProduct = (left = {}, right = {}) => {
   return Boolean((leftId && rightId && leftId === rightId) || (left.title && right.title && left.title === right.title) || (left.productName && right.title && left.productName === right.title));
 };
 
+const isGlobalCartOffer = (item, source, product, store) => {
+  // A resolved local store assignment takes precedence over stale fulfillment
+  // flags. Global offers can also be identified by their explicit stock scope
+  // when the Cart API omits catalog-only fields such as globalProduct.
+  if (store && !isGlobalStore(store)) return false;
+  return source?.storeId === 'global-store'
+    || item?.storeId === 'global-store'
+    || item?.sourceStoreId === 'global-store'
+    || isGlobalStore(store)
+    || isGlobalProduct(item)
+    || isGlobalProduct(product);
+};
+
 const globalLine = (item, source = {}, quote = null) => ({
   key: lineKey(item),
   productId: item.productId || item.id || '',
@@ -22,7 +35,9 @@ const globalLine = (item, source = {}, quote = null) => ({
   quantity: Number(item.quantity || 0),
   itemTotal: itemTotal(item),
   storeId: source.storeId || item.storeId || 'global-store',
-  storeName: source.store || source.storeName || item.store || item.storeName || 'India-wide Global Store',
+  storeName: source.storeId === 'global-store' || item.storeId === 'global-store' || item.sourceStoreId === 'global-store'
+    ? 'India-wide Global Store'
+    : source.store || source.storeName || item.store || item.storeName || 'India-wide Global Store',
   sourceLocation: source.location || '',
   deliveryType: 'global',
   deliveryLabel: 'Global Delivery',
@@ -59,29 +74,37 @@ const localLine = (item, source, quote, method) => {
 
 export const buildCartDeliveryLines = async ({ cartItems = [], catalogProducts = [], latitude, longitude, defaultMethod = 'standard', cached = true, selectedStoreId = '', storeMethods = {} }) => {
   const response = await getStores();
-  const stores = Array.isArray(response) ? response : response?.content || response?.items || [];
+  // Catalog APIs can include null placeholders when one store was removed or
+  // partially migrated. Ignore those rows before any store.id lookup so a
+  // malformed directory entry cannot break the entire cart summary.
+  const stores = (Array.isArray(response) ? response : response?.content || response?.items || [])
+    .filter((store) => store && typeof store === 'object');
+  const products = (Array.isArray(catalogProducts) ? catalogProducts : [])
+    .filter((product) => product && typeof product === 'object');
+  const items = (Array.isArray(cartItems) ? cartItems : [])
+    .filter((item) => item && typeof item === 'object');
   if (!stores.length) throw new Error('Store details are unavailable. Please retry.');
   if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
-    return cartItems.map((item) => {
-      const source = resolveProductStore(item, catalogProducts) || {};
+    return items.map((item) => {
+      const source = resolveProductStore(item, products) || {};
       const store = stores.find((entry) => source.storeId ? entry.id === source.storeId : entry.name === source.store || entry.name === source.storeName);
+      const product = products.find((entry) => matchesProduct(item, entry));
+      if (isGlobalCartOffer(item, source, product, store)) return globalLine(item, source);
       if (store && !isGlobalStore(store)) {
         const storeSource = { ...source, storeId:store.id, store:store.name, storeName:store.name, location:store.location };
         if (storeFulfillmentMethod(store, storeMethods, defaultMethod) === 'pickup') return pickupDeliveryLine(localLine(item, storeSource, null, 'pickup'));
         return { ...localLine(item, storeSource, null, defaultMethod), quoteUnavailable: true, estimatedDelivery: 'Select a delivery address' };
       }
-      if (isGlobalStore(store)) return globalLine(item, source);
       throw new Error('Store delivery details could not be verified. Please retry.');
     });
   }
-  const selectedStore = stores.find((entry) => entry.id === selectedStoreId);
-  return Promise.all(cartItems.map(async (item) => {
-    const source = resolveProductStore(item, catalogProducts) || {};
+  const selectedStore = stores.find((entry) => entry?.id === selectedStoreId);
+  return Promise.all(items.map(async (item) => {
+    const source = resolveProductStore(item, products) || {};
     const store = stores.find((entry) => source.storeId ? entry.id === source.storeId : entry.name === source.store || entry.name === source.storeName) || (!source.storeId ? selectedStore : null);
     const storeSource = store ? { ...source, storeId: store.id, store: store.name, storeName: store.name, location: store.location } : source;
-    const catalogProduct = catalogProducts.find((product) => matchesProduct(item, product));
-    if (isGlobalStore(store)) return globalLine(item, storeSource);
-    if (!store && (isGlobalProduct(item) || isGlobalProduct(catalogProduct))) return globalLine(item, storeSource);
+    const catalogProduct = products.find((product) => matchesProduct(item, product));
+    if (isGlobalCartOffer(item, storeSource, catalogProduct, store)) return globalLine(item, storeSource);
     if (!storeSource.storeId || !store) throw new Error('Store delivery details could not be verified. Please retry.');
     const requestedStoreMethod = storeFulfillmentMethod(store, storeMethods, defaultMethod);
     if (requestedStoreMethod === 'pickup') return pickupDeliveryLine(localLine(item, storeSource, null, 'pickup'));
@@ -89,8 +112,8 @@ export const buildCartDeliveryLines = async ({ cartItems = [], catalogProducts =
       const quote = await (cached ? getCachedStoreDeliveryQuote : getStoreDeliveryQuote)(storeSource.storeId, {
         latitude,
         longitude,
-        orderTotal: cartItems.filter((entry) => {
-          const entrySource = resolveProductStore(entry, catalogProducts) || {};
+        orderTotal: items.filter((entry) => {
+          const entrySource = resolveProductStore(entry, products) || {};
           return (entrySource.storeId || entry.storeId) === storeSource.storeId;
         }).reduce((sum, entry) => sum + itemTotal(entry), 0),
         deliveryMethod: requestedStoreMethod,

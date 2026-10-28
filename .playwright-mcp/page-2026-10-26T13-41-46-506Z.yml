@@ -1,0 +1,208 @@
+- generic [ref=f65e1]:
+  - generic [ref=f65e8]:
+    - navigation [ref=f65e9]:
+      - generic [ref=f65e10]:
+        - generic [ref=f65e12]:
+          - heading [level=6] [ref=f65e210]: Super Admin Portal
+          - text: All locations
+        - button [ref=f65e211] [cursor=pointer]
+      - generic [ref=f65e17]:
+        - generic [ref=f65e18]:
+          - paragraph [ref=f65e19]: Main
+          - button [ref=f65e212] [cursor=pointer]:
+            - generic [ref=f65e24]: Dashboard
+        - generic [ref=f65e25]:
+          - paragraph [ref=f65e26]: Management
+          - button [ref=f65e213] [cursor=pointer]:
+            - generic [ref=f65e32]: Locations
+          - button [ref=f65e214] [cursor=pointer]:
+            - generic [ref=f65e37]: Users
+          - button [ref=f65e215] [cursor=pointer]:
+            - generic [ref=f65e42]: Stores
+          - button [ref=f65e216] [cursor=pointer]:
+            - generic [ref=f65e48]: Products
+          - button [ref=f65e217] [cursor=pointer]:
+            - generic [ref=f65e53]: Categories
+          - button [ref=f65e218] [cursor=pointer]:
+            - generic [ref=f65e58]: Banners
+          - button [ref=f65e219] [cursor=pointer]:
+            - generic [ref=f65e64]: Inventory
+        - generic [ref=f65e65]:
+          - paragraph [ref=f65e66]: Orders & Payments
+          - button [ref=f65e220] [cursor=pointer]:
+            - generic [ref=f65e71]: Orders
+          - button [ref=f65e221] [cursor=pointer]:
+            - generic [ref=f65e77]: Payments
+          - button [ref=f65e222] [cursor=pointer]:
+            - generic [ref=f65e82]: Delivery
+        - generic [ref=f65e83]:
+          - paragraph [ref=f65e84]: Customer
+          - button [ref=f65e223] [cursor=pointer]:
+            - generic [ref=f65e89]: Customers
+          - button [ref=f65e224] [cursor=pointer]:
+            - generic [ref=f65e94]: Reviews
+          - button [ref=f65e225] [cursor=pointer]:
+            - generic [ref=f65e100]: Coupons
+          - button [ref=f65e226] [cursor=pointer]:
+            - generic [ref=f65e105]: Notifications
+        - generic [ref=f65e106]:
+          - paragraph [ref=f65e107]: Analytics
+          - button [ref=f65e227] [cursor=pointer]:
+            - generic [ref=f65e112]: Reports
+        - generic [ref=f65e113]:
+          - paragraph [ref=f65e114]: System
+          - button [ref=f65e228] [cursor=pointer]:
+            - generic [ref=f65e119]: Security
+          - button [ref=f65e229] [cursor=pointer]:
+            - generic [ref=f65e124]: Audit Logs
+      - button [ref=f65e230] [cursor=pointer]: View Customer App
+    - main [ref=f65e126]:
+      - generic [ref=f65e127]:
+        - generic [ref=f65e128]:
+          - button [ref=f65e129] [cursor=pointer]
+          - generic [ref=f65e132]:
+            - text: Super Admin /
+            - strong [ref=f65e133]: Users
+        - generic [ref=f65e134]:
+          - textbox [ref=f65e231]:
+            - /placeholder: Search portal
+          - button [ref=f65e232] [cursor=pointer]
+          - button [ref=f65e233] [cursor=pointer]:
+            - generic [ref=f65e144]: A
+            - generic [ref=f65e145]: Admin
+      - generic [ref=f65e146]:
+        - generic [ref=f65e147]:
+          - heading [level=4] [ref=f65e234]: Users
+          - paragraph [ref=f65e149]: Manage users within your assigned scope.
+        - button [ref=f65e235] [cursor=pointer]: View Customer App
+      - generic [ref=f65e151]:
+        - generic [ref=f65e152]:
+          - generic [ref=f65e153]:
+            - generic: Search
+            - generic [ref=f65e154]:
+              - textbox [ref=f65e236]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f65e156]:
+            - combobox [ref=f65e157] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f65e158]:
+            - combobox [ref=f65e159] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f65e237] [cursor=pointer]: Create
+          - button [ref=f65e238] [cursor=pointer]: Export
+        - generic [ref=f65e162]:
+          - generic [ref=f65e163]:
+            - paragraph [ref=f65e164]: Global Admin
+            - paragraph [ref=f65e165]: global.admin@example.test
+          - generic [ref=f65e166]:
+            - button [ref=f65e239] [cursor=pointer]: View
+            - button [ref=f65e240] [cursor=pointer]: Edit
+            - button [ref=f65e241] [cursor=pointer]: Deactivate
+            - button [ref=f65e242] [cursor=pointer]: Delete
+        - generic [ref=f65e171]:
+          - generic [ref=f65e172]:
+            - paragraph [ref=f65e173]: Hyderabad Location Admin
+            - paragraph [ref=f65e174]: hyderabad.admin@example.test
+          - generic [ref=f65e175]:
+            - button [ref=f65e243] [cursor=pointer]: View
+            - button [ref=f65e244] [cursor=pointer]: Edit
+            - button [ref=f65e245] [cursor=pointer]: Deactivate
+            - button [ref=f65e246] [cursor=pointer]: Delete
+        - generic [ref=f65e180]:
+          - generic [ref=f65e181]:
+            - paragraph [ref=f65e182]: Gachibowli Store Manager
+            - paragraph [ref=f65e183]: gachibowli.manager@example.test
+          - generic [ref=f65e184]:
+            - button [ref=f65e247] [cursor=pointer]: View
+            - button [ref=f65e248] [cursor=pointer]: Edit
+            - button [ref=f65e249] [cursor=pointer]: Deactivate
+            - button [ref=f65e250] [cursor=pointer]: Delete
+        - generic [ref=f65e189]:
+          - generic [ref=f65e190]:
+            - paragraph [ref=f65e191]: Sangareddy Store Manager
+            - paragraph [ref=f65e192]: sangareddy.manager@example.test
+          - generic [ref=f65e193]:
+            - button [ref=f65e251] [cursor=pointer]: View
+            - button [ref=f65e252] [cursor=pointer]: Edit
+            - button [ref=f65e253] [cursor=pointer]: Deactivate
+            - button [ref=f65e254] [cursor=pointer]: Delete
+        - generic [ref=f65e198]:
+          - generic [ref=f65e199]:
+            - paragraph [ref=f65e200]: Madhapur Store Manager
+            - paragraph [ref=f65e201]: madhapur.manager@example.test
+          - generic [ref=f65e202]:
+            - button [ref=f65e255] [cursor=pointer]: View
+            - button [ref=f65e256] [cursor=pointer]: Edit
+            - button [ref=f65e257] [cursor=pointer]: Deactivate
+            - button [ref=f65e258] [cursor=pointer]: Delete
+        - generic [ref=f65e207]:
+          - button [disabled]: Previous
+          - paragraph [ref=f65e208]: Page 1 of 1
+          - button [disabled]: Next
+  - dialog [ref=f65e363]:
+    - heading "Create Users" [level=2] [ref=f65e364]
+    - generic [ref=f65e263]:
+      - generic [ref=f65e265]:
+        - generic [ref=f65e340]:
+          - text: Name
+          - generic [aria-hidden] [ref=f65e341]: "*"
+        - generic [ref=f65e266]:
+          - textbox "Name" [ref=f65e365]: Global Admin QA
+          - group [aria-hidden]:
+            - generic: Name *
+      - generic [ref=f65e269]:
+        - generic [ref=f65e343]: Login username
+        - generic [ref=f65e270]:
+          - textbox "Login username" [ref=f65e366]: globaladmin.qa
+          - group [aria-hidden]:
+            - generic: Login username
+      - generic [ref=f65e273]:
+        - generic [ref=f65e345]:
+          - text: Email
+          - generic [aria-hidden] [ref=f65e346]: "*"
+        - generic [ref=f65e274]:
+          - textbox "Email" [ref=f65e367]: globaladmin.qa@example.test
+          - group [aria-hidden]:
+            - generic: Email *
+      - generic [ref=f65e277]:
+        - generic [ref=f65e348]:
+          - text: Mobile
+          - generic [aria-hidden] [ref=f65e349]: "*"
+        - generic [ref=f65e278]:
+          - textbox "Mobile" [ref=f65e368]: "9000000002"
+          - group [aria-hidden]:
+            - generic: Mobile *
+      - generic [ref=f65e281]:
+        - combobox [ref=f65e282] [cursor=pointer]: global-admin
+        - textbox [aria-hidden]: global-admin
+        - group [aria-hidden]
+      - generic [ref=f65e285]:
+        - generic: Location
+        - generic [ref=f65e286]:
+          - combobox "Location" [ref=f65e369]
+          - group [aria-hidden]:
+            - generic: Location
+      - generic [ref=f65e291]:
+        - generic: Store
+        - generic [ref=f65e292]:
+          - combobox "Store" [ref=f65e370]
+          - group [aria-hidden]:
+            - generic: Store
+      - generic [ref=f65e296]:
+        - generic [ref=f65e353]:
+          - text: Password
+          - generic [aria-hidden] [ref=f65e354]: "*"
+        - generic [ref=f65e297]:
+          - textbox "Password" [ref=f65e371]: QA-Global!2026
+          - group [aria-hidden]:
+            - generic: Password *
+      - generic [ref=f65e300]:
+        - combobox [active] [ref=f65e301] [cursor=pointer]: Active
+        - textbox [aria-hidden]: Active
+        - group [aria-hidden]
+    - generic [ref=f65e303]:
+      - button "Cancel" [ref=f65e372] [cursor=pointer]
+      - button "Save" [ref=f65e373] [cursor=pointer]

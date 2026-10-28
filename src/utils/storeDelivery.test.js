@@ -20,6 +20,21 @@ test('global API flag retains India-wide offer beside a local offer', () => {
   assert.equal(rows[1].price, 100);
 });
 
+test('local offers wait for a resolved customer location while global offers remain nationwide', () => {
+  const local = { id: 'local-product', globalProduct: false, price: 80 };
+  const global = { id: 'global-product', globalProduct: true, price: 120 };
+  const stores = [{ id: 'hyd-store', name: 'Hyderabad Store', active: true, latitude: 17, longitude: 78, deliveryRadiusKm: 10 }];
+  const mappings = [
+    { productId: 'local-product', storeId: 'hyd-store', product: local, available: true },
+    { productId: 'global-product', storeId: 'hyd-store', product: global, available: true },
+  ];
+
+  assert.deepEqual(deliveryProducts([local, global], mappings, stores, null).map((item) => item.productId || item.id), ['global-product']);
+  const farAway = deliveryProducts([local, global], mappings, stores, { latitude: 28.6, longitude: 77.2 });
+  assert.ok(farAway.some((item) => item.id === 'global-product' && item.storeId === 'global-store'));
+  assert.ok(!farAway.some((item) => item.id === 'local-product'));
+});
+
 test('global store eligibility uses the same product flag as checkout', () => {
   const globalStore = { id: 'global-store', name: 'India-wide Global Store', active: true };
   const localStore = { id: 'local-store', name: 'Local Store', active: true };

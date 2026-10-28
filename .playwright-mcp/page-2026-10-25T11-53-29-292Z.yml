@@ -1,0 +1,102 @@
+- generic [ref=f18e209]:
+  - navigation [ref=f18e210]:
+    - generic [ref=f18e211]:
+      - img "Spices and Pickles" [ref=f18e212]
+      - generic [ref=f18e213]:
+        - heading "Store Manager Portal" [level=6] [ref=f18e214]
+        - text: Gachibowli Fresh Hub
+      - button "Collapse sidebar" [ref=f18e215] [cursor=pointer]
+    - generic [ref=f18e218]:
+      - button "Dashboard" [ref=f18e219] [cursor=pointer]
+      - button "Products" [ref=f18e224] [cursor=pointer]
+      - button "Banners" [ref=f18e230] [cursor=pointer]
+      - button "Inventory" [ref=f18e235] [cursor=pointer]
+      - button "Orders" [ref=f18e241] [cursor=pointer]
+      - button "Delivery Partners" [ref=f18e246] [cursor=pointer]
+      - button "Delivery Radius" [ref=f18e251] [cursor=pointer]
+      - button "Delivery Settings" [ref=f18e256] [cursor=pointer]
+      - button "Change Password" [ref=f18e261] [cursor=pointer]
+      - button "Profile" [ref=f18e266] [cursor=pointer]
+      - button "Logout" [ref=f18e271] [cursor=pointer]
+    - button "View Customer App" [ref=f18e276] [cursor=pointer]
+  - main [ref=f18e277]:
+    - generic [ref=f18e278]:
+      - generic [ref=f18e279]:
+        - button [ref=f18e280] [cursor=pointer]
+        - generic [ref=f18e283]:
+          - text: Store Manager /
+          - strong [ref=f18e284]: Products
+      - generic [ref=f18e285]:
+        - textbox "Search portal" [ref=f18e290]
+        - button "Notifications" [ref=f18e291] [cursor=pointer]
+        - button "S Sravani Gachibowli" [ref=f18e294] [cursor=pointer]:
+          - generic [ref=f18e295]: S
+          - generic [ref=f18e296]: Sravani Gachibowli
+    - generic [ref=f18e297]:
+      - generic [ref=f18e298]:
+        - heading "Products" [level=4] [ref=f18e299]
+        - paragraph [ref=f18e300]: Manage products within your assigned scope.
+      - button "View Customer App" [ref=f18e301] [cursor=pointer]
+    - generic [ref=f18e302]:
+      - generic [ref=f18e303]:
+        - generic [ref=f18e304]:
+          - generic: Search
+          - generic [ref=f18e305]:
+            - textbox "Search" [ref=f18e306]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f18e307]:
+          - combobox [ref=f18e308] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f18e309]:
+          - combobox [ref=f18e310] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Export" [ref=f18e311] [cursor=pointer]
+      - generic [ref=f18e312]:
+        - generic [ref=f18e313]:
+          - paragraph [ref=f18e314]: Andhra Mango Avakaya Pickle
+          - paragraph [ref=f18e315]: PKL-ANDHRA-AVAKAYA
+        - generic [ref=f18e316]:
+          - button "View" [ref=f18e317] [cursor=pointer]
+          - button "View" [ref=f18e318] [cursor=pointer]
+      - generic [ref=f18e319]:
+        - generic [ref=f18e320]:
+          - paragraph [ref=f18e321]: California Almonds
+          - paragraph [ref=f18e322]: DRY-CAL-ALMOND
+        - generic [ref=f18e323]:
+          - button "View" [ref=f18e324] [cursor=pointer]
+          - button "View" [ref=f18e325] [cursor=pointer]
+      - generic [ref=f18e326]:
+        - generic [ref=f18e327]:
+          - paragraph [ref=f18e328]: Chicken Boneless
+          - paragraph [ref=f18e329]: NV-CHICKEN-BONELESS
+        - generic [ref=f18e330]:
+          - button "View" [ref=f18e331] [cursor=pointer]
+          - button "View" [ref=f18e332] [cursor=pointer]
+      - generic [ref=f18e333]:
+        - generic [ref=f18e334]:
+          - paragraph [ref=f18e335]: Chicken Breast
+          - paragraph [ref=f18e336]: NV-CHICKEN-BREAST
+        - generic [ref=f18e337]:
+          - button "View" [ref=f18e338] [cursor=pointer]
+          - button "View" [ref=f18e339] [cursor=pointer]
+      - generic [ref=f18e340]:
+        - generic [ref=f18e341]:
+          - paragraph [ref=f18e342]: Chicken Curry Cut
+          - paragraph [ref=f18e343]: NV-CHICKEN-CURRY
+        - generic [ref=f18e344]:
+          - button "View" [ref=f18e345] [cursor=pointer]
+          - button "View" [ref=f18e346] [cursor=pointer]
+      - generic [ref=f18e347]:
+        - generic [ref=f18e348]:
+          - paragraph [ref=f18e349]: Fresh Brinjal
+          - paragraph [ref=f18e350]: VEG-FRESH-BRINJAL
+        - generic [ref=f18e351]:
+          - button "View" [ref=f18e352] [cursor=pointer]
+          - button "View" [ref=f18e353] [cursor=pointer]
+      - generic [ref=f18e354]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f18e355]: Page 1 of 4
+        - button "Next" [ref=f18e356] [cursor=pointer]

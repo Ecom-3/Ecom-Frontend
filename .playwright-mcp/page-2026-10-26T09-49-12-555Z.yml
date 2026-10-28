@@ -1,0 +1,42 @@
+- generic [ref=f3e8]:
+  - complementary [ref=f3e9]:
+    - generic [ref=f3e10]:
+      - img "Spices and Pickles" [ref=f3e141]
+      - generic [ref=f3e52]:
+        - heading "Delivery Partner" [level=6] [ref=f3e142]
+        - text: "- Delivery Partner"
+    - navigation [ref=f3e12]:
+      - button "Dashboard" [ref=f3e143] [cursor=pointer]
+      - button "Orders" [ref=f3e144] [cursor=pointer]
+      - button "History" [ref=f3e145] [cursor=pointer]
+    - generic [ref=f3e16]:
+      - generic [ref=f3e17] [cursor=pointer]:
+        - switch "Active" [checked] [ref=f3e146]
+        - generic [ref=f3e70]: Active
+      - button "Share GPS" [ref=f3e147] [cursor=pointer]
+      - button "Profile" [active] [ref=f3e148] [cursor=pointer]
+      - button "Sign out" [ref=f3e149] [cursor=pointer]
+  - main [ref=f3e26]:
+    - heading "Delivery History" [level=5] [ref=f3e150]
+    - generic [ref=f3e29]:
+      - generic [ref=f3e30]:
+        - generic [ref=f3e31]:
+          - generic: Search customer / order
+          - generic [ref=f3e32]:
+            - textbox "Search customer / order" [ref=f3e151]
+            - group [aria-hidden]:
+              - generic: Search customer / order
+        - generic [ref=f3e34]:
+          - combobox [ref=f3e35] [cursor=pointer]: Oldest first
+          - textbox [aria-hidden]: oldest
+          - group [aria-hidden]
+        - generic [ref=f3e36]:
+          - combobox [ref=f3e37] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f3e38]:
+          - combobox [ref=f3e39] [cursor=pointer]: 30 days
+          - textbox [aria-hidden]: "30"
+          - group [aria-hidden]
+      - generic [ref=f3e40]: 0 deliveries
+      - paragraph [ref=f3e41]: No deliveries match these filters.

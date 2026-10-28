@@ -1,0 +1,10 @@
+.delivery-route-map{position:relative;z-index:0;min-height:280px;width:100%;overflow:hidden;background:#e8efeb}
+.delivery-route-map .leaflet-control-attribution{font-size:9px}
+.delivery-route-pin{display:grid!important;place-items:center;width:34px!important;height:34px!important;border:3px solid #fff!important;border-radius:50%;box-shadow:0 2px 9px #102b2066}
+.delivery-route-pin span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;color:#fff;font-size:13px;font-weight:900}
+.delivery-route-pin--partner span{background:#0b6e4f}
+.delivery-route-pin--customer span{background:#d64545}
+.tracking-map-legend{display:flex;flex-wrap:wrap;gap:14px;color:#52675d;font-size:12px}
+.tracking-map-legend span{display:flex;align-items:center;gap:6px}
+.tracking-map-legend i{width:10px;height:10px;border-radius:50%}
+.tracking-partner-dot{background:#0b6e4f}.tracking-customer-dot{background:#d64545}

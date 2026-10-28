@@ -68,6 +68,7 @@ const activeStore = (store = {}) => store.active !== false && store.deliveryEnab
   ![false, 'no', 'false'].includes(typeof store.delivery === 'string' ? store.delivery.toLowerCase() : store.delivery);
 
 export const isGlobalStore = (store = {}) => {
+  if (!store || typeof store !== 'object') return false;
   const text = [store.id, store.name, store.type, store.scope, store.fulfillmentType, store.channel, store.deliveryMethod, store.deliveryLabel]
     .filter(Boolean)
     .join(' ')

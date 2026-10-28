@@ -1,0 +1,43 @@
+- generic [ref=f1e5]:
+  - complementary [ref=f1e6]:
+    - generic [ref=f1e7]:
+      - img "Spices and Pickles" [ref=f1e110]
+      - generic [ref=f1e9]:
+        - heading "Store Manager" [level=6] [ref=f1e111]
+        - paragraph [ref=f1e11]: Gachibowli Fresh Hub
+    - navigation [ref=f1e12]:
+      - button "Dashboard" [ref=f1e112] [cursor=pointer]
+      - button "Products" [ref=f1e113] [cursor=pointer]
+      - button "Banners" [ref=f1e114] [cursor=pointer]
+      - button "Inventory" [ref=f1e115] [cursor=pointer]
+      - button "Orders" [ref=f1e116] [cursor=pointer]
+      - button "Delivery Partners" [ref=f1e117] [cursor=pointer]
+      - button "Delivery Radius" [ref=f1e118] [cursor=pointer]
+      - button "Delivery Settings" [ref=f1e119] [cursor=pointer]
+      - button "Change Password" [ref=f1e120] [cursor=pointer]
+      - button "Profile" [ref=f1e121] [cursor=pointer]
+      - button "Logout" [ref=f1e122] [cursor=pointer]
+    - button "View Customer App" [ref=f1e123] [cursor=pointer]
+  - main [ref=f1e71]:
+    - generic [ref=f1e72]:
+      - button [ref=f1e124] [cursor=pointer]
+      - button "S Sravani Gachibowli" [ref=f1e125] [cursor=pointer]:
+        - generic [ref=f1e78]: S
+        - generic [ref=f1e79]: Sravani Gachibowli
+      - button "Sign out" [ref=f1e126] [cursor=pointer]
+    - generic [ref=f1e81]:
+      - generic [ref=f1e82]:
+        - heading "Store Products" [level=4] [ref=f1e127]
+        - paragraph [ref=f1e84]: Manage products assigned only to Gachibowli Fresh Hub.
+      - button "Create Product" [ref=f1e128] [cursor=pointer]
+    - alert [ref=f1e129]:
+      - generic [ref=f1e133]: Product deleted from your assigned store.
+    - generic [ref=f1e86]:
+      - generic [ref=f1e87]:
+        - generic: Search your products
+        - generic [ref=f1e88]:
+          - textbox "Search your products" [ref=f1e134]
+          - group [aria-hidden]:
+            - generic: Search your products
+      - paragraph [ref=f1e90]: 0 products
+    - paragraph [ref=f1e135]: No products yet. Select Create Product to add one to this store.

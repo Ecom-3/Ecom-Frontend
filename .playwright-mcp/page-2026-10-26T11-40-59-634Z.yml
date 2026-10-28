@@ -1,0 +1,124 @@
+- generic [ref=f18e5]:
+  - generic [ref=f18e6]:
+    - generic [ref=f18e7]:
+      - img "Pickles & Spices" [ref=f18e8] [cursor=pointer]
+      - generic [ref=f18e9]:
+        - paragraph [ref=f18e10]: Hi, GIRIVARDHAN REDDY V
+        - button [ref=f18e11] [cursor=pointer]:
+          - paragraph [ref=f18e12]: "Deliver to: Select delivery location"
+    - generic [ref=f18e16]:
+      - textbox "Search for" [ref=f18e18]:
+        - /placeholder: "Search for "
+      - img [aria-hidden] [ref=f18e19] [cursor=pointer]
+    - generic [ref=f18e21]:
+      - 'generic "Current time in Asia/Calcutta: 05:10:59 pm" [ref=f18e22]':
+        - generic [ref=f18e23]: 05:10:59 pm
+        - generic [ref=f18e24]: Asia/Calcutta
+      - generic "Language, currency and time zone" [ref=f18e25] [cursor=pointer]:
+        - paragraph [ref=f18e28]: English
+      - button "Wishlist" [ref=f18e29] [cursor=pointer]:
+        - paragraph [ref=f18e32]: Wishlist
+      - paragraph [ref=f18e37] [cursor=pointer]: Saved
+      - paragraph [ref=f18e42] [cursor=pointer]: Cart
+  - generic [ref=f18e43]:
+    - button "Back to previous page" [ref=f18e44] [cursor=pointer]
+    - generic [ref=f18e47]:
+      - 'heading "Order #ORD-20261026-BAFD18B7" [level=6] [ref=f18e48]'
+      - generic [ref=f18e49]: 26/10/2026, 04:54 pm | 2 items | ₹406.00
+    - button "Get Help" [ref=f18e50] [cursor=pointer]
+  - generic [ref=f18e51]:
+    - region "Order tracking status" [ref=f18e52]:
+      - generic [ref=f18e53]:
+        - generic "Store and delivery address map" [ref=f18e54]
+        - text: Store and delivery address only. No live rider location is available.
+      - generic [ref=f18e55]:
+        - heading "Order status" [level=2] [ref=f18e59]
+        - generic [ref=f18e60]:
+          - progressbar "Refreshing order status" [ref=f18e61]
+          - generic [ref=f18e64]: Confirmed
+          - button "Refresh" [disabled]
+    - generic [ref=f18e66]:
+      - img "Premium Cashew Nuts" [ref=f18e68]
+      - generic [ref=f18e69]:
+        - paragraph [ref=f18e70]: Premium Cashew Nuts
+        - paragraph [ref=f18e71]: 2 items
+        - paragraph [ref=f18e72]: ₹406.00
+        - paragraph [ref=f18e73]: Order ID :012d3a48-1b4e-442e-be6e-7c4b14d670d1
+        - button "REORDER" [ref=f18e74] [cursor=pointer]
+    - generic [ref=f18e75]:
+      - heading "Your Order" [level=6] [ref=f18e76]
+      - generic [ref=f18e77]:
+        - img "Premium Cashew Nuts" [ref=f18e78]
+        - generic [ref=f18e79]:
+          - paragraph [ref=f18e80]: Premium Cashew Nuts
+          - paragraph [ref=f18e81]: "Quantity: 1"
+        - paragraph [ref=f18e82]: ₹359.00
+      - generic [ref=f18e83]:
+        - img "Fresh Tomatoes" [ref=f18e84]
+        - generic [ref=f18e85]:
+          - paragraph [ref=f18e86]: Fresh Tomatoes
+          - paragraph [ref=f18e87]: "Quantity: 1"
+        - paragraph [ref=f18e88]: ₹42.00
+      - generic [ref=f18e89]:
+        - generic [ref=f18e90]:
+          - paragraph [ref=f18e91]: Items subtotal
+          - paragraph [ref=f18e92]: ₹401.00
+        - generic [ref=f18e93]:
+          - paragraph [ref=f18e94]: Handling fee
+          - paragraph [ref=f18e95]: ₹5.00
+        - generic [ref=f18e96]:
+          - paragraph [ref=f18e97]: Order total
+          - paragraph [ref=f18e98]: ₹406.00
+    - generic [ref=f18e99]:
+      - generic [ref=f18e100]:
+        - generic [ref=f18e101]: BOX
+        - generic [ref=f18e102]:
+          - paragraph [ref=f18e103]: Order CONFIRMED
+          - paragraph [ref=f18e104]: "Ordered on : 26/10/2026, 04:54 pm"
+      - generic [ref=f18e105]: CONFIRMED
+    - generic [ref=f18e106]:
+      - paragraph [ref=f18e107]: Delivery split
+      - generic [ref=f18e109]:
+        - paragraph [ref=f18e110]: Premium Cashew Nuts
+        - paragraph [ref=f18e111]: Delivery estimate unavailable
+        - paragraph
+      - generic [ref=f18e113]:
+        - paragraph [ref=f18e114]: Fresh Tomatoes
+        - paragraph [ref=f18e115]: Delivery estimate unavailable
+        - paragraph
+    - paragraph [ref=f18e117]: You May Also Like
+    - generic [ref=f18e119]:
+      - generic [ref=f18e123]:
+        - paragraph [ref=f18e124]: Delivery To
+        - paragraph [ref=f18e125]: GIRIVARDHAN REDDY V
+      - generic [ref=f18e129]:
+        - paragraph [ref=f18e130]: Contact details
+        - paragraph [ref=f18e131]: "+918639616977"
+      - generic [ref=f18e135]:
+        - paragraph [ref=f18e136]: Delivery Address
+        - paragraph [ref=f18e137]: Srinivas Nagar, SR Nagar, Ward 98 Ameerpet, Greater Hyderabad Municipal Corporation Central Zone, Hyderabad, Khairatabad mandal, Hyderabad, Telangana, 500038, India, Hyderabad, Telangana, India, 500038
+    - generic [ref=f18e138]:
+      - generic [ref=f18e139]:
+        - paragraph [ref=f18e143]: Notifications
+        - button "Refresh" [disabled]
+      - generic [ref=f18e144]:
+        - progressbar [ref=f18e145]
+        - paragraph [ref=f18e148]: Loading notifications...
+    - generic [ref=f18e149]:
+      - generic [ref=f18e150]:
+        - paragraph [ref=f18e151]: Total Order Price
+        - generic [ref=f18e152]:
+          - paragraph [ref=f18e153]: ₹406.00
+          - img [aria-hidden] [ref=f18e154] [cursor=pointer]
+      - generic [ref=f18e156]:
+        - generic [ref=f18e157]: PAY
+        - paragraph [ref=f18e158]: PENDING
+      - generic [ref=f18e159]:
+        - button [ref=f18e160] [cursor=pointer]
+        - button [ref=f18e165] [cursor=pointer]
+      - button "Cancel Order" [ref=f18e169] [cursor=pointer]
+  - generic [ref=f18e170]:
+    - button [ref=f18e171] [cursor=pointer]:
+      - paragraph [ref=f18e174]: Home
+    - paragraph [ref=f18e178] [cursor=pointer]: Categories
+    - paragraph [ref=f18e182] [cursor=pointer]: Profile

@@ -1,0 +1,111 @@
+- generic [ref=f4e1]:
+  - generic [ref=f4e8]:
+    - navigation [ref=f4e9]:
+      - generic [ref=f4e10]:
+        - generic [ref=f4e12]:
+          - heading [level=6] [ref=f4e313]: Location Admin Portal
+          - text: hyderabad
+        - button [ref=f4e314] [cursor=pointer]
+      - generic [ref=f4e17]:
+        - generic [ref=f4e18]:
+          - paragraph [ref=f4e19]: Main
+          - button [ref=f4e315] [cursor=pointer]:
+            - generic [ref=f4e24]: Dashboard
+        - generic [ref=f4e25]:
+          - paragraph [ref=f4e26]: Management
+          - button [ref=f4e316] [cursor=pointer]:
+            - generic [ref=f4e31]: Stores
+          - button [ref=f4e317] [cursor=pointer]:
+            - generic [ref=f4e37]: Products
+          - button [ref=f4e318] [cursor=pointer]:
+            - generic [ref=f4e42]: Banners
+          - button [ref=f4e319] [cursor=pointer]:
+            - generic [ref=f4e48]: Inventory
+        - generic [ref=f4e49]:
+          - paragraph [ref=f4e50]: Orders & Payments
+          - button [ref=f4e320] [cursor=pointer]:
+            - generic [ref=f4e55]: Orders
+          - button [ref=f4e321] [cursor=pointer]:
+            - generic [ref=f4e61]: Payments
+          - button [ref=f4e322] [cursor=pointer]:
+            - generic [ref=f4e66]: Delivery
+        - generic [ref=f4e67]:
+          - paragraph [ref=f4e68]: Customer
+          - button [ref=f4e323] [cursor=pointer]:
+            - generic [ref=f4e74]: Coupons
+        - generic [ref=f4e75]:
+          - paragraph [ref=f4e76]: Analytics
+          - button [ref=f4e324] [cursor=pointer]:
+            - generic [ref=f4e81]: Reports
+      - button [ref=f4e325] [cursor=pointer]: View Customer App
+    - main [ref=f4e83]:
+      - generic [ref=f4e84]:
+        - generic [ref=f4e85]:
+          - button [ref=f4e86] [cursor=pointer]
+          - generic [ref=f4e89]:
+            - text: Location Admin /
+            - strong [ref=f4e90]: Products
+        - generic [ref=f4e91]:
+          - textbox [ref=f4e326]:
+            - /placeholder: Search portal
+          - button [ref=f4e327] [cursor=pointer]
+          - button [ref=f4e328] [cursor=pointer]:
+            - generic [ref=f4e101]: H
+            - generic [ref=f4e102]: Hyderabad Location Admin QA
+      - generic [ref=f4e103]:
+        - generic [ref=f4e104]:
+          - heading [level=4] [ref=f4e329]: Products
+          - paragraph [ref=f4e106]: Manage products within your assigned scope.
+        - button [ref=f4e330] [cursor=pointer]: View Customer App
+      - generic [ref=f4e108]:
+        - generic [ref=f4e109]:
+          - generic [ref=f4e110]:
+            - generic: Search
+            - generic [ref=f4e111]:
+              - textbox [ref=f4e331]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f4e113]:
+            - combobox [ref=f4e114] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f4e115]:
+            - combobox [ref=f4e116] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f4e332] [cursor=pointer]: Create Product
+          - button [ref=f4e333] [cursor=pointer]: Map Product
+          - button [ref=f4e334] [cursor=pointer]: Export
+        - status [ref=f4e301]: Saved successfully.
+        - generic [ref=f4e302]:
+          - generic [ref=f4e303]:
+            - paragraph [ref=f4e304]: Premium Cashew Nuts
+            - paragraph [ref=f4e305]: QA-PREM-CASHEW-001
+          - generic [ref=f4e306]:
+            - button [ref=f4e335] [cursor=pointer]: View
+            - button [ref=f4e336] [cursor=pointer]: Edit
+            - button [ref=f4e337] [cursor=pointer]: Make unavailable
+            - button [ref=f4e338] [cursor=pointer]: Delete
+            - button [ref=f4e339] [cursor=pointer]: Manage stores
+        - generic [ref=f4e121]:
+          - button [disabled]: Previous
+          - paragraph [ref=f4e122]: Page 1 of 1
+          - button [disabled]: Next
+  - dialog [ref=f4e342]:
+    - heading "Select product to map Products" [level=2] [ref=f4e343]
+    - generic [ref=f4e344]:
+      - alert [ref=f4e345]:
+        - generic [ref=f4e349]: Saved successfully.
+      - generic [ref=f4e351]:
+        - generic [ref=f4e362]: Catalog product
+        - generic [ref=f4e352]:
+          - combobox "Catalog product" [expanded] [active] [ref=f4e353]
+          - button "Close" [ref=f4e363] [cursor=pointer]
+          - group [aria-hidden]:
+            - generic: Catalog product
+        - paragraph [ref=f4e358]: Select a product to map to one or more stores in your assigned location.
+    - generic [ref=f4e360]:
+      - button "Cancel" [ref=f4e361] [cursor=pointer]
+      - button "Continue" [disabled]
+  - listbox "Catalog product" [ref=f4e365]:
+    - option "California Almonds (42120787-82c4-43a1-bf5f-c8ed783e556a)" [ref=f4e366] [cursor=pointer]

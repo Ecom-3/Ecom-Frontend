@@ -1,0 +1,212 @@
+- generic [ref=f14e1]:
+  - generic [ref=f14e8]:
+    - navigation [ref=f14e9]:
+      - generic [ref=f14e10]:
+        - generic [ref=f14e12]:
+          - heading [level=6] [ref=f14e165]: Location Admin Portal
+          - text: hyderabad
+        - button [ref=f14e166] [cursor=pointer]
+      - generic [ref=f14e17]:
+        - generic [ref=f14e18]:
+          - paragraph [ref=f14e19]: Main
+          - button [ref=f14e167] [cursor=pointer]:
+            - generic [ref=f14e24]: Dashboard
+        - generic [ref=f14e25]:
+          - paragraph [ref=f14e26]: Management
+          - button [ref=f14e168] [cursor=pointer]:
+            - generic [ref=f14e31]: Stores
+          - button [ref=f14e169] [cursor=pointer]:
+            - generic [ref=f14e37]: Products
+          - button [ref=f14e170] [cursor=pointer]:
+            - generic [ref=f14e42]: Banners
+          - button [ref=f14e171] [cursor=pointer]:
+            - generic [ref=f14e48]: Inventory
+        - generic [ref=f14e49]:
+          - paragraph [ref=f14e50]: Orders & Payments
+          - button [ref=f14e172] [cursor=pointer]:
+            - generic [ref=f14e55]: Orders
+          - button [ref=f14e173] [cursor=pointer]:
+            - generic [ref=f14e61]: Payments
+          - button [ref=f14e174] [cursor=pointer]:
+            - generic [ref=f14e66]: Delivery
+        - generic [ref=f14e67]:
+          - paragraph [ref=f14e68]: Customer
+          - button [ref=f14e175] [cursor=pointer]:
+            - generic [ref=f14e74]: Coupons
+        - generic [ref=f14e75]:
+          - paragraph [ref=f14e76]: Analytics
+          - button [ref=f14e176] [cursor=pointer]:
+            - generic [ref=f14e81]: Reports
+      - button [ref=f14e177] [cursor=pointer]: View Customer App
+    - main [ref=f14e83]:
+      - generic [ref=f14e84]:
+        - generic [ref=f14e85]:
+          - button [ref=f14e86] [cursor=pointer]
+          - generic [ref=f14e89]:
+            - text: Location Admin /
+            - strong [ref=f14e90]: Products
+        - generic [ref=f14e91]:
+          - textbox [ref=f14e178]:
+            - /placeholder: Search portal
+          - button [ref=f14e179] [cursor=pointer]
+          - button [ref=f14e180] [cursor=pointer]:
+            - generic [ref=f14e101]: H
+            - generic [ref=f14e102]: Hyderabad Location Admin
+      - generic [ref=f14e103]:
+        - generic [ref=f14e104]:
+          - heading [level=4] [ref=f14e181]: Products
+          - paragraph [ref=f14e106]: Manage products within your assigned scope.
+        - button [ref=f14e182] [cursor=pointer]: View Customer App
+      - generic [ref=f14e108]:
+        - generic [ref=f14e109]:
+          - generic [ref=f14e110]:
+            - generic: Search
+            - generic [ref=f14e111]:
+              - textbox [ref=f14e183]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f14e113]:
+            - combobox [ref=f14e114] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f14e115]:
+            - combobox [ref=f14e116] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f14e184] [cursor=pointer]: Map Product
+          - button [ref=f14e185] [cursor=pointer]: Export
+        - generic [ref=f14e119]:
+          - generic [ref=f14e120]:
+            - paragraph [ref=f14e121]: Andhra Mango Avakaya Pickle
+            - paragraph [ref=f14e122]: PKL-ANDHRA-AVAKAYA
+          - generic [ref=f14e123]:
+            - button [ref=f14e186] [cursor=pointer]: View
+            - button [ref=f14e187] [cursor=pointer]: Manage stores
+        - generic [ref=f14e126]:
+          - generic [ref=f14e127]:
+            - paragraph [ref=f14e128]: California Almonds
+            - paragraph [ref=f14e129]: DRY-CAL-ALMOND
+          - generic [ref=f14e130]:
+            - button [ref=f14e188] [cursor=pointer]: View
+            - button [ref=f14e189] [cursor=pointer]: Manage stores
+        - generic [ref=f14e133]:
+          - generic [ref=f14e134]:
+            - paragraph [ref=f14e135]: Chicken Boneless
+            - paragraph [ref=f14e136]: NV-CHICKEN-BONELESS
+          - generic [ref=f14e137]:
+            - button [ref=f14e190] [cursor=pointer]: View
+            - button [ref=f14e191] [cursor=pointer]: Manage stores
+        - generic [ref=f14e140]:
+          - generic [ref=f14e141]:
+            - paragraph [ref=f14e142]: Chicken Breast
+            - paragraph [ref=f14e143]: NV-CHICKEN-BREAST
+          - generic [ref=f14e144]:
+            - button [ref=f14e192] [cursor=pointer]: View
+            - button [ref=f14e193] [cursor=pointer]: Manage stores
+        - generic [ref=f14e147]:
+          - generic [ref=f14e148]:
+            - paragraph [ref=f14e149]: Chicken Curry Cut
+            - paragraph [ref=f14e150]: NV-CHICKEN-CURRY
+          - generic [ref=f14e151]:
+            - button [ref=f14e194] [cursor=pointer]: View
+            - button [ref=f14e195] [cursor=pointer]: Manage stores
+        - generic [ref=f14e154]:
+          - generic [ref=f14e155]:
+            - paragraph [ref=f14e156]: Fresh Brinjal
+            - paragraph [ref=f14e157]: VEG-FRESH-BRINJAL
+          - generic [ref=f14e158]:
+            - button [ref=f14e196] [cursor=pointer]: View
+            - button [ref=f14e197] [cursor=pointer]: Manage stores
+        - generic [ref=f14e161]:
+          - button [disabled]: Previous
+          - paragraph [ref=f14e162]: Page 1 of 4
+          - button [ref=f14e198] [cursor=pointer]: Next
+  - dialog [active] [ref=f14e201]:
+    - heading "Manage store mappings Andhra Mango Avakaya Pickle" [level=2] [ref=f14e202]
+    - generic [ref=f14e204]:
+      - paragraph [ref=f14e205]: Store availability in your assigned location
+      - generic [ref=f14e207]:
+        - generic [ref=f14e208]: Mapped stores
+        - generic [ref=f14e209]:
+          - button "Kukatpally Neighbourhood Market (store-kukatpally)" [ref=f14e210]:
+            - img [aria-hidden] [ref=f14e212] [cursor=pointer]
+          - button "Hyderabad Main Store (india-store-1-1)" [ref=f14e214]:
+            - img [aria-hidden] [ref=f14e216] [cursor=pointer]
+          - button "SR Nagar Store (india-store-1-3)" [ref=f14e218]:
+            - img [aria-hidden] [ref=f14e220] [cursor=pointer]
+          - button "Banjara Hills Pickle House (store-banjara)" [ref=f14e222]:
+            - img [aria-hidden] [ref=f14e224] [cursor=pointer]
+          - button "Gachibowli Fresh Hub (store-gachibowli)" [ref=f14e226]:
+            - img [aria-hidden] [ref=f14e228] [cursor=pointer]
+          - button "Secunderabad Daily Foods (store-secunderabad)" [ref=f14e230]:
+            - img [aria-hidden] [ref=f14e232] [cursor=pointer]
+          - combobox "Mapped stores" [ref=f14e234]
+          - generic [ref=f14e235]:
+            - button "Clear" [ref=f14e236] [cursor=pointer]
+            - button "Open" [ref=f14e239] [cursor=pointer]
+          - group [aria-hidden]:
+            - generic: Mapped stores
+        - paragraph [ref=f14e242]: Only stores in your assigned location are available.
+      - generic [ref=f14e243]:
+        - paragraph [ref=f14e244]: Kukatpally Neighbourhood Market
+        - button "Available" [ref=f14e245] [cursor=pointer]
+        - generic [ref=f14e246]:
+          - generic: Price override
+          - generic [ref=f14e247]:
+            - spinbutton "Price override" [ref=f14e248]
+            - group [aria-hidden]:
+              - generic: Price override
+          - paragraph [ref=f14e249]: Leave blank for product price.
+      - generic [ref=f14e250]:
+        - paragraph [ref=f14e251]: Hyderabad Main Store
+        - button "Available" [ref=f14e252] [cursor=pointer]
+        - generic [ref=f14e253]:
+          - generic: Price override
+          - generic [ref=f14e254]:
+            - spinbutton "Price override" [ref=f14e255]
+            - group [aria-hidden]:
+              - generic: Price override
+          - paragraph [ref=f14e256]: Leave blank for product price.
+      - generic [ref=f14e257]:
+        - paragraph [ref=f14e258]: SR Nagar Store
+        - button "Available" [ref=f14e259] [cursor=pointer]
+        - generic [ref=f14e260]:
+          - generic: Price override
+          - generic [ref=f14e261]:
+            - spinbutton "Price override" [ref=f14e262]
+            - group [aria-hidden]:
+              - generic: Price override
+          - paragraph [ref=f14e263]: Leave blank for product price.
+      - generic [ref=f14e264]:
+        - paragraph [ref=f14e265]: Banjara Hills Pickle House
+        - button "Available" [ref=f14e266] [cursor=pointer]
+        - generic [ref=f14e267]:
+          - generic: Price override
+          - generic [ref=f14e268]:
+            - spinbutton "Price override" [ref=f14e269]
+            - group [aria-hidden]:
+              - generic: Price override
+          - paragraph [ref=f14e270]: Leave blank for product price.
+      - generic [ref=f14e271]:
+        - paragraph [ref=f14e272]: Gachibowli Fresh Hub
+        - button "Unavailable" [ref=f14e273] [cursor=pointer]
+        - generic [ref=f14e274]:
+          - generic: Price override
+          - generic [ref=f14e275]:
+            - spinbutton "Price override" [ref=f14e276]
+            - group [aria-hidden]:
+              - generic: Price override
+          - paragraph [ref=f14e277]: Leave blank for product price.
+      - generic [ref=f14e278]:
+        - paragraph [ref=f14e279]: Secunderabad Daily Foods
+        - button "Unavailable" [ref=f14e280] [cursor=pointer]
+        - generic [ref=f14e281]:
+          - generic: Price override
+          - generic [ref=f14e282]:
+            - spinbutton "Price override" [ref=f14e283]
+            - group [aria-hidden]:
+              - generic: Price override
+          - paragraph [ref=f14e284]: Leave blank for product price.
+    - generic [ref=f14e286]:
+      - button "Cancel" [ref=f14e287] [cursor=pointer]
+      - button "Save" [ref=f14e288] [cursor=pointer]

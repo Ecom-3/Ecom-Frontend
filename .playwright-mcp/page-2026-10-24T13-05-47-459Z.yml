@@ -1,0 +1,151 @@
+- generic [ref=f9e5]:
+  - navigation [ref=f9e6]:
+    - generic [ref=f9e7]:
+      - img "Spices and Pickles" [ref=f9e8]
+      - generic [ref=f9e9]:
+        - heading "Location Admin Portal" [level=6] [ref=f9e10]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f9e11] [cursor=pointer]
+    - generic [ref=f9e14]:
+      - generic [ref=f9e15]:
+        - paragraph [ref=f9e16]: Main
+        - button "Dashboard" [ref=f9e17] [cursor=pointer]
+      - generic [ref=f9e22]:
+        - paragraph [ref=f9e23]: Management
+        - button "Stores" [ref=f9e24] [cursor=pointer]
+        - button "Products" [ref=f9e29] [cursor=pointer]
+        - button "Banners" [ref=f9e35] [cursor=pointer]
+        - button "Inventory" [ref=f9e40] [cursor=pointer]
+      - generic [ref=f9e46]:
+        - paragraph [ref=f9e47]: Orders & Payments
+        - button "Orders" [ref=f9e48] [cursor=pointer]
+        - button "Payments" [ref=f9e53] [cursor=pointer]
+        - button "Delivery" [ref=f9e59] [cursor=pointer]
+      - generic [ref=f9e64]:
+        - paragraph [ref=f9e65]: Customer
+        - button "Coupons" [ref=f9e66] [cursor=pointer]
+      - generic [ref=f9e72]:
+        - paragraph [ref=f9e73]: Analytics
+        - button "Reports" [ref=f9e74] [cursor=pointer]
+    - button "View Customer App" [ref=f9e79] [cursor=pointer]
+  - main [ref=f9e80]:
+    - generic [ref=f9e81]:
+      - generic [ref=f9e82]:
+        - button [ref=f9e83] [cursor=pointer]
+        - generic [ref=f9e86]:
+          - text: Location Admin /
+          - strong [ref=f9e87]: Orders
+      - generic [ref=f9e88]:
+        - textbox "Search portal" [ref=f9e93]
+        - button "Notifications" [ref=f9e94] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=f9e97] [cursor=pointer]:
+          - generic [ref=f9e98]: H
+          - generic [ref=f9e99]: Hyderabad Location Admin
+    - generic [ref=f9e100]:
+      - generic [ref=f9e101]:
+        - heading "Orders" [level=4] [ref=f9e102]
+        - paragraph [ref=f9e103]: Manage orders within your assigned scope.
+      - button "View Customer App" [ref=f9e104] [cursor=pointer]
+    - generic [ref=f9e107]:
+      - generic [ref=f9e108]:
+        - generic [ref=f9e109]:
+          - generic: Search or paste order ID
+          - generic [ref=f9e110]:
+            - textbox "Search or paste order ID" [ref=f9e111]
+            - group [aria-hidden]:
+              - generic: Search or paste order ID
+        - button "Fetch Order" [ref=f9e112] [cursor=pointer]
+        - generic [ref=f9e113]:
+          - combobox [ref=f9e114] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f9e115]:
+          - combobox [ref=f9e116] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Export" [ref=f9e117] [cursor=pointer]
+      - status [ref=f9e208]: Access denied
+      - generic [ref=f9e121]:
+        - generic [ref=f9e122]:
+          - paragraph [ref=f9e123]: ORD-20261023-10641B43
+          - paragraph [ref=f9e124]: Hyderabad Main Store
+        - generic [ref=f9e125]:
+          - button "View" [active] [ref=f9e126] [cursor=pointer]
+          - generic [ref=f9e127]:
+            - combobox [ref=f9e128] [cursor=pointer]: SHIPPED
+            - textbox [aria-hidden]: SHIPPED
+            - group [aria-hidden]
+          - button "Pack" [ref=f9e129] [cursor=pointer]
+          - button "Out" [ref=f9e130] [cursor=pointer]
+          - button "Delivered" [ref=f9e131] [cursor=pointer]
+          - button [ref=f9e132] [cursor=pointer]
+          - button "Reject" [ref=f9e136] [cursor=pointer]
+      - generic [ref=f9e137]:
+        - generic [ref=f9e138]:
+          - paragraph [ref=f9e139]: ORD-20261022-42A90977
+          - paragraph [ref=f9e140]: Gachibowli Fresh Hub
+        - generic [ref=f9e141]:
+          - button "View" [ref=f9e142] [cursor=pointer]
+          - generic [ref=f9e143]:
+            - combobox [ref=f9e144] [cursor=pointer]: CREATED
+            - textbox [aria-hidden]: CREATED
+            - group [aria-hidden]
+          - button "Accept" [ref=f9e145] [cursor=pointer]
+          - button [ref=f9e146] [cursor=pointer]
+          - button "Reject" [ref=f9e150] [cursor=pointer]
+      - generic [ref=f9e151]:
+        - generic [ref=f9e152]:
+          - paragraph [ref=f9e153]: ORD-20261021-B1052432
+          - paragraph [ref=f9e154]: Gachibowli Fresh Hub
+        - generic [ref=f9e155]:
+          - button "View" [ref=f9e156] [cursor=pointer]
+          - generic [ref=f9e157]:
+            - combobox [ref=f9e158] [cursor=pointer]: CREATED
+            - textbox [aria-hidden]: CREATED
+            - group [aria-hidden]
+          - button "Accept" [ref=f9e159] [cursor=pointer]
+          - button [ref=f9e160] [cursor=pointer]
+          - button "Reject" [ref=f9e164] [cursor=pointer]
+      - generic [ref=f9e165]:
+        - generic [ref=f9e166]:
+          - paragraph [ref=f9e167]: ORD-20261021-BE5B49AF
+          - paragraph [ref=f9e168]: SR Nagar Store
+        - generic [ref=f9e169]:
+          - button "View" [ref=f9e170] [cursor=pointer]
+          - generic [ref=f9e171]:
+            - combobox [ref=f9e172] [cursor=pointer]: CREATED
+            - textbox [aria-hidden]: CREATED
+            - group [aria-hidden]
+          - button "Accept" [ref=f9e173] [cursor=pointer]
+          - button [ref=f9e174] [cursor=pointer]
+          - button "Reject" [ref=f9e178] [cursor=pointer]
+      - generic [ref=f9e179]:
+        - generic [ref=f9e180]:
+          - paragraph [ref=f9e181]: ORD-20261021-DB9FA27C
+          - paragraph [ref=f9e182]: Gachibowli Fresh Hub
+        - generic [ref=f9e183]:
+          - button "View" [ref=f9e184] [cursor=pointer]
+          - generic [ref=f9e185]:
+            - combobox [ref=f9e186] [cursor=pointer]: CREATED
+            - textbox [aria-hidden]: CREATED
+            - group [aria-hidden]
+          - button "Accept" [ref=f9e187] [cursor=pointer]
+          - button [ref=f9e188] [cursor=pointer]
+          - button "Reject" [ref=f9e192] [cursor=pointer]
+      - generic [ref=f9e193]:
+        - generic [ref=f9e194]:
+          - paragraph [ref=f9e195]: ORD-20261021-60D571D2
+          - paragraph [ref=f9e196]: SR Nagar Store
+        - generic [ref=f9e197]:
+          - button "View" [ref=f9e198] [cursor=pointer]
+          - generic [ref=f9e199]:
+            - combobox [ref=f9e200] [cursor=pointer]: CREATED
+            - textbox [aria-hidden]: CREATED
+            - group [aria-hidden]
+          - button "Accept" [ref=f9e201] [cursor=pointer]
+          - button [ref=f9e202] [cursor=pointer]
+          - button "Reject" [ref=f9e206] [cursor=pointer]
+      - generic [ref=f9e119]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f9e120]: Page 1 of 7
+        - button "Next" [ref=f9e207] [cursor=pointer]

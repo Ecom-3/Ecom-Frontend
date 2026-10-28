@@ -1,0 +1,124 @@
+- generic [ref=f4e8]:
+  - navigation [ref=f4e9]:
+    - generic [ref=f4e10]:
+      - img "Spices and Pickles" [ref=f4e403]
+      - generic [ref=f4e12]:
+        - heading "Location Admin Portal" [level=6] [ref=f4e404]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f4e405] [cursor=pointer]
+    - generic [ref=f4e17]:
+      - generic [ref=f4e18]:
+        - paragraph [ref=f4e19]: Main
+        - button "Dashboard" [ref=f4e406] [cursor=pointer]
+      - generic [ref=f4e25]:
+        - paragraph [ref=f4e26]: Management
+        - button "Stores" [ref=f4e407] [cursor=pointer]
+        - button "Products" [ref=f4e408] [cursor=pointer]
+        - button "Banners" [ref=f4e409] [cursor=pointer]
+        - button "Inventory" [active] [ref=f4e410] [cursor=pointer]
+      - generic [ref=f4e49]:
+        - paragraph [ref=f4e50]: Orders & Payments
+        - button "Orders" [ref=f4e411] [cursor=pointer]
+        - button "Payments" [ref=f4e412] [cursor=pointer]
+        - button "Delivery" [ref=f4e413] [cursor=pointer]
+      - generic [ref=f4e67]:
+        - paragraph [ref=f4e68]: Customer
+        - button "Coupons" [ref=f4e414] [cursor=pointer]
+      - generic [ref=f4e75]:
+        - paragraph [ref=f4e76]: Analytics
+        - button "Reports" [ref=f4e415] [cursor=pointer]
+    - button "View Customer App" [ref=f4e416] [cursor=pointer]
+  - main [ref=f4e83]:
+    - generic [ref=f4e84]:
+      - generic [ref=f4e85]:
+        - button [ref=f4e86] [cursor=pointer]
+        - generic [ref=f4e89]:
+          - text: Location Admin /
+          - strong [ref=f4e90]: Inventory
+      - generic [ref=f4e91]:
+        - textbox "Search portal" [ref=f4e417]
+        - button "Notifications" [ref=f4e418] [cursor=pointer]
+        - button "H Hyderabad Location Admin QA" [ref=f4e419] [cursor=pointer]:
+          - generic [ref=f4e101]: H
+          - generic [ref=f4e102]: Hyderabad Location Admin QA
+    - generic [ref=f4e103]:
+      - generic [ref=f4e104]:
+        - heading "Inventory" [level=4] [ref=f4e438]
+        - paragraph [ref=f4e106]: Manage inventory within your assigned scope.
+      - button "View Customer App" [ref=f4e421] [cursor=pointer]
+    - generic [ref=f4e108]:
+      - generic [ref=f4e109]:
+        - generic [ref=f4e110]:
+          - generic: Search
+          - generic [ref=f4e111]:
+            - textbox "Search" [ref=f4e422]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f4e113]:
+          - combobox [ref=f4e114] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f4e115]:
+          - combobox [ref=f4e116] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create" [ref=f4e439] [cursor=pointer]
+        - button "Export" [ref=f4e425] [cursor=pointer]
+      - generic [ref=f4e440]:
+        - generic [ref=f4e441]:
+          - paragraph [ref=f4e442]: Catalog product missing
+          - paragraph [ref=f4e443]: 21000000-0000-0000-0000-000000000001
+        - generic [ref=f4e444]:
+          - button "View" [ref=f4e445] [cursor=pointer]
+          - button "Stock +10" [ref=f4e446] [cursor=pointer]
+          - button "Stock -1" [ref=f4e447] [cursor=pointer]
+          - button "Adjust" [ref=f4e448] [cursor=pointer]
+      - generic [ref=f4e449]:
+        - generic [ref=f4e450]:
+          - paragraph [ref=f4e451]: Catalog product missing
+          - paragraph [ref=f4e452]: 21000000-0000-0000-0000-000000000002
+        - generic [ref=f4e453]:
+          - button "View" [ref=f4e454] [cursor=pointer]
+          - button "Stock +10" [ref=f4e455] [cursor=pointer]
+          - button "Stock -1" [ref=f4e456] [cursor=pointer]
+          - button "Adjust" [ref=f4e457] [cursor=pointer]
+      - generic [ref=f4e458]:
+        - generic [ref=f4e459]:
+          - paragraph [ref=f4e460]: Catalog product missing
+          - paragraph [ref=f4e461]: 21000000-0000-0000-0000-000000000003
+        - generic [ref=f4e462]:
+          - button "View" [ref=f4e463] [cursor=pointer]
+          - button "Stock +10" [ref=f4e464] [cursor=pointer]
+          - button "Stock -1" [ref=f4e465] [cursor=pointer]
+          - button "Adjust" [ref=f4e466] [cursor=pointer]
+      - generic [ref=f4e467]:
+        - generic [ref=f4e468]:
+          - paragraph [ref=f4e469]: Catalog product missing
+          - paragraph [ref=f4e470]: 21000000-0000-0000-0000-000000000004
+        - generic [ref=f4e471]:
+          - button "View" [ref=f4e472] [cursor=pointer]
+          - button "Stock +10" [ref=f4e473] [cursor=pointer]
+          - button "Stock -1" [ref=f4e474] [cursor=pointer]
+          - button "Adjust" [ref=f4e475] [cursor=pointer]
+      - generic [ref=f4e476]:
+        - generic [ref=f4e477]:
+          - paragraph [ref=f4e478]: Catalog product missing
+          - paragraph [ref=f4e479]: 21000000-0000-0000-0000-000000000005
+        - generic [ref=f4e480]:
+          - button "View" [ref=f4e481] [cursor=pointer]
+          - button "Stock +10" [ref=f4e482] [cursor=pointer]
+          - button "Stock -1" [ref=f4e483] [cursor=pointer]
+          - button "Adjust" [ref=f4e484] [cursor=pointer]
+      - generic [ref=f4e485]:
+        - generic [ref=f4e486]:
+          - paragraph [ref=f4e487]: Catalog product missing
+          - paragraph [ref=f4e488]: 21000000-0000-0000-0000-000000000006
+        - generic [ref=f4e489]:
+          - button "View" [ref=f4e490] [cursor=pointer]
+          - button "Stock +10" [ref=f4e491] [cursor=pointer]
+          - button "Stock -1" [ref=f4e492] [cursor=pointer]
+          - button "Adjust" [ref=f4e493] [cursor=pointer]
+      - generic [ref=f4e121]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f4e122]: Page 1 of 4
+        - button "Next" [ref=f4e494] [cursor=pointer]

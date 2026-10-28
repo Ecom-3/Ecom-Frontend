@@ -1,0 +1,118 @@
+- generic [ref=f44e20]:
+  - navigation [ref=f44e21]:
+    - generic [ref=f44e22]:
+      - img "Spices and Pickles" [ref=f44e23]
+      - generic [ref=f44e24]:
+        - heading "Location Admin Portal" [level=6] [ref=f44e25]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f44e26] [cursor=pointer]
+    - generic [ref=f44e29]:
+      - generic [ref=f44e30]:
+        - paragraph [ref=f44e31]: Main
+        - button "Dashboard" [ref=f44e32] [cursor=pointer]
+      - generic [ref=f44e37]:
+        - paragraph [ref=f44e38]: Management
+        - button "Stores" [ref=f44e39] [cursor=pointer]
+        - button "Products" [ref=f44e44] [cursor=pointer]
+        - button "Banners" [ref=f44e50] [cursor=pointer]
+        - button "Inventory" [ref=f44e55] [cursor=pointer]
+      - generic [ref=f44e61]:
+        - paragraph [ref=f44e62]: Orders & Payments
+        - button "Orders" [ref=f44e63] [cursor=pointer]
+        - button "Payments" [ref=f44e68] [cursor=pointer]
+        - button "Delivery" [ref=f44e74] [cursor=pointer]
+      - generic [ref=f44e79]:
+        - paragraph [ref=f44e80]: Customer
+        - button "Coupons" [ref=f44e81] [cursor=pointer]
+      - generic [ref=f44e87]:
+        - paragraph [ref=f44e88]: Analytics
+        - button "Reports" [ref=f44e89] [cursor=pointer]
+    - button "View Customer App" [ref=f44e94] [cursor=pointer]
+  - main [ref=f44e95]:
+    - generic [ref=f44e96]:
+      - generic [ref=f44e97]:
+        - button [ref=f44e98] [cursor=pointer]
+        - generic [ref=f44e101]:
+          - text: Location Admin /
+          - strong [ref=f44e102]: Dashboard
+      - generic [ref=f44e103]:
+        - textbox "Search portal" [ref=f44e108]
+        - button "Notifications" [ref=f44e109] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=f44e112] [cursor=pointer]:
+          - generic [ref=f44e113]: H
+          - generic [ref=f44e114]: Hyderabad Location Admin
+    - generic [ref=f44e115]:
+      - generic [ref=f44e116]:
+        - heading "Welcome back, Hyderabad Location Admin" [level=4] [ref=f44e117]
+        - paragraph [ref=f44e118]: Live operational data for hyderabad.
+      - button "View Customer App" [ref=f44e119] [cursor=pointer]
+    - generic [ref=f44e120]:
+      - generic [ref=f44e121]:
+        - paragraph [ref=f44e125]: Total Orders
+        - heading "0" [level=5] [ref=f44e126]
+        - text: Backend data
+      - generic [ref=f44e127]:
+        - paragraph [ref=f44e131]: Created Orders
+        - heading "0" [level=5] [ref=f44e132]
+        - text: Backend data
+      - generic [ref=f44e133]:
+        - paragraph [ref=f44e137]: Completed Orders
+        - heading "0" [level=5] [ref=f44e138]
+        - text: Backend data
+      - generic [ref=f44e139]:
+        - paragraph [ref=f44e143]: Cancelled Orders
+        - heading "0" [level=5] [ref=f44e144]
+        - text: Backend data
+      - generic [ref=f44e145]:
+        - paragraph [ref=f44e150]: Products
+        - heading "0" [level=5] [ref=f44e151]
+        - text: Mapped to assigned stores
+      - generic [ref=f44e152]:
+        - paragraph [ref=f44e157]: Low Stock
+        - heading "0" [level=5] [ref=f44e158]
+        - text: Backend data
+      - generic [ref=f44e159]:
+        - paragraph [ref=f44e163]: Revenue
+        - heading "â‚¹0" [level=5] [ref=f44e164]
+        - text: Backend data
+    - generic [ref=f44e165]:
+      - generic [ref=f44e167]:
+        - heading "Revenue Overview" [level=6] [ref=f44e168]
+        - generic [ref=f44e169]: Order totals
+      - generic [ref=f44e171]:
+        - generic [ref=f44e172]:
+          - heading "Order Status" [level=6] [ref=f44e173]
+          - generic [ref=f44e174]: Live distribution
+        - generic [ref=f44e176]:
+          - text: CREATED
+          - strong [ref=f44e177]: "0"
+        - generic [ref=f44e180]:
+          - text: CONFIRMED
+          - strong [ref=f44e181]: "0"
+        - generic [ref=f44e184]:
+          - text: PROCESSING
+          - strong [ref=f44e185]: "0"
+        - generic [ref=f44e188]:
+          - text: SHIPPED
+          - strong [ref=f44e189]: "0"
+        - generic [ref=f44e192]:
+          - text: DELIVERED
+          - strong [ref=f44e193]: "0"
+        - generic [ref=f44e196]:
+          - text: CANCELLED
+          - strong [ref=f44e197]: "0"
+    - generic [ref=f44e199]:
+      - generic [ref=f44e200]:
+        - generic [ref=f44e201]:
+          - heading "Recent Orders" [level=6] [ref=f44e202]
+          - button "View All" [ref=f44e203] [cursor=pointer]
+        - generic [ref=f44e204]:
+          - paragraph [ref=f44e207]: No orders yet
+          - generic [ref=f44e208]: Customer orders will appear here.
+      - generic [ref=f44e209]:
+        - generic [ref=f44e210]:
+          - heading "Low Stock Products" [level=6] [ref=f44e211]
+          - button "View Inventory" [ref=f44e212] [cursor=pointer]
+        - generic [ref=f44e213]:
+          - paragraph [ref=f44e216]: Inventory looks healthy
+          - generic [ref=f44e217]: All products are sufficiently stocked.

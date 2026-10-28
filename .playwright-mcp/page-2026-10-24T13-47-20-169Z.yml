@@ -1,0 +1,85 @@
+- generic [ref=f32e8]:
+  - navigation [ref=f32e9]:
+    - generic [ref=f32e10]:
+      - img "Spices and Pickles" [ref=f32e11]
+      - generic [ref=f32e12]:
+        - heading "Location Admin Portal" [level=6] [ref=f32e13]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f32e14] [cursor=pointer]
+    - generic [ref=f32e17]:
+      - generic [ref=f32e18]:
+        - paragraph [ref=f32e19]: Main
+        - button "Dashboard" [ref=f32e20] [cursor=pointer]
+      - generic [ref=f32e25]:
+        - paragraph [ref=f32e26]: Management
+        - button "Stores" [ref=f32e27] [cursor=pointer]
+        - button "Products" [ref=f32e32] [cursor=pointer]
+        - button "Banners" [ref=f32e38] [cursor=pointer]
+        - button "Inventory" [ref=f32e43] [cursor=pointer]
+      - generic [ref=f32e49]:
+        - paragraph [ref=f32e50]: Orders & Payments
+        - button "Orders" [ref=f32e51] [cursor=pointer]
+        - button "Payments" [ref=f32e56] [cursor=pointer]
+        - button "Delivery" [ref=f32e62] [cursor=pointer]
+      - generic [ref=f32e67]:
+        - paragraph [ref=f32e68]: Customer
+        - button "Coupons" [ref=f32e69] [cursor=pointer]
+      - generic [ref=f32e75]:
+        - paragraph [ref=f32e76]: Analytics
+        - button "Reports" [ref=f32e77] [cursor=pointer]
+    - button "View Customer App" [ref=f32e82] [cursor=pointer]
+  - main [ref=f32e83]:
+    - generic [ref=f32e84]:
+      - generic [ref=f32e85]:
+        - button [ref=f32e86] [cursor=pointer]
+        - generic [ref=f32e89]:
+          - text: Location Admin /
+          - strong [ref=f32e90]: Orders
+      - generic [ref=f32e91]:
+        - textbox "Search portal" [ref=f32e96]: ORD-20261023-10641B43
+        - button "Notifications" [ref=f32e97] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=f32e100] [cursor=pointer]:
+          - generic [ref=f32e101]: H
+          - generic [ref=f32e102]: Hyderabad Location Admin
+    - generic [ref=f32e103]:
+      - generic [ref=f32e104]:
+        - heading "Orders" [level=4] [ref=f32e105]
+        - paragraph [ref=f32e106]: Manage orders within your assigned scope.
+      - button "View Customer App" [ref=f32e107] [cursor=pointer]
+    - generic [ref=f32e108]:
+      - generic [ref=f32e109]:
+        - generic [ref=f32e110]:
+          - generic [ref=f32e208]: Search or paste order ID
+          - generic [ref=f32e111]:
+            - textbox "Search or paste order ID" [active] [ref=f32e112]: ORD-20261023-10641B43
+            - group [aria-hidden]:
+              - generic: Search or paste order ID
+        - button "Fetch Order" [ref=f32e113] [cursor=pointer]
+        - generic [ref=f32e114]:
+          - combobox [ref=f32e115] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f32e116]:
+          - combobox [ref=f32e117] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Export" [ref=f32e118] [cursor=pointer]
+      - generic [ref=f32e119]:
+        - generic [ref=f32e120]:
+          - paragraph [ref=f32e121]: ORD-20261023-10641B43
+          - paragraph [ref=f32e122]: Hyderabad Main Store
+        - generic [ref=f32e123]:
+          - button "View" [ref=f32e124] [cursor=pointer]
+          - generic [ref=f32e125]:
+            - combobox [ref=f32e126] [cursor=pointer]: SHIPPED
+            - textbox [aria-hidden]: SHIPPED
+            - group [aria-hidden]
+          - button "Pack" [ref=f32e127] [cursor=pointer]
+          - button "Out" [ref=f32e128] [cursor=pointer]
+          - button "Delivered" [ref=f32e129] [cursor=pointer]
+          - button [ref=f32e130] [cursor=pointer]
+          - button "Reject" [ref=f32e134] [cursor=pointer]
+      - generic [ref=f32e205]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f32e206]: Page 1 of 1
+        - button "Next" [disabled]

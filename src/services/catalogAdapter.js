@@ -109,6 +109,33 @@ export const adaptStoreProduct = (storeProduct) => {
   };
 };
 
+// Location master records use the Catalog store endpoint as their durable store,
+// with an explicit ID prefix so they never appear as retail stores.
+export const adaptLocation = (location = {}) => ({
+  ...location,
+  id: location.id || location.storeId,
+  name: location.name || location.title || '',
+  code: location.code || location.storeCode || '',
+  address: location.address || '',
+  city: location.city || '',
+  state: location.state || '',
+  country: location.country || '',
+  pincode: location.pincode || '',
+  latitude: location.latitude,
+  longitude: location.longitude,
+  phone: location.phone || '',
+  email: location.email || '',
+  admin: location.adminName || location.admin || '',
+  status: location.status || (location.active === false ? 'Inactive' : 'Active'),
+  _isLocationRecord: true,
+});
+
+export const isLocationRecord = (record = {}) => String(record.id || '').startsWith('location-');
+export const adaptLocationList = (payload) => {
+  const items = Array.isArray(payload) ? payload : payload?.content || payload?.items || payload?.data || [];
+  return items.filter(isLocationRecord).map(adaptLocation);
+};
+
 export const adaptProduct = (product) => {
   const variants = asArray(product?.variants || product?.variantList || product?.items).map((variant) => adaptVariant(variant, product));
   const productId = product?.productId || product?.id || product?.slug || product?.sku || product?.name;

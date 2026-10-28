@@ -138,12 +138,13 @@ const CheckoutPage = () => {
     const store = catalogStores.find((entry) => (source.storeId && entry.id === source.storeId)
       || (source.store && entry.name === source.store)
       || (source.storeName && entry.name === source.storeName)) || null;
-    const global = isGlobalProduct(item) || isGlobalStore(store || source);
-    const storeId = global ? (store?.id || source.storeId || item.storeId || 'global-store') : (store?.id || source.storeId || item.storeId || source.store || source.storeName || item.storeName || item.store || 'store');
+    const explicitStoreId = source.storeId || source.sourceStoreId || item.storeId || item.sourceStoreId;
+    const global = explicitStoreId === 'global-store' || isGlobalProduct(item) || isGlobalStore(store || source);
+    const storeId = global ? 'global-store' : (store?.id || explicitStoreId || source.store || source.storeName || item.storeName || item.store || 'store');
     const key = String(storeId);
     let group = groups.find((entry) => entry.id === key);
     if (!group) {
-      group = { id: key, storeId: store?.id || source.storeId || item.storeId || key, name: store?.name || source.storeName || source.store || item.storeName || item.store || item.sourceStore || key, store: store || {}, global, items: [], subtotal: 0, source };
+      group = { id: key, storeId: global ? 'global-store' : (store?.id || explicitStoreId || key), name: global ? 'India-wide Global Store' : (store?.name || source.storeName || source.store || item.storeName || item.store || item.sourceStore || key), store: store || {}, global, items: [], subtotal: 0, source };
       groups.push(group);
     }
     group.items.push(item);
@@ -229,7 +230,7 @@ const CheckoutPage = () => {
   const hasDeliverySelection = cartStoreGroups.some((group) => !group.global && savedFulfillmentByStore[group.id]?.fulfillment === 'delivery');
   const requiresDeliveryAddress = hasGlobalDelivery || hasDeliverySelection;
   const deliveryFee = totalDeliveryCharge(deliveryLines);
-  const handlingFee = cartStoreGroups.length * 5;
+  const handlingFee = cartStoreGroups.filter((group) => !group.global).length * 5;
   const deliveryGroups = deliveryLines.reduce((groups, line) => {
     const key = `${line.fulfillmentType || 'checking'}:${line.storeId || 'store'}:${line.deliveryType || 'delivery'}`;
     const existing = groups.find((group) => group.key === key);
@@ -393,7 +394,7 @@ const CheckoutPage = () => {
       date: firstLine.scheduleDate || '', slot: firstLine.scheduleSlot || '',
       notes: notes.trim(), coupon: appliedCoupon?.name || '', discount, promotionVerified:Boolean(appliedCoupon), subtotal, deliveryFee,
       handlingFee, total, deliveryAddress: requiresDeliveryAddress ? (selectedLocation?.address || deliveryAddress) : '',
-      contactNumber: contactPhone, customerLocation: userCity,
+      contactNumber: contactPhone, customerLocation: String(selectedLocation?.city || userCity || '').trim().slice(0, 150),
       deliveryQuote: deliveryLines.find((line) => line.fulfillmentType !== 'global' && line.quote)?.quote || null,
       customerLatitude: Number.isFinite(customerLat) ? customerLat : null, customerLongitude: Number.isFinite(customerLng) ? customerLng : null,
       storeLatitude: selectedStore?.latitude ?? null, storeLongitude: selectedStore?.longitude ?? null,
@@ -462,7 +463,7 @@ const CheckoutPage = () => {
           <Box component="section" className="checkout-panel">
             <Box className="checkout-section-heading">
               <span className="checkout-section-icon"><LocalShippingOutlinedIcon /></span>
-              <Box><Typography component="h2">2. Fulfillment by store</Typography><small>Each store has an independent delivery or pickup selection</small></Box>
+              <Box><Typography component="h2">2. Fulfillment options</Typography><small>Local stores offer delivery or pickup; global items ship nationwide</small></Box>
             </Box>
             <Box className="checkout-store-fulfillment-list">
               {cartStoreGroups.map((group) => {
@@ -497,7 +498,7 @@ const CheckoutPage = () => {
                   </button>
                   {expanded && <Box className="checkout-store-accordion-content">
                   <Box className="checkout-store-fulfillment-heading"><Box><strong>{group.name}</strong><small>{group.items.length} item{group.items.length === 1 ? '' : 's'} in this store</small></Box><b>{formatCurrency(group.subtotal)}</b></Box>
-                  {group.global ? <Box className="checkout-global-fulfillment"><LocalShippingOutlinedIcon /><Box><strong>Global delivery</strong><small>Estimated delivery: 7-10 days - No local pickup</small></Box></Box> : <>
+                  {group.global ? <Box className="checkout-global-fulfillment"><LocalShippingOutlinedIcon /><Box><strong>Global delivery</strong><small>India-wide shipping · estimated delivery: 7–10 days · pickup unavailable</small></Box></Box> : <>
                     <Box className="checkout-mode-switch" role="group" aria-label={`${group.name} fulfillment`}>
                       <button type="button" className={selection.fulfillment === 'delivery' ? 'selected' : ''} aria-pressed={selection.fulfillment === 'delivery'} onClick={() => { updateStoreSelection(setFulfillmentByStore, group.id, { fulfillment: 'delivery', date: '', slot: '' }); setError(''); }}><LocalShippingOutlinedIcon /> Delivery</button>
                       <button type="button" disabled={!pickupAvailableForStore} className={selection.fulfillment === 'pickup' ? 'selected' : ''} aria-pressed={selection.fulfillment === 'pickup'} onClick={() => { updateStoreSelection(setFulfillmentByStore, group.id, { fulfillment: 'pickup', pickupTiming: 'asap', date: '', slot: '' }); setError(''); }}><StorefrontOutlinedIcon /> Store pickup</button>
@@ -585,7 +586,7 @@ const CheckoutPage = () => {
                   <Box className="checkout-summary-item-copy"><strong>{item.title}</strong><small>{item.weight || 'Product'} · {item.quantity} × {formatCurrency(Number(item.price ?? item.unitPrice ?? 0))}</small><b>{formatCurrency(Number(item.price ?? item.unitPrice ?? 0) * Number(item.quantity))}</b></Box>
                   <span className="checkout-summary-quantity">{item.quantity}</span>
                 </Box>)}
-                <Box className="checkout-summary-store-service"><span>{isConfigured ? storeLine.deliveryLabel || 'Fulfillment' : 'Choose a fulfillment option'}</span><strong>{isConfigured && storeCharge ? formatCurrency(storeCharge) : isConfigured ? 'No charge' : ''}</strong></Box>
+                <Box className="checkout-summary-store-service"><span>{isGlobalStore ? 'India-wide Global Delivery · 7–10 days' : isConfigured ? storeLine.deliveryLabel || 'Fulfillment' : 'Choose a fulfillment option'}</span><strong>{isConfigured && storeCharge ? formatCurrency(storeCharge) : isConfigured ? 'No charge' : ''}</strong></Box>
                 {scheduledLabel && <small className="checkout-summary-schedule">{isPickupStore ? 'Pickup' : 'Delivery'}: {scheduledLabel}</small>}
                 <Box className="checkout-summary-store-subtotal"><span>Store subtotal</span><strong>{formatCurrency(storeSubtotal)}</strong></Box>
               </Box>;

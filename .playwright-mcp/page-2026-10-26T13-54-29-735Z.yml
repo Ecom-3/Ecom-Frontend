@@ -1,0 +1,235 @@
+- generic [ref=f4e1]:
+  - generic [ref=f4e8]:
+    - navigation [ref=f4e9]:
+      - generic [ref=f4e10]:
+        - generic [ref=f4e12]:
+          - heading [level=6] [ref=f4e124]: Location Admin Portal
+          - text: hyderabad
+        - button [ref=f4e125] [cursor=pointer]
+      - generic [ref=f4e17]:
+        - generic [ref=f4e18]:
+          - paragraph [ref=f4e19]: Main
+          - button [ref=f4e126] [cursor=pointer]:
+            - generic [ref=f4e24]: Dashboard
+        - generic [ref=f4e25]:
+          - paragraph [ref=f4e26]: Management
+          - button [ref=f4e127] [cursor=pointer]:
+            - generic [ref=f4e31]: Stores
+          - button [ref=f4e128] [cursor=pointer]:
+            - generic [ref=f4e37]: Products
+          - button [ref=f4e129] [cursor=pointer]:
+            - generic [ref=f4e42]: Banners
+          - button [ref=f4e130] [cursor=pointer]:
+            - generic [ref=f4e48]: Inventory
+        - generic [ref=f4e49]:
+          - paragraph [ref=f4e50]: Orders & Payments
+          - button [ref=f4e131] [cursor=pointer]:
+            - generic [ref=f4e55]: Orders
+          - button [ref=f4e132] [cursor=pointer]:
+            - generic [ref=f4e61]: Payments
+          - button [ref=f4e133] [cursor=pointer]:
+            - generic [ref=f4e66]: Delivery
+        - generic [ref=f4e67]:
+          - paragraph [ref=f4e68]: Customer
+          - button [ref=f4e134] [cursor=pointer]:
+            - generic [ref=f4e74]: Coupons
+        - generic [ref=f4e75]:
+          - paragraph [ref=f4e76]: Analytics
+          - button [ref=f4e135] [cursor=pointer]:
+            - generic [ref=f4e81]: Reports
+      - button [ref=f4e136] [cursor=pointer]: View Customer App
+    - main [ref=f4e83]:
+      - generic [ref=f4e84]:
+        - generic [ref=f4e85]:
+          - button [ref=f4e86] [cursor=pointer]
+          - generic [ref=f4e89]:
+            - text: Location Admin /
+            - strong [ref=f4e90]: Products
+        - generic [ref=f4e91]:
+          - textbox [ref=f4e137]:
+            - /placeholder: Search portal
+          - button [ref=f4e138] [cursor=pointer]
+          - button [ref=f4e139] [cursor=pointer]:
+            - generic [ref=f4e101]: H
+            - generic [ref=f4e102]: Hyderabad Location Admin QA
+      - generic [ref=f4e103]:
+        - generic [ref=f4e104]:
+          - heading [level=4] [ref=f4e140]: Products
+          - paragraph [ref=f4e106]: Manage products within your assigned scope.
+        - button [ref=f4e141] [cursor=pointer]: View Customer App
+      - generic [ref=f4e108]:
+        - generic [ref=f4e109]:
+          - generic [ref=f4e110]:
+            - generic: Search
+            - generic [ref=f4e111]:
+              - textbox [ref=f4e142]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f4e113]:
+            - combobox [ref=f4e114] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f4e115]:
+            - combobox [ref=f4e116] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f4e143] [cursor=pointer]: Create Product
+          - button [ref=f4e144] [cursor=pointer]: Map Product
+          - button [ref=f4e145] [cursor=pointer]: Export
+        - paragraph [ref=f4e120]: No matching records. Use Create to add the first record.
+        - generic [ref=f4e121]:
+          - button [disabled]: Previous
+          - paragraph [ref=f4e122]: Page 1 of 1
+          - button [disabled]: Next
+  - dialog [ref=f4e148]:
+    - heading "Create Products" [level=2] [ref=f4e149]
+    - generic [ref=f4e150]:
+      - generic [ref=f4e152]:
+        - generic:
+          - text: Product name
+          - generic [aria-hidden]: "*"
+        - generic [ref=f4e153]:
+          - textbox "Product name" [ref=f4e154]
+          - group [aria-hidden]:
+            - generic: Product name *
+      - generic [ref=f4e156]:
+        - generic:
+          - text: Master SKU
+          - generic [aria-hidden]: "*"
+        - generic [ref=f4e157]:
+          - textbox "Master SKU" [ref=f4e158]
+          - group [aria-hidden]:
+            - generic: Master SKU *
+      - generic [ref=f4e161]:
+        - generic [ref=f4e251]: Category
+        - generic [ref=f4e162]:
+          - combobox "Category" [expanded] [active] [ref=f4e163]
+          - button "Clear" [ref=f4e252] [cursor=pointer]
+          - group [aria-hidden]:
+            - generic: Category
+      - generic [ref=f4e166]:
+        - generic: Sub-category
+        - generic [ref=f4e167]:
+          - textbox "Sub-category" [ref=f4e168]
+          - group [aria-hidden]:
+            - generic: Sub-category
+      - generic [ref=f4e170]:
+        - generic:
+          - text: Description
+          - generic [aria-hidden]: "*"
+        - generic [ref=f4e171]:
+          - textbox "Description" [ref=f4e172]
+          - group [aria-hidden]:
+            - generic: Description *
+      - generic [ref=f4e174]:
+        - generic: Brand
+        - generic [ref=f4e175]:
+          - textbox "Brand" [ref=f4e176]
+          - group [aria-hidden]:
+            - generic: Brand
+      - generic [ref=f4e178]:
+        - generic: Ingredients
+        - generic [ref=f4e179]:
+          - textbox "Ingredients" [ref=f4e180]
+          - group [aria-hidden]:
+            - generic: Ingredients
+      - generic [ref=f4e182]:
+        - generic: Specifications
+        - generic [ref=f4e183]:
+          - textbox "Specifications" [ref=f4e184]
+          - group [aria-hidden]:
+            - generic: Specifications
+      - generic [ref=f4e186]:
+        - generic: Pack
+        - generic [ref=f4e187]:
+          - textbox "Pack" [ref=f4e188]
+          - group [aria-hidden]:
+            - generic: Pack
+      - generic [ref=f4e190]:
+        - generic: Type
+        - generic [ref=f4e191]:
+          - textbox "Type" [ref=f4e192]
+          - group [aria-hidden]:
+            - generic: Type
+      - generic [ref=f4e194]:
+        - generic: Shelf life
+        - generic [ref=f4e195]:
+          - textbox "Shelf life" [ref=f4e196]
+          - group [aria-hidden]:
+            - generic: Shelf life
+      - generic [ref=f4e198]:
+        - generic: Tags
+        - generic [ref=f4e199]:
+          - textbox "Tags" [ref=f4e200]
+          - group [aria-hidden]:
+            - generic: Tags
+      - generic [ref=f4e202]:
+        - generic: Highlights
+        - generic [ref=f4e203]:
+          - textbox "Highlights" [ref=f4e204]
+          - group [aria-hidden]:
+            - generic: Highlights
+      - generic [ref=f4e206]:
+        - generic: About the Source
+        - generic [ref=f4e207]:
+          - textbox "About the Source" [ref=f4e208]
+          - group [aria-hidden]:
+            - generic: About the Source
+      - generic [ref=f4e210]:
+        - generic: "Variants (one per line: Label | SKU | Price)"
+        - generic [ref=f4e211]:
+          - 'textbox "Variants (one per line: Label | SKU | Price)" [ref=f4e212]'
+          - group [aria-hidden]:
+            - generic: "Variants (one per line: Label | SKU | Price)"
+      - generic [ref=f4e214]:
+        - generic:
+          - text: Default price
+          - generic [aria-hidden]: "*"
+        - generic [ref=f4e215]:
+          - spinbutton "Default price" [ref=f4e216]
+          - group [aria-hidden]:
+            - generic: Default price *
+      - generic [ref=f4e218]:
+        - generic: Main image URL
+        - generic [ref=f4e219]:
+          - textbox "Main image URL" [ref=f4e220]
+          - group [aria-hidden]:
+            - generic: Main image URL
+      - generic [ref=f4e222]:
+        - combobox [ref=f4e223] [cursor=pointer]: Featured product
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+      - generic [ref=f4e225]:
+        - combobox [ref=f4e226] [cursor=pointer]: Special product
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+      - generic [ref=f4e228]:
+        - combobox [ref=f4e229] [cursor=pointer]: New arrival
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+      - generic [ref=f4e231]:
+        - combobox [ref=f4e232] [cursor=pointer]: Best seller
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+      - generic [ref=f4e234]:
+        - combobox [ref=f4e235] [cursor=pointer]: Active
+        - textbox [aria-hidden]: Active
+        - group [aria-hidden]
+      - generic [ref=f4e236]:
+        - paragraph [ref=f4e237]: Store availability in your assigned location
+        - generic [ref=f4e239]:
+          - generic: Mapped stores
+          - generic [ref=f4e240]:
+            - combobox "Mapped stores" [ref=f4e241]
+            - button "Open" [ref=f4e243] [cursor=pointer]
+            - group [aria-hidden]:
+              - generic: Mapped stores
+          - paragraph [ref=f4e246]: Only stores in your assigned location are available.
+    - generic [ref=f4e248]:
+      - button "Cancel" [ref=f4e249] [cursor=pointer]
+      - button "Save" [ref=f4e250] [cursor=pointer]
+  - listbox "Category" [ref=f4e256]:
+    - option "Traditional Pickles" [ref=f4e257] [cursor=pointer]
+    - option "Premium Dry Fruits" [ref=f4e258] [cursor=pointer]
+    - option "Fresh Vegetables" [ref=f4e259] [cursor=pointer]
+    - option "Fresh Non-Veg" [ref=f4e260] [cursor=pointer]

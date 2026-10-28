@@ -13,13 +13,6 @@ import { readLanguage } from './i18n/preferences';
 
 document.documentElement.lang = languageCode(readLanguage());
 
-// Business records and persistent preferences belong in backend services and
-// MySQL. Clear browser-local state left by older builds on this app origin.
-localStorage.clear();
-for (const key of Object.keys(sessionStorage)) {
-  if (key !== 'authToken') sessionStorage.removeItem(key);
-}
-
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ThemeProvider theme={brandTheme}><AppProvider>

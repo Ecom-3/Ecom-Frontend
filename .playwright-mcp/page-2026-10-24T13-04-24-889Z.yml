@@ -1,0 +1,105 @@
+- generic [ref=f7e1]:
+  - generic [ref=f7e5]:
+    - navigation [ref=f7e6]:
+      - generic [ref=f7e7]:
+        - generic [ref=f7e9]:
+          - heading [level=6] [ref=f7e210]: Location Admin Portal
+          - text: hyderabad
+        - button [ref=f7e211] [cursor=pointer]
+      - generic [ref=f7e14]:
+        - generic [ref=f7e15]:
+          - paragraph [ref=f7e16]: Main
+          - button [ref=f7e212] [cursor=pointer]:
+            - generic [ref=f7e21]: Dashboard
+        - generic [ref=f7e22]:
+          - paragraph [ref=f7e23]: Management
+          - button [ref=f7e213] [cursor=pointer]:
+            - generic [ref=f7e28]: Stores
+          - button [ref=f7e214] [cursor=pointer]:
+            - generic [ref=f7e34]: Products
+          - button [ref=f7e215] [cursor=pointer]:
+            - generic [ref=f7e39]: Banners
+          - button [ref=f7e216] [cursor=pointer]:
+            - generic [ref=f7e45]: Inventory
+        - generic [ref=f7e46]:
+          - paragraph [ref=f7e47]: Orders & Payments
+          - button [ref=f7e217] [cursor=pointer]:
+            - generic [ref=f7e52]: Orders
+          - button [ref=f7e218] [cursor=pointer]:
+            - generic [ref=f7e58]: Payments
+          - button [ref=f7e219] [cursor=pointer]:
+            - generic [ref=f7e63]: Delivery
+        - generic [ref=f7e64]:
+          - paragraph [ref=f7e65]: Customer
+          - button [ref=f7e220] [cursor=pointer]:
+            - generic [ref=f7e71]: Coupons
+        - generic [ref=f7e72]:
+          - paragraph [ref=f7e73]: Analytics
+          - button [ref=f7e221] [cursor=pointer]:
+            - generic [ref=f7e78]: Reports
+      - button [ref=f7e222] [cursor=pointer]: View Customer App
+    - main [ref=f7e80]:
+      - generic [ref=f7e81]:
+        - generic [ref=f7e82]:
+          - button [ref=f7e83] [cursor=pointer]
+          - generic [ref=f7e86]:
+            - text: Location Admin /
+            - strong [ref=f7e87]: Orders
+        - generic [ref=f7e88]:
+          - textbox [ref=f7e223]:
+            - /placeholder: Search portal
+            - text: ORD-20261023-10641B43
+          - button [ref=f7e224] [cursor=pointer]
+          - button [ref=f7e225] [cursor=pointer]:
+            - generic [ref=f7e98]: H
+            - generic [ref=f7e99]: Hyderabad Location Admin
+      - generic [ref=f7e100]:
+        - generic [ref=f7e101]:
+          - heading [level=4] [ref=f7e226]: Orders
+          - paragraph [ref=f7e103]: Manage orders within your assigned scope.
+        - button [ref=f7e227] [cursor=pointer]: View Customer App
+      - generic [ref=f7e107]:
+        - generic [ref=f7e108]:
+          - generic [ref=f7e109]:
+            - generic [ref=f7e228]: Search or paste order ID
+            - generic [ref=f7e110]:
+              - textbox [ref=f7e229]: ORD-20261023-10641B43
+              - group [aria-hidden]:
+                - generic: Search or paste order ID
+          - button [ref=f7e230] [cursor=pointer]: Fetch Order
+          - generic [ref=f7e113]:
+            - combobox [expanded] [ref=f7e114] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f7e115]:
+            - combobox [ref=f7e116] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f7e231] [cursor=pointer]: Export
+        - status [ref=f7e208]: Access denied
+        - generic [ref=f7e121]:
+          - generic [ref=f7e122]:
+            - paragraph [ref=f7e123]: ORD-20261023-10641B43
+            - paragraph [ref=f7e124]: Hyderabad Main Store
+          - generic [ref=f7e125]:
+            - button [ref=f7e232] [cursor=pointer]: View
+            - generic [ref=f7e127]:
+              - combobox [ref=f7e128] [cursor=pointer]: SHIPPED
+              - textbox [aria-hidden]: SHIPPED
+              - group [aria-hidden]
+            - button [ref=f7e233] [cursor=pointer]: Pack
+            - button [ref=f7e234] [cursor=pointer]: Out
+            - button [ref=f7e235] [cursor=pointer]: Delivered
+            - button [ref=f7e236] [cursor=pointer]: Assign
+            - button [ref=f7e237] [cursor=pointer]: Reject
+        - generic [ref=f7e119]:
+          - button [disabled]: Previous
+          - paragraph [ref=f7e120]: Page 1 of 1
+          - button [disabled]: Next
+  - listbox [ref=f7e240]:
+    - option "All" [active] [selected] [ref=f7e241] [cursor=pointer]
+    - option "SHIPPED" [ref=f7e242] [cursor=pointer]
+    - option "CREATED" [ref=f7e243] [cursor=pointer]
+    - option "CANCELLED" [ref=f7e244] [cursor=pointer]
+    - option "PROCESSING" [ref=f7e245] [cursor=pointer]
+    - option "DELIVERED" [ref=f7e246] [cursor=pointer]

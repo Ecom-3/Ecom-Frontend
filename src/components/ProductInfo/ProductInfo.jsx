@@ -10,7 +10,7 @@ import { AppContext } from '../../context/AppContext';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import { getProduct, getProductVariants, getProductImages } from '../../services/catalogApi';
 import { adaptProduct, adaptImage, adaptVariant, variantChoiceLabel } from '../../services/catalogAdapter';
-import { findInventoryForItem } from '../../services/inventoryApi';
+import { getPublicInventoryAvailability } from '../../services/inventoryApi';
 import { loadProductStock } from '../../utils/productStock.js';
 import { getProductReviews } from '../../services/reviewApi';
 import { resolveProductStore } from '../../services/productStoreResolver';
@@ -128,14 +128,14 @@ const ProductInfo = () => {
   const stockVariantId = selectedVariant?.variantId ?? selectedVariant?.id ?? null;
   const stockScope = `${product.storeId}:${product.productId}:${stockVariantId}`;
   useEffect(() => {
-    if (!isLoggedIn || !product.storeId || !product.productId) return;
+    if (!product.storeId || !product.productId) return;
     let ignore = false;
-    loadProductStock(findInventoryForItem, { storeId: product.storeId, productId: product.productId, variantId: stockVariantId })
+    loadProductStock(getPublicInventoryAvailability, { storeId: product.storeId, productId: product.productId, variantId: stockVariantId })
       .then(stock => { if (!ignore) setStockResult({ scope: stockScope, ...stock }); });
     return () => { ignore = true; };
-  }, [isLoggedIn, product.storeId, product.productId, stockVariantId, stockScope, stockAttempt]);
+  }, [product.storeId, product.productId, stockVariantId, stockScope, stockAttempt]);
   const stock = stockResult?.scope === stockScope ? stockResult : null;
-  const checkingStock = Boolean(isLoggedIn && product.storeId && catalogProduct && !stock);
+  const checkingStock = Boolean(product.storeId && catalogProduct && !stock);
 
   const bestSellers = catalogProducts.filter((item) => item.productId !== targetId
     && (item.bestSeller === 'Yes' || item.bestSeller === true)
@@ -161,9 +161,8 @@ const ProductInfo = () => {
 
   const cartItem = cartItems.find((item) => sameCatalogItem(item, { productId: product.productId, variantId: selectedVariant?.variantId || selectedVariant?.id, storeId: product.storeId }));
   const productQuantity = cartItem ? cartItem.quantity : 0;
-  const insufficientStock = stock?.state === 'available' && productQuantity >= stock.available;
-  const stockUnverified = Boolean(isLoggedIn && product.storeId && ['missing', 'error'].includes(stock?.state));
-  const isOutOfStock = stock?.state === 'out' || stockUnverified || product.available === false || product.active === false || selectedVariant?.active === false || variantsUnavailable || insufficientStock;
+  const stockUnverified = Boolean(product.storeId && ['missing', 'error'].includes(stock?.state));
+  const isOutOfStock = stock?.state === 'out' || stockUnverified || product.available === false || product.active === false || selectedVariant?.active === false || variantsUnavailable;
 
   const handleViewCart = () => {
     if (isLoggedIn) {
@@ -241,7 +240,7 @@ const ProductInfo = () => {
           <Typography className="product-description-text">
             {product.description || 'Not specified'}
           </Typography>
-          <Box className={`availability-status ${isOutOfStock ? 'out' : ''}`}><Typography>{productLoading || checkingStock ? 'Checking availability...' : stock?.state === 'available' && insufficientStock ? `Only ${stock.available} available` : stock?.state === 'available' ? `In stock${Number.isInteger(stock.available) ? ` (${stock.available})` : ''}` : stock?.state === 'missing' ? 'Currently unavailable' : stock?.state === 'error' ? 'Availability could not be confirmed. Please try again.' : stock?.state === 'out' || product.active === false || product.available === false || selectedVariant?.active === false ? 'Unavailable' : variantsUnavailable ? 'Variant options unavailable' : !isLoggedIn ? 'Sign in to check stock' : 'Stock availability could not be checked'}</Typography>{stock?.state === 'error' && <Button size="small" onClick={() => setStockAttempt((attempt) => attempt + 1)}>Check again</Button>}</Box>
+          <Box className={`availability-status ${isOutOfStock ? 'out' : ''}`}><Typography>{productLoading || checkingStock ? 'Checking availability...' : stock?.state === 'available' ? 'In stock' : stock?.state === 'missing' ? 'Currently unavailable' : stock?.state === 'error' ? 'Availability could not be confirmed. Please try again.' : stock?.state === 'out' || product.active === false || product.available === false || selectedVariant?.active === false ? 'Unavailable' : variantsUnavailable ? 'Variant options unavailable' : 'Stock availability could not be checked'}</Typography>{stock?.state === 'error' && <Button size="small" onClick={() => setStockAttempt((attempt) => attempt + 1)}>Check again</Button>}</Box>
 
           <Box className="info-block"><Typography className="info-block-heading">Ingredients</Typography><Typography>{product.ingredients || 'Not specified'}</Typography></Box>
           <Box className="info-block"><Typography className="info-block-heading">Specifications</Typography>{specifications.length ? <Box className="specification-list">{specifications.map((specification) => { const [label,...value]=specification.split(':');return <Box key={specification}><Typography>{label}</Typography><Typography>{value.join(':').trim() || '-'}</Typography></Box>; })}</Box> : <Typography>Not specified</Typography>}</Box>
@@ -317,15 +316,15 @@ const ProductInfo = () => {
             <span className="sticky-qty-count">{productQuantity}</span>
             <button
               className="sticky-qty-btn"
-              disabled={cartLoading || productLoading || checkingStock || stockUnverified || isOutOfStock || insufficientStock || !productPriceKnown}
+              disabled={cartLoading || productLoading || checkingStock || stockUnverified || isOutOfStock || !productPriceKnown}
               onClick={handleAddProduct}
             >
               +
             </button>
           </Box>
         ) : (
-          <Button className="bottom-add-btn" disabled={!catalogProduct || productLoading || cartLoading || checkingStock || isOutOfStock || !productPriceKnown} onClick={handleAddProduct}>
-            {productLoading || checkingStock ? 'CHECKING...' : cartLoading ? 'ADDING...' : !productPriceKnown ? 'PRICE UNAVAILABLE' : insufficientStock ? 'STOCK LIMIT' : stockUnverified ? 'CHECK AVAILABILITY' : isOutOfStock ? 'UNAVAILABLE' : 'ADD +'}
+          <Button className="bottom-add-btn" disabled={!catalogProduct || productLoading || cartLoading || checkingStock || stockUnverified || isOutOfStock || !productPriceKnown} onClick={handleAddProduct}>
+            {productLoading || checkingStock ? 'CHECKING...' : cartLoading ? 'ADDING...' : !productPriceKnown ? 'PRICE UNAVAILABLE' : stockUnverified ? 'CHECK AVAILABILITY' : isOutOfStock ? 'UNAVAILABLE' : 'ADD +'}
           </Button>
         )}
       </Box>

@@ -1,0 +1,89 @@
+- generic [ref=f3e8]:
+  - navigation [ref=f3e9]:
+    - generic [ref=f3e10]:
+      - img "Spices and Pickles" [ref=f3e305]
+      - generic [ref=f3e12]:
+        - heading "Global Admin Portal" [level=6] [ref=f3e306]
+        - text: All locations
+      - button "Collapse sidebar" [ref=f3e307] [cursor=pointer]
+    - generic [ref=f3e17]:
+      - generic [ref=f3e18]:
+        - paragraph [ref=f3e19]: Main
+        - button "Dashboard" [ref=f3e308] [cursor=pointer]
+      - generic [ref=f3e25]:
+        - paragraph [ref=f3e26]: Management
+        - button "Stores" [ref=f3e309] [cursor=pointer]
+        - button "Products" [ref=f3e310] [cursor=pointer]
+        - button "Banners" [ref=f3e311] [cursor=pointer]
+        - button "Inventory" [ref=f3e312] [cursor=pointer]
+      - generic [ref=f3e49]:
+        - paragraph [ref=f3e50]: Orders & Payments
+        - button "Orders" [ref=f3e313] [cursor=pointer]
+        - button "Payments" [ref=f3e314] [cursor=pointer]
+        - button "Delivery" [ref=f3e315] [cursor=pointer]
+      - generic [ref=f3e67]:
+        - paragraph [ref=f3e68]: Customer
+        - button "Customers" [ref=f3e316] [cursor=pointer]
+        - button "Reviews" [ref=f3e317] [cursor=pointer]
+        - button "Coupons" [ref=f3e318] [cursor=pointer]
+        - button "Notifications" [ref=f3e319] [cursor=pointer]
+      - generic [ref=f3e90]:
+        - paragraph [ref=f3e91]: Analytics
+        - button "Reports" [ref=f3e320] [cursor=pointer]
+      - generic [ref=f3e97]:
+        - paragraph [ref=f3e98]: System
+        - button "Audit Logs" [ref=f3e321] [cursor=pointer]
+    - button "View Customer App" [ref=f3e322] [cursor=pointer]
+  - main [ref=f3e105]:
+    - generic [ref=f3e106]:
+      - generic [ref=f3e107]:
+        - button [ref=f3e108] [cursor=pointer]
+        - generic [ref=f3e111]:
+          - text: Global Admin /
+          - strong [ref=f3e112]: Products
+      - generic [ref=f3e113]:
+        - textbox "Search portal" [ref=f3e323]
+        - button "Notifications" [ref=f3e324] [cursor=pointer]
+        - button "G Global Admin QA" [ref=f3e325] [cursor=pointer]:
+          - generic [ref=f3e123]: G
+          - generic [ref=f3e124]: Global Admin QA
+    - generic [ref=f3e125]:
+      - generic [ref=f3e126]:
+        - heading "Products" [level=4] [ref=f3e326]
+        - paragraph [ref=f3e128]: Manage products within your assigned scope.
+      - button "View Customer App" [ref=f3e327] [cursor=pointer]
+    - generic [ref=f3e130]:
+      - generic [ref=f3e131]:
+        - generic [ref=f3e132]:
+          - generic: Search
+          - generic [ref=f3e133]:
+            - textbox "Search" [ref=f3e328]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f3e135]:
+          - combobox [ref=f3e136] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f3e137]:
+          - combobox [ref=f3e138] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create" [ref=f3e329] [cursor=pointer]
+        - button "Export" [ref=f3e330] [cursor=pointer]
+      - alert [ref=f3e331]:
+        - generic [ref=f3e335]: 23 product IDs are present in inventory but missing from the catalog. Inventory stock records do not create product records. Recreate the products in this page before assigning new stock.
+      - status [ref=f3e336]: Saved successfully.
+      - generic [ref=f3e146]:
+        - generic [ref=f3e147]:
+          - paragraph [ref=f3e148]: California Almonds
+          - paragraph [ref=f3e149]: QA-CAL-ALMOND-001
+        - generic [ref=f3e150]:
+          - button "View" [ref=f3e337] [cursor=pointer]
+          - button "Edit" [active] [ref=f3e338] [cursor=pointer]
+          - button "Duplicate" [ref=f3e339] [cursor=pointer]
+          - button "Deactivate" [ref=f3e340] [cursor=pointer]
+          - button "Delete" [ref=f3e341] [cursor=pointer]
+      - generic [ref=f3e156]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f3e157]: Page 1 of 1
+        - button "Next" [disabled]

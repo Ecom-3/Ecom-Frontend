@@ -1,0 +1,309 @@
+- generic [ref=f7e1]:
+  - generic [ref=f7e8]:
+    - navigation [ref=f7e9]:
+      - generic [ref=f7e10]:
+        - generic [ref=f7e12]:
+          - heading [level=6] [ref=f7e123]: Location Admin Portal
+          - text: hyderabad
+        - button [ref=f7e124] [cursor=pointer]
+      - generic [ref=f7e17]:
+        - generic [ref=f7e18]:
+          - paragraph [ref=f7e19]: Main
+          - button [ref=f7e125] [cursor=pointer]:
+            - generic [ref=f7e24]: Dashboard
+        - generic [ref=f7e25]:
+          - paragraph [ref=f7e26]: Management
+          - button [ref=f7e126] [cursor=pointer]:
+            - generic [ref=f7e31]: Stores
+          - button [ref=f7e127] [cursor=pointer]:
+            - generic [ref=f7e37]: Products
+          - button [ref=f7e128] [cursor=pointer]:
+            - generic [ref=f7e42]: Banners
+          - button [ref=f7e129] [cursor=pointer]:
+            - generic [ref=f7e48]: Inventory
+        - generic [ref=f7e49]:
+          - paragraph [ref=f7e50]: Orders & Payments
+          - button [ref=f7e130] [cursor=pointer]:
+            - generic [ref=f7e55]: Orders
+          - button [ref=f7e131] [cursor=pointer]:
+            - generic [ref=f7e61]: Payments
+          - button [ref=f7e132] [cursor=pointer]:
+            - generic [ref=f7e66]: Delivery
+        - generic [ref=f7e67]:
+          - paragraph [ref=f7e68]: Customer
+          - button [ref=f7e133] [cursor=pointer]:
+            - generic [ref=f7e74]: Coupons
+        - generic [ref=f7e75]:
+          - paragraph [ref=f7e76]: Analytics
+          - button [ref=f7e134] [cursor=pointer]:
+            - generic [ref=f7e81]: Reports
+      - button [ref=f7e135] [cursor=pointer]: View Customer App
+    - main [ref=f7e83]:
+      - generic [ref=f7e84]:
+        - generic [ref=f7e85]:
+          - button [ref=f7e86] [cursor=pointer]
+          - generic [ref=f7e89]:
+            - text: Location Admin /
+            - strong [ref=f7e90]: Stores
+        - generic [ref=f7e91]:
+          - textbox [ref=f7e136]:
+            - /placeholder: Search portal
+          - button [ref=f7e137] [cursor=pointer]
+          - button [ref=f7e138] [cursor=pointer]:
+            - generic [ref=f7e101]: H
+            - generic [ref=f7e102]: Hyderabad Location Admin
+      - generic [ref=f7e103]:
+        - generic [ref=f7e104]:
+          - heading [level=4] [ref=f7e139]: Stores
+          - paragraph [ref=f7e106]: Manage stores within your assigned scope.
+        - button [ref=f7e140] [cursor=pointer]: View Customer App
+      - generic [ref=f7e108]:
+        - generic [ref=f7e109]:
+          - generic [ref=f7e110]:
+            - generic: Search
+            - generic [ref=f7e111]:
+              - textbox [ref=f7e141]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f7e113]:
+            - combobox [ref=f7e114] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f7e115]:
+            - combobox [ref=f7e116] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f7e142] [cursor=pointer]: Create
+          - button [ref=f7e143] [cursor=pointer]: Export
+        - paragraph [ref=f7e119]: No matching records. Use Create to add the first record.
+        - generic [ref=f7e120]:
+          - button [disabled]: Previous
+          - paragraph [ref=f7e121]: Page 1 of 1
+          - button [disabled]: Next
+  - dialog [ref=f7e280]:
+    - heading [level=2] [ref=f7e281]: Create Stores
+    - generic [ref=f7e148]:
+      - generic [ref=f7e150]:
+        - generic [ref=f7e282]:
+          - text: Store name
+          - generic [aria-hidden] [ref=f7e283]: "*"
+        - generic [ref=f7e151]:
+          - textbox [ref=f7e284]: LA QA lifecycle disposable 20261025
+          - group [aria-hidden]:
+            - generic: Store name *
+      - generic [ref=f7e154]:
+        - generic: Store code
+        - generic [ref=f7e155]:
+          - textbox [ref=f7e285]
+          - group [aria-hidden]:
+            - generic: Store code
+      - generic [ref=f7e158]:
+        - generic [ref=f7e286]: Store description
+        - generic [ref=f7e159]:
+          - textbox [ref=f7e287]: Isolated Location Admin QA fixture
+          - group [aria-hidden]:
+            - generic: Store description
+      - generic [ref=f7e162]:
+        - generic: Store manager name
+        - generic [ref=f7e163]:
+          - textbox [ref=f7e288]
+          - group [aria-hidden]:
+            - generic: Store manager name
+      - generic [ref=f7e166]:
+        - paragraph [ref=f7e167]: Store map location
+        - generic [ref=f7e168]:
+          - generic [ref=f7e169]:
+            - generic: Search store location
+            - generic [ref=f7e170]:
+              - textbox [ref=f7e289]
+              - group [aria-hidden]:
+                - generic: Search store location
+            - paragraph [ref=f7e172]: Search with area, city, landmark or full address.
+          - button [ref=f7e290] [cursor=pointer]: Search
+          - button [ref=f7e291] [cursor=pointer]: Use current map point
+          - button [ref=f7e292] [cursor=pointer]: Open map
+        - generic [ref=f7e293]:
+          - iframe [ref=f7e294]:
+            - generic [ref=f8e2]:
+              - generic:
+                - region "Map" [ref=f8e3]
+                - button "Map marker" [ref=f8e4]
+              - generic:
+                - generic [ref=f8e8]:
+                  - button "Zoom In" [ref=f8e9] [cursor=pointer]
+                  - button "Zoom Out" [ref=f8e11] [cursor=pointer]
+                - group [ref=f8e13]:
+                  - generic [ref=f8e14]:
+                    - text: ©
+                    - link "OpenStreetMap contributors" [ref=f8e15] [cursor=pointer]:
+                      - /url: /copyright
+                    - text: ♥️
+                    - link "Make a Donation" [ref=f8e16] [cursor=pointer]:
+                      - /url: https://supporting.openstreetmap.org
+                    - text: .
+                    - link "Website and API terms" [ref=f8e17] [cursor=pointer]:
+                      - /url: https://wiki.osmfoundation.org/wiki/Terms_of_Use
+          - generic: 7.5 km
+        - generic [ref=f7e175]:
+          - generic [ref=f7e176]:
+            - generic [ref=f7e295]: Latitude
+            - generic [ref=f7e177]:
+              - spinbutton [ref=f7e296]: "17.4250000"
+              - group [aria-hidden]:
+                - generic: Latitude
+          - generic [ref=f7e179]:
+            - generic [ref=f7e297]: Longitude
+            - generic [ref=f7e180]:
+              - spinbutton [ref=f7e298]: "78.4500000"
+              - group [aria-hidden]:
+                - generic: Longitude
+      - generic [ref=f7e183]:
+        - generic [ref=f7e299]: Address
+        - generic [ref=f7e184]:
+          - textbox [ref=f7e300]: 10 Isolated QA Road, Hyderabad
+          - group [aria-hidden]:
+            - generic: Address
+      - generic [ref=f7e187]:
+        - generic: Door number
+        - generic [ref=f7e188]:
+          - textbox [ref=f7e301]
+          - group [aria-hidden]:
+            - generic: Door number
+      - generic [ref=f7e191]:
+        - generic: Street / road name
+        - generic [ref=f7e192]:
+          - textbox [ref=f7e302]
+          - group [aria-hidden]:
+            - generic: Street / road name
+      - generic [ref=f7e195]:
+        - generic: Area
+        - generic [ref=f7e196]:
+          - textbox [ref=f7e303]
+          - group [aria-hidden]:
+            - generic: Area
+      - generic [ref=f7e199]:
+        - generic: Landmark
+        - generic [ref=f7e200]:
+          - textbox [ref=f7e304]
+          - group [aria-hidden]:
+            - generic: Landmark
+      - generic [ref=f7e203]:
+        - generic: City
+        - generic [ref=f7e204]:
+          - textbox [ref=f7e305]
+          - group [aria-hidden]:
+            - generic: City
+      - generic [ref=f7e207]:
+        - generic: District
+        - generic [ref=f7e208]:
+          - textbox [ref=f7e306]
+          - group [aria-hidden]:
+            - generic: District
+      - generic [ref=f7e211]:
+        - generic: State
+        - generic [ref=f7e212]:
+          - textbox [ref=f7e307]
+          - group [aria-hidden]:
+            - generic: State
+      - generic [ref=f7e215]:
+        - generic: Pincode
+        - generic [ref=f7e216]:
+          - textbox [ref=f7e308]
+          - group [aria-hidden]:
+            - generic: Pincode
+      - generic [ref=f7e219]:
+        - generic: Store mobile number
+        - generic [ref=f7e220]:
+          - textbox [ref=f7e309]
+          - group [aria-hidden]:
+            - generic: Store mobile number
+      - generic [ref=f7e223]:
+        - generic: Alternate mobile number
+        - generic [ref=f7e224]:
+          - textbox [ref=f7e310]
+          - group [aria-hidden]:
+            - generic: Alternate mobile number
+      - generic [ref=f7e227]:
+        - generic: Store email
+        - generic [ref=f7e228]:
+          - textbox [ref=f7e311]
+          - group [aria-hidden]:
+            - generic: Store email
+      - generic [ref=f7e231]:
+        - generic: GST number
+        - generic [ref=f7e232]:
+          - textbox [ref=f7e312]
+          - group [aria-hidden]:
+            - generic: GST number
+      - generic [ref=f7e235]:
+        - generic: Store rating
+        - generic [ref=f7e236]:
+          - spinbutton [ref=f7e313]
+          - group [aria-hidden]:
+            - generic: Store rating
+      - generic [ref=f7e239]:
+        - generic: Store logo/image URL
+        - generic [ref=f7e240]:
+          - textbox [ref=f7e314]
+          - group [aria-hidden]:
+            - generic: Store logo/image URL
+      - generic [ref=f7e243]:
+        - combobox [ref=f7e244] [cursor=pointer]: Delivery available
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+      - generic [ref=f7e246]:
+        - combobox [ref=f7e247] [cursor=pointer]: Pickup available
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+      - generic [ref=f7e249]:
+        - combobox [expanded] [ref=f7e250] [cursor=pointer]: Store status
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+      - generic [ref=f7e252]:
+        - generic [ref=f7e315]:
+          - text: Order radius in KM
+          - generic [aria-hidden] [ref=f7e316]: "*"
+        - generic [ref=f7e253]:
+          - spinbutton [ref=f7e317]: "7.5"
+          - group [aria-hidden]:
+            - generic: Order radius in KM *
+      - generic [ref=f7e256]:
+        - generic [ref=f7e318]:
+          - text: Delivery ETA minutes
+          - generic [aria-hidden] [ref=f7e319]: "*"
+        - generic [ref=f7e257]:
+          - spinbutton [ref=f7e320]: "25"
+          - group [aria-hidden]:
+            - generic: Delivery ETA minutes *
+      - generic [ref=f7e260]:
+        - generic: Delivery charge
+        - generic [ref=f7e261]:
+          - spinbutton [ref=f7e321]
+          - group [aria-hidden]:
+            - generic: Delivery charge
+      - generic [ref=f7e264]:
+        - generic: Free delivery above order value
+        - generic [ref=f7e265]:
+          - spinbutton [ref=f7e322]
+          - group [aria-hidden]:
+            - generic: Free delivery above order value
+      - generic [ref=f7e268]:
+        - generic: Delivery modes (comma separated)
+        - generic [ref=f7e269]:
+          - textbox [ref=f7e323]
+          - group [aria-hidden]:
+            - generic: Delivery modes (comma separated)
+      - generic [ref=f7e272]:
+        - generic: Delivery notes
+        - generic [ref=f7e273]:
+          - textbox [ref=f7e324]
+          - group [aria-hidden]:
+            - generic: Delivery notes
+    - generic [ref=f7e276]:
+      - button [ref=f7e325] [cursor=pointer]: Cancel
+      - button [ref=f7e326] [cursor=pointer]: Save
+  - listbox [ref=f7e329]:
+    - option "Store status" [disabled] [selected]
+    - option "Active" [active] [ref=f7e330] [cursor=pointer]
+    - option "Inactive" [ref=f7e331] [cursor=pointer]
+    - option "Temporarily Closed" [ref=f7e332] [cursor=pointer]

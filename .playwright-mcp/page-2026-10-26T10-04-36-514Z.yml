@@ -1,0 +1,207 @@
+- generic [ref=f17e1]:
+  - generic [ref=f17e5]:
+    - complementary [ref=f17e6]:
+      - generic [ref=f17e9]:
+        - heading [level=6] [ref=f17e236]: Store Manager
+        - paragraph [ref=f17e11]: Gachibowli Fresh Hub
+      - navigation [ref=f17e12]:
+        - button [ref=f17e237] [cursor=pointer]:
+          - generic [ref=f17e17]: Dashboard
+        - button [ref=f17e238] [cursor=pointer]:
+          - generic [ref=f17e23]: Products
+        - button [ref=f17e239] [cursor=pointer]:
+          - generic [ref=f17e28]: Banners
+        - button [ref=f17e240] [cursor=pointer]:
+          - generic [ref=f17e34]: Coupons
+        - button [ref=f17e241] [cursor=pointer]:
+          - generic [ref=f17e40]: Inventory
+        - button [ref=f17e242] [cursor=pointer]:
+          - generic [ref=f17e45]: Orders
+        - button [ref=f17e243] [cursor=pointer]:
+          - generic [ref=f17e50]: Delivery Partners
+        - button [ref=f17e244] [cursor=pointer]:
+          - generic [ref=f17e55]: Delivery Radius
+        - button [ref=f17e245] [cursor=pointer]:
+          - generic [ref=f17e60]: Delivery Settings
+        - button [ref=f17e246] [cursor=pointer]:
+          - generic [ref=f17e65]: Change Password
+        - button [ref=f17e247] [cursor=pointer]:
+          - generic [ref=f17e70]: Profile
+        - button [ref=f17e248] [cursor=pointer]:
+          - generic [ref=f17e75]: Logout
+      - button [ref=f17e249] [cursor=pointer]: View Customer App
+    - main [ref=f17e77]:
+      - generic [ref=f17e78]:
+        - button [ref=f17e250] [cursor=pointer]: Store Manager
+        - button [ref=f17e251] [cursor=pointer]:
+          - generic [ref=f17e84]: S
+          - generic [ref=f17e85]: Sravani Gachibowli
+        - button [ref=f17e252] [cursor=pointer]: Sign out
+      - generic [ref=f17e87]:
+        - heading [level=4] [ref=f17e253]: Delivery Partners
+        - generic [ref=f17e89]:
+          - generic [ref=f17e90]: 7/7 active
+          - button [ref=f17e254] [cursor=pointer]: Create Delivery Partner
+      - generic [ref=f17e93]:
+        - generic [ref=f17e94]:
+          - generic [ref=f17e95]:
+            - paragraph [ref=f17e96]: Amit Kumar - Gachibowli Fresh Hub
+            - paragraph [ref=f17e97]: +91 90000 33031
+            - paragraph [ref=f17e98]: deliverypartnergachibowli01@metaarch.local
+            - paragraph [ref=f17e99]: "Username: deliverypartnergachibowli01"
+          - generic [ref=f17e100]:
+            - paragraph [ref=f17e101]: Vehicle type not recorded
+            - paragraph [ref=f17e102]: "Bike / vehicle: Not recorded"
+            - paragraph [ref=f17e103]: "Licence: Not recorded"
+            - paragraph [ref=f17e104]: Gachibowli Fresh Hub ? hyderabad
+          - generic [ref=f17e105]:
+            - button [ref=f17e255] [cursor=pointer]: View full details
+            - generic [ref=f17e107] [cursor=pointer]:
+              - switch [checked] [ref=f17e256]
+              - generic [ref=f17e113]: Active
+        - generic [ref=f17e114]:
+          - generic [ref=f17e115]:
+            - paragraph [ref=f17e116]: Delivery Partner
+            - paragraph [ref=f17e117]: "9885347642"
+            - paragraph [ref=f17e118]: deliverypartner@metaarch.local
+            - paragraph [ref=f17e119]: "Username: deliverypartner"
+            - paragraph [ref=f17e120]: efd34t54rdgvdsr53
+          - generic [ref=f17e121]:
+            - paragraph [ref=f17e122]: Scooter
+            - paragraph [ref=f17e123]: "Bike / vehicle: AP04AP8965"
+            - paragraph [ref=f17e124]: "Licence: 1134566666666666vbg"
+            - paragraph [ref=f17e125]: Gachibowli Fresh Hub ? hyderabad
+          - generic [ref=f17e126]:
+            - button [ref=f17e257] [cursor=pointer]: View full details
+            - generic [ref=f17e128] [cursor=pointer]:
+              - switch [checked] [ref=f17e258]
+              - generic [ref=f17e134]: Active
+        - generic [ref=f17e135]:
+          - generic [ref=f17e136]:
+            - paragraph [ref=f17e137]: Imran Khan
+            - paragraph [ref=f17e138]: +91 90000 33001
+            - paragraph [ref=f17e139]: deliverypartnerhyd01@metaarch.local
+            - paragraph [ref=f17e140]: "Username: deliverypartnerhyd01"
+          - generic [ref=f17e141]:
+            - paragraph [ref=f17e142]: Vehicle type not recorded
+            - paragraph [ref=f17e143]: "Bike / vehicle: Not recorded"
+            - paragraph [ref=f17e144]: "Licence: Not recorded"
+            - paragraph [ref=f17e145]: Gachibowli Fresh Hub ? hyderabad
+          - generic [ref=f17e146]:
+            - button [ref=f17e259] [cursor=pointer]: View full details
+            - generic [ref=f17e148] [cursor=pointer]:
+              - switch [checked] [ref=f17e260]
+              - generic [ref=f17e154]: Active
+        - generic [ref=f17e155]:
+          - generic [ref=f17e156]:
+            - paragraph [ref=f17e157]: Imran Khan - Gachibowli Fresh Hub
+            - paragraph [ref=f17e158]: +91 90000 33033
+            - paragraph [ref=f17e159]: deliverypartnergachibowli03@metaarch.local
+            - paragraph [ref=f17e160]: "Username: deliverypartnergachibowli03"
+          - generic [ref=f17e161]:
+            - paragraph [ref=f17e162]: Vehicle type not recorded
+            - paragraph [ref=f17e163]: "Bike / vehicle: Not recorded"
+            - paragraph [ref=f17e164]: "Licence: Not recorded"
+            - paragraph [ref=f17e165]: Gachibowli Fresh Hub ? hyderabad
+          - generic [ref=f17e166]:
+            - button [ref=f17e261] [cursor=pointer]: View full details
+            - generic [ref=f17e168] [cursor=pointer]:
+              - switch [checked] [ref=f17e262]
+              - generic [ref=f17e174]: Active
+        - generic [ref=f17e175]:
+          - generic [ref=f17e176]:
+            - paragraph [ref=f17e177]: Naveen Rao - Gachibowli Fresh Hub
+            - paragraph [ref=f17e178]: +91 90000 33035
+            - paragraph [ref=f17e179]: deliverypartnergachibowli05@metaarch.local
+            - paragraph [ref=f17e180]: "Username: deliverypartnergachibowli05"
+          - generic [ref=f17e181]:
+            - paragraph [ref=f17e182]: Vehicle type not recorded
+            - paragraph [ref=f17e183]: "Bike / vehicle: Not recorded"
+            - paragraph [ref=f17e184]: "Licence: Not recorded"
+            - paragraph [ref=f17e185]: Gachibowli Fresh Hub ? hyderabad
+          - generic [ref=f17e186]:
+            - button [ref=f17e263] [cursor=pointer]: View full details
+            - generic [ref=f17e188] [cursor=pointer]:
+              - switch [checked] [ref=f17e264]
+              - generic [ref=f17e194]: Active
+        - generic [ref=f17e195]:
+          - generic [ref=f17e196]:
+            - paragraph [ref=f17e197]: Ravi Singh - Gachibowli Fresh Hub
+            - paragraph [ref=f17e198]: +91 90000 33032
+            - paragraph [ref=f17e199]: deliverypartnergachibowli02@metaarch.local
+            - paragraph [ref=f17e200]: "Username: deliverypartnergachibowli02"
+          - generic [ref=f17e201]:
+            - paragraph [ref=f17e202]: Vehicle type not recorded
+            - paragraph [ref=f17e203]: "Bike / vehicle: Not recorded"
+            - paragraph [ref=f17e204]: "Licence: Not recorded"
+            - paragraph [ref=f17e205]: Gachibowli Fresh Hub ? hyderabad
+          - generic [ref=f17e206]:
+            - button [ref=f17e265] [cursor=pointer]: View full details
+            - generic [ref=f17e208] [cursor=pointer]:
+              - switch [checked] [ref=f17e266]
+              - generic [ref=f17e214]: Active
+        - generic [ref=f17e215]:
+          - generic [ref=f17e216]:
+            - paragraph [ref=f17e217]: Suresh Babu - Gachibowli Fresh Hub
+            - paragraph [ref=f17e218]: +91 90000 33034
+            - paragraph [ref=f17e219]: deliverypartnergachibowli04@metaarch.local
+            - paragraph [ref=f17e220]: "Username: deliverypartnergachibowli04"
+          - generic [ref=f17e221]:
+            - paragraph [ref=f17e222]: Vehicle type not recorded
+            - paragraph [ref=f17e223]: "Bike / vehicle: Not recorded"
+            - paragraph [ref=f17e224]: "Licence: Not recorded"
+            - paragraph [ref=f17e225]: Gachibowli Fresh Hub ? hyderabad
+          - generic [ref=f17e226]:
+            - button [ref=f17e267] [cursor=pointer]: View full details
+            - generic [ref=f17e228] [cursor=pointer]:
+              - switch [checked] [ref=f17e268]
+              - generic [ref=f17e234]: Active
+  - dialog [active] [ref=f17e271]:
+    - heading "Amit Kumar - Gachibowli Fresh Hub Active" [level=2] [ref=f17e272]:
+      - generic [ref=f17e273]: Amit Kumar - Gachibowli Fresh Hub
+      - generic [ref=f17e274]: Active
+    - generic [ref=f17e276]:
+      - generic [ref=f17e277]:
+        - generic [ref=f17e278]:
+          - text: Login username
+          - paragraph [ref=f17e279]: deliverypartnergachibowli01
+        - generic [ref=f17e280]:
+          - text: Email
+          - paragraph [ref=f17e281]: deliverypartnergachibowli01@metaarch.local
+        - generic [ref=f17e282]:
+          - text: Mobile number
+          - paragraph [ref=f17e283]: +91 90000 33031
+        - generic [ref=f17e284]:
+          - text: Emergency contact
+          - paragraph [ref=f17e285]: Not recorded
+        - generic [ref=f17e286]:
+          - text: Vehicle type
+          - paragraph [ref=f17e287]: Not recorded
+        - generic [ref=f17e288]:
+          - text: Vehicle number
+          - paragraph [ref=f17e289]: Not recorded
+        - generic [ref=f17e290]:
+          - text: Driving licence number
+          - paragraph [ref=f17e291]: Not recorded
+        - generic [ref=f17e292]:
+          - text: Assigned store
+          - paragraph [ref=f17e293]: Gachibowli Fresh Hub
+        - generic [ref=f17e294]:
+          - text: Assigned location
+          - paragraph [ref=f17e295]: hyderabad
+        - generic [ref=f17e296]:
+          - text: Partner address
+          - paragraph [ref=f17e297]: Not recorded
+        - generic [ref=f17e298]:
+          - text: Store address
+          - paragraph [ref=f17e299]: Not recorded
+        - generic [ref=f17e300]:
+          - text: Account created
+          - paragraph [ref=f17e301]: Not recorded
+        - generic [ref=f17e302]:
+          - text: Account updated
+          - paragraph [ref=f17e303]: Not recorded
+      - generic [ref=f17e304]:
+        - heading "Last shared location" [level=6] [ref=f17e305]
+        - paragraph [ref=f17e306]: No valid GPS location has been shared by this partner yet.
+    - button "Close" [ref=f17e308] [cursor=pointer]

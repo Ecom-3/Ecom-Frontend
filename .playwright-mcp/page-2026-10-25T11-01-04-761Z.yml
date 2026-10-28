@@ -1,0 +1,193 @@
+- generic [ref=f76e1]:
+  - generic [ref=f76e8]:
+    - navigation [ref=f76e9]:
+      - generic [ref=f76e10]:
+        - generic [ref=f76e12]:
+          - heading [level=6] [ref=f76e177]: Location Admin Portal
+          - text: hyderabad
+        - button [ref=f76e178] [cursor=pointer]
+      - generic [ref=f76e17]:
+        - generic [ref=f76e18]:
+          - paragraph [ref=f76e19]: Main
+          - button [ref=f76e179] [cursor=pointer]:
+            - generic [ref=f76e24]: Dashboard
+        - generic [ref=f76e25]:
+          - paragraph [ref=f76e26]: Management
+          - button [ref=f76e180] [cursor=pointer]:
+            - generic [ref=f76e31]: Stores
+          - button [ref=f76e181] [cursor=pointer]:
+            - generic [ref=f76e37]: Products
+          - button [ref=f76e182] [cursor=pointer]:
+            - generic [ref=f76e42]: Banners
+          - button [ref=f76e183] [cursor=pointer]:
+            - generic [ref=f76e48]: Inventory
+        - generic [ref=f76e49]:
+          - paragraph [ref=f76e50]: Orders & Payments
+          - button [ref=f76e184] [cursor=pointer]:
+            - generic [ref=f76e55]: Orders
+          - button [ref=f76e185] [cursor=pointer]:
+            - generic [ref=f76e61]: Payments
+          - button [ref=f76e186] [cursor=pointer]:
+            - generic [ref=f76e66]: Delivery
+        - generic [ref=f76e67]:
+          - paragraph [ref=f76e68]: Customer
+          - button [ref=f76e187] [cursor=pointer]:
+            - generic [ref=f76e74]: Coupons
+        - generic [ref=f76e75]:
+          - paragraph [ref=f76e76]: Analytics
+          - button [ref=f76e188] [cursor=pointer]:
+            - generic [ref=f76e81]: Reports
+      - button [ref=f76e189] [cursor=pointer]: View Customer App
+    - main [ref=f76e83]:
+      - generic [ref=f76e84]:
+        - generic [ref=f76e85]:
+          - button [ref=f76e86] [cursor=pointer]
+          - generic [ref=f76e89]:
+            - text: Location Admin /
+            - strong [ref=f76e90]: Inventory
+        - generic [ref=f76e91]:
+          - textbox [ref=f76e190]:
+            - /placeholder: Search portal
+          - button [ref=f76e191] [cursor=pointer]
+          - button [ref=f76e192] [cursor=pointer]:
+            - generic [ref=f76e101]: H
+            - generic [ref=f76e102]: Hyderabad Location Admin
+      - generic [ref=f76e103]:
+        - generic [ref=f76e104]:
+          - heading [level=4] [ref=f76e193]: Inventory
+          - paragraph [ref=f76e106]: Manage inventory within your assigned scope.
+        - button [ref=f76e194] [cursor=pointer]: View Customer App
+      - generic [ref=f76e108]:
+        - generic [ref=f76e109]:
+          - generic [ref=f76e110]:
+            - generic: Search
+            - generic [ref=f76e111]:
+              - textbox [ref=f76e195]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f76e113]:
+            - combobox [ref=f76e114] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f76e115]:
+            - combobox [ref=f76e116] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f76e196] [cursor=pointer]: Create
+          - button [ref=f76e197] [cursor=pointer]: Export
+        - generic [ref=f76e119]:
+          - generic [ref=f76e120]:
+            - paragraph [ref=f76e121]: 21000000-0000-0000-0000-000000000006
+            - paragraph [ref=f76e122]: 39cfd79d-24e4-4c22-ae71-611bf30388c2
+          - generic [ref=f76e123]:
+            - button [ref=f76e198] [cursor=pointer]: View
+            - button [ref=f76e199] [cursor=pointer]: Stock +10
+            - button [ref=f76e200] [cursor=pointer]: Stock -1
+            - button [ref=f76e201] [cursor=pointer]: Adjust
+        - generic [ref=f76e128]:
+          - generic [ref=f76e129]:
+            - paragraph [ref=f76e130]: 21000000-0000-0000-0000-000000000006
+            - paragraph [ref=f76e131]: 39cfd79d-24e4-4c22-ae71-611bf30388c2
+          - generic [ref=f76e132]:
+            - button [ref=f76e202] [cursor=pointer]: View
+            - button [ref=f76e203] [cursor=pointer]: Stock +10
+            - button [ref=f76e204] [cursor=pointer]: Stock -1
+            - button [ref=f76e205] [cursor=pointer]: Adjust
+        - generic [ref=f76e137]:
+          - generic [ref=f76e138]:
+            - paragraph [ref=f76e139]: 21000000-0000-0000-0000-000000000006
+            - paragraph [ref=f76e140]: 39cfd79d-24e4-4c22-ae71-611bf30388c2
+          - generic [ref=f76e141]:
+            - button [ref=f76e206] [cursor=pointer]: View
+            - button [ref=f76e207] [cursor=pointer]: Stock +10
+            - button [ref=f76e208] [cursor=pointer]: Stock -1
+            - button [ref=f76e209] [cursor=pointer]: Adjust
+        - generic [ref=f76e146]:
+          - generic [ref=f76e147]:
+            - paragraph [ref=f76e148]: 21000000-0000-0000-0000-000000000006
+            - paragraph [ref=f76e149]: 39cfd79d-24e4-4c22-ae71-611bf30388c2
+          - generic [ref=f76e150]:
+            - button [ref=f76e210] [cursor=pointer]: View
+            - button [ref=f76e211] [cursor=pointer]: Stock +10
+            - button [ref=f76e212] [cursor=pointer]: Stock -1
+            - button [ref=f76e213] [cursor=pointer]: Adjust
+        - generic [ref=f76e155]:
+          - generic [ref=f76e156]:
+            - paragraph [ref=f76e157]: 21000000-0000-0000-0000-000000000006
+            - paragraph [ref=f76e158]: 39cfd79d-24e4-4c22-ae71-611bf30388c2
+          - generic [ref=f76e159]:
+            - button [ref=f76e214] [cursor=pointer]: View
+            - button [ref=f76e215] [cursor=pointer]: Stock +10
+            - button [ref=f76e216] [cursor=pointer]: Stock -1
+            - button [ref=f76e217] [cursor=pointer]: Adjust
+        - generic [ref=f76e164]:
+          - generic [ref=f76e165]:
+            - paragraph [ref=f76e166]: 21000000-0000-0000-0000-000000000006
+            - paragraph [ref=f76e167]: c12dec85-1cd2-43fd-8617-5861800c39f5
+          - generic [ref=f76e168]:
+            - button [ref=f76e218] [cursor=pointer]: View
+            - button [ref=f76e219] [cursor=pointer]: Stock +10
+            - button [ref=f76e220] [cursor=pointer]: Stock -1
+            - button [ref=f76e221] [cursor=pointer]: Adjust
+        - generic [ref=f76e173]:
+          - button [disabled]: Previous
+          - paragraph [ref=f76e174]: Page 1 of 26
+          - button [ref=f76e222] [cursor=pointer]: Next
+  - dialog [active] [ref=f76e225]:
+    - heading "Details Inventory" [level=2] [ref=f76e226]
+    - generic [ref=f76e227]:
+      - generic [ref=f76e228]:
+        - text: productId
+        - paragraph [ref=f76e229]: 21000000-0000-0000-0000-000000000006
+      - generic [ref=f76e230]:
+        - text: variantId
+        - paragraph [ref=f76e231]: 39cfd79d-24e4-4c22-ae71-611bf30388c2
+      - generic [ref=f76e232]:
+        - text: storeId
+        - paragraph [ref=f76e233]: india-store-1-1
+      - generic [ref=f76e234]:
+        - text: availableQuantity
+        - paragraph [ref=f76e235]: "50"
+      - generic [ref=f76e236]:
+        - text: reservedQuantity
+        - paragraph [ref=f76e237]: "0"
+      - generic [ref=f76e238]:
+        - text: reorderLevel
+        - paragraph [ref=f76e239]: "10"
+      - generic [ref=f76e240]:
+        - text: status
+        - paragraph [ref=f76e241]: ACTIVE
+      - generic [ref=f76e242]:
+        - text: createdAt
+        - paragraph [ref=f76e243]: 2026-10-22T12:26:44.351182Z
+      - generic [ref=f76e244]:
+        - text: updatedAt
+        - paragraph [ref=f76e245]: 2026-10-22T12:26:44.351182Z
+      - generic [ref=f76e246]:
+        - text: version
+        - paragraph [ref=f76e247]: "0"
+      - generic [ref=f76e248]:
+        - text: name
+        - paragraph [ref=f76e249]: California Almonds
+      - generic [ref=f76e250]:
+        - text: sku
+        - paragraph [ref=f76e251]: DRY-CAL-ALMOND-1KG
+      - generic [ref=f76e252]:
+        - text: store
+        - paragraph [ref=f76e253]: Hyderabad Main Store
+      - generic [ref=f76e254]:
+        - text: location
+        - paragraph [ref=f76e255]: Hyderabad
+      - generic [ref=f76e256]:
+        - text: stock
+        - paragraph [ref=f76e257]: "50"
+      - generic [ref=f76e258]:
+        - text: reserved
+        - paragraph [ref=f76e259]: "0"
+      - generic [ref=f76e260]:
+        - text: lowStockAt
+        - paragraph [ref=f76e261]: "10"
+      - generic [ref=f76e262]:
+        - text: available
+        - paragraph [ref=f76e263]: Available
+    - button "Cancel" [ref=f76e266] [cursor=pointer]

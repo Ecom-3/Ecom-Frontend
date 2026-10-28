@@ -1,0 +1,159 @@
+- generic [ref=f29e1]:
+  - generic [ref=f29e8]:
+    - navigation [ref=f29e9]:
+      - generic [ref=f29e10]:
+        - generic [ref=f29e12]:
+          - heading [level=6] [ref=f29e180]: Location Admin Portal
+          - text: hyderabad
+        - button [ref=f29e181] [cursor=pointer]
+      - generic [ref=f29e17]:
+        - generic [ref=f29e18]:
+          - paragraph [ref=f29e19]: Main
+          - button [ref=f29e182] [cursor=pointer]:
+            - generic [ref=f29e24]: Dashboard
+        - generic [ref=f29e25]:
+          - paragraph [ref=f29e26]: Management
+          - button [ref=f29e183] [cursor=pointer]:
+            - generic [ref=f29e31]: Stores
+          - button [ref=f29e184] [cursor=pointer]:
+            - generic [ref=f29e37]: Products
+          - button [ref=f29e185] [cursor=pointer]:
+            - generic [ref=f29e42]: Banners
+          - button [ref=f29e186] [cursor=pointer]:
+            - generic [ref=f29e48]: Inventory
+        - generic [ref=f29e49]:
+          - paragraph [ref=f29e50]: Orders & Payments
+          - button [ref=f29e187] [cursor=pointer]:
+            - generic [ref=f29e55]: Orders
+          - button [ref=f29e188] [cursor=pointer]:
+            - generic [ref=f29e61]: Payments
+          - button [ref=f29e189] [cursor=pointer]:
+            - generic [ref=f29e66]: Delivery
+        - generic [ref=f29e67]:
+          - paragraph [ref=f29e68]: Customer
+          - button [ref=f29e190] [cursor=pointer]:
+            - generic [ref=f29e74]: Coupons
+        - generic [ref=f29e75]:
+          - paragraph [ref=f29e76]: Analytics
+          - button [ref=f29e191] [cursor=pointer]:
+            - generic [ref=f29e81]: Reports
+      - button [ref=f29e192] [cursor=pointer]: View Customer App
+    - main [ref=f29e83]:
+      - generic [ref=f29e84]:
+        - generic [ref=f29e85]:
+          - button [ref=f29e86] [cursor=pointer]
+          - generic [ref=f29e89]:
+            - text: Location Admin /
+            - strong [ref=f29e90]: Reports
+        - generic [ref=f29e91]:
+          - textbox [ref=f29e193]:
+            - /placeholder: Search portal
+          - button [ref=f29e194] [cursor=pointer]
+          - button [ref=f29e195] [cursor=pointer]:
+            - generic [ref=f29e101]: H
+            - generic [ref=f29e102]: Hyderabad Location Admin
+      - generic [ref=f29e103]:
+        - generic [ref=f29e104]:
+          - heading [level=4] [ref=f29e196]: Reports
+          - paragraph [ref=f29e106]: Manage reports within your assigned scope.
+        - button [ref=f29e197] [cursor=pointer]: View Customer App
+      - generic [ref=f29e108]:
+        - generic [ref=f29e109]:
+          - generic [ref=f29e110]:
+            - generic [ref=f29e111]: From
+            - generic [ref=f29e112]:
+              - textbox [ref=f29e198]
+              - group [aria-hidden]:
+                - generic: From
+          - generic [ref=f29e114]:
+            - generic [ref=f29e115]: To
+            - generic [ref=f29e116]:
+              - textbox [ref=f29e199]
+              - group [aria-hidden]:
+                - generic: To
+          - generic [ref=f29e118]:
+            - combobox [disabled] [ref=f29e119]: Hyderabad
+            - textbox [disabled] [aria-hidden]: Hyderabad
+            - group [aria-hidden]
+          - generic [ref=f29e120]:
+            - combobox [expanded] [ref=f29e121] [cursor=pointer]: All stores in location
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f29e122]:
+            - combobox [ref=f29e123] [cursor=pointer]: Sort stores by revenue
+            - textbox [aria-hidden]: revenue
+            - group [aria-hidden]
+          - button [ref=f29e200] [cursor=pointer]: Reset
+          - button [ref=f29e201] [cursor=pointer]: Export JSON
+        - generic [ref=f29e126]:
+          - generic [ref=f29e127]:
+            - paragraph [ref=f29e128]: Revenue
+            - heading [level=5] [ref=f29e202]: ₹14,068
+            - text: All stores in hyderabad
+          - generic [ref=f29e130]:
+            - paragraph [ref=f29e131]: Orders
+            - heading [level=5] [ref=f29e203]: "41"
+            - text: All stores in hyderabad
+          - generic [ref=f29e133]:
+            - paragraph [ref=f29e134]: Delivered
+            - heading [level=5] [ref=f29e204]: "1"
+            - text: All stores in hyderabad
+          - generic [ref=f29e136]:
+            - paragraph [ref=f29e137]: Products
+            - heading [level=5] [ref=f29e205]: "21"
+            - text: All stores in hyderabad
+          - generic [ref=f29e139]:
+            - paragraph [ref=f29e140]: Stock Units
+            - heading [level=5] [ref=f29e206]: "7860"
+            - text: All stores in hyderabad
+        - generic [ref=f29e142]:
+          - heading [level=6] [ref=f29e207]: Store performance
+          - generic [ref=f29e144]:
+            - generic [ref=f29e145]:
+              - generic [ref=f29e146]: Store and location
+              - generic [ref=f29e147]: Orders
+              - generic [ref=f29e148]: Revenue
+            - generic [ref=f29e149]:
+              - generic [ref=f29e150]:
+                - text: Hyderabad Main Store
+                - generic [ref=f29e151]: Hyderabad
+              - generic [ref=f29e152]: "16"
+              - strong [ref=f29e153]: ₹5,767
+            - generic [ref=f29e154]:
+              - generic [ref=f29e155]:
+                - text: Gachibowli Fresh Hub
+                - generic [ref=f29e156]: Hyderabad
+              - generic [ref=f29e157]: "12"
+              - strong [ref=f29e158]: ₹4,394
+            - generic [ref=f29e159]:
+              - generic [ref=f29e160]:
+                - text: SR Nagar Store
+                - generic [ref=f29e161]: Hyderabad
+              - generic [ref=f29e162]: "12"
+              - strong [ref=f29e163]: ₹3,553
+            - generic [ref=f29e164]:
+              - generic [ref=f29e165]:
+                - text: Banjara Hills Pickle House
+                - generic [ref=f29e166]: Hyderabad
+              - generic [ref=f29e167]: "1"
+              - strong [ref=f29e168]: ₹354
+            - generic [ref=f29e169]:
+              - generic [ref=f29e170]:
+                - text: Kukatpally Neighbourhood Market
+                - generic [ref=f29e171]: Hyderabad
+              - generic [ref=f29e172]: "0"
+              - strong [ref=f29e173]: ₹0
+            - generic [ref=f29e174]:
+              - generic [ref=f29e175]:
+                - text: Secunderabad Daily Foods
+                - generic [ref=f29e176]: Hyderabad
+              - generic [ref=f29e177]: "0"
+              - strong [ref=f29e178]: ₹0
+  - listbox [ref=f29e210]:
+    - option "All stores in location" [active] [selected] [ref=f29e211] [cursor=pointer]
+    - option "Banjara Hills Pickle House" [ref=f29e212] [cursor=pointer]
+    - option "Gachibowli Fresh Hub" [ref=f29e213] [cursor=pointer]
+    - option "Hyderabad Main Store" [ref=f29e214] [cursor=pointer]
+    - option "Kukatpally Neighbourhood Market" [ref=f29e215] [cursor=pointer]
+    - option "Secunderabad Daily Foods" [ref=f29e216] [cursor=pointer]
+    - option "SR Nagar Store" [ref=f29e217] [cursor=pointer]

@@ -1,0 +1,41 @@
+- generic [ref=f2e5]:
+  - complementary [ref=f2e6]:
+    - img "Spices and Pickles" [ref=f2e8]
+    - navigation [ref=f2e11]:
+      - button [active] [ref=f2e74] [cursor=pointer]
+      - button [ref=f2e75] [cursor=pointer]
+      - button [ref=f2e76] [cursor=pointer]
+    - generic [ref=f2e27]:
+      - switch [checked] [ref=f2e77] [cursor=pointer]
+      - button [ref=f2e78] [cursor=pointer]
+      - button [ref=f2e79] [cursor=pointer]
+      - button [ref=f2e80] [cursor=pointer]
+  - main [ref=f2e44]:
+    - heading "Dashboard" [level=5] [ref=f2e81]
+    - generic [ref=f2e82]:
+      - generic [ref=f2e83]:
+        - heading "Delivery Report" [level=6] [ref=f2e84]
+        - generic [ref=f2e85]:
+          - combobox [ref=f2e86] [cursor=pointer]: 30 days
+          - textbox [aria-hidden]: "30"
+          - group [aria-hidden]
+      - generic [ref=f2e87]:
+        - generic [ref=f2e88]:
+          - heading "1" [level=5] [ref=f2e89]
+          - text: Assigned
+        - generic [ref=f2e90]:
+          - heading "1" [level=5] [ref=f2e91]
+          - text: Active
+        - generic [ref=f2e92]:
+          - heading "0" [level=5] [ref=f2e93]
+          - text: Delivered today
+        - generic [ref=f2e94]:
+          - heading "0" [level=5] [ref=f2e95]
+          - text: Delivered
+        - generic [ref=f2e96]:
+          - heading "0%" [level=5] [ref=f2e97]
+          - text: Success rate
+        - generic [ref=f2e98]:
+          - heading "Rs 0" [level=5] [ref=f2e99]
+          - text: Value handled
+      - paragraph [ref=f2e100]: No completed deliveries in this period.

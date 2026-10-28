@@ -14,7 +14,7 @@ import ProductCard from '../../components/ProductCard/ProductCard';
 import CampaignCarousel from '../../components/CampaignCarousel/CampaignCarousel';
 import { AppContext } from '../../context/AppContext';
 import { promotionApplies } from '../../services/promotionScope';
-import { getCachedStoreDeliveryQuote, getStoreProducts } from '../../services/catalogApi';
+import { getCachedStoreDeliveryQuote, getPublicStoreProducts } from '../../services/catalogApi';
 import { adaptStoreProductList } from '../../services/catalogAdapter';
 import { deliverySummary, isGlobalProduct, isGlobalStore, isProductEligibleForStore, storeDeliversTo } from '../../utils/storeDelivery';
 import StoreServiceAreaMap from '../../components/StoreServiceAreaMap/StoreServiceAreaMap';
@@ -37,7 +37,7 @@ const StorePage = () => {
 
   useEffect(() => {
     let ignore = false;
-    getStoreProducts(storeId, { status: 'ACTIVE' })
+    getPublicStoreProducts(storeId, { status: 'ACTIVE' })
       .then((payload) => {
         if (!ignore) setStoreProducts(adaptStoreProductList(payload || []).map((item) => ({ ...item, storeId: item.storeId || storeId })));
       })

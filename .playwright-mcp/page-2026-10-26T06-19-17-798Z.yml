@@ -1,0 +1,51 @@
+- generic [ref=f14e5]:
+  - complementary [ref=f14e6]:
+    - generic [ref=f14e7]:
+      - img "Spices and Pickles" [ref=f14e8]
+      - generic [ref=f14e9]:
+        - heading "Store Manager" [level=6] [ref=f14e10]
+        - paragraph [ref=f14e11]: Gachibowli Fresh Hub
+    - navigation [ref=f14e12]:
+      - button "Dashboard" [ref=f14e13] [cursor=pointer]
+      - button "Products" [ref=f14e18] [cursor=pointer]
+      - button "Banners" [ref=f14e24] [cursor=pointer]
+      - button "Inventory" [ref=f14e29] [cursor=pointer]
+      - button "Orders" [ref=f14e35] [cursor=pointer]
+      - button "Delivery Partners" [ref=f14e40] [cursor=pointer]
+      - button "Delivery Radius" [ref=f14e45] [cursor=pointer]
+      - button "Delivery Settings" [ref=f14e50] [cursor=pointer]
+      - button "Change Password" [ref=f14e55] [cursor=pointer]
+      - button "Profile" [ref=f14e60] [cursor=pointer]
+      - button "Logout" [ref=f14e65] [cursor=pointer]
+    - button "View Customer App" [ref=f14e70] [cursor=pointer]
+  - main [ref=f14e71]:
+    - generic [ref=f14e72]:
+      - button [ref=f14e73] [cursor=pointer]
+      - button "S Sravani Gachibowli" [ref=f14e77] [cursor=pointer]:
+        - generic [ref=f14e78]: S
+        - generic [ref=f14e79]: Sravani Gachibowli
+      - button "Sign out" [ref=f14e80] [cursor=pointer]
+    - generic [ref=f14e82]:
+      - heading "Change Password" [level=4] [ref=f14e83]
+      - paragraph [ref=f14e84]: Assigned store
+    - generic [ref=f14e85]:
+      - generic [ref=f14e86]:
+        - generic [ref=f14e88]:
+          - generic: Current Password
+          - generic [ref=f14e89]:
+            - textbox "Current Password" [ref=f14e90]
+            - group [aria-hidden]:
+              - generic: Current Password
+        - generic [ref=f14e92]:
+          - generic: New Password
+          - generic [ref=f14e93]:
+            - textbox "New Password" [ref=f14e94]
+            - group [aria-hidden]:
+              - generic: New Password
+        - generic [ref=f14e96]:
+          - generic: Confirm Password
+          - generic [ref=f14e97]:
+            - textbox "Confirm Password" [ref=f14e98]
+            - group [aria-hidden]:
+              - generic: Confirm Password
+      - button "Change Password" [ref=f14e100] [cursor=pointer]

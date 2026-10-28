@@ -1,0 +1,12 @@
+- dialog [active] [ref=f6e398]:
+  - generic [ref=f6e399]:
+    - button "Close" [ref=f6e400] [cursor=pointer]
+    - heading "Assign delivery partner" [level=5] [ref=f6e401]
+    - paragraph [ref=f6e402]: Active delivery partners for hyderabad.
+    - button "Refresh availability" [ref=f6e403] [cursor=pointer]
+    - paragraph [ref=f6e404]: 5 active delivery partners
+    - generic [ref=f6e405]:
+      - combobox "Delivery partner" [ref=f6e406] [cursor=pointer]: Select delivery partner by name
+      - textbox [aria-hidden]
+      - group [aria-hidden]
+    - button "Assign order" [disabled]

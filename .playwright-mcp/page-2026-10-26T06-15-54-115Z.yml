@@ -1,0 +1,177 @@
+- generic [ref=f10e1]:
+  - generic [ref=f10e5]:
+    - navigation [ref=f10e6]:
+      - generic [ref=f10e7]:
+        - generic [ref=f10e9]:
+          - heading [level=6] [ref=f10e10]: Store Manager Portal
+          - text: Gachibowli Fresh Hub
+        - button [ref=f10e11] [cursor=pointer]
+      - generic [ref=f10e14]:
+        - button [ref=f10e15] [cursor=pointer]:
+          - generic [ref=f10e19]: Dashboard
+        - button [ref=f10e20] [cursor=pointer]:
+          - generic [ref=f10e25]: Products
+        - button [ref=f10e26] [cursor=pointer]:
+          - generic [ref=f10e30]: Banners
+        - button [ref=f10e31] [cursor=pointer]:
+          - generic [ref=f10e36]: Inventory
+        - button [ref=f10e37] [cursor=pointer]:
+          - generic [ref=f10e41]: Orders
+        - button [ref=f10e42] [cursor=pointer]:
+          - generic [ref=f10e46]: Delivery Partners
+        - button [ref=f10e47] [cursor=pointer]:
+          - generic [ref=f10e51]: Delivery Radius
+        - button [ref=f10e52] [cursor=pointer]:
+          - generic [ref=f10e56]: Delivery Settings
+        - button [ref=f10e57] [cursor=pointer]:
+          - generic [ref=f10e61]: Change Password
+        - button [ref=f10e62] [cursor=pointer]:
+          - generic [ref=f10e66]: Profile
+        - button [ref=f10e67] [cursor=pointer]:
+          - generic [ref=f10e71]: Logout
+      - button [ref=f10e72] [cursor=pointer]: View Customer App
+    - main [ref=f10e73]:
+      - generic [ref=f10e74]:
+        - generic [ref=f10e75]:
+          - button [ref=f10e76] [cursor=pointer]
+          - generic [ref=f10e79]:
+            - text: Store Manager /
+            - strong [ref=f10e80]: Inventory
+        - generic [ref=f10e81]:
+          - textbox [ref=f10e86]:
+            - /placeholder: Search portal
+          - button [ref=f10e87] [cursor=pointer]
+          - button [ref=f10e90] [cursor=pointer]:
+            - generic [ref=f10e91]: S
+            - generic [ref=f10e92]: Sravani Gachibowli
+      - generic [ref=f10e93]:
+        - generic [ref=f10e94]:
+          - heading [level=4] [ref=f10e95]: Inventory
+          - paragraph [ref=f10e96]: Manage inventory within your assigned scope.
+        - button [ref=f10e97] [cursor=pointer]: View Customer App
+      - generic [ref=f10e98]:
+        - generic [ref=f10e99]:
+          - generic [ref=f10e100]:
+            - generic: Search
+            - generic [ref=f10e101]:
+              - textbox [ref=f10e102]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f10e103]:
+            - combobox [ref=f10e104] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f10e105]:
+            - combobox [ref=f10e106] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f10e107] [cursor=pointer]: Create
+          - button [ref=f10e108] [cursor=pointer]: Export
+        - generic [ref=f10e109]:
+          - generic [ref=f10e110]:
+            - paragraph [ref=f10e111]: 21000000-0000-0000-0000-000000000006
+            - paragraph [ref=f10e112]: 39cfd79d-24e4-4c22-ae71-611bf30388c2
+          - generic [ref=f10e113]:
+            - button [ref=f10e114] [cursor=pointer]: View
+            - button [ref=f10e115] [cursor=pointer]: Stock +10
+            - button [ref=f10e116] [cursor=pointer]: Stock -1
+            - button [ref=f10e117] [cursor=pointer]: Adjust
+        - generic [ref=f10e118]:
+          - generic [ref=f10e119]:
+            - paragraph [ref=f10e120]: 21000000-0000-0000-0000-000000000006
+            - paragraph [ref=f10e121]: c12dec85-1cd2-43fd-8617-5861800c39f5
+          - generic [ref=f10e122]:
+            - button [ref=f10e123] [cursor=pointer]: View
+            - button [ref=f10e124] [cursor=pointer]: Stock +10
+            - button [ref=f10e125] [cursor=pointer]: Stock -1
+            - button [ref=f10e126] [cursor=pointer]: Adjust
+        - generic [ref=f10e127]:
+          - generic [ref=f10e128]:
+            - paragraph [ref=f10e129]: 21000000-0000-0000-0000-000000000006
+            - paragraph [ref=f10e130]: 43ad1ed5-cd45-11f1-be7d-74563cbdba97
+          - generic [ref=f10e131]:
+            - button [ref=f10e132] [cursor=pointer]: View
+            - button [ref=f10e133] [cursor=pointer]: Stock +10
+            - button [ref=f10e134] [cursor=pointer]: Stock -1
+            - button [ref=f10e135] [cursor=pointer]: Adjust
+        - generic [ref=f10e136]:
+          - generic [ref=f10e137]:
+            - paragraph [ref=f10e138]: 21000000-0000-0000-0000-000000000012
+            - paragraph [ref=f10e139]: 22e95a6e-ada9-11f1-a370-74563cbdba97
+          - generic [ref=f10e140]:
+            - button [ref=f10e141] [cursor=pointer]: View
+            - button [ref=f10e142] [cursor=pointer]: Stock +10
+            - button [ref=f10e143] [cursor=pointer]: Stock -1
+            - button [ref=f10e144] [cursor=pointer]: Adjust
+        - generic [ref=f10e145]:
+          - generic [ref=f10e146]:
+            - paragraph [ref=f10e147]: 21000000-0000-0000-0000-000000000013
+            - paragraph [ref=f10e148]: 22e95a98-ada9-11f1-a370-74563cbdba97
+          - generic [ref=f10e149]:
+            - button [ref=f10e150] [cursor=pointer]: View
+            - button [ref=f10e151] [cursor=pointer]: Stock +10
+            - button [ref=f10e152] [cursor=pointer]: Stock -1
+            - button [ref=f10e153] [cursor=pointer]: Adjust
+        - generic [ref=f10e154]:
+          - generic [ref=f10e155]:
+            - paragraph [ref=f10e156]: 21000000-0000-0000-0000-000000000015
+            - paragraph [ref=f10e157]: 22e95aeb-ada9-11f1-a370-74563cbdba97
+          - generic [ref=f10e158]:
+            - button [ref=f10e159] [cursor=pointer]: View
+            - button [ref=f10e160] [cursor=pointer]: Stock +10
+            - button [ref=f10e161] [cursor=pointer]: Stock -1
+            - button [ref=f10e162] [cursor=pointer]: Adjust
+        - generic [ref=f10e163]:
+          - button [disabled]: Previous
+          - paragraph [ref=f10e164]: Page 1 of 8
+          - button [ref=f10e165] [cursor=pointer]: Next
+  - dialog [ref=f10e168]:
+    - heading "Edit Inventory" [level=2] [ref=f10e169]
+    - generic [ref=f10e170]:
+      - generic [ref=f10e173]:
+        - generic:
+          - text: Product
+          - generic [aria-hidden]: "*"
+        - generic [ref=f10e174]:
+          - combobox "Product" [invalid] [ref=f10e175]
+          - button "Open" [ref=f10e177] [cursor=pointer]
+          - group [aria-hidden]:
+            - generic: Product *
+        - paragraph [ref=f10e180]: Select a Catalog product.
+      - generic [ref=f10e182]:
+        - combobox [disabled] [ref=f10e183]
+        - textbox [disabled] [aria-hidden]: 39cfd79d-24e4-4c22-ae71-611bf30388c2
+        - group [aria-hidden]
+      - generic [ref=f10e185]:
+        - generic [ref=f10e186]:
+          - combobox [invalid] [ref=f10e187] [cursor=pointer]: Select mapped store
+          - textbox [invalid] [aria-hidden]
+          - group [aria-hidden]
+        - text: Store is required.
+      - generic [ref=f10e189]:
+        - generic [ref=f10e190]:
+          - text: Current stock
+          - generic [aria-hidden] [ref=f10e191]: "*"
+        - generic [ref=f10e192]:
+          - spinbutton "Current stock" [ref=f10e193]: "60"
+          - group [aria-hidden]:
+            - generic: Current stock *
+      - generic [ref=f10e195]:
+        - generic: Reserved stock
+        - generic [ref=f10e196]:
+          - spinbutton "Reserved stock" [ref=f10e197]
+          - group [aria-hidden]:
+            - generic: Reserved stock
+      - generic [ref=f10e199]:
+        - generic [ref=f10e200]: Low-stock threshold
+        - generic [ref=f10e201]:
+          - spinbutton "Low-stock threshold" [ref=f10e202]: "12"
+          - group [aria-hidden]:
+            - generic: Low-stock threshold
+      - generic [ref=f10e204]:
+        - combobox [ref=f10e205] [cursor=pointer]: ACTIVE
+        - textbox [aria-hidden]: ACTIVE
+        - group [aria-hidden]
+    - generic [ref=f10e207]:
+      - button "Cancel" [ref=f10e208] [cursor=pointer]
+      - button "Save" [active] [ref=f10e209] [cursor=pointer]

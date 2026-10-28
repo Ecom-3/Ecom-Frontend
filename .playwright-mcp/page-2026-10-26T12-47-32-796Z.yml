@@ -1,0 +1,108 @@
+- generic [ref=f43e5]:
+  - navigation [ref=f43e6]:
+    - generic [ref=f43e7]:
+      - img "Spices and Pickles" [ref=f43e608]
+      - generic [ref=f43e9]:
+        - heading "Super Admin Portal" [level=6] [ref=f43e609]
+        - text: All locations
+      - button "Collapse sidebar" [ref=f43e610] [cursor=pointer]
+    - generic [ref=f43e14]:
+      - generic [ref=f43e15]:
+        - paragraph [ref=f43e16]: Main
+        - button "Dashboard" [ref=f43e611] [cursor=pointer]
+      - generic [ref=f43e22]:
+        - paragraph [ref=f43e23]: Management
+        - button "Locations" [ref=f43e612] [cursor=pointer]
+        - button "Users" [ref=f43e613] [cursor=pointer]
+        - button "Stores" [ref=f43e614] [cursor=pointer]
+        - button "Products" [ref=f43e615] [cursor=pointer]
+        - button "Categories" [ref=f43e616] [cursor=pointer]
+        - button "Banners" [ref=f43e617] [cursor=pointer]
+        - button "Inventory" [ref=f43e618] [cursor=pointer]
+      - generic [ref=f43e62]:
+        - paragraph [ref=f43e63]: Orders & Payments
+        - button "Orders" [ref=f43e619] [cursor=pointer]
+        - button "Payments" [ref=f43e620] [cursor=pointer]
+        - button "Delivery" [ref=f43e621] [cursor=pointer]
+      - generic [ref=f43e80]:
+        - paragraph [ref=f43e81]: Customer
+        - button "Customers" [ref=f43e622] [cursor=pointer]
+        - button "Reviews" [ref=f43e623] [cursor=pointer]
+        - button "Coupons" [ref=f43e624] [cursor=pointer]
+        - button "Notifications" [ref=f43e625] [cursor=pointer]
+      - generic [ref=f43e103]:
+        - paragraph [ref=f43e104]: Analytics
+        - button "Reports" [ref=f43e626] [cursor=pointer]
+      - generic [ref=f43e110]:
+        - paragraph [ref=f43e111]: System
+        - button "Security" [ref=f43e627] [cursor=pointer]
+        - button "Audit Logs" [ref=f43e628] [cursor=pointer]
+    - button "View Customer App" [ref=f43e629] [cursor=pointer]
+  - main [ref=f43e123]:
+    - generic [ref=f43e124]:
+      - generic [ref=f43e125]:
+        - button [ref=f43e126] [cursor=pointer]
+        - generic [ref=f43e129]:
+          - text: Super Admin /
+          - strong [ref=f43e130]: Stores
+      - generic [ref=f43e131]:
+        - textbox "Search portal" [ref=f43e630]
+        - button "Notifications" [ref=f43e631] [cursor=pointer]
+        - button "A Admin" [ref=f43e632] [cursor=pointer]:
+          - generic [ref=f43e141]: A
+          - generic [ref=f43e142]: Admin
+    - generic [ref=f43e143]:
+      - generic [ref=f43e144]:
+        - heading "Stores" [level=4] [ref=f43e633]
+        - paragraph [ref=f43e146]: Manage stores within your assigned scope.
+      - button "View Customer App" [ref=f43e634] [cursor=pointer]
+    - generic [ref=f43e150]:
+      - generic [ref=f43e151]:
+        - generic [ref=f43e152]:
+          - generic: Search
+          - generic [ref=f43e153]:
+            - textbox "Search" [ref=f43e635]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f43e155]:
+          - combobox [ref=f43e156] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f43e157]:
+          - combobox [ref=f43e158] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create" [active] [ref=f43e636] [cursor=pointer]
+        - button "Export" [ref=f43e637] [cursor=pointer]
+      - status [ref=f43e638]: Saved successfully.
+      - generic [ref=f43e164]:
+        - generic [ref=f43e165]:
+          - paragraph [ref=f43e166]: India-wide Global Store
+          - paragraph [ref=f43e167]: +91 91000 29999
+        - generic [ref=f43e168]:
+          - button "View" [ref=f43e639] [cursor=pointer]
+          - button "Edit" [ref=f43e640] [cursor=pointer]
+          - button "Deactivate" [ref=f43e641] [cursor=pointer]
+          - button "Delete" [ref=f43e642] [cursor=pointer]
+      - generic [ref=f43e173]:
+        - generic [ref=f43e174]:
+          - paragraph [ref=f43e175]: Gachibowli Fresh Hub
+          - paragraph [ref=f43e176]: +91 91000 20001
+        - generic [ref=f43e177]:
+          - button "View" [ref=f43e643] [cursor=pointer]
+          - button "Edit" [ref=f43e644] [cursor=pointer]
+          - button "Deactivate" [ref=f43e645] [cursor=pointer]
+          - button "Delete" [ref=f43e646] [cursor=pointer]
+      - generic [ref=f43e647]:
+        - generic [ref=f43e648]:
+          - paragraph [ref=f43e649]: Madhapur Fresh Hub
+          - paragraph [ref=f43e650]: +91 91000 20003
+        - generic [ref=f43e651]:
+          - button "View" [ref=f43e652] [cursor=pointer]
+          - button "Edit" [ref=f43e653] [cursor=pointer]
+          - button "Deactivate" [ref=f43e654] [cursor=pointer]
+          - button "Delete" [ref=f43e655] [cursor=pointer]
+      - generic [ref=f43e162]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f43e163]: Page 1 of 1
+        - button "Next" [disabled]

@@ -1,0 +1,73 @@
+- generic [ref=f52e5]:
+  - navigation [ref=f52e6]:
+    - generic [ref=f52e7]:
+      - img "Spices and Pickles" [ref=f52e260]
+      - generic [ref=f52e9]:
+        - heading "Location Admin Portal" [level=6] [ref=f52e261]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f52e262] [cursor=pointer]
+    - generic [ref=f52e14]:
+      - generic [ref=f52e15]:
+        - paragraph [ref=f52e16]: Main
+        - button "Dashboard" [ref=f52e263] [cursor=pointer]
+      - generic [ref=f52e22]:
+        - paragraph [ref=f52e23]: Management
+        - button "Stores" [ref=f52e264] [cursor=pointer]
+        - button "Products" [ref=f52e265] [cursor=pointer]
+        - button "Banners" [ref=f52e266] [cursor=pointer]
+        - button "Inventory" [ref=f52e267] [cursor=pointer]
+      - generic [ref=f52e46]:
+        - paragraph [ref=f52e47]: Orders & Payments
+        - button "Orders" [ref=f52e268] [cursor=pointer]
+        - button "Payments" [ref=f52e269] [cursor=pointer]
+        - button "Delivery" [ref=f52e270] [cursor=pointer]
+      - generic [ref=f52e64]:
+        - paragraph [ref=f52e65]: Customer
+        - button "Coupons" [ref=f52e271] [cursor=pointer]
+      - generic [ref=f52e72]:
+        - paragraph [ref=f52e73]: Analytics
+        - button "Reports" [ref=f52e272] [cursor=pointer]
+    - button "View Customer App" [ref=f52e273] [cursor=pointer]
+  - main [ref=f52e80]:
+    - generic [ref=f52e81]:
+      - generic [ref=f52e82]:
+        - button [ref=f52e83] [cursor=pointer]
+        - generic [ref=f52e86]:
+          - text: Location Admin /
+          - strong [ref=f52e87]: Products
+      - generic [ref=f52e88]:
+        - textbox "Search portal" [ref=f52e274]
+        - button "Notifications" [ref=f52e275] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=f52e276] [cursor=pointer]:
+          - generic [ref=f52e98]: H
+          - generic [ref=f52e99]: Hyderabad Location Admin
+    - generic [ref=f52e100]:
+      - generic [ref=f52e101]:
+        - heading "Products" [level=4] [ref=f52e277]
+        - paragraph [ref=f52e103]: Manage products within your assigned scope.
+      - button "View Customer App" [ref=f52e278] [cursor=pointer]
+    - generic [ref=f52e107]:
+      - generic [ref=f52e108]:
+        - generic [ref=f52e109]:
+          - generic: Search
+          - generic [ref=f52e110]:
+            - textbox "Search" [ref=f52e279]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f52e112]:
+          - combobox [ref=f52e113] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f52e114]:
+          - combobox [ref=f52e115] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create Product" [ref=f52e280] [cursor=pointer]
+        - button "Map Product" [ref=f52e281] [cursor=pointer]
+        - button "Export" [ref=f52e282] [cursor=pointer]
+      - status [ref=f52e217]: Deleted successfully.
+      - paragraph [ref=f52e283]: No matching records. Use Create to add the first record.
+      - generic [ref=f52e120]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f52e121]: Page 1 of 1
+        - button "Next" [disabled]

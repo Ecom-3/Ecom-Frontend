@@ -14,7 +14,7 @@ import { AppContext } from '../../context/AppContext';
 import { buildOrderAddressesPayload, buildOrderItemsPayload, createOrder, getOrder, normalizeOrder, retrySavedOrder } from '../../services/orderApi';
 import { createPayment, getPayment, getPaymentByOrder, getPaymentStatus, normalizePayment } from '../../services/paymentApi';
 import { getProduct } from '../../services/catalogApi';
-import { checkoutErrorMessage, validateGlobalCheckout } from '../../utils/globalCheckout';
+import { checkoutErrorMessage, validateCartProducts, validateGlobalCheckout } from '../../utils/globalCheckout';
 import './PaymentOptions.css';
 import { getPaymentCapabilities } from '../../services/paymentApi';
 import { requirePaymentProcessing } from '../../utils/paymentAvailability';
@@ -22,7 +22,7 @@ import * as cartApi from '../../services/cartApi';
 import { prepareCheckoutCart, finishCheckoutCart } from '../../utils/checkoutCart';
 import { createCheckoutGroup, getCheckoutGroupByKey, getCheckoutGroupByCart } from '../../services/orderApi';
 import { persistStoreCheckout } from '../../utils/persistedStoreCheckout';
-import { findInventoryForItem } from '../../services/inventoryApi';
+import { getPublicInventoryAvailability } from '../../services/inventoryApi';
 import { validateCheckoutAvailability } from '../../utils/checkoutAvailability';
 
 const methods = [
@@ -41,6 +41,7 @@ const paymentStatusText = {
 const GLOBAL_STORE_ID = 'global-store';
 const GLOBAL_STORE_NAME = 'India-wide Global Store';
 const COMPLETED_CHECKOUT_RETURN_KEY = 'freshcart.completedCheckoutReturnToCart';
+const promotionLocationFor = (checkout = {}) => String(checkout.customerLocation || '').trim().slice(0, 150);
 const isPaidOrderStatus = (status) => ['PAID', 'SUCCESS'].includes(String(status || '').toUpperCase());
 const tokenCustomerId = () => {
   try {
@@ -85,7 +86,7 @@ const resolveCheckoutStoreId = ({ activeCart, checkout = {}, cartItems = [] } = 
 const PaymentOptions = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { activeCart, addresses, cartItems, clearCart, formatCurrency, user, catalogStores } = useContext(AppContext);
+  const { activeCart, addresses, cartItems, clearCartAfterCheckout, formatCurrency, user, catalogStores } = useContext(AppContext);
   const customerId = tokenCustomerId() || user?.id || '';
   const checkout = useMemo(() => location.state?.checkout || {}, [location.state]);
   const existingOrderId = location.state?.orderId || location.state?.order?.id || '';
@@ -136,8 +137,10 @@ const PaymentOptions = () => {
     const delivery = Number(checkout.deliveryFee || 0);
     const storeCount = new Set(cartItems.map((item, index) => {
       const line = lineForCartItem(item, checkout.deliveryLines || [], index);
+      if (line.fulfillmentType === 'global' || line.storeId === GLOBAL_STORE_ID
+          || item.storeId === GLOBAL_STORE_ID || item.sourceStoreId === GLOBAL_STORE_ID) return null;
       return line.storeId || item.storeId || item.sourceStoreId || item.store || item.storeName;
-    })).size;
+    }).filter(Boolean)).size;
     const handling = multiStoreCart ? storeCount * 5 : Number(checkout.handlingFee ?? (cartItems.length ? 5 : 0));
     const discount = Number(checkout.discount || 0);
     const orderTotal = Number(existingOrder?.totalAmount || 0);
@@ -147,7 +150,7 @@ const PaymentOptions = () => {
   const checkoutBlock = multiStoreCart && !persistedMultiStore
     ? 'Persisted multi-store checkout is not enabled on this service stack. No orders or payments were submitted.'
     : !(persistedMultiStore && !existingOrderId) && !existingOrderId
-      ? checkoutPolicyError({ groupCount: splitKeysFor(cartItems, checkout.deliveryLines || []).length, handlingFee: summary.handling, discount: summary.discount, coupon: checkout.coupon, promotionVerified:Boolean(checkout.promotionVerified) })
+      ? checkoutPolicyError({ groupCount: splitKeysFor(cartItems, checkout.deliveryLines || []).length, handlingFee: summary.handling, discount: summary.discount, coupon: checkout.coupon, promotionVerified:Boolean(checkout.promotionVerified), globalOrder: checkout.fulfillmentType === 'global' || checkout.sourceStoreId === GLOBAL_STORE_ID })
       : '';
   const storeNameFor = (order = {}) => {
     const storeId = order.sourceStoreId || order.storeId || '';
@@ -162,8 +165,10 @@ const PaymentOptions = () => {
       ...group,
       line: {
         ...group.line,
-        fulfillmentType: group.line.fulfillmentType || group.items[0]?.fulfillmentType || checkout.fulfillmentType,
-        storeId: group.line.storeId || group.items[0]?.storeId,
+        storeId: group.line.storeId || group.items[0]?.storeId || group.items[0]?.sourceStoreId,
+        fulfillmentType: group.line.storeId || group.items[0]?.storeId || group.items[0]?.sourceStoreId
+          ? (group.line.storeId || group.items[0]?.storeId || group.items[0]?.sourceStoreId) === GLOBAL_STORE_ID ? 'global' : 'nearby'
+          : group.line.fulfillmentType || group.items[0]?.fulfillmentType,
       },
     })),
     getProduct,
@@ -187,10 +192,11 @@ const PaymentOptions = () => {
       if (!storeId) throw new Error('Select the store for the saved checkout before retrying.');
       return normalizeOrder(await retrySavedOrder(customerId, storeId));
     }
+    await validateCartProducts(cartItems, getProduct);
     await verifyGlobalItems();
     const deliveryLines = checkout.deliveryLines || [];
     const splitKeys = splitKeysFor(cartItems, deliveryLines);
-    const policyError = checkoutPolicyError({ groupCount: splitKeys.length, handlingFee: summary.handling, discount: summary.discount, coupon: checkout.coupon, promotionVerified:Boolean(checkout.promotionVerified) });
+    const policyError = checkoutPolicyError({ groupCount: splitKeys.length, handlingFee: summary.handling, discount: summary.discount, coupon: checkout.coupon, promotionVerified:Boolean(checkout.promotionVerified), globalOrder: checkout.fulfillmentType === 'global' || checkout.sourceStoreId === GLOBAL_STORE_ID });
     if (policyError) throw new Error(policyError);
     const hasGlobalLine = deliveryLines.some((line) => line.fulfillmentType === 'global') || ['global','mixed'].includes(checkout.fulfillmentType);
     const useLocalSplitOrder = hasGlobalLine || splitKeys.length > 1;
@@ -237,7 +243,7 @@ const PaymentOptions = () => {
             scheduledDeliverySlot: line.scheduleSlot || null,
             pickupDetails: line.pickupDetails || null,
             couponCode: checkout.coupon || '',
-            promotionLocation: checkout.customerLocation || '',
+            promotionLocation: promotionLocationFor(checkout),
             paymentStatus: 'PENDING',
           }));
           return {
@@ -295,7 +301,7 @@ const PaymentOptions = () => {
         scheduledDeliverySlot: primaryLine.scheduleSlot || checkout.slot || null,
         pickupDetails: primaryLine.pickupDetails || (checkout.pickupStore ? `Pickup from ${checkout.pickupStore}` : null),
         couponCode: checkout.coupon || '',
-        promotionLocation: checkout.customerLocation || '',
+        promotionLocation: promotionLocationFor(checkout),
         paymentStatus: 'PENDING',
       }));
   };
@@ -316,7 +322,7 @@ const PaymentOptions = () => {
   };
 
   const lookupCheckoutInventory = async (query) => {
-    return findInventoryForItem(query);
+    return getPublicInventoryAvailability(query);
   };
 
   const pay = async (retrySaved = false) => {
@@ -344,7 +350,7 @@ const PaymentOptions = () => {
         }
         if (!existingOrderId) {
           finishCheckoutCart(customerId, order.storeId);
-          if (!retrySaved) await clearCart();
+          if (!retrySaved) clearCartAfterCheckout();
         }
         setResult({ order, payment: pendingPayment || { status: 'PENDING', amount: payableAmount, paymentMethod: selectedPaymentMethod, paymentId: '' } });
         sessionStorage.setItem(COMPLETED_CHECKOUT_RETURN_KEY, order.id);
@@ -392,7 +398,7 @@ const PaymentOptions = () => {
           scheduledDeliveryDate: checkout.date || null,
           scheduledDeliverySlot: checkout.slot || null,
           couponCode:index===0?(checkout.coupon||''):'',
-          promotionLocation:checkout.customerLocation||'',
+          promotionLocation:promotionLocationFor(checkout),
         }));
         const group = await persistStoreCheckout({ customerId, stores, cartApi, request: createCheckoutGroup, lookup: getCheckoutGroupByKey, lookupCart: getCheckoutGroupByCart, checkInventory: entries => validateCheckoutAvailability(entries, lookupCheckoutInventory) });
         navigate(`/checkout-group/${encodeURIComponent(group.id)}`);
@@ -416,13 +422,14 @@ const PaymentOptions = () => {
       if (!order.id) throw new Error('Order Service did not return an order ID.');
       const payableAmount = Number(order.totalAmount || order.total || 0);
       if (!(payableAmount > 0)) throw new Error('Order Service did not return a valid order total.');
-      if (!existingOrderId && (Number(order.handlingFee) !== 5 || Math.round(payableAmount * 100) !== Math.round(summary.total * 100))) {
+      const expectedHandlingFee = checkout.fulfillmentType === 'global' || checkout.sourceStoreId === GLOBAL_STORE_ID ? 0 : 5;
+      if (!existingOrderId && (Number(order.handlingFee) !== expectedHandlingFee || Math.round(payableAmount * 100) !== Math.round(summary.total * 100))) {
         throw new Error('The server order total differs from checkout. No payment was initiated. Verify the order-service update before retrying.');
       }
       if (isCashOnDelivery) {
         if (!existingOrderId) {
           finishCheckoutCart(customerId, order.storeId);
-          if (!retrySaved) await clearCart();
+          if (!retrySaved) clearCartAfterCheckout();
         }
         setResult({ order, payment: { status: 'PENDING', amount: payableAmount, paymentMethod, paymentId: '' } });
         sessionStorage.setItem(COMPLETED_CHECKOUT_RETURN_KEY, order.id);

@@ -1,0 +1,110 @@
+- generic [ref=f11e8]:
+  - navigation [ref=f11e9]:
+    - generic [ref=f11e10]:
+      - img "Spices and Pickles" [ref=f11e218]
+      - generic [ref=f11e12]:
+        - heading "Location Admin Portal" [level=6] [ref=f11e219]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f11e220] [cursor=pointer]
+    - generic [ref=f11e17]:
+      - generic [ref=f11e18]:
+        - paragraph [ref=f11e19]: Main
+        - button "Dashboard" [ref=f11e221] [cursor=pointer]
+      - generic [ref=f11e25]:
+        - paragraph [ref=f11e26]: Management
+        - button "Stores" [ref=f11e222] [cursor=pointer]
+        - button "Products" [ref=f11e223] [cursor=pointer]
+        - button "Banners" [ref=f11e224] [cursor=pointer]
+        - button "Inventory" [ref=f11e225] [cursor=pointer]
+      - generic [ref=f11e49]:
+        - paragraph [ref=f11e50]: Orders & Payments
+        - button "Orders" [ref=f11e226] [cursor=pointer]
+        - button "Payments" [ref=f11e227] [cursor=pointer]
+        - button "Delivery" [ref=f11e228] [cursor=pointer]
+      - generic [ref=f11e67]:
+        - paragraph [ref=f11e68]: Customer
+        - button "Coupons" [ref=f11e229] [cursor=pointer]
+      - generic [ref=f11e75]:
+        - paragraph [ref=f11e76]: Analytics
+        - button "Reports" [ref=f11e230] [cursor=pointer]
+    - button "View Customer App" [ref=f11e231] [cursor=pointer]
+  - main [ref=f11e83]:
+    - generic [ref=f11e84]:
+      - generic [ref=f11e85]:
+        - button [ref=f11e86] [cursor=pointer]
+        - generic [ref=f11e89]:
+          - text: Location Admin /
+          - strong [ref=f11e90]: Reports
+      - generic [ref=f11e91]:
+        - textbox "Search portal" [ref=f11e232]
+        - button "Notifications" [ref=f11e233] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=f11e234] [cursor=pointer]:
+          - generic [ref=f11e101]: H
+          - generic [ref=f11e102]: Hyderabad Location Admin
+    - generic [ref=f11e103]:
+      - generic [ref=f11e104]:
+        - heading "Reports" [level=4] [ref=f11e235]
+        - paragraph [ref=f11e106]: Manage reports within your assigned scope.
+      - button "View Customer App" [ref=f11e236] [cursor=pointer]
+    - generic [ref=f11e108]:
+      - generic [ref=f11e109]:
+        - generic [ref=f11e110]:
+          - generic [ref=f11e111]: From
+          - generic [ref=f11e112]:
+            - textbox "From" [ref=f11e237]
+            - group [aria-hidden]:
+              - generic: From
+        - generic [ref=f11e114]:
+          - generic [ref=f11e115]: To
+          - generic [ref=f11e116]:
+            - textbox "To" [ref=f11e238]
+            - group [aria-hidden]:
+              - generic: To
+        - generic [ref=f11e118]:
+          - combobox [disabled] [ref=f11e119]: Hyderabad
+          - textbox [disabled] [aria-hidden]: Hyderabad
+          - group [aria-hidden]
+        - generic [ref=f11e120]:
+          - combobox [active] [ref=f11e121] [cursor=pointer]: Hyderabad Main Store
+          - textbox [aria-hidden]: Hyderabad Main Store
+          - group [aria-hidden]
+        - generic [ref=f11e122]:
+          - combobox [ref=f11e123] [cursor=pointer]: Sort stores by revenue
+          - textbox [aria-hidden]: revenue
+          - group [aria-hidden]
+        - button "Reset" [ref=f11e239] [cursor=pointer]
+        - button "Export JSON" [ref=f11e240] [cursor=pointer]
+      - generic [ref=f11e126]:
+        - generic [ref=f11e127]:
+          - paragraph [ref=f11e128]: Revenue
+          - heading "₹5,767" [level=5] [ref=f11e241]
+          - text: Hyderabad Main Store
+        - generic [ref=f11e130]:
+          - paragraph [ref=f11e131]: Orders
+          - heading "16" [level=5] [ref=f11e242]
+          - text: Hyderabad Main Store
+        - generic [ref=f11e133]:
+          - paragraph [ref=f11e134]: Delivered
+          - heading "1" [level=5] [ref=f11e243]
+          - text: Hyderabad Main Store
+        - generic [ref=f11e136]:
+          - paragraph [ref=f11e137]: Products
+          - heading "14" [level=5] [ref=f11e244]
+          - text: Hyderabad Main Store
+        - generic [ref=f11e139]:
+          - paragraph [ref=f11e140]: Stock Units
+          - heading "1200" [level=5] [ref=f11e245]
+          - text: Hyderabad Main Store
+      - generic [ref=f11e142]:
+        - heading "Store performance" [level=6] [ref=f11e246]
+        - generic [ref=f11e144]:
+          - generic [ref=f11e145]:
+            - generic [ref=f11e146]: Store and location
+            - generic [ref=f11e147]: Orders
+            - generic [ref=f11e148]: Revenue
+          - generic [ref=f11e149]:
+            - generic [ref=f11e150]:
+              - text: Hyderabad Main Store
+              - generic [ref=f11e151]: Hyderabad
+            - generic [ref=f11e152]: "16"
+            - strong [ref=f11e153]: ₹5,767

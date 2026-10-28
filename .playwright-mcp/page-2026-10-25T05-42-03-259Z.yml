@@ -1,0 +1,281 @@
+- generic [ref=f2e1]:
+  - generic [ref=f2e8]:
+    - navigation [ref=f2e9]:
+      - generic [ref=f2e10]:
+        - generic [ref=f2e12]:
+          - heading [level=6] [ref=f2e123]: Location Admin Portal
+          - text: hyderabad
+        - button [ref=f2e124] [cursor=pointer]
+      - generic [ref=f2e17]:
+        - generic [ref=f2e18]:
+          - paragraph [ref=f2e19]: Main
+          - button [ref=f2e125] [cursor=pointer]:
+            - generic [ref=f2e24]: Dashboard
+        - generic [ref=f2e25]:
+          - paragraph [ref=f2e26]: Management
+          - button [ref=f2e126] [cursor=pointer]:
+            - generic [ref=f2e31]: Stores
+          - button [ref=f2e127] [cursor=pointer]:
+            - generic [ref=f2e37]: Products
+          - button [ref=f2e128] [cursor=pointer]:
+            - generic [ref=f2e42]: Banners
+          - button [ref=f2e129] [cursor=pointer]:
+            - generic [ref=f2e48]: Inventory
+        - generic [ref=f2e49]:
+          - paragraph [ref=f2e50]: Orders & Payments
+          - button [ref=f2e130] [cursor=pointer]:
+            - generic [ref=f2e55]: Orders
+          - button [ref=f2e131] [cursor=pointer]:
+            - generic [ref=f2e61]: Payments
+          - button [ref=f2e132] [cursor=pointer]:
+            - generic [ref=f2e66]: Delivery
+        - generic [ref=f2e67]:
+          - paragraph [ref=f2e68]: Customer
+          - button [ref=f2e133] [cursor=pointer]:
+            - generic [ref=f2e74]: Coupons
+        - generic [ref=f2e75]:
+          - paragraph [ref=f2e76]: Analytics
+          - button [ref=f2e134] [cursor=pointer]:
+            - generic [ref=f2e81]: Reports
+      - button [ref=f2e135] [cursor=pointer]: View Customer App
+    - main [ref=f2e83]:
+      - generic [ref=f2e84]:
+        - generic [ref=f2e85]:
+          - button [ref=f2e86] [cursor=pointer]
+          - generic [ref=f2e89]:
+            - text: Location Admin /
+            - strong [ref=f2e90]: Stores
+        - generic [ref=f2e91]:
+          - textbox [ref=f2e136]:
+            - /placeholder: Search portal
+          - button [ref=f2e137] [cursor=pointer]
+          - button [ref=f2e138] [cursor=pointer]:
+            - generic [ref=f2e101]: H
+            - generic [ref=f2e102]: Hyderabad Location Admin
+      - generic [ref=f2e103]:
+        - generic [ref=f2e104]:
+          - heading [level=4] [ref=f2e139]: Stores
+          - paragraph [ref=f2e106]: Manage stores within your assigned scope.
+        - button [ref=f2e140] [cursor=pointer]: View Customer App
+      - generic [ref=f2e108]:
+        - generic [ref=f2e109]:
+          - generic [ref=f2e110]:
+            - generic: Search
+            - generic [ref=f2e111]:
+              - textbox [ref=f2e141]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f2e113]:
+            - combobox [ref=f2e114] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f2e115]:
+            - combobox [ref=f2e116] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f2e142] [cursor=pointer]: Create
+          - button [ref=f2e143] [cursor=pointer]: Export
+        - paragraph [ref=f2e119]: No matching records. Use Create to add the first record.
+        - generic [ref=f2e120]:
+          - button [disabled]: Previous
+          - paragraph [ref=f2e121]: Page 1 of 1
+          - button [disabled]: Next
+  - dialog [active] [ref=f2e146]:
+    - heading "Create Stores" [level=2] [ref=f2e147]
+    - generic [ref=f2e148]:
+      - generic [ref=f2e150]:
+        - generic:
+          - text: Store name
+          - generic [aria-hidden]: "*"
+        - generic [ref=f2e151]:
+          - textbox "Store name" [ref=f2e152]
+          - group [aria-hidden]:
+            - generic: Store name *
+      - generic [ref=f2e154]:
+        - generic: Store code
+        - generic [ref=f2e155]:
+          - textbox "Store code" [ref=f2e156]
+          - group [aria-hidden]:
+            - generic: Store code
+      - generic [ref=f2e158]:
+        - generic: Store description
+        - generic [ref=f2e159]:
+          - textbox "Store description" [ref=f2e160]
+          - group [aria-hidden]:
+            - generic: Store description
+      - generic [ref=f2e162]:
+        - generic: Store manager name
+        - generic [ref=f2e163]:
+          - textbox "Store manager name" [ref=f2e164]
+          - group [aria-hidden]:
+            - generic: Store manager name
+      - generic [ref=f2e166]:
+        - paragraph [ref=f2e167]: Store map location
+        - generic [ref=f2e168]:
+          - generic [ref=f2e169]:
+            - generic: Search store location
+            - generic [ref=f2e170]:
+              - textbox "Search store location" [ref=f2e171]
+              - group [aria-hidden]:
+                - generic: Search store location
+            - paragraph [ref=f2e172]: Search with area, city, landmark or full address.
+          - button "Search" [ref=f2e173] [cursor=pointer]
+          - button "Use current map point" [ref=f2e174] [cursor=pointer]
+        - generic [ref=f2e175]:
+          - generic [ref=f2e176]:
+            - generic: Latitude
+            - generic [ref=f2e177]:
+              - spinbutton "Latitude" [ref=f2e178]
+              - group [aria-hidden]:
+                - generic: Latitude
+          - generic [ref=f2e179]:
+            - generic: Longitude
+            - generic [ref=f2e180]:
+              - spinbutton "Longitude" [ref=f2e181]
+              - group [aria-hidden]:
+                - generic: Longitude
+      - generic [ref=f2e183]:
+        - generic: Address
+        - generic [ref=f2e184]:
+          - textbox "Address" [ref=f2e185]
+          - group [aria-hidden]:
+            - generic: Address
+      - generic [ref=f2e187]:
+        - generic: Door number
+        - generic [ref=f2e188]:
+          - textbox "Door number" [ref=f2e189]
+          - group [aria-hidden]:
+            - generic: Door number
+      - generic [ref=f2e191]:
+        - generic: Street / road name
+        - generic [ref=f2e192]:
+          - textbox "Street / road name" [ref=f2e193]
+          - group [aria-hidden]:
+            - generic: Street / road name
+      - generic [ref=f2e195]:
+        - generic: Area
+        - generic [ref=f2e196]:
+          - textbox "Area" [ref=f2e197]
+          - group [aria-hidden]:
+            - generic: Area
+      - generic [ref=f2e199]:
+        - generic: Landmark
+        - generic [ref=f2e200]:
+          - textbox "Landmark" [ref=f2e201]
+          - group [aria-hidden]:
+            - generic: Landmark
+      - generic [ref=f2e203]:
+        - generic: City
+        - generic [ref=f2e204]:
+          - textbox "City" [ref=f2e205]
+          - group [aria-hidden]:
+            - generic: City
+      - generic [ref=f2e207]:
+        - generic: District
+        - generic [ref=f2e208]:
+          - textbox "District" [ref=f2e209]
+          - group [aria-hidden]:
+            - generic: District
+      - generic [ref=f2e211]:
+        - generic: State
+        - generic [ref=f2e212]:
+          - textbox "State" [ref=f2e213]
+          - group [aria-hidden]:
+            - generic: State
+      - generic [ref=f2e215]:
+        - generic: Pincode
+        - generic [ref=f2e216]:
+          - textbox "Pincode" [ref=f2e217]
+          - group [aria-hidden]:
+            - generic: Pincode
+      - generic [ref=f2e219]:
+        - generic: Store mobile number
+        - generic [ref=f2e220]:
+          - textbox "Store mobile number" [ref=f2e221]
+          - group [aria-hidden]:
+            - generic: Store mobile number
+      - generic [ref=f2e223]:
+        - generic: Alternate mobile number
+        - generic [ref=f2e224]:
+          - textbox "Alternate mobile number" [ref=f2e225]
+          - group [aria-hidden]:
+            - generic: Alternate mobile number
+      - generic [ref=f2e227]:
+        - generic: Store email
+        - generic [ref=f2e228]:
+          - textbox "Store email" [ref=f2e229]
+          - group [aria-hidden]:
+            - generic: Store email
+      - generic [ref=f2e231]:
+        - generic: GST number
+        - generic [ref=f2e232]:
+          - textbox "GST number" [ref=f2e233]
+          - group [aria-hidden]:
+            - generic: GST number
+      - generic [ref=f2e235]:
+        - generic: Store rating
+        - generic [ref=f2e236]:
+          - spinbutton "Store rating" [ref=f2e237]
+          - group [aria-hidden]:
+            - generic: Store rating
+      - generic [ref=f2e239]:
+        - generic: Store logo/image URL
+        - generic [ref=f2e240]:
+          - textbox "Store logo/image URL" [ref=f2e241]
+          - group [aria-hidden]:
+            - generic: Store logo/image URL
+      - generic [ref=f2e243]:
+        - combobox [ref=f2e244] [cursor=pointer]: Delivery available
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+      - generic [ref=f2e246]:
+        - combobox [ref=f2e247] [cursor=pointer]: Pickup available
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+      - generic [ref=f2e249]:
+        - combobox [ref=f2e250] [cursor=pointer]: Store status
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+      - generic [ref=f2e252]:
+        - generic:
+          - text: Order radius in KM
+          - generic [aria-hidden]: "*"
+        - generic [ref=f2e253]:
+          - spinbutton "Order radius in KM" [ref=f2e254]
+          - group [aria-hidden]:
+            - generic: Order radius in KM *
+      - generic [ref=f2e256]:
+        - generic:
+          - text: Delivery ETA minutes
+          - generic [aria-hidden]: "*"
+        - generic [ref=f2e257]:
+          - spinbutton "Delivery ETA minutes" [ref=f2e258]
+          - group [aria-hidden]:
+            - generic: Delivery ETA minutes *
+      - generic [ref=f2e260]:
+        - generic: Delivery charge
+        - generic [ref=f2e261]:
+          - spinbutton "Delivery charge" [ref=f2e262]
+          - group [aria-hidden]:
+            - generic: Delivery charge
+      - generic [ref=f2e264]:
+        - generic: Free delivery above order value
+        - generic [ref=f2e265]:
+          - spinbutton "Free delivery above order value" [ref=f2e266]
+          - group [aria-hidden]:
+            - generic: Free delivery above order value
+      - generic [ref=f2e268]:
+        - generic: Delivery modes (comma separated)
+        - generic [ref=f2e269]:
+          - textbox "Delivery modes (comma separated)" [ref=f2e270]
+          - group [aria-hidden]:
+            - generic: Delivery modes (comma separated)
+      - generic [ref=f2e272]:
+        - generic: Delivery notes
+        - generic [ref=f2e273]:
+          - textbox "Delivery notes" [ref=f2e274]
+          - group [aria-hidden]:
+            - generic: Delivery notes
+    - generic [ref=f2e276]:
+      - button "Cancel" [ref=f2e277] [cursor=pointer]
+      - button "Save" [ref=f2e278] [cursor=pointer]

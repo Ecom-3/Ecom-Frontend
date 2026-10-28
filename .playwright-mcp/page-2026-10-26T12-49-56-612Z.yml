@@ -1,0 +1,166 @@
+- generic [ref=f46e1]:
+  - generic [ref=f46e8]:
+    - navigation [ref=f46e9]:
+      - generic [ref=f46e10]:
+        - generic [ref=f46e12]:
+          - heading [level=6] [ref=f46e499]: Super Admin Portal
+          - text: All locations
+        - button [ref=f46e500] [cursor=pointer]
+      - generic [ref=f46e17]:
+        - generic [ref=f46e18]:
+          - paragraph [ref=f46e19]: Main
+          - button [ref=f46e501] [cursor=pointer]:
+            - generic [ref=f46e24]: Dashboard
+        - generic [ref=f46e25]:
+          - paragraph [ref=f46e26]: Management
+          - button [ref=f46e502] [cursor=pointer]:
+            - generic [ref=f46e32]: Locations
+          - button [ref=f46e503] [cursor=pointer]:
+            - generic [ref=f46e37]: Users
+          - button [ref=f46e504] [cursor=pointer]:
+            - generic [ref=f46e42]: Stores
+          - button [ref=f46e505] [cursor=pointer]:
+            - generic [ref=f46e48]: Products
+          - button [ref=f46e506] [cursor=pointer]:
+            - generic [ref=f46e53]: Categories
+          - button [ref=f46e507] [cursor=pointer]:
+            - generic [ref=f46e58]: Banners
+          - button [ref=f46e508] [cursor=pointer]:
+            - generic [ref=f46e64]: Inventory
+        - generic [ref=f46e65]:
+          - paragraph [ref=f46e66]: Orders & Payments
+          - button [ref=f46e509] [cursor=pointer]:
+            - generic [ref=f46e71]: Orders
+          - button [ref=f46e510] [cursor=pointer]:
+            - generic [ref=f46e77]: Payments
+          - button [ref=f46e511] [cursor=pointer]:
+            - generic [ref=f46e82]: Delivery
+        - generic [ref=f46e83]:
+          - paragraph [ref=f46e84]: Customer
+          - button [ref=f46e512] [cursor=pointer]:
+            - generic [ref=f46e89]: Customers
+          - button [ref=f46e513] [cursor=pointer]:
+            - generic [ref=f46e94]: Reviews
+          - button [ref=f46e514] [cursor=pointer]:
+            - generic [ref=f46e100]: Coupons
+          - button [ref=f46e515] [cursor=pointer]:
+            - generic [ref=f46e105]: Notifications
+        - generic [ref=f46e106]:
+          - paragraph [ref=f46e107]: Analytics
+          - button [ref=f46e516] [cursor=pointer]:
+            - generic [ref=f46e112]: Reports
+        - generic [ref=f46e113]:
+          - paragraph [ref=f46e114]: System
+          - button [ref=f46e517] [cursor=pointer]:
+            - generic [ref=f46e119]: Security
+          - button [ref=f46e518] [cursor=pointer]:
+            - generic [ref=f46e124]: Audit Logs
+      - button [ref=f46e519] [cursor=pointer]: View Customer App
+    - main [ref=f46e126]:
+      - generic [ref=f46e127]:
+        - generic [ref=f46e128]:
+          - button [ref=f46e129] [cursor=pointer]
+          - generic [ref=f46e132]:
+            - text: Super Admin /
+            - strong [ref=f46e133]: Products
+        - generic [ref=f46e134]:
+          - textbox [ref=f46e520]:
+            - /placeholder: Search portal
+          - button [ref=f46e521] [cursor=pointer]
+          - button [ref=f46e522] [cursor=pointer]:
+            - generic [ref=f46e144]: A
+            - generic [ref=f46e145]: Admin
+      - generic [ref=f46e146]:
+        - generic [ref=f46e147]:
+          - heading [level=4] [ref=f46e523]: Products
+          - paragraph [ref=f46e149]: Manage products within your assigned scope.
+        - button [ref=f46e524] [cursor=pointer]: View Customer App
+      - generic [ref=f46e151]:
+        - generic [ref=f46e152]:
+          - generic [ref=f46e153]:
+            - generic: Search
+            - generic [ref=f46e154]:
+              - textbox [ref=f46e525]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f46e156]:
+            - combobox [ref=f46e157] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f46e158]:
+            - combobox [ref=f46e159] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f46e526] [cursor=pointer]: Create
+          - button [ref=f46e527] [cursor=pointer]: Export
+        - status [ref=f46e325]: Deleted successfully.
+        - generic [ref=f46e182]:
+          - generic [ref=f46e183]:
+            - paragraph [ref=f46e184]: California Almonds
+            - paragraph [ref=f46e185]: DRY-CAL-ALMOND
+          - generic [ref=f46e186]:
+            - button [ref=f46e528] [cursor=pointer]: View
+            - button [ref=f46e529] [cursor=pointer]: Edit
+            - button [ref=f46e530] [cursor=pointer]: Duplicate
+            - button [ref=f46e531] [cursor=pointer]: Deactivate
+            - button [ref=f46e532] [cursor=pointer]: Delete
+        - generic [ref=f46e192]:
+          - generic [ref=f46e193]:
+            - paragraph [ref=f46e194]: Chicken Boneless
+            - paragraph [ref=f46e195]: NV-CHICKEN-BONELESS
+          - generic [ref=f46e196]:
+            - button [ref=f46e533] [cursor=pointer]: View
+            - button [ref=f46e534] [cursor=pointer]: Edit
+            - button [ref=f46e535] [cursor=pointer]: Duplicate
+            - button [ref=f46e536] [cursor=pointer]: Deactivate
+            - button [ref=f46e537] [cursor=pointer]: Delete
+        - generic [ref=f46e202]:
+          - generic [ref=f46e203]:
+            - paragraph [ref=f46e204]: Chicken Breast
+            - paragraph [ref=f46e205]: NV-CHICKEN-BREAST
+          - generic [ref=f46e206]:
+            - button [ref=f46e538] [cursor=pointer]: View
+            - button [ref=f46e539] [cursor=pointer]: Edit
+            - button [ref=f46e540] [cursor=pointer]: Duplicate
+            - button [ref=f46e541] [cursor=pointer]: Deactivate
+            - button [ref=f46e542] [cursor=pointer]: Delete
+        - generic [ref=f46e212]:
+          - generic [ref=f46e213]:
+            - paragraph [ref=f46e214]: Chicken Curry Cut
+            - paragraph [ref=f46e215]: NV-CHICKEN-CURRY
+          - generic [ref=f46e216]:
+            - button [ref=f46e543] [cursor=pointer]: View
+            - button [ref=f46e544] [cursor=pointer]: Edit
+            - button [ref=f46e545] [cursor=pointer]: Duplicate
+            - button [ref=f46e546] [cursor=pointer]: Deactivate
+            - button [ref=f46e547] [cursor=pointer]: Delete
+        - generic [ref=f46e351]:
+          - generic [ref=f46e352]:
+            - paragraph [ref=f46e353]: Fresh Brinjal
+            - paragraph [ref=f46e354]: VEG-FRESH-BRINJAL
+          - generic [ref=f46e355]:
+            - button [ref=f46e548] [cursor=pointer]: View
+            - button [ref=f46e549] [cursor=pointer]: Edit
+            - button [ref=f46e550] [cursor=pointer]: Duplicate
+            - button [ref=f46e551] [cursor=pointer]: Deactivate
+            - button [ref=f46e552] [cursor=pointer]: Delete
+        - generic [ref=f46e487]:
+          - generic [ref=f46e488]:
+            - paragraph [ref=f46e489]: Fresh Carrots
+            - paragraph [ref=f46e490]: VEG-FRESH-CARROT
+          - generic [ref=f46e491]:
+            - button [ref=f46e553] [cursor=pointer]: View
+            - button [ref=f46e554] [cursor=pointer]: Edit
+            - button [ref=f46e555] [cursor=pointer]: Duplicate
+            - button [ref=f46e556] [cursor=pointer]: Deactivate
+            - button [ref=f46e557] [cursor=pointer]: Delete
+        - generic [ref=f46e222]:
+          - button [disabled]: Previous
+          - paragraph [ref=f46e223]: Page 1 of 4
+          - button [ref=f46e558] [cursor=pointer]: Next
+  - dialog [active] [ref=f46e561]:
+    - heading "Confirm action" [level=2] [ref=f46e562]
+    - paragraph [ref=f46e564]: Delete this record? This action updates local data immediately.
+    - generic [ref=f46e565]:
+      - button "Cancel" [ref=f46e566] [cursor=pointer]
+      - button "Confirm" [ref=f46e567] [cursor=pointer]

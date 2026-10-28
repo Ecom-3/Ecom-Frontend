@@ -1,0 +1,82 @@
+- generic [ref=f50e5]:
+  - navigation [ref=f50e6]:
+    - generic [ref=f50e7]:
+      - img "Spices and Pickles" [ref=f50e189]
+      - generic [ref=f50e9]:
+        - heading "Location Admin Portal" [level=6] [ref=f50e190]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f50e191] [cursor=pointer]
+    - generic [ref=f50e14]:
+      - generic [ref=f50e15]:
+        - paragraph [ref=f50e16]: Main
+        - button "Dashboard" [ref=f50e192] [cursor=pointer]
+      - generic [ref=f50e22]:
+        - paragraph [ref=f50e23]: Management
+        - button "Stores" [ref=f50e193] [cursor=pointer]
+        - button "Products" [ref=f50e194] [cursor=pointer]
+        - button "Banners" [ref=f50e195] [cursor=pointer]
+        - button "Inventory" [ref=f50e196] [cursor=pointer]
+      - generic [ref=f50e46]:
+        - paragraph [ref=f50e47]: Orders & Payments
+        - button "Orders" [ref=f50e197] [cursor=pointer]
+        - button "Payments" [ref=f50e198] [cursor=pointer]
+        - button "Delivery" [ref=f50e199] [cursor=pointer]
+      - generic [ref=f50e64]:
+        - paragraph [ref=f50e65]: Customer
+        - button "Coupons" [ref=f50e200] [cursor=pointer]
+      - generic [ref=f50e72]:
+        - paragraph [ref=f50e73]: Analytics
+        - button "Reports" [ref=f50e201] [cursor=pointer]
+    - button "View Customer App" [ref=f50e202] [cursor=pointer]
+  - main [ref=f50e80]:
+    - generic [ref=f50e81]:
+      - generic [ref=f50e82]:
+        - button [ref=f50e83] [cursor=pointer]
+        - generic [ref=f50e86]:
+          - text: Location Admin /
+          - strong [ref=f50e87]: Products
+      - generic [ref=f50e88]:
+        - textbox "Search portal" [ref=f50e203]
+        - button "Notifications" [ref=f50e204] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=f50e205] [cursor=pointer]:
+          - generic [ref=f50e98]: H
+          - generic [ref=f50e99]: Hyderabad Location Admin
+    - generic [ref=f50e100]:
+      - generic [ref=f50e101]:
+        - heading "Products" [level=4] [ref=f50e206]
+        - paragraph [ref=f50e103]: Manage products within your assigned scope.
+      - button "View Customer App" [ref=f50e207] [cursor=pointer]
+    - generic [ref=f50e107]:
+      - generic [ref=f50e108]:
+        - generic [ref=f50e109]:
+          - generic: Search
+          - generic [ref=f50e110]:
+            - textbox "Search" [ref=f50e208]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f50e112]:
+          - combobox [ref=f50e113] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f50e114]:
+          - combobox [ref=f50e115] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create Product" [ref=f50e209] [cursor=pointer]
+        - button "Map Product" [ref=f50e210] [cursor=pointer]
+        - button "Export" [ref=f50e211] [cursor=pointer]
+      - status [ref=f50e212]: Store mappings saved for your assigned location.
+      - generic [ref=f50e145]:
+        - generic [ref=f50e146]:
+          - paragraph [ref=f50e147]: QA Location Admin Product 20261025
+          - paragraph [ref=f50e148]: QA-LA-PROD-20261025
+        - generic [ref=f50e149]:
+          - button "View" [ref=f50e213] [cursor=pointer]
+          - button "Edit" [ref=f50e214] [cursor=pointer]
+          - button "Make unavailable" [ref=f50e215] [cursor=pointer]
+          - button "Delete" [ref=f50e216] [cursor=pointer]
+          - button "Manage stores" [active] [ref=f50e217] [cursor=pointer]
+      - generic [ref=f50e120]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f50e121]: Page 1 of 1
+        - button "Next" [disabled]

@@ -1,0 +1,89 @@
+- generic [ref=f4e8]:
+  - navigation [ref=f4e9]:
+    - generic [ref=f4e10]:
+      - img "Spices and Pickles" [ref=f4e403]
+      - generic [ref=f4e12]:
+        - heading "Location Admin Portal" [level=6] [ref=f4e404]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f4e405] [cursor=pointer]
+    - generic [ref=f4e17]:
+      - generic [ref=f4e18]:
+        - paragraph [ref=f4e19]: Main
+        - button "Dashboard" [ref=f4e406] [cursor=pointer]
+      - generic [ref=f4e25]:
+        - paragraph [ref=f4e26]: Management
+        - button "Stores" [ref=f4e407] [cursor=pointer]
+        - button "Products" [ref=f4e408] [cursor=pointer]
+        - button "Banners" [ref=f4e409] [cursor=pointer]
+        - button "Inventory" [ref=f4e410] [cursor=pointer]
+      - generic [ref=f4e49]:
+        - paragraph [ref=f4e50]: Orders & Payments
+        - button "Orders" [ref=f4e411] [cursor=pointer]
+        - button "Payments" [ref=f4e412] [cursor=pointer]
+        - button "Delivery" [ref=f4e413] [cursor=pointer]
+      - generic [ref=f4e67]:
+        - paragraph [ref=f4e68]: Customer
+        - button "Coupons" [ref=f4e414] [cursor=pointer]
+      - generic [ref=f4e75]:
+        - paragraph [ref=f4e76]: Analytics
+        - button "Reports" [ref=f4e415] [cursor=pointer]
+    - button "View Customer App" [ref=f4e416] [cursor=pointer]
+  - main [ref=f4e83]:
+    - generic [ref=f4e84]:
+      - generic [ref=f4e85]:
+        - button [ref=f4e86] [cursor=pointer]
+        - generic [ref=f4e89]:
+          - text: Location Admin /
+          - strong [ref=f4e90]: Products
+      - generic [ref=f4e91]:
+        - textbox "Search portal" [ref=f4e417]
+        - button "Notifications" [ref=f4e418] [cursor=pointer]
+        - button "H Hyderabad Location Admin QA" [ref=f4e419] [cursor=pointer]:
+          - generic [ref=f4e101]: H
+          - generic [ref=f4e102]: Hyderabad Location Admin QA
+    - generic [ref=f4e103]:
+      - generic [ref=f4e104]:
+        - heading "Products" [level=4] [ref=f4e420]
+        - paragraph [ref=f4e106]: Manage products within your assigned scope.
+      - button "View Customer App" [ref=f4e421] [cursor=pointer]
+    - generic [ref=f4e108]:
+      - generic [ref=f4e109]:
+        - generic [ref=f4e110]:
+          - generic: Search
+          - generic [ref=f4e111]:
+            - textbox "Search" [ref=f4e422]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f4e113]:
+          - combobox [ref=f4e114] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f4e115]:
+          - combobox [ref=f4e116] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create Product" [ref=f4e423] [cursor=pointer]
+        - button "Map Product" [active] [ref=f4e424] [cursor=pointer]
+        - button "Export" [ref=f4e425] [cursor=pointer]
+      - status [ref=f4e301]: Store mappings saved for your assigned location.
+      - generic [ref=f4e302]:
+        - generic [ref=f4e303]:
+          - paragraph [ref=f4e304]: Premium Cashew Nuts
+          - paragraph [ref=f4e305]: QA-PREM-CASHEW-001
+        - generic [ref=f4e306]:
+          - button "View" [ref=f4e426] [cursor=pointer]
+          - button "Edit" [ref=f4e427] [cursor=pointer]
+          - button "Make unavailable" [ref=f4e428] [cursor=pointer]
+          - button "Delete" [ref=f4e429] [cursor=pointer]
+          - button "Manage stores" [ref=f4e430] [cursor=pointer]
+      - generic [ref=f4e431]:
+        - generic [ref=f4e432]:
+          - paragraph [ref=f4e433]: California Almonds
+          - paragraph [ref=f4e434]: QA-CAL-ALMOND-001
+        - generic [ref=f4e435]:
+          - button "View" [ref=f4e436] [cursor=pointer]
+          - button "Manage stores" [ref=f4e437] [cursor=pointer]
+      - generic [ref=f4e121]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f4e122]: Page 1 of 1
+        - button "Next" [disabled]

@@ -11,7 +11,8 @@ export const checkoutPolicyError = (checkout) => {
   const error = checkoutReviewError(checkout);
   if (error) return error;
   if (checkout.groupCount > 1) return 'This cart contains items from multiple stores. Place separate orders for each store.';
-  if (Number(checkout.handlingFee ?? 0) !== 5) {
+  const expectedHandlingFee = checkout.globalOrder ? 0 : 5;
+  if (Number(checkout.handlingFee ?? 0) !== expectedHandlingFee) {
     return 'Checkout is unavailable until handling fees and promotions are verified by the order service.';
   }
   return '';

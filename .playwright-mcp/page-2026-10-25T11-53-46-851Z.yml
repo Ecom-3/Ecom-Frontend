@@ -1,0 +1,56 @@
+- generic [ref=f18e357]:
+  - complementary [ref=f18e358]:
+    - generic [ref=f18e359]:
+      - img "Spices and Pickles" [ref=f18e360]
+      - generic [ref=f18e361]:
+        - heading "Store Manager" [level=6] [ref=f18e362]
+        - paragraph [ref=f18e363]: Gachibowli Fresh Hub
+    - navigation [ref=f18e364]:
+      - button "Dashboard" [ref=f18e365] [cursor=pointer]
+      - button "Products" [ref=f18e370] [cursor=pointer]
+      - button "Banners" [ref=f18e376] [cursor=pointer]
+      - button "Inventory" [ref=f18e381] [cursor=pointer]
+      - button "Orders" [ref=f18e387] [cursor=pointer]
+      - button "Delivery Partners" [ref=f18e392] [cursor=pointer]
+      - button "Delivery Radius" [ref=f18e397] [cursor=pointer]
+      - button "Delivery Settings" [ref=f18e402] [cursor=pointer]
+      - button "Change Password" [ref=f18e407] [cursor=pointer]
+      - button "Profile" [ref=f18e412] [cursor=pointer]
+      - button "Logout" [ref=f18e417] [cursor=pointer]
+    - button "View Customer App" [ref=f18e422] [cursor=pointer]
+  - main [ref=f18e423]:
+    - generic [ref=f18e424]:
+      - button [ref=f18e425] [cursor=pointer]
+      - button "S Sravani Gachibowli" [ref=f18e429] [cursor=pointer]:
+        - generic [ref=f18e430]: S
+        - generic [ref=f18e431]: Sravani Gachibowli
+      - button "Sign out" [ref=f18e432] [cursor=pointer]
+    - generic [ref=f18e433]:
+      - generic [ref=f18e434]:
+        - heading "Delivery Radius & Service Area" [level=4] [ref=f18e435]
+        - paragraph [ref=f18e436]: Gachibowli Fresh Hub - Hyderabad
+      - button "+ Add Delivery Radius" [ref=f18e437] [cursor=pointer]
+    - generic [ref=f18e438]:
+      - generic [ref=f18e439]:
+        - generic [ref=f18e441]:
+          - button "Zoom in" [ref=f18e442] [cursor=pointer]: +
+          - button "Zoom out" [ref=f18e443] [cursor=pointer]: "-"
+        - generic [ref=f18e444]: Store
+        - generic: 8 KM
+      - complementary [ref=f18e445]:
+        - heading "Delivery Radius Rules" [level=6] [ref=f18e446]
+        - generic [ref=f18e447]:
+          - generic [ref=f18e448]:
+            - paragraph [ref=f18e449]: 0-8 KM
+            - generic [ref=f18e450]: Active
+          - paragraph [ref=f18e452]: ₹30 Standard Delivery
+          - paragraph [ref=f18e453]: 10-26 min
+          - generic [ref=f18e454]:
+            - generic [ref=f18e455]: Express
+            - generic [ref=f18e457]: Instant
+            - generic [ref=f18e459]: Scheduled
+            - generic [ref=f18e461]: Standard
+            - generic [ref=f18e463]: Store Pickup
+          - generic [ref=f18e465]:
+            - button "Edit" [ref=f18e466] [cursor=pointer]
+            - button "Delete" [ref=f18e467] [cursor=pointer]

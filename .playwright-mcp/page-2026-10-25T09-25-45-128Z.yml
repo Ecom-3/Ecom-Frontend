@@ -1,0 +1,276 @@
+- generic [ref=f22e1]:
+  - generic [ref=f22e5]:
+    - navigation [ref=f22e6]:
+      - generic [ref=f22e7]:
+        - generic [ref=f22e9]:
+          - heading [level=6] [ref=f22e580]: Location Admin Portal
+          - text: hyderabad
+        - button [ref=f22e581] [cursor=pointer]
+      - generic [ref=f22e14]:
+        - generic [ref=f22e15]:
+          - paragraph [ref=f22e16]: Main
+          - button [ref=f22e582] [cursor=pointer]:
+            - generic [ref=f22e21]: Dashboard
+        - generic [ref=f22e22]:
+          - paragraph [ref=f22e23]: Management
+          - button [ref=f22e583] [cursor=pointer]:
+            - generic [ref=f22e28]: Stores
+          - button [ref=f22e584] [cursor=pointer]:
+            - generic [ref=f22e34]: Products
+          - button [ref=f22e585] [cursor=pointer]:
+            - generic [ref=f22e39]: Banners
+          - button [ref=f22e586] [cursor=pointer]:
+            - generic [ref=f22e45]: Inventory
+        - generic [ref=f22e46]:
+          - paragraph [ref=f22e47]: Orders & Payments
+          - button [ref=f22e587] [cursor=pointer]:
+            - generic [ref=f22e52]: Orders
+          - button [ref=f22e588] [cursor=pointer]:
+            - generic [ref=f22e58]: Payments
+          - button [ref=f22e589] [cursor=pointer]:
+            - generic [ref=f22e63]: Delivery
+        - generic [ref=f22e64]:
+          - paragraph [ref=f22e65]: Customer
+          - button [ref=f22e590] [cursor=pointer]:
+            - generic [ref=f22e71]: Coupons
+        - generic [ref=f22e72]:
+          - paragraph [ref=f22e73]: Analytics
+          - button [ref=f22e591] [cursor=pointer]:
+            - generic [ref=f22e78]: Reports
+      - button [ref=f22e592] [cursor=pointer]: View Customer App
+    - main [ref=f22e80]:
+      - generic [ref=f22e81]:
+        - generic [ref=f22e82]:
+          - button [ref=f22e83] [cursor=pointer]
+          - generic [ref=f22e86]:
+            - text: Location Admin /
+            - strong [ref=f22e87]: Products
+        - generic [ref=f22e88]:
+          - textbox [ref=f22e593]:
+            - /placeholder: Search portal
+          - button [ref=f22e594] [cursor=pointer]
+          - button [ref=f22e595] [cursor=pointer]:
+            - generic [ref=f22e98]: H
+            - generic [ref=f22e99]: Hyderabad Location Admin
+      - generic [ref=f22e100]:
+        - generic [ref=f22e101]:
+          - heading [level=4] [ref=f22e596]: Products
+          - paragraph [ref=f22e103]: Manage products within your assigned scope.
+        - button [ref=f22e597] [cursor=pointer]: View Customer App
+      - generic [ref=f22e105]:
+        - generic [ref=f22e106]:
+          - generic [ref=f22e107]:
+            - generic: Search
+            - generic [ref=f22e108]:
+              - textbox [ref=f22e598]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f22e110]:
+            - combobox [ref=f22e111] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f22e112]:
+            - combobox [ref=f22e113] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f22e599] [cursor=pointer]: Create Product
+          - button [ref=f22e600] [cursor=pointer]: Map Product
+          - button [ref=f22e601] [cursor=pointer]: Export
+        - generic [ref=f22e356]:
+          - generic [ref=f22e357]:
+            - paragraph [ref=f22e358]: QA LA Product 20261025 1454
+            - paragraph [ref=f22e359]: QA-LA-20261025-1454
+          - generic [ref=f22e360]:
+            - button [ref=f22e602] [cursor=pointer]: View
+            - button [ref=f22e603] [cursor=pointer]: Edit
+            - button [ref=f22e604] [cursor=pointer]: Make unavailable
+            - button [ref=f22e605] [cursor=pointer]: Delete
+            - button [ref=f22e606] [cursor=pointer]: Manage stores
+        - generic [ref=f22e117]:
+          - generic [ref=f22e118]:
+            - paragraph [ref=f22e119]: Andhra Mango Avakaya Pickle
+            - paragraph [ref=f22e120]: PKL-ANDHRA-AVAKAYA
+          - generic [ref=f22e121]:
+            - button [ref=f22e607] [cursor=pointer]: View
+            - button [ref=f22e608] [cursor=pointer]: Manage stores
+        - generic [ref=f22e124]:
+          - generic [ref=f22e125]:
+            - paragraph [ref=f22e126]: California Almonds
+            - paragraph [ref=f22e127]: DRY-CAL-ALMOND
+          - generic [ref=f22e128]:
+            - button [ref=f22e609] [cursor=pointer]: View
+            - button [ref=f22e610] [cursor=pointer]: Manage stores
+        - generic [ref=f22e131]:
+          - generic [ref=f22e132]:
+            - paragraph [ref=f22e133]: Chicken Boneless
+            - paragraph [ref=f22e134]: NV-CHICKEN-BONELESS
+          - generic [ref=f22e135]:
+            - button [ref=f22e611] [cursor=pointer]: View
+            - button [ref=f22e612] [cursor=pointer]: Manage stores
+        - generic [ref=f22e138]:
+          - generic [ref=f22e139]:
+            - paragraph [ref=f22e140]: Chicken Breast
+            - paragraph [ref=f22e141]: NV-CHICKEN-BREAST
+          - generic [ref=f22e142]:
+            - button [ref=f22e613] [cursor=pointer]: View
+            - button [ref=f22e614] [cursor=pointer]: Manage stores
+        - generic [ref=f22e145]:
+          - generic [ref=f22e146]:
+            - paragraph [ref=f22e147]: Chicken Curry Cut
+            - paragraph [ref=f22e148]: NV-CHICKEN-CURRY
+          - generic [ref=f22e149]:
+            - button [ref=f22e615] [cursor=pointer]: View
+            - button [ref=f22e616] [cursor=pointer]: Manage stores
+        - generic [ref=f22e159]:
+          - button [disabled]: Previous
+          - paragraph [ref=f22e160]: Page 1 of 4
+          - button [ref=f22e617] [cursor=pointer]: Next
+  - dialog [active] [ref=f22e620]:
+    - heading "Edit Products" [level=2] [ref=f22e621]
+    - generic [ref=f22e622]:
+      - generic [ref=f22e624]:
+        - generic [ref=f22e625]:
+          - text: Product name
+          - generic [aria-hidden] [ref=f22e626]: "*"
+        - generic [ref=f22e627]:
+          - textbox "Product name" [ref=f22e628]: QA LA Product 20261025 1454
+          - group [aria-hidden]:
+            - generic: Product name *
+      - generic [ref=f22e630]:
+        - generic [ref=f22e631]:
+          - text: Master SKU
+          - generic [aria-hidden] [ref=f22e632]: "*"
+        - generic [ref=f22e633]:
+          - textbox "Master SKU" [ref=f22e634]: QA-LA-20261025-1454
+          - group [aria-hidden]:
+            - generic: Master SKU *
+      - generic [ref=f22e637]:
+        - generic [ref=f22e638]: Category
+        - generic [ref=f22e639]:
+          - combobox "Category" [ref=f22e640]: Traditional Pickles
+          - group [aria-hidden]:
+            - generic: Category
+      - generic [ref=f22e643]:
+        - generic [ref=f22e644]: Sub-category
+        - generic [ref=f22e645]:
+          - textbox "Sub-category" [ref=f22e646]: Other
+          - group [aria-hidden]:
+            - generic: Sub-category
+      - generic [ref=f22e648]:
+        - generic [ref=f22e649]:
+          - text: Description
+          - generic [aria-hidden] [ref=f22e650]: "*"
+        - generic [ref=f22e651]:
+          - textbox "Description" [ref=f22e652]: Disposable Location Admin product regression fixture.
+          - group [aria-hidden]:
+            - generic: Description *
+      - generic [ref=f22e654]:
+        - generic: Brand
+        - generic [ref=f22e655]:
+          - textbox "Brand" [ref=f22e656]
+          - group [aria-hidden]:
+            - generic: Brand
+      - generic [ref=f22e658]:
+        - generic: Ingredients
+        - generic [ref=f22e659]:
+          - textbox "Ingredients" [ref=f22e660]
+          - group [aria-hidden]:
+            - generic: Ingredients
+      - generic [ref=f22e662]:
+        - generic: Specifications
+        - generic [ref=f22e663]:
+          - textbox "Specifications" [ref=f22e664]
+          - group [aria-hidden]:
+            - generic: Specifications
+      - generic [ref=f22e666]:
+        - generic: Pack
+        - generic [ref=f22e667]:
+          - textbox "Pack" [ref=f22e668]
+          - group [aria-hidden]:
+            - generic: Pack
+      - generic [ref=f22e670]:
+        - generic: Type
+        - generic [ref=f22e671]:
+          - textbox "Type" [ref=f22e672]
+          - group [aria-hidden]:
+            - generic: Type
+      - generic [ref=f22e674]:
+        - generic: Shelf life
+        - generic [ref=f22e675]:
+          - textbox "Shelf life" [ref=f22e676]
+          - group [aria-hidden]:
+            - generic: Shelf life
+      - generic [ref=f22e678]:
+        - generic: Tags
+        - generic [ref=f22e679]:
+          - textbox "Tags" [ref=f22e680]
+          - group [aria-hidden]:
+            - generic: Tags
+      - generic [ref=f22e682]:
+        - generic: Highlights
+        - generic [ref=f22e683]:
+          - textbox "Highlights" [ref=f22e684]
+          - group [aria-hidden]:
+            - generic: Highlights
+      - generic [ref=f22e686]:
+        - generic: About the Source
+        - generic [ref=f22e687]:
+          - textbox "About the Source" [ref=f22e688]
+          - group [aria-hidden]:
+            - generic: About the Source
+      - generic [ref=f22e690]:
+        - generic [ref=f22e691]: "Variants (one per line: Label | SKU | Price)"
+        - generic [ref=f22e692]:
+          - 'textbox "Variants (one per line: Label | SKU | Price)" [ref=f22e693]': QA 100 g | QA-LA-20261025-1454-100G | 19.5
+          - group [aria-hidden]:
+            - generic: "Variants (one per line: Label | SKU | Price)"
+      - generic [ref=f22e695]:
+        - generic [ref=f22e696]:
+          - text: Default price
+          - generic [aria-hidden] [ref=f22e697]: "*"
+        - generic [ref=f22e698]:
+          - spinbutton "Default price" [ref=f22e699]: "19.5"
+          - group [aria-hidden]:
+            - generic: Default price *
+      - generic [ref=f22e701]:
+        - generic: Main image URL
+        - generic [ref=f22e702]:
+          - textbox "Main image URL" [ref=f22e703]
+          - group [aria-hidden]:
+            - generic: Main image URL
+      - generic [ref=f22e705]:
+        - combobox [ref=f22e706] [cursor=pointer]: "No"
+        - textbox [aria-hidden]: "No"
+        - group [aria-hidden]
+      - generic [ref=f22e708]:
+        - combobox [ref=f22e709] [cursor=pointer]: "No"
+        - textbox [aria-hidden]: "No"
+        - group [aria-hidden]
+      - generic [ref=f22e711]:
+        - combobox [ref=f22e712] [cursor=pointer]: "No"
+        - textbox [aria-hidden]: "No"
+        - group [aria-hidden]
+      - generic [ref=f22e714]:
+        - combobox [ref=f22e715] [cursor=pointer]: "No"
+        - textbox [aria-hidden]: "No"
+        - group [aria-hidden]
+      - generic [ref=f22e717]:
+        - combobox [ref=f22e718] [cursor=pointer]: Active
+        - textbox [aria-hidden]: Active
+        - group [aria-hidden]
+      - generic [ref=f22e719]:
+        - paragraph [ref=f22e720]: Store availability in your assigned location
+        - generic [ref=f22e722]:
+          - generic [ref=f22e723]: Mapped stores
+          - generic [ref=f22e724]:
+            - button "Hyderabad Main Store (india-store-1-1)" [ref=f22e725]:
+              - img [aria-hidden] [ref=f22e727] [cursor=pointer]
+            - combobox "Mapped stores" [ref=f22e729]
+            - button "Open" [ref=f22e731] [cursor=pointer]
+            - group [aria-hidden]:
+              - generic: Mapped stores
+          - paragraph [ref=f22e734]: Only stores in your assigned location are available.
+        - paragraph [ref=f22e735]: "Hyderabad Main Store: included in this location product."
+    - generic [ref=f22e737]:
+      - button "Cancel" [ref=f22e738] [cursor=pointer]
+      - button "Save" [ref=f22e739] [cursor=pointer]

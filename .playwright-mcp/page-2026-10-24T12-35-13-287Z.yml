@@ -1,0 +1,268 @@
+- generic [ref=e1]:
+  - generic [ref=e20]:
+    - navigation [ref=e21]:
+      - generic [ref=e22]:
+        - generic [ref=e24]:
+          - heading [level=6] [ref=e516]: Location Admin Portal
+          - text: hyderabad
+        - button [ref=e517] [cursor=pointer]
+      - generic [ref=e29]:
+        - generic [ref=e30]:
+          - paragraph [ref=e31]: Main
+          - button [ref=e518] [cursor=pointer]:
+            - generic [ref=e36]: Dashboard
+        - generic [ref=e37]:
+          - paragraph [ref=e38]: Management
+          - button [ref=e519] [cursor=pointer]:
+            - generic [ref=e43]: Stores
+          - button [ref=e520] [cursor=pointer]:
+            - generic [ref=e49]: Products
+          - button [ref=e521] [cursor=pointer]:
+            - generic [ref=e54]: Banners
+          - button [ref=e522] [cursor=pointer]:
+            - generic [ref=e60]: Inventory
+        - generic [ref=e61]:
+          - paragraph [ref=e62]: Orders & Payments
+          - button [ref=e523] [cursor=pointer]:
+            - generic [ref=e67]: Orders
+          - button [ref=e524] [cursor=pointer]:
+            - generic [ref=e73]: Payments
+          - button [ref=e525] [cursor=pointer]:
+            - generic [ref=e78]: Delivery
+        - generic [ref=e79]:
+          - paragraph [ref=e80]: Customer
+          - button [ref=e526] [cursor=pointer]:
+            - generic [ref=e86]: Coupons
+        - generic [ref=e87]:
+          - paragraph [ref=e88]: Analytics
+          - button [ref=e527] [cursor=pointer]:
+            - generic [ref=e93]: Reports
+      - button [ref=e528] [cursor=pointer]: View Customer App
+    - main [ref=e95]:
+      - generic [ref=e96]:
+        - generic [ref=e97]:
+          - button [ref=e98] [cursor=pointer]
+          - generic [ref=e101]:
+            - text: Location Admin /
+            - strong [ref=e102]: Stores
+        - generic [ref=e103]:
+          - textbox [ref=e529]:
+            - /placeholder: Search portal
+          - button [ref=e530] [cursor=pointer]
+          - button [ref=e531] [cursor=pointer]:
+            - generic [ref=e113]: H
+            - generic [ref=e114]: Hyderabad Location Admin
+      - generic [ref=e115]:
+        - generic [ref=e116]:
+          - heading [level=4] [ref=e532]: Stores
+          - paragraph [ref=e118]: Manage stores within your assigned scope.
+        - button [ref=e533] [cursor=pointer]: View Customer App
+      - generic [ref=e219]:
+        - generic [ref=e220]:
+          - generic [ref=e221]:
+            - generic: Search
+            - generic [ref=e222]:
+              - textbox [ref=e534]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=e224]:
+            - combobox [ref=e225] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=e226]:
+            - combobox [ref=e227] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=e535] [cursor=pointer]: Create
+          - button [ref=e536] [cursor=pointer]: Export
+        - generic [ref=e230]:
+          - generic [ref=e231]:
+            - paragraph [ref=e232]: Kukatpally Neighbourhood Market
+            - paragraph [ref=e233]: +91 91000 20014
+          - generic [ref=e234]:
+            - button [ref=e537] [cursor=pointer]: View
+            - button [ref=e538] [cursor=pointer]: Edit
+            - button [ref=e539] [cursor=pointer]: Deactivate
+            - button [ref=e540] [cursor=pointer]: Delete
+        - generic [ref=e239]:
+          - generic [ref=e240]:
+            - paragraph [ref=e241]: Hyderabad Main Store
+            - paragraph [ref=e242]: +91 91000 20000
+          - generic [ref=e243]:
+            - button [ref=e541] [cursor=pointer]: View
+            - button [ref=e542] [cursor=pointer]: Edit
+            - button [ref=e543] [cursor=pointer]: Deactivate
+            - button [ref=e544] [cursor=pointer]: Delete
+        - generic [ref=e248]:
+          - generic [ref=e249]:
+            - paragraph [ref=e250]: Secunderabad Daily Foods
+            - paragraph [ref=e251]: +91 91000 20003
+          - generic [ref=e252]:
+            - button [ref=e545] [cursor=pointer]: View
+            - button [ref=e546] [cursor=pointer]: Edit
+            - button [ref=e547] [cursor=pointer]: Deactivate
+            - button [ref=e548] [cursor=pointer]: Delete
+        - generic [ref=e257]:
+          - generic [ref=e258]:
+            - paragraph [ref=e259]: Banjara Hills Pickle House
+            - paragraph [ref=e260]: +91 91000 20002
+          - generic [ref=e261]:
+            - button [ref=e549] [cursor=pointer]: View
+            - button [ref=e550] [cursor=pointer]: Edit
+            - button [ref=e551] [cursor=pointer]: Deactivate
+            - button [ref=e552] [cursor=pointer]: Delete
+        - generic [ref=e266]:
+          - generic [ref=e267]:
+            - paragraph [ref=e268]: Gachibowli Fresh Hub
+            - paragraph [ref=e269]: +91 91000 20001
+          - generic [ref=e270]:
+            - button [ref=e553] [cursor=pointer]: View
+            - button [ref=e554] [cursor=pointer]: Edit
+            - button [ref=e555] [cursor=pointer]: Deactivate
+            - button [ref=e556] [cursor=pointer]: Delete
+        - generic [ref=e275]:
+          - generic [ref=e276]:
+            - paragraph [ref=e277]: SR Nagar Store
+            - paragraph [ref=e278]: +91 91000 20013
+          - generic [ref=e279]:
+            - button [ref=e557] [cursor=pointer]: View
+            - button [ref=e558] [cursor=pointer]: Edit
+            - button [ref=e559] [cursor=pointer]: Activate
+            - button [ref=e560] [cursor=pointer]: Delete
+        - generic [ref=e284]:
+          - button [disabled]: Previous
+          - paragraph [ref=e285]: Page 1 of 1
+          - button [disabled]: Next
+  - dialog [active] [ref=e563]:
+    - heading "Details Stores" [level=2] [ref=e564]
+    - generic [ref=e565]:
+      - generic [ref=e566]:
+        - text: name
+        - paragraph [ref=e567]: Kukatpally Neighbourhood Market
+      - generic [ref=e568]:
+        - text: storeCode
+        - paragraph [ref=e569]: HYD-KKP-006
+      - generic [ref=e570]:
+        - text: logoUrl
+        - paragraph [ref=e571]: https://loremflickr.com/900/600/grocery,market?lock=916
+      - generic [ref=e572]:
+        - text: description
+        - paragraph [ref=e573]: Everyday groceries, fresh vegetables and selected regional products serving Kukatpally and KPHB.
+      - generic [ref=e574]:
+        - text: location
+        - paragraph [ref=e575]: Hyderabad
+      - generic [ref=e576]:
+        - text: address
+        - paragraph [ref=e577]: Shop 4, Phase 1, KPHB Road, Kukatpally, Hyderabad, Telangana 500072
+      - generic [ref=e578]:
+        - text: doorNumber
+        - paragraph [ref=e579]: Shop 4, Phase 1
+      - generic [ref=e580]:
+        - text: streetName
+        - paragraph [ref=e581]: KPHB Road
+      - generic [ref=e582]:
+        - text: area
+        - paragraph [ref=e583]: Kukatpally
+      - generic [ref=e584]:
+        - text: landmark
+        - paragraph [ref=e585]: Near KPHB Metro Station
+      - generic [ref=e586]:
+        - text: city
+        - paragraph [ref=e587]: Hyderabad
+      - generic [ref=e588]:
+        - text: district
+        - paragraph [ref=e589]: Hyderabad
+      - generic [ref=e590]:
+        - text: state
+        - paragraph [ref=e591]: Telangana
+      - generic [ref=e592]:
+        - text: pincode
+        - paragraph [ref=e593]: "500072"
+      - generic [ref=e594]:
+        - text: latitude
+        - paragraph [ref=e595]: "17.4933"
+      - generic [ref=e596]:
+        - text: longitude
+        - paragraph [ref=e597]: "78.4011"
+      - generic [ref=e598]:
+        - text: provider
+        - paragraph [ref=e599]: MANUAL
+      - generic [ref=e600]:
+        - text: providerPlaceId
+        - paragraph [ref=e601]: sample:store:store-kukatpally
+      - generic [ref=e602]:
+        - text: providerOsmType
+        - paragraph [ref=e603]: sample
+      - generic [ref=e604]:
+        - text: providerOsmId
+        - paragraph [ref=e605]: HYD-KKP-006
+      - generic [ref=e606]:
+        - text: locationAccuracyMeters
+        - paragraph [ref=e607]: "50"
+      - generic [ref=e608]:
+        - text: phone
+        - paragraph [ref=e609]: +91 91000 20014
+      - generic [ref=e610]:
+        - text: alternatePhone
+        - paragraph [ref=e611]: +91 91000 21014
+      - generic [ref=e612]:
+        - text: email
+        - paragraph [ref=e613]: kukatpally@metaarch.local
+      - generic [ref=e614]:
+        - text: adminName
+        - paragraph [ref=e615]: Naveen Kukatpally
+      - generic [ref=e616]:
+        - text: storeRating
+        - paragraph [ref=e617]: "4.55"
+      - generic [ref=e618]:
+        - text: gstNumber
+        - paragraph [ref=e619]: 36AABCM1234F1Z6
+      - generic [ref=e620]:
+        - text: status
+        - paragraph [ref=e621]: Active
+      - generic [ref=e622]:
+        - text: deliveryEnabled
+        - paragraph [ref=e623]: "true"
+      - generic [ref=e624]:
+        - text: pickupEnabled
+        - paragraph [ref=e625]: "true"
+      - generic [ref=e626]:
+        - text: deliveryRadiusKm
+        - paragraph [ref=e627]: "7"
+      - generic [ref=e628]:
+        - text: deliveryEtaMinutes
+        - paragraph [ref=e629]: "26"
+      - generic [ref=e630]:
+        - text: deliveryCharge
+        - paragraph [ref=e631]: "32"
+      - generic [ref=e632]:
+        - text: freeDeliveryAbove
+        - paragraph [ref=e633]: "499"
+      - generic [ref=e634]:
+        - text: deliveryModes
+        - paragraph [ref=e635]: Standard Delivery,Instant Delivery,Express Delivery,Scheduled Delivery,Store Pickup
+      - generic [ref=e636]:
+        - text: deliveryNotes
+        - paragraph [ref=e637]: Fresh stock sourced for Kukatpally and nearby KPHB Phase 1; service is subject to the listed delivery radius.
+      - generic [ref=e638]:
+        - text: isNew
+        - paragraph [ref=e639]: "false"
+      - generic [ref=e640]:
+        - text: active
+        - paragraph [ref=e641]: "true"
+      - generic [ref=e642]:
+        - text: createdAt
+        - paragraph [ref=e643]: 2026-10-21T17:30:53.587705Z
+      - generic [ref=e644]:
+        - text: updatedAt
+        - paragraph [ref=e645]: 2026-10-22T12:25:57.878079Z
+      - generic [ref=e646]:
+        - text: delivery
+        - paragraph [ref=e647]: "Yes"
+      - generic [ref=e648]:
+        - text: pickup
+        - paragraph [ref=e649]: "Yes"
+      - generic [ref=e650]:
+        - text: admin
+        - paragraph [ref=e651]: Naveen Kukatpally
+    - button "Cancel" [ref=e654] [cursor=pointer]

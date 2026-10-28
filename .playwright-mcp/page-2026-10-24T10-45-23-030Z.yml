@@ -1,0 +1,130 @@
+- generic [ref=f17e8]:
+  - navigation [ref=f17e9]:
+    - generic [ref=f17e10]:
+      - img "Spices and Pickles" [ref=f17e11]
+      - generic [ref=f17e12]:
+        - heading "Location Admin Portal" [level=6] [ref=f17e13]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f17e14] [cursor=pointer]
+    - generic [ref=f17e17]:
+      - generic [ref=f17e18]:
+        - paragraph [ref=f17e19]: Main
+        - button "Dashboard" [ref=f17e20] [cursor=pointer]
+      - generic [ref=f17e25]:
+        - paragraph [ref=f17e26]: Management
+        - button "Stores" [ref=f17e27] [cursor=pointer]
+        - button "Products" [active] [ref=f17e32] [cursor=pointer]
+        - button "Banners" [ref=f17e38] [cursor=pointer]
+        - button "Inventory" [ref=f17e43] [cursor=pointer]
+      - generic [ref=f17e49]:
+        - paragraph [ref=f17e50]: Orders & Payments
+        - button "Orders" [ref=f17e51] [cursor=pointer]
+        - button "Payments" [ref=f17e56] [cursor=pointer]
+        - button "Delivery" [ref=f17e62] [cursor=pointer]
+      - generic [ref=f17e67]:
+        - paragraph [ref=f17e68]: Customer
+        - button "Coupons" [ref=f17e69] [cursor=pointer]
+      - generic [ref=f17e75]:
+        - paragraph [ref=f17e76]: Analytics
+        - button "Reports" [ref=f17e77] [cursor=pointer]
+    - button "View Customer App" [ref=f17e82] [cursor=pointer]
+  - main [ref=f17e83]:
+    - generic [ref=f17e84]:
+      - generic [ref=f17e85]:
+        - button [ref=f17e86] [cursor=pointer]
+        - generic [ref=f17e89]:
+          - text: Location Admin /
+          - strong [ref=f17e90]: Products
+      - generic [ref=f17e91]:
+        - textbox "Search portal" [ref=f17e96]
+        - button "Notifications" [ref=f17e97] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=f17e100] [cursor=pointer]:
+          - generic [ref=f17e101]: H
+          - generic [ref=f17e102]: Hyderabad Location Admin
+    - generic [ref=f17e103]:
+      - generic [ref=f17e104]:
+        - heading "Products" [level=4] [ref=f17e185]
+        - paragraph [ref=f17e106]: Manage products within your assigned scope.
+      - button "View Customer App" [ref=f17e107] [cursor=pointer]
+    - generic [ref=f17e186]:
+      - generic [ref=f17e187]:
+        - generic [ref=f17e188]:
+          - generic: Search
+          - generic [ref=f17e189]:
+            - textbox "Search" [ref=f17e190]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f17e191]:
+          - combobox [ref=f17e192] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f17e193]:
+          - combobox [ref=f17e194] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create" [ref=f17e195] [cursor=pointer]
+        - button "Export" [ref=f17e196] [cursor=pointer]
+      - generic [ref=f17e197]:
+        - generic [ref=f17e198]:
+          - paragraph [ref=f17e199]: Afghan Raisi
+          - paragraph [ref=f17e200]: DRY-AFG-RAISIN
+        - generic [ref=f17e201]:
+          - button "View" [ref=f17e202] [cursor=pointer]
+          - button "Edit" [ref=f17e203] [cursor=pointer]
+          - button "Duplicate" [ref=f17e204] [cursor=pointer]
+          - button "Deactivate" [ref=f17e205] [cursor=pointer]
+          - button "Delete" [ref=f17e206] [cursor=pointer]
+      - generic [ref=f17e207]:
+        - generic [ref=f17e208]:
+          - paragraph [ref=f17e209]: Andhra Mango Avakaya Pickle
+          - paragraph [ref=f17e210]: PKL-ANDHRA-AVAKAYA
+        - generic [ref=f17e211]:
+          - button "View" [ref=f17e212] [cursor=pointer]
+          - button "Edit" [ref=f17e213] [cursor=pointer]
+          - button "Duplicate" [ref=f17e214] [cursor=pointer]
+          - button "Deactivate" [ref=f17e215] [cursor=pointer]
+          - button "Delete" [ref=f17e216] [cursor=pointer]
+      - generic [ref=f17e217]:
+        - generic [ref=f17e218]:
+          - paragraph [ref=f17e219]: California Almonds
+          - paragraph [ref=f17e220]: DRY-CAL-ALMOND
+        - generic [ref=f17e221]:
+          - button "View" [ref=f17e222] [cursor=pointer]
+          - button "Edit" [ref=f17e223] [cursor=pointer]
+          - button "Duplicate" [ref=f17e224] [cursor=pointer]
+          - button "Deactivate" [ref=f17e225] [cursor=pointer]
+          - button "Delete" [ref=f17e226] [cursor=pointer]
+      - generic [ref=f17e227]:
+        - generic [ref=f17e228]:
+          - paragraph [ref=f17e229]: Chicken Boneless
+          - paragraph [ref=f17e230]: NV-CHICKEN-BONELESS
+        - generic [ref=f17e231]:
+          - button "View" [ref=f17e232] [cursor=pointer]
+          - button "Edit" [ref=f17e233] [cursor=pointer]
+          - button "Duplicate" [ref=f17e234] [cursor=pointer]
+          - button "Deactivate" [ref=f17e235] [cursor=pointer]
+          - button "Delete" [ref=f17e236] [cursor=pointer]
+      - generic [ref=f17e237]:
+        - generic [ref=f17e238]:
+          - paragraph [ref=f17e239]: Chicken Breast
+          - paragraph [ref=f17e240]: NV-CHICKEN-BREAST
+        - generic [ref=f17e241]:
+          - button "View" [ref=f17e242] [cursor=pointer]
+          - button "Edit" [ref=f17e243] [cursor=pointer]
+          - button "Duplicate" [ref=f17e244] [cursor=pointer]
+          - button "Deactivate" [ref=f17e245] [cursor=pointer]
+          - button "Delete" [ref=f17e246] [cursor=pointer]
+      - generic [ref=f17e247]:
+        - generic [ref=f17e248]:
+          - paragraph [ref=f17e249]: Chicken Curry Cut
+          - paragraph [ref=f17e250]: NV-CHICKEN-CURRY
+        - generic [ref=f17e251]:
+          - button "View" [ref=f17e252] [cursor=pointer]
+          - button "Edit" [ref=f17e253] [cursor=pointer]
+          - button "Duplicate" [ref=f17e254] [cursor=pointer]
+          - button "Deactivate" [ref=f17e255] [cursor=pointer]
+          - button "Delete" [ref=f17e256] [cursor=pointer]
+      - generic [ref=f17e257]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f17e258]: Page 1 of 4
+        - button "Next" [ref=f17e259] [cursor=pointer]

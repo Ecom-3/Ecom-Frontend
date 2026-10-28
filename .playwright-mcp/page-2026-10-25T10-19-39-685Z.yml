@@ -1,0 +1,195 @@
+- generic [ref=f49e1]:
+  - generic [ref=f49e5]:
+    - navigation [ref=f49e6]:
+      - generic [ref=f49e7]:
+        - generic [ref=f49e9]:
+          - heading [level=6] [ref=f49e123]: Location Admin Portal
+          - text: hyderabad
+        - button [ref=f49e124] [cursor=pointer]
+      - generic [ref=f49e14]:
+        - generic [ref=f49e15]:
+          - paragraph [ref=f49e16]: Main
+          - button [ref=f49e125] [cursor=pointer]:
+            - generic [ref=f49e21]: Dashboard
+        - generic [ref=f49e22]:
+          - paragraph [ref=f49e23]: Management
+          - button [ref=f49e126] [cursor=pointer]:
+            - generic [ref=f49e28]: Stores
+          - button [ref=f49e127] [cursor=pointer]:
+            - generic [ref=f49e34]: Products
+          - button [ref=f49e128] [cursor=pointer]:
+            - generic [ref=f49e39]: Banners
+          - button [ref=f49e129] [cursor=pointer]:
+            - generic [ref=f49e45]: Inventory
+        - generic [ref=f49e46]:
+          - paragraph [ref=f49e47]: Orders & Payments
+          - button [ref=f49e130] [cursor=pointer]:
+            - generic [ref=f49e52]: Orders
+          - button [ref=f49e131] [cursor=pointer]:
+            - generic [ref=f49e58]: Payments
+          - button [ref=f49e132] [cursor=pointer]:
+            - generic [ref=f49e63]: Delivery
+        - generic [ref=f49e64]:
+          - paragraph [ref=f49e65]: Customer
+          - button [ref=f49e133] [cursor=pointer]:
+            - generic [ref=f49e71]: Coupons
+        - generic [ref=f49e72]:
+          - paragraph [ref=f49e73]: Analytics
+          - button [ref=f49e134] [cursor=pointer]:
+            - generic [ref=f49e78]: Reports
+      - button [ref=f49e135] [cursor=pointer]: View Customer App
+    - main [ref=f49e80]:
+      - generic [ref=f49e81]:
+        - generic [ref=f49e82]:
+          - button [ref=f49e83] [cursor=pointer]
+          - generic [ref=f49e86]:
+            - text: Location Admin /
+            - strong [ref=f49e87]: Products
+        - generic [ref=f49e88]:
+          - textbox [ref=f49e136]:
+            - /placeholder: Search portal
+          - button [ref=f49e137] [cursor=pointer]
+          - button [ref=f49e138] [cursor=pointer]:
+            - generic [ref=f49e98]: H
+            - generic [ref=f49e99]: Hyderabad Location Admin
+      - generic [ref=f49e100]:
+        - generic [ref=f49e101]:
+          - heading [level=4] [ref=f49e139]: Products
+          - paragraph [ref=f49e103]: Manage products within your assigned scope.
+        - button [ref=f49e140] [cursor=pointer]: View Customer App
+      - generic [ref=f49e107]:
+        - generic [ref=f49e108]:
+          - generic [ref=f49e109]:
+            - generic: Search
+            - generic [ref=f49e110]:
+              - textbox [ref=f49e141]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f49e112]:
+            - combobox [ref=f49e113] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f49e114]:
+            - combobox [ref=f49e115] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f49e142] [cursor=pointer]: Create Product
+          - button [ref=f49e143] [cursor=pointer]: Map Product
+          - button [ref=f49e144] [cursor=pointer]: Export
+        - generic [ref=f49e145]:
+          - generic [ref=f49e146]:
+            - paragraph [ref=f49e147]: QA Location Admin Product 20261025
+            - paragraph [ref=f49e148]: QA-LA-PROD-20261025
+          - generic [ref=f49e149]:
+            - button [ref=f49e150] [cursor=pointer]: View
+            - button [ref=f49e151] [cursor=pointer]: Edit
+            - button [ref=f49e152] [cursor=pointer]: Make available
+            - button [ref=f49e153] [cursor=pointer]: Delete
+            - button [ref=f49e154] [cursor=pointer]: Manage stores
+        - generic [ref=f49e120]:
+          - button [disabled]: Previous
+          - paragraph [ref=f49e121]: Page 1 of 1
+          - button [disabled]: Next
+  - dialog [active] [ref=f49e157]:
+    - heading "Details Products" [level=2] [ref=f49e158]
+    - generic [ref=f49e159]:
+      - generic [ref=f49e160]:
+        - text: categoryId
+        - paragraph [ref=f49e161]: 3b78ea5e-2b7c-4a9e-b635-000000000001
+      - generic [ref=f49e162]:
+        - text: categoryName
+        - paragraph [ref=f49e163]: QA Location Admin Category 20261025
+      - generic [ref=f49e164]:
+        - text: subcategory
+        - paragraph [ref=f49e165]: Other
+      - generic [ref=f49e166]:
+        - text: name
+        - paragraph [ref=f49e167]: QA Location Admin Product 20261025
+      - generic [ref=f49e168]:
+        - text: slug
+        - paragraph [ref=f49e169]: qa-location-admin-product-20261025
+      - generic [ref=f49e170]:
+        - text: sku
+        - paragraph [ref=f49e171]: QA-LA-PROD-20261025
+      - generic [ref=f49e172]:
+        - text: description
+        - paragraph [ref=f49e173]: Disposable isolated H2 regression fixture.
+      - generic [ref=f49e174]:
+        - text: brand
+        - paragraph [ref=f49e175]: —
+      - generic [ref=f49e176]:
+        - text: ingredients
+        - paragraph [ref=f49e177]: —
+      - generic [ref=f49e178]:
+        - text: specifications
+        - paragraph [ref=f49e179]: —
+      - generic [ref=f49e180]:
+        - text: pack
+        - paragraph [ref=f49e181]: —
+      - generic [ref=f49e182]:
+        - text: type
+        - paragraph [ref=f49e183]: —
+      - generic [ref=f49e184]:
+        - text: shelfLife
+        - paragraph [ref=f49e185]: —
+      - generic [ref=f49e186]:
+        - text: tags
+        - paragraph [ref=f49e187]: —
+      - generic [ref=f49e188]:
+        - text: highlights
+        - paragraph [ref=f49e189]: —
+      - generic [ref=f49e190]:
+        - text: aboutSource
+        - paragraph [ref=f49e191]: —
+      - generic [ref=f49e192]:
+        - text: status
+        - paragraph [ref=f49e193]: Inactive
+      - generic [ref=f49e194]:
+        - text: featured
+        - paragraph [ref=f49e195]: "No"
+      - generic [ref=f49e196]:
+        - text: special
+        - paragraph [ref=f49e197]: "No"
+      - generic [ref=f49e198]:
+        - text: newArrival
+        - paragraph [ref=f49e199]: "No"
+      - generic [ref=f49e200]:
+        - text: bestSeller
+        - paragraph [ref=f49e201]: "No"
+      - generic [ref=f49e202]:
+        - text: globalProduct
+        - paragraph [ref=f49e203]: "false"
+      - generic [ref=f49e204]:
+        - text: fulfillmentType
+        - paragraph [ref=f49e205]: —
+      - generic [ref=f49e206]:
+        - text: deliveryMethod
+        - paragraph [ref=f49e207]: —
+      - generic [ref=f49e208]:
+        - text: variants
+        - paragraph [ref=f49e209]: Test Pack | QA-LA-VAR-20261025 | 49
+      - generic [ref=f49e210]:
+        - text: images
+        - paragraph [ref=f49e211]: "{\"id\":\"03cecc09-d84a-4420-9272-940103f32e90\",\"productId\":\"c583963c-8877-40fc-89de-6a9442bdfd2a\",\"url\":\"http://localhost:5175/src/assets/images/logo.png\",\"altText\":\"QA Location Admin Product 20261025\",\"displayOrder\":0,\"primaryImage\":true,\"createdAt\":\"2026-10-25T10:19:07.845380Z\",\"updatedAt\":\"2026-10-25T10:19:07.845380Z\"}"
+      - generic [ref=f49e212]:
+        - text: createdAt
+        - paragraph [ref=f49e213]: 2026-10-25T10:19:07.738609Z
+      - generic [ref=f49e214]:
+        - text: updatedAt
+        - paragraph [ref=f49e215]: 2026-10-25T10:19:07.738609Z
+      - generic [ref=f49e216]:
+        - text: ownerLocation
+        - paragraph [ref=f49e217]: hyderabad
+      - generic [ref=f49e218]:
+        - text: locationAvailable
+        - paragraph [ref=f49e219]: "false"
+      - generic [ref=f49e220]:
+        - text: category
+        - paragraph [ref=f49e221]: QA Location Admin Category 20261025
+      - generic [ref=f49e222]:
+        - text: price
+        - paragraph [ref=f49e223]: "49"
+      - generic [ref=f49e224]:
+        - text: image
+        - paragraph [ref=f49e225]: http://localhost:5175/src/assets/images/logo.png
+    - button "Cancel" [ref=f49e228] [cursor=pointer]

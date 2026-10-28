@@ -1,0 +1,124 @@
+- generic [ref=f70e8]:
+  - navigation [ref=f70e9]:
+    - generic [ref=f70e10]:
+      - img "Spices and Pickles" [ref=f70e11]
+      - generic [ref=f70e12]:
+        - heading "Location Admin Portal" [level=6] [ref=f70e13]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f70e14] [cursor=pointer]
+    - generic [ref=f70e17]:
+      - generic [ref=f70e18]:
+        - paragraph [ref=f70e19]: Main
+        - button "Dashboard" [ref=f70e20] [cursor=pointer]
+      - generic [ref=f70e25]:
+        - paragraph [ref=f70e26]: Management
+        - button "Stores" [ref=f70e27] [cursor=pointer]
+        - button "Products" [ref=f70e32] [cursor=pointer]
+        - button "Banners" [ref=f70e38] [cursor=pointer]
+        - button "Inventory" [ref=f70e43] [cursor=pointer]
+      - generic [ref=f70e49]:
+        - paragraph [ref=f70e50]: Orders & Payments
+        - button "Orders" [ref=f70e51] [cursor=pointer]
+        - button "Payments" [ref=f70e56] [cursor=pointer]
+        - button "Delivery" [ref=f70e62] [cursor=pointer]
+      - generic [ref=f70e67]:
+        - paragraph [ref=f70e68]: Customer
+        - button "Coupons" [ref=f70e69] [cursor=pointer]
+      - generic [ref=f70e75]:
+        - paragraph [ref=f70e76]: Analytics
+        - button "Reports" [ref=f70e77] [cursor=pointer]
+    - button "View Customer App" [ref=f70e82] [cursor=pointer]
+  - main [ref=f70e83]:
+    - generic [ref=f70e84]:
+      - generic [ref=f70e85]:
+        - button [ref=f70e86] [cursor=pointer]
+        - generic [ref=f70e89]:
+          - text: Location Admin /
+          - strong [ref=f70e90]: Stores
+      - generic [ref=f70e91]:
+        - textbox "Search portal" [ref=f70e96]
+        - button "Notifications" [ref=f70e97] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=f70e100] [cursor=pointer]:
+          - generic [ref=f70e101]: H
+          - generic [ref=f70e102]: Hyderabad Location Admin
+    - generic [ref=f70e103]:
+      - generic [ref=f70e104]:
+        - heading "Stores" [level=4] [ref=f70e105]
+        - paragraph [ref=f70e106]: Manage stores within your assigned scope.
+      - button "View Customer App" [ref=f70e107] [cursor=pointer]
+    - generic [ref=f70e108]:
+      - generic [ref=f70e109]:
+        - generic [ref=f70e110]:
+          - generic: Search
+          - generic [ref=f70e111]:
+            - textbox "Search" [ref=f70e112]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f70e113]:
+          - combobox [ref=f70e114] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f70e115]:
+          - combobox [ref=f70e116] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create" [ref=f70e117] [cursor=pointer]
+        - button "Export" [ref=f70e118] [cursor=pointer]
+      - generic [ref=f70e119]:
+        - generic [ref=f70e120]:
+          - paragraph [ref=f70e121]: Kukatpally Neighbourhood Market
+          - paragraph [ref=f70e122]: +91 91000 20014
+        - generic [ref=f70e123]:
+          - button "View" [ref=f70e124] [cursor=pointer]
+          - button "Edit" [ref=f70e125] [cursor=pointer]
+          - button "Deactivate" [ref=f70e126] [cursor=pointer]
+          - button "Delete" [ref=f70e127] [cursor=pointer]
+      - generic [ref=f70e128]:
+        - generic [ref=f70e129]:
+          - paragraph [ref=f70e130]: Hyderabad Main Store
+          - paragraph [ref=f70e131]: +91 91000 20000
+        - generic [ref=f70e132]:
+          - button "View" [ref=f70e133] [cursor=pointer]
+          - button "Edit" [ref=f70e134] [cursor=pointer]
+          - button "Deactivate" [ref=f70e135] [cursor=pointer]
+          - button "Delete" [ref=f70e136] [cursor=pointer]
+      - generic [ref=f70e137]:
+        - generic [ref=f70e138]:
+          - paragraph [ref=f70e139]: Secunderabad Daily Foods
+          - paragraph [ref=f70e140]: +91 91000 20003
+        - generic [ref=f70e141]:
+          - button "View" [ref=f70e142] [cursor=pointer]
+          - button "Edit" [ref=f70e143] [cursor=pointer]
+          - button "Deactivate" [ref=f70e144] [cursor=pointer]
+          - button "Delete" [ref=f70e145] [cursor=pointer]
+      - generic [ref=f70e146]:
+        - generic [ref=f70e147]:
+          - paragraph [ref=f70e148]: Banjara Hills Pickle House
+          - paragraph [ref=f70e149]: +91 91000 20002
+        - generic [ref=f70e150]:
+          - button "View" [ref=f70e151] [cursor=pointer]
+          - button "Edit" [ref=f70e152] [cursor=pointer]
+          - button "Deactivate" [ref=f70e153] [cursor=pointer]
+          - button "Delete" [ref=f70e154] [cursor=pointer]
+      - generic [ref=f70e155]:
+        - generic [ref=f70e156]:
+          - paragraph [ref=f70e157]: Gachibowli Fresh Hub
+          - paragraph [ref=f70e158]: +91 91000 20001
+        - generic [ref=f70e159]:
+          - button "View" [ref=f70e160] [cursor=pointer]
+          - button "Edit" [ref=f70e161] [cursor=pointer]
+          - button "Deactivate" [ref=f70e162] [cursor=pointer]
+          - button "Delete" [ref=f70e163] [cursor=pointer]
+      - generic [ref=f70e164]:
+        - generic [ref=f70e165]:
+          - paragraph [ref=f70e166]: SR Nagar Store
+          - paragraph [ref=f70e167]: +91 91000 20013
+        - generic [ref=f70e168]:
+          - button "View" [ref=f70e169] [cursor=pointer]
+          - button "Edit" [ref=f70e170] [cursor=pointer]
+          - button "Activate" [ref=f70e171] [cursor=pointer]
+          - button "Delete" [ref=f70e172] [cursor=pointer]
+      - generic [ref=f70e173]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f70e174]: Page 1 of 1
+        - button "Next" [disabled]

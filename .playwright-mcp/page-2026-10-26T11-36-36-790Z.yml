@@ -1,0 +1,75 @@
+- generic [ref=f25e203]:
+  - generic [ref=f25e204]:
+    - button [ref=f25e205] [cursor=pointer]
+    - generic [ref=f25e209]:
+      - img "Spices and Pickles" [ref=f25e210]
+      - generic [ref=f25e211]:
+        - paragraph [ref=f25e212]: Delivery navigation
+        - generic [ref=f25e213]: Order ORD-20261026-BAFD18B7 · live route
+    - button "Open directions" [disabled]
+  - generic [ref=f25e214]:
+    - generic [ref=f25e215]:
+      - generic [ref=f25e216]:
+        - generic [ref=f25e217]:
+          - heading "Live route" [level=6] [ref=f25e218]
+          - paragraph [ref=f25e219]: Your GPS position and the customer’s saved delivery location
+        - generic [ref=f25e220]:
+          - generic [ref=f25e221]: You
+          - generic [ref=f25e223]: Customer
+      - application "Map showing delivery partner and customer route" [ref=f25e226]:
+        - button "C" [ref=f25e227] [cursor=pointer]
+        - generic:
+          - generic [ref=f25e229]:
+            - button "Zoom in" [ref=f25e230] [cursor=pointer]: +
+            - button "Zoom out" [ref=f25e231] [cursor=pointer]: −
+          - generic [ref=f25e232]:
+            - link "Leaflet" [ref=f25e233] [cursor=pointer]:
+              - /url: https://leafletjs.com
+            - text: "| © OpenStreetMap contributors"
+      - generic [ref=f25e238]:
+        - generic [ref=f25e241]:
+          - paragraph [ref=f25e242]: Your current location
+          - paragraph [ref=f25e243]: Waiting for GPS location
+        - generic [ref=f25e244]: Finding GPS
+    - generic [ref=f25e246]:
+      - generic [ref=f25e247]:
+        - generic [ref=f25e248]:
+          - heading "Delivery details" [level=5] [ref=f25e249]
+          - paragraph [ref=f25e250]: Review the destination and verify the customer OTP here.
+        - generic [ref=f25e251]: Out for Delivery
+      - generic [ref=f25e253]:
+        - generic [ref=f25e257]:
+          - strong [ref=f25e258]: —
+          - generic [ref=f25e259]: Approx. direct distance
+        - generic [ref=f25e264]:
+          - strong [ref=f25e265]: —
+          - generic [ref=f25e266]: Approx. travel time
+      - generic [ref=f25e267]:
+        - paragraph [ref=f25e268]: Customer
+        - paragraph [ref=f25e271]: Customer
+        - paragraph [ref=f25e272]: Srinivas Nagar, SR Nagar, Ward 98 Ameerpet, Greater Hyderabad Municipal Corporation Central Zone, Hyderabad, Khairatabad mandal, Hyderabad, Telangana, 500038, India, slokam tech, 4, axsis bank, Hyderabad, Telangana, 500038, India
+      - generic [ref=f25e273]:
+        - paragraph [ref=f25e274]: Order
+        - paragraph [ref=f25e278]: ORD-20261026-BAFD18B7
+        - paragraph [ref=f25e279]: Premium Cashew Nuts × 1, Fresh Tomatoes × 1
+        - paragraph [ref=f25e280]: "Order total: Rs 406"
+      - generic [ref=f25e281]:
+        - generic [ref=f25e285]:
+          - generic [ref=f25e286]: Pickup / current position
+          - strong [ref=f25e287]: Waiting for GPS permission
+        - generic [ref=f25e292]:
+          - generic [ref=f25e293]: Delivery destination
+          - strong [ref=f25e294]: Srinivas Nagar, SR Nagar, Ward 98 Ameerpet, Greater Hyderabad Municipal Corporation Central Zone, Hyderabad, Khairatabad mandal, Hyderabad, Telangana, 500038, India, slokam tech, 4, axsis bank, Hyderabad, Telangana, 500038, India
+      - generic [ref=f25e295]:
+        - heading "Confirm delivery" [level=6] [ref=f25e296]
+        - paragraph [ref=f25e297]: Enter the six-digit code shared by the customer after handing over the order.
+        - generic [ref=f25e298]:
+          - generic [ref=f25e299]: Customer OTP
+          - generic [ref=f25e300]:
+            - textbox "Customer OTP" [active] [ref=f25e301]
+            - group [aria-hidden]:
+              - generic: Customer OTP
+          - paragraph [ref=f25e302]: Six digits
+        - generic [ref=f25e303]:
+          - button "Resend OTP" [ref=f25e304] [cursor=pointer]
+          - button "Verify and complete" [disabled]

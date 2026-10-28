@@ -1,0 +1,134 @@
+- generic [ref=f26e1]:
+  - generic [ref=f26e5]:
+    - navigation [ref=f26e6]:
+      - generic [ref=f26e7]:
+        - generic [ref=f26e9]:
+          - heading [level=6] [ref=f26e417]: Location Admin Portal
+          - text: hyderabad
+        - button [ref=f26e418] [cursor=pointer]
+      - generic [ref=f26e14]:
+        - generic [ref=f26e15]:
+          - paragraph [ref=f26e16]: Main
+          - button [ref=f26e419] [cursor=pointer]:
+            - generic [ref=f26e21]: Dashboard
+        - generic [ref=f26e22]:
+          - paragraph [ref=f26e23]: Management
+          - button [ref=f26e420] [cursor=pointer]:
+            - generic [ref=f26e28]: Stores
+          - button [ref=f26e421] [cursor=pointer]:
+            - generic [ref=f26e34]: Products
+          - button [ref=f26e422] [cursor=pointer]:
+            - generic [ref=f26e39]: Banners
+          - button [ref=f26e423] [cursor=pointer]:
+            - generic [ref=f26e45]: Inventory
+        - generic [ref=f26e46]:
+          - paragraph [ref=f26e47]: Orders & Payments
+          - button [ref=f26e424] [cursor=pointer]:
+            - generic [ref=f26e52]: Orders
+          - button [ref=f26e425] [cursor=pointer]:
+            - generic [ref=f26e58]: Payments
+          - button [ref=f26e426] [cursor=pointer]:
+            - generic [ref=f26e63]: Delivery
+        - generic [ref=f26e64]:
+          - paragraph [ref=f26e65]: Customer
+          - button [ref=f26e427] [cursor=pointer]:
+            - generic [ref=f26e71]: Coupons
+        - generic [ref=f26e72]:
+          - paragraph [ref=f26e73]: Analytics
+          - button [ref=f26e428] [cursor=pointer]:
+            - generic [ref=f26e78]: Reports
+      - button [ref=f26e429] [cursor=pointer]: View Customer App
+    - main [ref=f26e80]:
+      - generic [ref=f26e81]:
+        - generic [ref=f26e82]:
+          - button [ref=f26e83] [cursor=pointer]
+          - generic [ref=f26e86]:
+            - text: Location Admin /
+            - strong [ref=f26e87]: Products
+        - generic [ref=f26e88]:
+          - textbox [ref=f26e430]:
+            - /placeholder: Search portal
+          - button [ref=f26e431] [cursor=pointer]
+          - button [ref=f26e432] [cursor=pointer]:
+            - generic [ref=f26e98]: H
+            - generic [ref=f26e99]: Hyderabad Location Admin
+      - generic [ref=f26e100]:
+        - generic [ref=f26e101]:
+          - heading [level=4] [ref=f26e433]: Products
+          - paragraph [ref=f26e103]: Manage products within your assigned scope.
+        - button [ref=f26e434] [cursor=pointer]: View Customer App
+      - generic [ref=f26e105]:
+        - generic [ref=f26e106]:
+          - generic [ref=f26e107]:
+            - generic: Search
+            - generic [ref=f26e108]:
+              - textbox [ref=f26e435]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f26e110]:
+            - combobox [ref=f26e111] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f26e112]:
+            - combobox [ref=f26e113] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f26e436] [cursor=pointer]: Create Product
+          - button [ref=f26e437] [cursor=pointer]: Map Product
+          - button [ref=f26e438] [cursor=pointer]: Export
+        - status [ref=f26e284]: Store mappings saved for your assigned location.
+        - generic [ref=f26e117]:
+          - generic [ref=f26e118]:
+            - paragraph [ref=f26e119]: QA Disposable LA12 LA13 LA14 20261025
+            - paragraph [ref=f26e120]: QA-LA-121314-20261025
+          - generic [ref=f26e121]:
+            - button [ref=f26e439] [cursor=pointer]: View
+            - button [ref=f26e440] [cursor=pointer]: Edit
+            - button [ref=f26e441] [cursor=pointer]: Make unavailable
+            - button [ref=f26e442] [cursor=pointer]: Delete
+            - button [ref=f26e443] [cursor=pointer]: Manage stores
+        - generic [ref=f26e127]:
+          - generic [ref=f26e128]:
+            - paragraph [ref=f26e129]: Andhra Mango Avakaya Pickle
+            - paragraph [ref=f26e130]: PKL-ANDHRA-AVAKAYA
+          - generic [ref=f26e131]:
+            - button [ref=f26e444] [cursor=pointer]: View
+            - button [ref=f26e445] [cursor=pointer]: Manage stores
+        - generic [ref=f26e134]:
+          - generic [ref=f26e135]:
+            - paragraph [ref=f26e136]: California Almonds
+            - paragraph [ref=f26e137]: DRY-CAL-ALMOND
+          - generic [ref=f26e138]:
+            - button [ref=f26e446] [cursor=pointer]: View
+            - button [ref=f26e447] [cursor=pointer]: Manage stores
+        - generic [ref=f26e141]:
+          - generic [ref=f26e142]:
+            - paragraph [ref=f26e143]: Chicken Boneless
+            - paragraph [ref=f26e144]: NV-CHICKEN-BONELESS
+          - generic [ref=f26e145]:
+            - button [ref=f26e448] [cursor=pointer]: View
+            - button [ref=f26e449] [cursor=pointer]: Manage stores
+        - generic [ref=f26e148]:
+          - generic [ref=f26e149]:
+            - paragraph [ref=f26e150]: Chicken Breast
+            - paragraph [ref=f26e151]: NV-CHICKEN-BREAST
+          - generic [ref=f26e152]:
+            - button [ref=f26e450] [cursor=pointer]: View
+            - button [ref=f26e451] [cursor=pointer]: Manage stores
+        - generic [ref=f26e155]:
+          - generic [ref=f26e156]:
+            - paragraph [ref=f26e157]: Chicken Curry Cut
+            - paragraph [ref=f26e158]: NV-CHICKEN-CURRY
+          - generic [ref=f26e159]:
+            - button [ref=f26e452] [cursor=pointer]: View
+            - button [ref=f26e453] [cursor=pointer]: Manage stores
+        - generic [ref=f26e162]:
+          - button [disabled]: Previous
+          - paragraph [ref=f26e163]: Page 1 of 4
+          - button [ref=f26e454] [cursor=pointer]: Next
+  - dialog [active] [ref=f26e457]:
+    - heading "Confirm action" [level=2] [ref=f26e458]
+    - paragraph [ref=f26e460]: Permanently delete this location-owned product, its assigned stores, variants, and images? This cannot be undone.
+    - generic [ref=f26e461]:
+      - button "Cancel" [ref=f26e462] [cursor=pointer]
+      - button "Confirm" [ref=f26e463] [cursor=pointer]

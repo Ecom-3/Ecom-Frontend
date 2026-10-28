@@ -1,0 +1,132 @@
+- generic [ref=f18e468]:
+  - navigation [ref=f18e469]:
+    - generic [ref=f18e470]:
+      - img "Spices and Pickles" [ref=f18e471]
+      - generic [ref=f18e472]:
+        - heading "Store Manager Portal" [level=6] [ref=f18e473]
+        - text: Gachibowli Fresh Hub
+      - button "Collapse sidebar" [ref=f18e474] [cursor=pointer]
+    - generic [ref=f18e477]:
+      - button "Dashboard" [ref=f18e478] [cursor=pointer]
+      - button "Products" [ref=f18e483] [cursor=pointer]
+      - button "Banners" [ref=f18e489] [cursor=pointer]
+      - button "Inventory" [ref=f18e494] [cursor=pointer]
+      - button "Orders" [ref=f18e500] [cursor=pointer]
+      - button "Delivery Partners" [ref=f18e505] [cursor=pointer]
+      - button "Delivery Radius" [ref=f18e510] [cursor=pointer]
+      - button "Delivery Settings" [ref=f18e515] [cursor=pointer]
+      - button "Change Password" [ref=f18e520] [cursor=pointer]
+      - button "Profile" [ref=f18e525] [cursor=pointer]
+      - button "Logout" [ref=f18e530] [cursor=pointer]
+    - button "View Customer App" [ref=f18e535] [cursor=pointer]
+  - main [ref=f18e536]:
+    - generic [ref=f18e537]:
+      - generic [ref=f18e538]:
+        - button [ref=f18e539] [cursor=pointer]
+        - generic [ref=f18e542]:
+          - text: Store Manager /
+          - strong [ref=f18e543]: Orders
+      - generic [ref=f18e544]:
+        - textbox "Search portal" [ref=f18e549]
+        - button "Notifications" [ref=f18e550] [cursor=pointer]
+        - button "S Sravani Gachibowli" [ref=f18e553] [cursor=pointer]:
+          - generic [ref=f18e554]: S
+          - generic [ref=f18e555]: Sravani Gachibowli
+    - generic [ref=f18e556]:
+      - generic [ref=f18e557]:
+        - heading "Orders" [level=4] [ref=f18e558]
+        - paragraph [ref=f18e559]: Manage orders within your assigned scope.
+      - button "View Customer App" [ref=f18e560] [cursor=pointer]
+    - generic [ref=f18e561]:
+      - generic [ref=f18e562]:
+        - generic [ref=f18e563]:
+          - generic: Search or paste order ID
+          - generic [ref=f18e564]:
+            - textbox "Search or paste order ID" [ref=f18e565]
+            - group [aria-hidden]:
+              - generic: Search or paste order ID
+        - button "Fetch Order" [ref=f18e566] [cursor=pointer]
+        - generic [ref=f18e567]:
+          - combobox [ref=f18e568] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f18e569]:
+          - combobox [ref=f18e570] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Export" [ref=f18e571] [cursor=pointer]
+      - generic [ref=f18e572]:
+        - generic [ref=f18e573]:
+          - paragraph [ref=f18e574]: ORD-20261022-42A90977
+          - paragraph [ref=f18e575]: Gachibowli Fresh Hub
+        - generic [ref=f18e576]:
+          - generic [ref=f18e577]:
+            - combobox [ref=f18e578] [cursor=pointer]: CREATED
+            - textbox [aria-hidden]: CREATED
+            - group [aria-hidden]
+          - button "Accept" [ref=f18e579] [cursor=pointer]
+          - button [ref=f18e580] [cursor=pointer]
+          - button "Reject" [ref=f18e584] [cursor=pointer]
+      - generic [ref=f18e585]:
+        - generic [ref=f18e586]:
+          - paragraph [ref=f18e587]: ORD-20261021-B1052432
+          - paragraph [ref=f18e588]: Gachibowli Fresh Hub
+        - generic [ref=f18e589]:
+          - generic [ref=f18e590]:
+            - combobox [ref=f18e591] [cursor=pointer]: CREATED
+            - textbox [aria-hidden]: CREATED
+            - group [aria-hidden]
+          - button "Accept" [ref=f18e592] [cursor=pointer]
+          - button [ref=f18e593] [cursor=pointer]
+          - button "Reject" [ref=f18e597] [cursor=pointer]
+      - generic [ref=f18e598]:
+        - generic [ref=f18e599]:
+          - paragraph [ref=f18e600]: ORD-20261021-DB9FA27C
+          - paragraph [ref=f18e601]: Gachibowli Fresh Hub
+        - generic [ref=f18e602]:
+          - generic [ref=f18e603]:
+            - combobox [ref=f18e604] [cursor=pointer]: CREATED
+            - textbox [aria-hidden]: CREATED
+            - group [aria-hidden]
+          - button "Accept" [ref=f18e605] [cursor=pointer]
+          - button [ref=f18e606] [cursor=pointer]
+          - button "Reject" [ref=f18e610] [cursor=pointer]
+      - generic [ref=f18e611]:
+        - generic [ref=f18e612]:
+          - paragraph [ref=f18e613]: ORD-20261021-C9E18536
+          - paragraph [ref=f18e614]: Gachibowli Fresh Hub
+        - generic [ref=f18e615]:
+          - generic [ref=f18e616]:
+            - combobox [ref=f18e617] [cursor=pointer]: CANCELLED
+            - textbox [aria-hidden]: CANCELLED
+            - group [aria-hidden]
+          - button [ref=f18e618] [cursor=pointer]
+          - button "Reject" [ref=f18e622] [cursor=pointer]
+      - generic [ref=f18e623]:
+        - generic [ref=f18e624]:
+          - paragraph [ref=f18e625]: ORD-20260923-293106F1
+          - paragraph [ref=f18e626]: Gachibowli Fresh Hub
+        - generic [ref=f18e627]:
+          - generic [ref=f18e628]:
+            - combobox [ref=f18e629] [cursor=pointer]: CREATED
+            - textbox [aria-hidden]: CREATED
+            - group [aria-hidden]
+          - button "Accept" [ref=f18e630] [cursor=pointer]
+          - button [ref=f18e631] [cursor=pointer]
+          - button "Reject" [ref=f18e635] [cursor=pointer]
+      - generic [ref=f18e636]:
+        - generic [ref=f18e637]:
+          - paragraph [ref=f18e638]: ORD-20260923-76038C3C
+          - paragraph [ref=f18e639]: Gachibowli Fresh Hub
+        - generic [ref=f18e640]:
+          - generic [ref=f18e641]:
+            - combobox [ref=f18e642] [cursor=pointer]: CREATED
+            - textbox [aria-hidden]: CREATED
+            - group [aria-hidden]
+          - button "Accept" [ref=f18e643] [cursor=pointer]
+          - button [ref=f18e644] [cursor=pointer]
+          - button "Reject" [ref=f18e648] [cursor=pointer]
+      - generic [ref=f18e649]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f18e650]: Page 1 of 2
+        - button "Next" [ref=f18e651] [cursor=pointer]

@@ -1,0 +1,117 @@
+- generic [ref=f26e5]:
+  - navigation [ref=f26e6]:
+    - generic [ref=f26e7]:
+      - img "Spices and Pickles" [ref=f26e377]
+      - generic [ref=f26e9]:
+        - heading "Location Admin Portal" [level=6] [ref=f26e378]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f26e379] [cursor=pointer]
+    - generic [ref=f26e14]:
+      - generic [ref=f26e15]:
+        - paragraph [ref=f26e16]: Main
+        - button "Dashboard" [ref=f26e380] [cursor=pointer]
+      - generic [ref=f26e22]:
+        - paragraph [ref=f26e23]: Management
+        - button "Stores" [ref=f26e381] [cursor=pointer]
+        - button "Products" [ref=f26e382] [cursor=pointer]
+        - button "Banners" [ref=f26e383] [cursor=pointer]
+        - button "Inventory" [ref=f26e384] [cursor=pointer]
+      - generic [ref=f26e46]:
+        - paragraph [ref=f26e47]: Orders & Payments
+        - button "Orders" [ref=f26e385] [cursor=pointer]
+        - button "Payments" [ref=f26e386] [cursor=pointer]
+        - button "Delivery" [ref=f26e387] [cursor=pointer]
+      - generic [ref=f26e64]:
+        - paragraph [ref=f26e65]: Customer
+        - button "Coupons" [ref=f26e388] [cursor=pointer]
+      - generic [ref=f26e72]:
+        - paragraph [ref=f26e73]: Analytics
+        - button "Reports" [ref=f26e389] [cursor=pointer]
+    - button "View Customer App" [ref=f26e390] [cursor=pointer]
+  - main [ref=f26e80]:
+    - generic [ref=f26e81]:
+      - generic [ref=f26e82]:
+        - button [ref=f26e83] [cursor=pointer]
+        - generic [ref=f26e86]:
+          - text: Location Admin /
+          - strong [ref=f26e87]: Products
+      - generic [ref=f26e88]:
+        - textbox "Search portal" [ref=f26e391]
+        - button "Notifications" [ref=f26e392] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=f26e393] [cursor=pointer]:
+          - generic [ref=f26e98]: H
+          - generic [ref=f26e99]: Hyderabad Location Admin
+    - generic [ref=f26e100]:
+      - generic [ref=f26e101]:
+        - heading "Products" [level=4] [ref=f26e394]
+        - paragraph [ref=f26e103]: Manage products within your assigned scope.
+      - button "View Customer App" [ref=f26e395] [cursor=pointer]
+    - generic [ref=f26e105]:
+      - generic [ref=f26e106]:
+        - generic [ref=f26e107]:
+          - generic: Search
+          - generic [ref=f26e108]:
+            - textbox "Search" [ref=f26e396]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f26e110]:
+          - combobox [ref=f26e111] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f26e112]:
+          - combobox [ref=f26e113] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create Product" [ref=f26e397] [cursor=pointer]
+        - button "Map Product" [ref=f26e398] [cursor=pointer]
+        - button "Export" [ref=f26e399] [cursor=pointer]
+      - status [ref=f26e284]: Store mappings saved for your assigned location.
+      - generic [ref=f26e117]:
+        - generic [ref=f26e118]:
+          - paragraph [ref=f26e119]: QA Disposable LA12 LA13 LA14 20261025
+          - paragraph [ref=f26e120]: QA-LA-121314-20261025
+        - generic [ref=f26e121]:
+          - button "View" [ref=f26e400] [cursor=pointer]
+          - button "Edit" [ref=f26e401] [cursor=pointer]
+          - button "Make unavailable" [ref=f26e402] [cursor=pointer]
+          - button "Delete" [ref=f26e403] [cursor=pointer]
+          - button "Manage stores" [active] [ref=f26e404] [cursor=pointer]
+      - generic [ref=f26e127]:
+        - generic [ref=f26e128]:
+          - paragraph [ref=f26e129]: Andhra Mango Avakaya Pickle
+          - paragraph [ref=f26e130]: PKL-ANDHRA-AVAKAYA
+        - generic [ref=f26e131]:
+          - button "View" [ref=f26e405] [cursor=pointer]
+          - button "Manage stores" [ref=f26e406] [cursor=pointer]
+      - generic [ref=f26e134]:
+        - generic [ref=f26e135]:
+          - paragraph [ref=f26e136]: California Almonds
+          - paragraph [ref=f26e137]: DRY-CAL-ALMOND
+        - generic [ref=f26e138]:
+          - button "View" [ref=f26e407] [cursor=pointer]
+          - button "Manage stores" [ref=f26e408] [cursor=pointer]
+      - generic [ref=f26e141]:
+        - generic [ref=f26e142]:
+          - paragraph [ref=f26e143]: Chicken Boneless
+          - paragraph [ref=f26e144]: NV-CHICKEN-BONELESS
+        - generic [ref=f26e145]:
+          - button "View" [ref=f26e409] [cursor=pointer]
+          - button "Manage stores" [ref=f26e410] [cursor=pointer]
+      - generic [ref=f26e148]:
+        - generic [ref=f26e149]:
+          - paragraph [ref=f26e150]: Chicken Breast
+          - paragraph [ref=f26e151]: NV-CHICKEN-BREAST
+        - generic [ref=f26e152]:
+          - button "View" [ref=f26e411] [cursor=pointer]
+          - button "Manage stores" [ref=f26e412] [cursor=pointer]
+      - generic [ref=f26e155]:
+        - generic [ref=f26e156]:
+          - paragraph [ref=f26e157]: Chicken Curry Cut
+          - paragraph [ref=f26e158]: NV-CHICKEN-CURRY
+        - generic [ref=f26e159]:
+          - button "View" [ref=f26e413] [cursor=pointer]
+          - button "Manage stores" [ref=f26e414] [cursor=pointer]
+      - generic [ref=f26e162]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f26e163]: Page 1 of 4
+        - button "Next" [ref=f26e415] [cursor=pointer]

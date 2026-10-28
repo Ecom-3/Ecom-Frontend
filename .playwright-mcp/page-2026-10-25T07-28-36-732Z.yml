@@ -1,0 +1,184 @@
+- generic [ref=f10e1]:
+  - generic [ref=f10e8]:
+    - navigation [ref=f10e9]:
+      - generic [ref=f10e10]:
+        - generic [ref=f10e12]:
+          - heading [level=6] [ref=f10e123]: Location Admin Portal
+          - text: hyderabad
+        - button [ref=f10e124] [cursor=pointer]
+      - generic [ref=f10e17]:
+        - generic [ref=f10e18]:
+          - paragraph [ref=f10e19]: Main
+          - button [ref=f10e125] [cursor=pointer]:
+            - generic [ref=f10e24]: Dashboard
+        - generic [ref=f10e25]:
+          - paragraph [ref=f10e26]: Management
+          - button [ref=f10e126] [cursor=pointer]:
+            - generic [ref=f10e31]: Stores
+          - button [ref=f10e127] [cursor=pointer]:
+            - generic [ref=f10e37]: Products
+          - button [ref=f10e128] [cursor=pointer]:
+            - generic [ref=f10e42]: Banners
+          - button [ref=f10e129] [cursor=pointer]:
+            - generic [ref=f10e48]: Inventory
+        - generic [ref=f10e49]:
+          - paragraph [ref=f10e50]: Orders & Payments
+          - button [ref=f10e130] [cursor=pointer]:
+            - generic [ref=f10e55]: Orders
+          - button [ref=f10e131] [cursor=pointer]:
+            - generic [ref=f10e61]: Payments
+          - button [ref=f10e132] [cursor=pointer]:
+            - generic [ref=f10e66]: Delivery
+        - generic [ref=f10e67]:
+          - paragraph [ref=f10e68]: Customer
+          - button [ref=f10e133] [cursor=pointer]:
+            - generic [ref=f10e74]: Coupons
+        - generic [ref=f10e75]:
+          - paragraph [ref=f10e76]: Analytics
+          - button [ref=f10e134] [cursor=pointer]:
+            - generic [ref=f10e81]: Reports
+      - button [ref=f10e135] [cursor=pointer]: View Customer App
+    - main [ref=f10e83]:
+      - generic [ref=f10e84]:
+        - generic [ref=f10e85]:
+          - button [ref=f10e86] [cursor=pointer]
+          - generic [ref=f10e89]:
+            - text: Location Admin /
+            - strong [ref=f10e90]: Coupons
+        - generic [ref=f10e91]:
+          - textbox [ref=f10e136]:
+            - /placeholder: Search portal
+          - button [ref=f10e137] [cursor=pointer]
+          - button [ref=f10e138] [cursor=pointer]:
+            - generic [ref=f10e101]: H
+            - generic [ref=f10e102]: Hyderabad Location Admin
+      - generic [ref=f10e103]:
+        - generic [ref=f10e104]:
+          - heading [level=4] [ref=f10e139]: Coupons
+          - paragraph [ref=f10e106]: Manage coupons within your assigned scope.
+        - button [ref=f10e140] [cursor=pointer]: View Customer App
+      - generic [ref=f10e108]:
+        - generic [ref=f10e109]:
+          - generic [ref=f10e110]:
+            - generic: Search
+            - generic [ref=f10e111]:
+              - textbox [ref=f10e141]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f10e113]:
+            - combobox [ref=f10e114] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f10e115]:
+            - combobox [ref=f10e116] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f10e142] [cursor=pointer]: Create
+          - button [ref=f10e143] [cursor=pointer]: Export
+        - paragraph [ref=f10e119]: No matching records. Use Create to add the first record.
+        - generic [ref=f10e120]:
+          - button [disabled]: Previous
+          - paragraph [ref=f10e121]: Page 1 of 1
+          - button [disabled]: Next
+  - dialog [active] [ref=f10e146]:
+    - heading "Create Coupons" [level=2] [ref=f10e147]
+    - generic [ref=f10e148]:
+      - generic [ref=f10e150]:
+        - generic:
+          - text: Coupon code
+          - generic [aria-hidden]: "*"
+        - generic [ref=f10e151]:
+          - textbox "Coupon code" [ref=f10e152]
+          - group [aria-hidden]:
+            - generic: Coupon code *
+      - generic [ref=f10e154]:
+        - generic:
+          - text: Coupon name
+          - generic [aria-hidden]: "*"
+        - generic [ref=f10e155]:
+          - textbox "Coupon name" [ref=f10e156]
+          - group [aria-hidden]:
+            - generic: Coupon name *
+      - generic [ref=f10e158]:
+        - generic: Description
+        - generic [ref=f10e159]:
+          - textbox "Description" [ref=f10e160]
+          - group [aria-hidden]:
+            - generic: Description
+      - generic [ref=f10e162]:
+        - combobox [ref=f10e163] [cursor=pointer]: Discount type
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+      - generic [ref=f10e165]:
+        - generic:
+          - text: Discount value
+          - generic [aria-hidden]: "*"
+        - generic [ref=f10e166]:
+          - spinbutton "Discount value" [ref=f10e167]
+          - group [aria-hidden]:
+            - generic: Discount value *
+      - generic [ref=f10e169]:
+        - generic: Minimum order
+        - generic [ref=f10e170]:
+          - spinbutton "Minimum order" [ref=f10e171]
+          - group [aria-hidden]:
+            - generic: Minimum order
+      - generic [ref=f10e173]:
+        - generic: Maximum discount
+        - generic [ref=f10e174]:
+          - spinbutton "Maximum discount" [ref=f10e175]
+          - group [aria-hidden]:
+            - generic: Maximum discount
+      - generic [ref=f10e177]:
+        - generic:
+          - text: Start date
+          - generic [aria-hidden]: "*"
+        - generic [ref=f10e178]:
+          - textbox "Start date" [ref=f10e179]
+          - group [aria-hidden]:
+            - generic: Start date *
+      - generic [ref=f10e181]:
+        - generic:
+          - text: Expiry date
+          - generic [aria-hidden]: "*"
+        - generic [ref=f10e182]:
+          - textbox "Expiry date" [ref=f10e183]
+          - group [aria-hidden]:
+            - generic: Expiry date *
+      - generic [ref=f10e185]:
+        - generic:
+          - text: Usage limit
+          - generic [aria-hidden]: "*"
+        - generic [ref=f10e186]:
+          - spinbutton "Usage limit" [ref=f10e187]
+          - group [aria-hidden]:
+            - generic: Usage limit *
+      - generic [ref=f10e189]:
+        - generic: Per-user limit
+        - generic [ref=f10e190]:
+          - spinbutton "Per-user limit" [ref=f10e191]
+          - group [aria-hidden]:
+            - generic: Per-user limit
+      - generic [ref=f10e194]:
+        - generic: Product
+        - generic [ref=f10e195]:
+          - combobox "Product" [ref=f10e196]
+          - group [aria-hidden]:
+            - generic: Product
+      - generic [ref=f10e200]:
+        - generic: Category
+        - generic [ref=f10e201]:
+          - combobox "Category" [ref=f10e202]
+          - group [aria-hidden]:
+            - generic: Category
+      - generic [ref=f10e205]:
+        - combobox [ref=f10e206] [cursor=pointer]: Customer eligibility
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+      - generic [ref=f10e208]:
+        - combobox [ref=f10e209] [cursor=pointer]: Status
+        - textbox [aria-hidden]
+        - group [aria-hidden]
+    - generic [ref=f10e211]:
+      - button "Cancel" [ref=f10e212] [cursor=pointer]
+      - button "Save" [ref=f10e213] [cursor=pointer]

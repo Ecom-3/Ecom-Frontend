@@ -1,0 +1,214 @@
+- generic [ref=f47e1]:
+  - generic [ref=f47e8]:
+    - navigation [ref=f47e9]:
+      - generic [ref=f47e10]:
+        - generic [ref=f47e12]:
+          - heading [level=6] [ref=f47e1000]: Super Admin Portal
+          - text: All locations
+        - button [ref=f47e1001] [cursor=pointer]
+      - generic [ref=f47e17]:
+        - generic [ref=f47e18]:
+          - paragraph [ref=f47e19]: Main
+          - button [ref=f47e1002] [cursor=pointer]:
+            - generic [ref=f47e24]: Dashboard
+        - generic [ref=f47e25]:
+          - paragraph [ref=f47e26]: Management
+          - button [ref=f47e1003] [cursor=pointer]:
+            - generic [ref=f47e32]: Locations
+          - button [ref=f47e1004] [cursor=pointer]:
+            - generic [ref=f47e37]: Users
+          - button [ref=f47e1005] [cursor=pointer]:
+            - generic [ref=f47e42]: Stores
+          - button [ref=f47e1006] [cursor=pointer]:
+            - generic [ref=f47e48]: Products
+          - button [ref=f47e1007] [cursor=pointer]:
+            - generic [ref=f47e53]: Categories
+          - button [ref=f47e1008] [cursor=pointer]:
+            - generic [ref=f47e58]: Banners
+          - button [ref=f47e1009] [cursor=pointer]:
+            - generic [ref=f47e64]: Inventory
+        - generic [ref=f47e65]:
+          - paragraph [ref=f47e66]: Orders & Payments
+          - button [ref=f47e1010] [cursor=pointer]:
+            - generic [ref=f47e71]: Orders
+          - button [ref=f47e1011] [cursor=pointer]:
+            - generic [ref=f47e77]: Payments
+          - button [ref=f47e1012] [cursor=pointer]:
+            - generic [ref=f47e82]: Delivery
+        - generic [ref=f47e83]:
+          - paragraph [ref=f47e84]: Customer
+          - button [ref=f47e1013] [cursor=pointer]:
+            - generic [ref=f47e89]: Customers
+          - button [ref=f47e1014] [cursor=pointer]:
+            - generic [ref=f47e94]: Reviews
+          - button [ref=f47e1015] [cursor=pointer]:
+            - generic [ref=f47e100]: Coupons
+          - button [ref=f47e1016] [cursor=pointer]:
+            - generic [ref=f47e105]: Notifications
+        - generic [ref=f47e106]:
+          - paragraph [ref=f47e107]: Analytics
+          - button [ref=f47e1017] [cursor=pointer]:
+            - generic [ref=f47e112]: Reports
+        - generic [ref=f47e113]:
+          - paragraph [ref=f47e114]: System
+          - button [ref=f47e1018] [cursor=pointer]:
+            - generic [ref=f47e119]: Security
+          - button [ref=f47e1019] [cursor=pointer]:
+            - generic [ref=f47e124]: Audit Logs
+      - button [ref=f47e1020] [cursor=pointer]: View Customer App
+    - main [ref=f47e126]:
+      - generic [ref=f47e127]:
+        - generic [ref=f47e128]:
+          - button [ref=f47e129] [cursor=pointer]
+          - generic [ref=f47e132]:
+            - text: Super Admin /
+            - strong [ref=f47e133]: Locations
+        - generic [ref=f47e134]:
+          - textbox [ref=f47e1021]:
+            - /placeholder: Search portal
+          - button [ref=f47e1022] [cursor=pointer]
+          - button [ref=f47e1023] [cursor=pointer]:
+            - generic [ref=f47e144]: A
+            - generic [ref=f47e145]: Admin
+      - generic [ref=f47e146]:
+        - generic [ref=f47e147]:
+          - heading [level=4] [ref=f47e1024]: Locations
+          - paragraph [ref=f47e149]: Manage locations within your assigned scope.
+        - button [ref=f47e1025] [cursor=pointer]: View Customer App
+      - generic [ref=f47e151]:
+        - generic [ref=f47e152]:
+          - generic [ref=f47e153]:
+            - generic: Search
+            - generic [ref=f47e154]:
+              - textbox [ref=f47e1026]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f47e156]:
+            - combobox [ref=f47e157] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f47e158]:
+            - combobox [ref=f47e159] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f47e1027] [cursor=pointer]: Create
+          - button [ref=f47e1028] [cursor=pointer]: Export
+        - paragraph [ref=f47e998]: No matching records. Use Create to add the first record.
+        - generic [ref=f47e180]:
+          - button [disabled]: Previous
+          - paragraph [ref=f47e181]: Page 1 of 1
+          - button [disabled]: Next
+  - dialog [active] [ref=f47e1031]:
+    - heading "Create Locations" [level=2] [ref=f47e1032]
+    - generic [ref=f47e1033]:
+      - generic [ref=f47e1035]:
+        - generic:
+          - text: Location name
+          - generic [aria-hidden]: "*"
+        - generic [ref=f47e1036]:
+          - textbox "Location name" [ref=f47e1037]
+          - group [aria-hidden]:
+            - generic: Location name *
+      - generic [ref=f47e1039]:
+        - generic:
+          - text: Code
+          - generic [aria-hidden]: "*"
+        - generic [ref=f47e1040]:
+          - textbox "Code" [ref=f47e1041]
+          - group [aria-hidden]:
+            - generic: Code *
+      - generic [ref=f47e1043]:
+        - generic:
+          - text: Address
+          - generic [aria-hidden]: "*"
+        - generic [ref=f47e1044]:
+          - textbox "Address" [ref=f47e1045]
+          - group [aria-hidden]:
+            - generic: Address *
+      - generic [ref=f47e1047]:
+        - generic:
+          - text: City
+          - generic [aria-hidden]: "*"
+        - generic [ref=f47e1048]:
+          - textbox "City" [ref=f47e1049]
+          - group [aria-hidden]:
+            - generic: City *
+      - generic [ref=f47e1051]:
+        - generic: State
+        - generic [ref=f47e1052]:
+          - textbox "State" [ref=f47e1053]
+          - group [aria-hidden]:
+            - generic: State
+      - generic [ref=f47e1055]:
+        - generic: Country
+        - generic [ref=f47e1056]:
+          - textbox "Country" [ref=f47e1057]
+          - group [aria-hidden]:
+            - generic: Country
+      - generic [ref=f47e1059]:
+        - generic: Pincode
+        - generic [ref=f47e1060]:
+          - textbox "Pincode" [ref=f47e1061]
+          - group [aria-hidden]:
+            - generic: Pincode
+      - generic [ref=f47e1063]:
+        - generic: Latitude
+        - generic [ref=f47e1064]:
+          - spinbutton "Latitude" [ref=f47e1065]
+          - group [aria-hidden]:
+            - generic: Latitude
+      - generic [ref=f47e1067]:
+        - generic: Longitude
+        - generic [ref=f47e1068]:
+          - spinbutton "Longitude" [ref=f47e1069]
+          - group [aria-hidden]:
+            - generic: Longitude
+      - generic [ref=f47e1071]:
+        - heading "Verify Location on Map" [level=6] [ref=f47e1072]
+        - paragraph [ref=f47e1073]: Search for a place or click the map to set its coordinates. Address suggestions are only applied when you choose them.
+        - generic [ref=f47e1074]:
+          - generic [ref=f47e1075]:
+            - generic: Search address, area, city, or pincode
+            - generic [ref=f47e1076]:
+              - textbox "Search address, area, city, or pincode" [ref=f47e1077]
+              - group [aria-hidden]:
+                - generic: Search address, area, city, or pincode
+          - button "Search" [ref=f47e1078] [cursor=pointer]
+        - application "Select location on map" [ref=f47e1079]:
+          - generic:
+            - generic [ref=f47e1080]:
+              - button "Zoom in" [ref=f47e1081] [cursor=pointer]: +
+              - button "Zoom out" [ref=f47e1082] [cursor=pointer]: −
+            - generic [ref=f47e1083]:
+              - link "Leaflet" [ref=f47e1084] [cursor=pointer]:
+                - /url: https://leafletjs.com
+              - text: "| ©"
+              - link "OpenStreetMap" [ref=f47e1089] [cursor=pointer]:
+                - /url: https://www.openstreetmap.org/copyright
+              - text: contributors
+        - generic [ref=f47e1090]:
+          - paragraph [ref=f47e1091]: "Latitude: Not set Longitude: Not set"
+          - button "Reset to selected location" [disabled]
+        - generic [ref=f47e1092]:
+          - button "Use This Location" [disabled]
+      - generic [ref=f47e1094]:
+        - generic: Contact number
+        - generic [ref=f47e1095]:
+          - textbox "Contact number" [ref=f47e1096]
+          - group [aria-hidden]:
+            - generic: Contact number
+      - generic [ref=f47e1098]:
+        - generic: Email
+        - generic [ref=f47e1099]:
+          - textbox "Email" [ref=f47e1100]
+          - group [aria-hidden]:
+            - generic: Email
+      - generic [ref=f47e1102]:
+        - generic: Assigned admin
+        - generic [ref=f47e1103]:
+          - textbox "Assigned admin" [ref=f47e1104]
+          - group [aria-hidden]:
+            - generic: Assigned admin
+    - generic [ref=f47e1106]:
+      - button "Cancel" [ref=f47e1107] [cursor=pointer]
+      - button "Save" [ref=f47e1108] [cursor=pointer]

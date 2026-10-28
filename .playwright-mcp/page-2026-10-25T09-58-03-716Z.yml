@@ -1,0 +1,52 @@
+- generic [ref=f41e5]:
+  - navigation [ref=f41e6]:
+    - generic [ref=f41e7]:
+      - img "Spices and Pickles" [ref=f41e8]
+      - generic [ref=f41e9]:
+        - heading "Location Admin Portal" [level=6] [ref=f41e10]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f41e11] [cursor=pointer]
+    - generic [ref=f41e14]:
+      - generic [ref=f41e15]:
+        - paragraph [ref=f41e16]: Main
+        - button "Dashboard" [ref=f41e17] [cursor=pointer]
+      - generic [ref=f41e22]:
+        - paragraph [ref=f41e23]: Management
+        - button "Stores" [ref=f41e24] [cursor=pointer]
+        - button "Products" [ref=f41e29] [cursor=pointer]
+        - button "Banners" [ref=f41e35] [cursor=pointer]
+        - button "Inventory" [ref=f41e40] [cursor=pointer]
+      - generic [ref=f41e46]:
+        - paragraph [ref=f41e47]: Orders & Payments
+        - button "Orders" [ref=f41e48] [cursor=pointer]
+        - button "Payments" [ref=f41e53] [cursor=pointer]
+        - button "Delivery" [ref=f41e59] [cursor=pointer]
+      - generic [ref=f41e64]:
+        - paragraph [ref=f41e65]: Customer
+        - button "Coupons" [ref=f41e66] [cursor=pointer]
+      - generic [ref=f41e72]:
+        - paragraph [ref=f41e73]: Analytics
+        - button "Reports" [ref=f41e74] [cursor=pointer]
+    - button "View Customer App" [ref=f41e79] [cursor=pointer]
+  - main [ref=f41e80]:
+    - generic [ref=f41e81]:
+      - generic [ref=f41e82]:
+        - button [ref=f41e83] [cursor=pointer]
+        - generic [ref=f41e86]:
+          - text: Location Admin /
+          - strong [ref=f41e87]: Reports
+      - generic [ref=f41e88]:
+        - textbox "Search portal" [ref=f41e93]
+        - button "Notifications" [ref=f41e94] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=f41e97] [cursor=pointer]:
+          - generic [ref=f41e98]: H
+          - generic [ref=f41e99]: Hyderabad Location Admin
+    - generic [ref=f41e100]:
+      - generic [ref=f41e101]:
+        - heading "Reports" [level=4] [ref=f41e102]
+        - paragraph [ref=f41e103]: Manage reports within your assigned scope.
+      - button "View Customer App" [ref=f41e104] [cursor=pointer]
+    - status [ref=f41e105]:
+      - paragraph [ref=f41e106]: Loading Reports...
+    - alert [ref=f41e108]:
+      - generic [ref=f41e112]: Loading backend order data…

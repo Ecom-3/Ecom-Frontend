@@ -1,0 +1,80 @@
+- generic [ref=f2e8]:
+  - navigation [ref=f2e9]:
+    - generic [ref=f2e10]:
+      - img "Spices and Pickles" [ref=f2e353]
+      - generic [ref=f2e12]:
+        - heading "Global Admin Portal" [level=6] [ref=f2e354]
+        - text: All locations
+      - button "Collapse sidebar" [ref=f2e355] [cursor=pointer]
+    - generic [ref=f2e17]:
+      - generic [ref=f2e18]:
+        - paragraph [ref=f2e19]: Main
+        - button "Dashboard" [ref=f2e356] [cursor=pointer]
+      - generic [ref=f2e25]:
+        - paragraph [ref=f2e26]: Management
+        - button "Stores" [ref=f2e357] [cursor=pointer]
+        - button "Products" [ref=f2e358] [cursor=pointer]
+        - button "Banners" [ref=f2e359] [cursor=pointer]
+        - button "Inventory" [ref=f2e360] [cursor=pointer]
+      - generic [ref=f2e49]:
+        - paragraph [ref=f2e50]: Orders & Payments
+        - button "Orders" [ref=f2e361] [cursor=pointer]
+        - button "Payments" [ref=f2e362] [cursor=pointer]
+        - button "Delivery" [ref=f2e363] [cursor=pointer]
+      - generic [ref=f2e67]:
+        - paragraph [ref=f2e68]: Customer
+        - button "Customers" [ref=f2e364] [cursor=pointer]
+        - button "Reviews" [ref=f2e365] [cursor=pointer]
+        - button "Coupons" [ref=f2e366] [cursor=pointer]
+        - button "Notifications" [ref=f2e367] [cursor=pointer]
+      - generic [ref=f2e90]:
+        - paragraph [ref=f2e91]: Analytics
+        - button "Reports" [ref=f2e368] [cursor=pointer]
+      - generic [ref=f2e97]:
+        - paragraph [ref=f2e98]: System
+        - button "Audit Logs" [ref=f2e369] [cursor=pointer]
+    - button "View Customer App" [ref=f2e370] [cursor=pointer]
+  - main [ref=f2e105]:
+    - generic [ref=f2e106]:
+      - generic [ref=f2e107]:
+        - button [ref=f2e108] [cursor=pointer]
+        - generic [ref=f2e111]:
+          - text: Global Admin /
+          - strong [ref=f2e112]: Products
+      - generic [ref=f2e113]:
+        - textbox "Search portal" [ref=f2e371]
+        - button "Notifications" [ref=f2e372] [cursor=pointer]
+        - button "G Global Admin QA" [ref=f2e373] [cursor=pointer]:
+          - generic [ref=f2e123]: G
+          - generic [ref=f2e124]: Global Admin QA
+    - generic [ref=f2e125]:
+      - generic [ref=f2e126]:
+        - heading "Products" [level=4] [ref=f2e374]
+        - paragraph [ref=f2e128]: Manage products within your assigned scope.
+      - button "View Customer App" [ref=f2e375] [cursor=pointer]
+    - generic [ref=f2e130]:
+      - generic [ref=f2e131]:
+        - generic [ref=f2e132]:
+          - generic: Search
+          - generic [ref=f2e133]:
+            - textbox "Search" [ref=f2e376]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f2e135]:
+          - combobox [ref=f2e136] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f2e137]:
+          - combobox [ref=f2e138] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create" [active] [ref=f2e377] [cursor=pointer]
+        - button "Export" [ref=f2e378] [cursor=pointer]
+      - alert [ref=f2e141]:
+        - generic [ref=f2e145]: 23 product IDs are present in inventory but missing from the catalog. Inventory stock records do not create product records. Recreate the products in this page before assigning new stock.
+      - status [ref=f2e347]: must not be null
+      - paragraph [ref=f2e146]: No matching records. Use Create to add the first record.
+      - generic [ref=f2e147]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f2e148]: Page 1 of 1
+        - button "Next" [disabled]

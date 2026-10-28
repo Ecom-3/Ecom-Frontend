@@ -1,0 +1,40 @@
+- generic [ref=f3e1]:
+  - generic [ref=f3e8]:
+    - complementary [ref=f3e9]:
+      - navigation [ref=f3e12]:
+        - button [ref=f3e13] [cursor=pointer]
+        - button [ref=f3e14] [cursor=pointer]
+        - button [ref=f3e15] [cursor=pointer]
+      - generic [ref=f3e16]:
+        - switch [checked] [ref=f3e20] [cursor=pointer]
+        - button [ref=f3e23] [cursor=pointer]
+        - button [ref=f3e24] [cursor=pointer]
+        - button [ref=f3e25] [cursor=pointer]
+    - main [ref=f3e26]:
+      - heading [level=5] [ref=f3e43]: Delivery History
+      - generic [ref=f3e29]:
+        - generic [ref=f3e30]:
+          - generic [ref=f3e31]:
+            - generic: Search customer / order
+            - generic [ref=f3e32]:
+              - textbox [ref=f3e44]
+              - group [aria-hidden]:
+                - generic: Search customer / order
+          - generic [ref=f3e34]:
+            - combobox [expanded] [ref=f3e35] [cursor=pointer]: Newest first
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - generic [ref=f3e36]:
+            - combobox [ref=f3e37] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f3e38]:
+            - combobox [ref=f3e39] [cursor=pointer]: 30 days
+            - textbox [aria-hidden]: "30"
+            - group [aria-hidden]
+        - generic [ref=f3e40]: 0 deliveries
+        - paragraph [ref=f3e41]: No deliveries match these filters.
+  - listbox [ref=f3e47]:
+    - option "Newest first" [active] [selected] [ref=f3e48] [cursor=pointer]
+    - option "Oldest first" [ref=f3e49] [cursor=pointer]
+    - option "Customer name" [ref=f3e50] [cursor=pointer]

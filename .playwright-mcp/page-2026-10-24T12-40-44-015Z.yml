@@ -1,0 +1,40 @@
+- generic [ref=e937]:
+  - generic [ref=e938]:
+    - button [ref=e939] [cursor=pointer]
+    - button "Skip" [ref=e943] [cursor=pointer]
+  - generic [ref=e944]:
+    - img "Pickles & Spices" [ref=e945]
+    - heading "Sign in" [level=4] [ref=e946]
+    - generic [ref=e947]:
+      - generic [ref=e948]:
+        - generic:
+          - text: Email, Mobile Number or Username
+          - generic [aria-hidden]: "*"
+        - generic [ref=e949]:
+          - textbox "Email, Mobile Number or Username" [ref=e950]
+          - group [aria-hidden]:
+            - generic: Email, Mobile Number or Username *
+      - generic [ref=e951]:
+        - generic:
+          - text: Password
+          - generic [aria-hidden]: "*"
+        - generic [ref=e952]:
+          - textbox "Password" [ref=e953]
+          - button "Show password" [ref=e955] [cursor=pointer]
+          - group [aria-hidden]:
+            - generic: Password *
+      - button "Forgot Password?" [ref=e959] [cursor=pointer]
+      - button "Sign in" [ref=e960] [cursor=pointer]
+      - generic [ref=e961]: OR
+      - button "Sign in with Mobile OTP" [ref=e963] [cursor=pointer]
+      - button "Sign in with Email OTP" [ref=e964] [cursor=pointer]
+      - paragraph [ref=e965]:
+        - text: Don't have an account?
+        - button "Create Account" [ref=e966] [cursor=pointer]
+      - paragraph [ref=e968]:
+        - text: By creating an account, you agree to our
+        - link "Terms & Conditions" [ref=e969] [cursor=pointer]:
+          - /url: /terms-conditions
+        - text: and
+        - link "Privacy Policy" [ref=e970] [cursor=pointer]:
+          - /url: /privacy-policy

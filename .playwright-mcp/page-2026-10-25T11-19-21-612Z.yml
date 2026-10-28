@@ -1,0 +1,170 @@
+- generic [ref=f1e8]:
+  - complementary [ref=f1e9]:
+    - generic [ref=f1e10]:
+      - img "Spices and Pickles" [ref=f1e11]
+      - generic [ref=f1e12]:
+        - heading "Store Manager" [level=6] [ref=f1e13]
+        - paragraph [ref=f1e14]: Gachibowli Fresh Hub
+    - navigation [ref=f1e15]:
+      - button "Dashboard" [ref=f1e16] [cursor=pointer]
+      - button "Products" [ref=f1e21] [cursor=pointer]
+      - button "Banners" [ref=f1e27] [cursor=pointer]
+      - button "Inventory" [ref=f1e32] [cursor=pointer]
+      - button "Orders" [ref=f1e38] [cursor=pointer]
+      - button "Delivery Partners" [ref=f1e43] [cursor=pointer]
+      - button "Delivery Radius" [ref=f1e48] [cursor=pointer]
+      - button "Delivery Settings" [ref=f1e53] [cursor=pointer]
+      - button "Change Password" [ref=f1e58] [cursor=pointer]
+      - button "Profile" [ref=f1e63] [cursor=pointer]
+      - button "Logout" [ref=f1e68] [cursor=pointer]
+    - button "View Customer App" [ref=f1e73] [cursor=pointer]
+  - main [ref=f1e74]:
+    - generic [ref=f1e75]:
+      - button [ref=f1e76] [cursor=pointer]
+      - button "S Sravani Gachibowli" [ref=f1e80] [cursor=pointer]:
+        - generic [ref=f1e81]: S
+        - generic [ref=f1e82]: Sravani Gachibowli
+      - button "Sign out" [ref=f1e83] [cursor=pointer]
+    - generic [ref=f1e84]:
+      - generic [ref=f1e85]:
+        - heading "Store Profile" [level=4] [ref=f1e86]
+        - paragraph [ref=f1e87]: Gachibowli Fresh Hub
+      - generic [ref=f1e88]: Active
+    - generic [ref=f1e90]:
+      - generic [ref=f1e91]:
+        - img "Store logo" [ref=f1e93]
+        - generic [ref=f1e94]:
+          - heading "Gachibowli Fresh Hub" [level=5] [ref=f1e95]
+          - paragraph [ref=f1e96]: store-gachibowli / HYD-GCB-002
+        - button "Cancel Edit" [active] [ref=f1e209] [cursor=pointer]
+      - generic [ref=f1e98]:
+        - generic [ref=f1e100]:
+          - button "Zoom in" [ref=f1e101] [cursor=pointer]: +
+          - button "Zoom out" [ref=f1e102] [cursor=pointer]: "-"
+        - generic [ref=f1e103]: Store
+      - generic [ref=f1e104]:
+        - generic [ref=f1e106]:
+          - generic [ref=f1e107]: Store Name
+          - generic [ref=f1e108]:
+            - textbox "Store Name" [ref=f1e109]: Gachibowli Fresh Hub
+            - group [aria-hidden]:
+              - generic: Store Name
+        - generic [ref=f1e111]:
+          - generic [ref=f1e112]: Store Code
+          - generic [ref=f1e113]:
+            - textbox "Store Code" [ref=f1e114]: HYD-GCB-002
+            - group [aria-hidden]:
+              - generic: Store Code
+        - generic [ref=f1e116]:
+          - generic [ref=f1e117]: Description
+          - generic [ref=f1e118]:
+            - textbox "Description" [ref=f1e119]: Fresh hub for Gachibowli, Kondapur and DLF Road groceries with pickup and fast delivery.
+            - group [aria-hidden]:
+              - generic: Description
+        - generic [ref=f1e121]:
+          - generic [ref=f1e122]: Manager Name
+          - generic [ref=f1e123]:
+            - textbox "Manager Name" [ref=f1e124]: Sravani Gachibowli
+            - group [aria-hidden]:
+              - generic: Manager Name
+        - generic [ref=f1e126]:
+          - generic [ref=f1e127]: Mobile Number
+          - generic [ref=f1e128]:
+            - textbox "Mobile Number" [ref=f1e129]: +91 91000 20001
+            - group [aria-hidden]:
+              - generic: Mobile Number
+        - generic [ref=f1e131]:
+          - generic [ref=f1e132]: Alternate Mobile
+          - generic [ref=f1e133]:
+            - textbox "Alternate Mobile" [ref=f1e134]: +91 91000 21001
+            - group [aria-hidden]:
+              - generic: Alternate Mobile
+        - generic [ref=f1e136]:
+          - generic [ref=f1e137]: Email
+          - generic [ref=f1e138]:
+            - textbox "Email" [ref=f1e139]: gachibowli@metaarch.local
+            - group [aria-hidden]:
+              - generic: Email
+        - generic [ref=f1e141]:
+          - generic [ref=f1e142]: Door Number
+          - generic [ref=f1e143]:
+            - textbox "Door Number" [ref=f1e144]: Shop 9
+            - group [aria-hidden]:
+              - generic: Door Number
+        - generic [ref=f1e146]:
+          - generic [ref=f1e147]: Road / Street
+          - generic [ref=f1e148]:
+            - textbox "Road / Street" [ref=f1e149]: DLF Road
+            - group [aria-hidden]:
+              - generic: Road / Street
+        - generic [ref=f1e151]:
+          - generic [ref=f1e152]: Area
+          - generic [ref=f1e153]:
+            - textbox "Area" [ref=f1e154]: Gachibowli
+            - group [aria-hidden]:
+              - generic: Area
+        - generic [ref=f1e156]:
+          - generic [ref=f1e157]: Landmark
+          - generic [ref=f1e158]:
+            - textbox "Landmark" [ref=f1e159]: Opposite DLF Cyber City
+            - group [aria-hidden]:
+              - generic: Landmark
+        - generic [ref=f1e161]:
+          - generic [ref=f1e162]: City
+          - generic [ref=f1e163]:
+            - textbox "City" [ref=f1e164]: Hyderabad
+            - group [aria-hidden]:
+              - generic: City
+        - generic [ref=f1e166]:
+          - generic [ref=f1e167]: District
+          - generic [ref=f1e168]:
+            - textbox "District" [ref=f1e169]: Hyderabad
+            - group [aria-hidden]:
+              - generic: District
+        - generic [ref=f1e171]:
+          - generic [ref=f1e172]: State
+          - generic [ref=f1e173]:
+            - textbox "State" [ref=f1e174]: Telangana
+            - group [aria-hidden]:
+              - generic: State
+        - generic [ref=f1e176]:
+          - generic [ref=f1e177]: Pincode
+          - generic [ref=f1e178]:
+            - textbox "Pincode" [ref=f1e179]: "500032"
+            - group [aria-hidden]:
+              - generic: Pincode
+        - generic [ref=f1e181]:
+          - generic [ref=f1e182]: Latitude
+          - generic [ref=f1e183]:
+            - spinbutton "Latitude" [ref=f1e184]: "17.4434778"
+            - group [aria-hidden]:
+              - generic: Latitude
+        - generic [ref=f1e186]:
+          - generic [ref=f1e187]: Longitude
+          - generic [ref=f1e188]:
+            - spinbutton "Longitude" [ref=f1e189]: "78.3771953"
+            - group [aria-hidden]:
+              - generic: Longitude
+        - generic [ref=f1e191]:
+          - generic [ref=f1e192]: GST Number
+          - generic [ref=f1e193]:
+            - textbox "GST Number" [ref=f1e194]: 36AABCM1234F1Z2
+            - group [aria-hidden]:
+              - generic: GST Number
+        - generic [ref=f1e196]:
+          - combobox [ref=f1e197] [cursor=pointer]: Old
+          - textbox [aria-hidden]: Old
+          - group [aria-hidden]
+        - generic [ref=f1e199]:
+          - combobox [ref=f1e200] [cursor=pointer]: "Yes"
+          - textbox [aria-hidden]: "Yes"
+          - group [aria-hidden]
+        - generic [ref=f1e202]:
+          - combobox [ref=f1e203] [cursor=pointer]: "Yes"
+          - textbox [aria-hidden]: "Yes"
+          - group [aria-hidden]
+        - generic [ref=f1e205]:
+          - combobox [ref=f1e206] [cursor=pointer]: Active
+          - textbox [aria-hidden]: Active
+          - group [aria-hidden]
+      - button "Save Changes" [ref=f1e208] [cursor=pointer]

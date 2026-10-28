@@ -1,0 +1,79 @@
+- generic [ref=f9e8]:
+  - navigation [ref=f9e9]:
+    - generic [ref=f9e10]:
+      - img "Spices and Pickles" [ref=f9e11]
+      - generic [ref=f9e12]:
+        - heading "Location Admin Portal" [level=6] [ref=f9e13]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f9e14] [cursor=pointer]
+    - generic [ref=f9e17]:
+      - generic [ref=f9e18]:
+        - paragraph [ref=f9e19]: Main
+        - button "Dashboard" [ref=f9e20] [cursor=pointer]
+      - generic [ref=f9e25]:
+        - paragraph [ref=f9e26]: Management
+        - button "Stores" [ref=f9e27] [cursor=pointer]
+        - button "Products" [ref=f9e32] [cursor=pointer]
+        - button "Banners" [ref=f9e38] [cursor=pointer]
+        - button "Inventory" [ref=f9e43] [cursor=pointer]
+      - generic [ref=f9e49]:
+        - paragraph [ref=f9e50]: Orders & Payments
+        - button "Orders" [ref=f9e51] [cursor=pointer]
+        - button "Payments" [ref=f9e56] [cursor=pointer]
+        - button "Delivery" [ref=f9e62] [cursor=pointer]
+      - generic [ref=f9e67]:
+        - paragraph [ref=f9e68]: Customer
+        - button "Coupons" [ref=f9e69] [cursor=pointer]
+      - generic [ref=f9e75]:
+        - paragraph [ref=f9e76]: Analytics
+        - button "Reports" [ref=f9e77] [cursor=pointer]
+    - button "View Customer App" [ref=f9e82] [cursor=pointer]
+  - main [ref=f9e83]:
+    - generic [ref=f9e84]:
+      - generic [ref=f9e85]:
+        - button [ref=f9e86] [cursor=pointer]
+        - generic [ref=f9e89]:
+          - text: Location Admin /
+          - strong [ref=f9e90]: Stores
+      - generic [ref=f9e91]:
+        - textbox "Search portal" [ref=f9e96]
+        - button "Notifications" [ref=f9e97] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=f9e100] [cursor=pointer]:
+          - generic [ref=f9e101]: H
+          - generic [ref=f9e102]: Hyderabad Location Admin
+    - generic [ref=f9e103]:
+      - generic [ref=f9e104]:
+        - heading "Stores" [level=4] [ref=f9e105]
+        - paragraph [ref=f9e106]: Manage stores within your assigned scope.
+      - button "View Customer App" [ref=f9e107] [cursor=pointer]
+    - generic [ref=f9e108]:
+      - generic [ref=f9e109]:
+        - generic [ref=f9e110]:
+          - generic: Search
+          - generic [ref=f9e111]:
+            - textbox "Search" [ref=f9e112]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f9e113]:
+          - combobox [ref=f9e114] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f9e115]:
+          - combobox [ref=f9e116] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create" [ref=f9e117] [cursor=pointer]
+        - button "Export" [ref=f9e118] [cursor=pointer]
+      - generic [ref=f9e119]:
+        - generic [ref=f9e120]:
+          - paragraph [ref=f9e121]: LA QA next5 lifecycle store
+          - paragraph [ref=f9e122]: Inactive
+        - generic [ref=f9e123]:
+          - button "View" [ref=f9e124] [cursor=pointer]
+          - button "Edit" [ref=f9e125] [cursor=pointer]
+          - button "Activate" [active] [ref=f9e130] [cursor=pointer]
+          - button "Delete" [ref=f9e127] [cursor=pointer]
+      - generic [ref=f9e128]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f9e129]: Page 1 of 1
+        - button "Next" [disabled]

@@ -1,0 +1,133 @@
+- generic [ref=f23e1]:
+  - generic [ref=f23e8]:
+    - navigation [ref=f23e9]:
+      - generic [ref=f23e10]:
+        - generic [ref=f23e12]:
+          - heading [level=6] [ref=f23e169]: Location Admin Portal
+          - text: hyderabad
+        - button [ref=f23e170] [cursor=pointer]
+      - generic [ref=f23e17]:
+        - generic [ref=f23e18]:
+          - paragraph [ref=f23e19]: Main
+          - button [ref=f23e171] [cursor=pointer]:
+            - generic [ref=f23e24]: Dashboard
+        - generic [ref=f23e25]:
+          - paragraph [ref=f23e26]: Management
+          - button [ref=f23e172] [cursor=pointer]:
+            - generic [ref=f23e31]: Stores
+          - button [ref=f23e173] [cursor=pointer]:
+            - generic [ref=f23e37]: Products
+          - button [ref=f23e174] [cursor=pointer]:
+            - generic [ref=f23e42]: Banners
+          - button [ref=f23e175] [cursor=pointer]:
+            - generic [ref=f23e48]: Inventory
+        - generic [ref=f23e49]:
+          - paragraph [ref=f23e50]: Orders & Payments
+          - button [ref=f23e176] [cursor=pointer]:
+            - generic [ref=f23e55]: Orders
+          - button [ref=f23e177] [cursor=pointer]:
+            - generic [ref=f23e61]: Payments
+          - button [ref=f23e178] [cursor=pointer]:
+            - generic [ref=f23e66]: Delivery
+        - generic [ref=f23e67]:
+          - paragraph [ref=f23e68]: Customer
+          - button [ref=f23e179] [cursor=pointer]:
+            - generic [ref=f23e74]: Coupons
+        - generic [ref=f23e75]:
+          - paragraph [ref=f23e76]: Analytics
+          - button [ref=f23e180] [cursor=pointer]:
+            - generic [ref=f23e81]: Reports
+      - button [ref=f23e181] [cursor=pointer]: View Customer App
+    - main [ref=f23e83]:
+      - generic [ref=f23e84]:
+        - generic [ref=f23e85]:
+          - button [ref=f23e86] [cursor=pointer]
+          - generic [ref=f23e89]:
+            - text: Location Admin /
+            - strong [ref=f23e90]: Products
+        - generic [ref=f23e91]:
+          - textbox [ref=f23e182]:
+            - /placeholder: Search portal
+          - button [ref=f23e183] [cursor=pointer]
+          - button [ref=f23e184] [cursor=pointer]:
+            - generic [ref=f23e101]: H
+            - generic [ref=f23e102]: Hyderabad Location Admin
+      - generic [ref=f23e103]:
+        - generic [ref=f23e104]:
+          - heading [level=4] [ref=f23e185]: Products
+          - paragraph [ref=f23e106]: Manage products within your assigned scope.
+        - button [ref=f23e186] [cursor=pointer]: View Customer App
+      - generic [ref=f23e108]:
+        - generic [ref=f23e109]:
+          - generic [ref=f23e110]:
+            - generic: Search
+            - generic [ref=f23e111]:
+              - textbox [ref=f23e187]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f23e113]:
+            - combobox [ref=f23e114] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f23e115]:
+            - combobox [ref=f23e116] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f23e188] [cursor=pointer]: Create Product
+          - button [ref=f23e189] [cursor=pointer]: Map Product
+          - button [ref=f23e190] [cursor=pointer]: Export
+        - generic [ref=f23e120]:
+          - generic [ref=f23e121]:
+            - paragraph [ref=f23e122]: QA LA Product 20261025 1454 Edited
+            - paragraph [ref=f23e123]: QA-LA-20261025-1454
+          - generic [ref=f23e124]:
+            - button [ref=f23e191] [cursor=pointer]: View
+            - button [ref=f23e192] [cursor=pointer]: Edit
+            - button [ref=f23e193] [cursor=pointer]: Make unavailable
+            - button [ref=f23e194] [cursor=pointer]: Delete
+            - button [ref=f23e195] [cursor=pointer]: Manage stores
+        - generic [ref=f23e130]:
+          - generic [ref=f23e131]:
+            - paragraph [ref=f23e132]: Andhra Mango Avakaya Pickle
+            - paragraph [ref=f23e133]: PKL-ANDHRA-AVAKAYA
+          - generic [ref=f23e134]:
+            - button [ref=f23e196] [cursor=pointer]: View
+            - button [ref=f23e197] [cursor=pointer]: Manage stores
+        - generic [ref=f23e137]:
+          - generic [ref=f23e138]:
+            - paragraph [ref=f23e139]: California Almonds
+            - paragraph [ref=f23e140]: DRY-CAL-ALMOND
+          - generic [ref=f23e141]:
+            - button [ref=f23e198] [cursor=pointer]: View
+            - button [ref=f23e199] [cursor=pointer]: Manage stores
+        - generic [ref=f23e144]:
+          - generic [ref=f23e145]:
+            - paragraph [ref=f23e146]: Chicken Boneless
+            - paragraph [ref=f23e147]: NV-CHICKEN-BONELESS
+          - generic [ref=f23e148]:
+            - button [ref=f23e200] [cursor=pointer]: View
+            - button [ref=f23e201] [cursor=pointer]: Manage stores
+        - generic [ref=f23e151]:
+          - generic [ref=f23e152]:
+            - paragraph [ref=f23e153]: Chicken Breast
+            - paragraph [ref=f23e154]: NV-CHICKEN-BREAST
+          - generic [ref=f23e155]:
+            - button [ref=f23e202] [cursor=pointer]: View
+            - button [ref=f23e203] [cursor=pointer]: Manage stores
+        - generic [ref=f23e158]:
+          - generic [ref=f23e159]:
+            - paragraph [ref=f23e160]: Chicken Curry Cut
+            - paragraph [ref=f23e161]: NV-CHICKEN-CURRY
+          - generic [ref=f23e162]:
+            - button [ref=f23e204] [cursor=pointer]: View
+            - button [ref=f23e205] [cursor=pointer]: Manage stores
+        - generic [ref=f23e165]:
+          - button [disabled]: Previous
+          - paragraph [ref=f23e166]: Page 1 of 4
+          - button [ref=f23e206] [cursor=pointer]: Next
+  - dialog [active] [ref=f23e209]:
+    - heading "Confirm action" [level=2] [ref=f23e210]
+    - paragraph [ref=f23e212]: Delete this record? This action updates local data immediately.
+    - generic [ref=f23e213]:
+      - button "Cancel" [ref=f23e214] [cursor=pointer]
+      - button "Confirm" [ref=f23e215] [cursor=pointer]

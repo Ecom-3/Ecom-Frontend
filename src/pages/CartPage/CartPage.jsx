@@ -1,5 +1,5 @@
 ﻿import { useContext, useEffect, useState } from 'react';
-import { Box, Typography, Button, IconButton, Chip } from '@mui/material';
+import { Alert, Box, Typography, Button, IconButton, Chip } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
@@ -27,6 +27,7 @@ const CartPage = () => {
   const [couponResult, setCouponResult] = useState(null);
   const goToCheckout = () => {
     sessionStorage.removeItem(COMPLETED_CHECKOUT_RETURN_KEY);
+    if (undeliverableStoreGroups.length) return;
     if (!isLoggedIn) {
       navigate('/login', { state: { from: '/checkout', completeProfile: true, checkoutIntent: true } });
       return;
@@ -39,7 +40,9 @@ const CartPage = () => {
   };
 
   const grandTotal = cartTotal;
-  const hasGlobalCart = cartItems.some(isGlobalProduct);
+  const hasGlobalCart = cartItems.some((item) => isGlobalProduct(item)
+    || item.storeId === 'global-store'
+    || item.sourceStoreId === 'global-store');
   const defaultAddress = addresses.find((address) => address.isDefault) || addresses[0] || {};
   const customerLat = Number(selectedLocation?.latitude ?? defaultAddress.coordinates?.lat ?? defaultAddress.latitude);
   const customerLng = Number(selectedLocation?.longitude ?? defaultAddress.coordinates?.lng ?? defaultAddress.longitude);
@@ -87,9 +90,15 @@ const CartPage = () => {
     if (!existing) groups.push(group);
     return groups;
   }, []);
+  const undeliverableStoreGroups = deliveryMode === 'delivery'
+    ? deliveryGroups.filter((group) => group.line.fulfillmentType !== 'global' && group.line.quote?.deliveryAvailable === false)
+    : [];
+  const checkoutBlockedByDelivery = undeliverableStoreGroups.length > 0;
 
   const youMayAlsoLike = catalogProducts.filter((product) => !cartItems.some((item) => item.productId === product.productId)).slice(0, 3);
-  const storeLabelFor = (item) => item.storeName || item.store || item.sourceStore || item.sourceStoreName || item.storeId || item.sourceStoreId || 'Store';
+  const storeLabelFor = (item) => item.storeId === 'global-store' || item.sourceStoreId === 'global-store'
+    ? 'India-wide Global Store'
+    : item.storeName || item.store || item.sourceStore || item.sourceStoreName || item.storeId || item.sourceStoreId || 'Store';
   const savedForLaterGroups = savedForLater.reduce((groups, item) => {
     const storeName = storeLabelFor(item);
     const group = groups.find((entry) => entry.storeName === storeName) || { storeName, items: [] };
@@ -178,10 +187,14 @@ const CartPage = () => {
                 <Box className="slot-banner">
                   <StorefrontOutlinedIcon className="slot-store-icon" />
                   <span className="slot-text">
-                    {deliveryMode === 'pickup' ? `Pick-up | ${group.line.storeName || group.items[0]?.storeName || group.items[0]?.store || 'Store'} | ${group.items.length} item${group.items.length === 1 ? '' : 's'}` : group.line.fulfillmentType === 'global' ? `Global Delivery | Delivered in 7-10 days | ${group.items.length} Item${group.items.length === 1 ? '' : 's'}` : `${group.line.deliveryLabel || 'Calculating delivery'} | ${group.line.storeName || 'Store checking'} | ${group.items.length} item${group.items.length === 1 ? '' : 's'}`}
+                    {deliveryMode === 'pickup' ? `Pick-up | ${group.line.storeName || group.items[0]?.storeName || group.items[0]?.store || 'Store'} | ${group.items.length} item${group.items.length === 1 ? '' : 's'}` : group.line.fulfillmentType === 'global' ? `Global Delivery | Delivered in 7-10 days | ${group.items.length} Item${group.items.length === 1 ? '' : 's'}` : group.line.quote?.deliveryAvailable === false ? `Delivery unavailable | ${group.line.storeName || 'Store'} | ${group.items.length} item${group.items.length === 1 ? '' : 's'}` : `${group.line.deliveryLabel || 'Calculating delivery'} | ${group.line.storeName || 'Store checking'} | ${group.items.length} item${group.items.length === 1 ? '' : 's'}`}
                   </span>
                   <Chip className="verified-store-chip" size="small" label={`${group.items.length} item${group.items.length === 1 ? '' : 's'}`} />
                 </Box>
+
+                {deliveryMode === 'delivery' && group.line.fulfillmentType !== 'global' && group.line.quote?.deliveryAvailable === false && <Alert severity="warning" sx={{ mx: 2, mb: 1 }}>
+                  This store is outside the deliverable area for your selected location. Change your delivery location or remove these items to continue. Pick-up may be available.
+                </Alert>}
 
                 {group.items.map((item) => <Box className="slot-item-body" key={catalogItemKey(item)}>
                     <Box className="slot-item-img">
@@ -191,7 +204,7 @@ const CartPage = () => {
                       <Typography component="button" className="slot-item-title" onClick={() => navigate(`/product-info/${encodeURIComponent(item.productId || item.id)}`)} sx={{ border:0, bgcolor:'transparent', textAlign:'left', cursor:'pointer' }}>{item.title}</Typography>
                       <Typography className="slot-item-weight">{item.weight}</Typography>
                       <Typography className="slot-item-store">{storeLabelFor(item)}</Typography>
-                      <Typography className="slot-item-weight">{deliveryMode === 'pickup' ? 'Pick-up from store' : lineFor(item).fulfillmentType === 'global' ? 'Delivered in 7-10 days' : lineFor(item).estimatedDelivery || 'Checking ETA'}</Typography>
+                      <Typography className="slot-item-weight">{deliveryMode === 'pickup' ? 'Pick-up from store' : lineFor(item).fulfillmentType === 'global' ? 'Delivered in 7-10 days' : lineFor(item).quote?.deliveryAvailable === false ? 'Outside this store’s delivery area' : lineFor(item).estimatedDelivery || 'Checking ETA'}</Typography>
                       <Box sx={{ display: 'flex', gap: 1 }}><Button size="small" disabled={cartLoading} onClick={() => saveItemForLater(item)} sx={{ p: 0, minWidth: 0, textTransform: 'none' }}>Save for later</Button><Button size="small" disabled={cartLoading} color="error" onClick={() => removeFromCart(item.productId, item.variantId, item.storeId)} sx={{ p: 0, minWidth: 0, textTransform: 'none' }}>Remove</Button></Box>
                       <Typography className="slot-item-price">{formatCurrency(Number(item.price) * Number(item.quantity))}</Typography>
                     </Box>
@@ -224,7 +237,7 @@ const CartPage = () => {
                 <Typography className="bill-section-title">Item Delivery Breakdown</Typography>
                 <Box className="bill-title-line" />
               </Box>
-              {deliveryGroups.map((group, index) => <Box className="bill-data-row" key={group.key}><Typography className="bill-item-label">Order {index + 1}: {group.line.fulfillmentType === 'global' ? 'Global Fulfillment' : group.line.storeName || 'Store not mapped'} | {group.items.length} Item{group.items.length === 1 ? '' : 's'}</Typography><Typography className="bill-item-value">{group.line.fulfillmentType === 'global' ? '7-10 days delivery' : group.line.deliveryLabel}</Typography></Box>)}
+              {deliveryGroups.map((group, index) => <Box className="bill-data-row" key={group.key}><Typography className="bill-item-label">Order {index + 1}: {group.line.fulfillmentType === 'global' ? 'Global Fulfillment' : group.line.storeName || 'Store not mapped'} | {group.items.length} Item{group.items.length === 1 ? '' : 's'}</Typography><Typography className="bill-item-value">{group.line.fulfillmentType === 'global' ? '7-10 days delivery' : group.line.quote?.deliveryAvailable === false ? 'Outside delivery area' : group.line.deliveryLabel}</Typography></Box>)}
             </Box>}
 
             {/* You May Also Like Section */}
@@ -261,7 +274,7 @@ const CartPage = () => {
                 <Typography className="grand-total-label">Amount to be paid</Typography>
                 <Typography className="grand-total-value">{formatCurrency(cartTotalWithDelivery)}</Typography>
               </Box>
-              <Button variant="contained" className="summary-checkout-button" onClick={goToCheckout} disabled={cartLoading}>Proceed to Checkout <span>→</span></Button>
+              <Button variant="contained" className="summary-checkout-button" onClick={goToCheckout} disabled={cartLoading || checkoutBlockedByDelivery}>Proceed to Checkout <span>→</span></Button>
             </Box>
             <Box className="cart-benefits-card">
               <Box><StorefrontOutlinedIcon /><span><strong>Multiple Stores</strong><small>Items from each store are grouped separately.</small></span></Box>
@@ -288,6 +301,7 @@ const CartPage = () => {
               variant="contained"
               className="proceed-pay-btn"
               onClick={goToCheckout}
+              disabled={cartLoading || checkoutBlockedByDelivery}
             >
               Proceed to Checkout <span>→</span>
             </Button>

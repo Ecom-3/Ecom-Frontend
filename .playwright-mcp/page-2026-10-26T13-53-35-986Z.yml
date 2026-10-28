@@ -1,0 +1,240 @@
+- generic [ref=f3e1]:
+  - generic [ref=f3e8]:
+    - navigation [ref=f3e9]:
+      - generic [ref=f3e10]:
+        - generic [ref=f3e12]:
+          - heading [level=6] [ref=f3e159]: Global Admin Portal
+          - text: All locations
+        - button [ref=f3e160] [cursor=pointer]
+      - generic [ref=f3e17]:
+        - generic [ref=f3e18]:
+          - paragraph [ref=f3e19]: Main
+          - button [ref=f3e161] [cursor=pointer]:
+            - generic [ref=f3e24]: Dashboard
+        - generic [ref=f3e25]:
+          - paragraph [ref=f3e26]: Management
+          - button [ref=f3e162] [cursor=pointer]:
+            - generic [ref=f3e31]: Stores
+          - button [ref=f3e163] [cursor=pointer]:
+            - generic [ref=f3e37]: Products
+          - button [ref=f3e164] [cursor=pointer]:
+            - generic [ref=f3e42]: Banners
+          - button [ref=f3e165] [cursor=pointer]:
+            - generic [ref=f3e48]: Inventory
+        - generic [ref=f3e49]:
+          - paragraph [ref=f3e50]: Orders & Payments
+          - button [ref=f3e166] [cursor=pointer]:
+            - generic [ref=f3e55]: Orders
+          - button [ref=f3e167] [cursor=pointer]:
+            - generic [ref=f3e61]: Payments
+          - button [ref=f3e168] [cursor=pointer]:
+            - generic [ref=f3e66]: Delivery
+        - generic [ref=f3e67]:
+          - paragraph [ref=f3e68]: Customer
+          - button [ref=f3e169] [cursor=pointer]:
+            - generic [ref=f3e73]: Customers
+          - button [ref=f3e170] [cursor=pointer]:
+            - generic [ref=f3e78]: Reviews
+          - button [ref=f3e171] [cursor=pointer]:
+            - generic [ref=f3e84]: Coupons
+          - button [ref=f3e172] [cursor=pointer]:
+            - generic [ref=f3e89]: Notifications
+        - generic [ref=f3e90]:
+          - paragraph [ref=f3e91]: Analytics
+          - button [ref=f3e173] [cursor=pointer]:
+            - generic [ref=f3e96]: Reports
+        - generic [ref=f3e97]:
+          - paragraph [ref=f3e98]: System
+          - button [ref=f3e174] [cursor=pointer]:
+            - generic [ref=f3e103]: Audit Logs
+      - button [ref=f3e175] [cursor=pointer]: View Customer App
+    - main [ref=f3e105]:
+      - generic [ref=f3e106]:
+        - generic [ref=f3e107]:
+          - button [ref=f3e108] [cursor=pointer]
+          - generic [ref=f3e111]:
+            - text: Global Admin /
+            - strong [ref=f3e112]: Products
+        - generic [ref=f3e113]:
+          - textbox [ref=f3e176]:
+            - /placeholder: Search portal
+          - button [ref=f3e177] [cursor=pointer]
+          - button [ref=f3e178] [cursor=pointer]:
+            - generic [ref=f3e123]: G
+            - generic [ref=f3e124]: Global Admin QA
+      - generic [ref=f3e125]:
+        - generic [ref=f3e126]:
+          - heading [level=4] [ref=f3e179]: Products
+          - paragraph [ref=f3e128]: Manage products within your assigned scope.
+        - button [ref=f3e180] [cursor=pointer]: View Customer App
+      - generic [ref=f3e130]:
+        - generic [ref=f3e131]:
+          - generic [ref=f3e132]:
+            - generic: Search
+            - generic [ref=f3e133]:
+              - textbox [ref=f3e181]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f3e135]:
+            - combobox [ref=f3e136] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f3e137]:
+            - combobox [ref=f3e138] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f3e182] [cursor=pointer]: Create
+          - button [ref=f3e183] [cursor=pointer]: Export
+        - alert [ref=f3e141]:
+          - generic [ref=f3e145]: 23 product IDs are present in inventory but missing from the catalog. Inventory stock records do not create product records. Recreate the products in this page before assigning new stock.
+        - generic [ref=f3e146]:
+          - generic [ref=f3e147]:
+            - paragraph [ref=f3e148]: California Almonds
+            - paragraph [ref=f3e149]: QA-CAL-ALMOND-001
+          - generic [ref=f3e150]:
+            - button [ref=f3e184] [cursor=pointer]: View
+            - button [ref=f3e185] [cursor=pointer]: Edit
+            - button [ref=f3e186] [cursor=pointer]: Duplicate
+            - button [ref=f3e187] [cursor=pointer]: Deactivate
+            - button [ref=f3e188] [cursor=pointer]: Delete
+        - generic [ref=f3e156]:
+          - button [disabled]: Previous
+          - paragraph [ref=f3e157]: Page 1 of 1
+          - button [disabled]: Next
+  - dialog [ref=f3e191]:
+    - heading "Edit Products" [level=2] [ref=f3e192]
+    - generic [ref=f3e193]:
+      - generic [ref=f3e195]:
+        - generic [ref=f3e196]:
+          - text: Product name
+          - generic [aria-hidden] [ref=f3e197]: "*"
+        - generic [ref=f3e198]:
+          - textbox "Product name" [ref=f3e199]: California Almonds
+          - group [aria-hidden]:
+            - generic: Product name *
+      - generic [ref=f3e201]:
+        - generic [ref=f3e202]:
+          - text: Master SKU
+          - generic [aria-hidden] [ref=f3e203]: "*"
+        - generic [ref=f3e204]:
+          - textbox "Master SKU" [ref=f3e205]: QA-CAL-ALMOND-001
+          - group [aria-hidden]:
+            - generic: Master SKU *
+      - generic [ref=f3e208]:
+        - generic [ref=f3e209]: Category
+        - generic [ref=f3e210]:
+          - combobox "Category" [ref=f3e211]: Premium Dry Fruits
+          - group [aria-hidden]:
+            - generic: Category
+      - generic [ref=f3e214]:
+        - generic [ref=f3e215]: Sub-category
+        - generic [ref=f3e216]:
+          - textbox "Sub-category" [ref=f3e217]: Nuts
+          - group [aria-hidden]:
+            - generic: Sub-category
+      - generic [ref=f3e219]:
+        - generic [ref=f3e220]:
+          - text: Description
+          - generic [aria-hidden] [ref=f3e221]: "*"
+        - generic [ref=f3e222]:
+          - textbox "Description" [ref=f3e223]: Crisp whole almonds for snacking, baking and desserts.
+          - group [aria-hidden]:
+            - generic: Description *
+      - generic [ref=f3e225]:
+        - generic [ref=f3e226]: Brand
+        - generic [ref=f3e227]:
+          - textbox "Brand" [ref=f3e228]: Metaarch Select
+          - group [aria-hidden]:
+            - generic: Brand
+      - generic [ref=f3e230]:
+        - generic [ref=f3e231]: Ingredients
+        - generic [ref=f3e232]:
+          - textbox "Ingredients" [ref=f3e233]: Whole almonds.
+          - group [aria-hidden]:
+            - generic: Ingredients
+      - generic [ref=f3e235]:
+        - generic [ref=f3e236]: Specifications
+        - generic [ref=f3e237]:
+          - textbox "Specifications" [ref=f3e238]: Whole kernels; store in a cool, dry place.
+          - group [aria-hidden]:
+            - generic: Specifications
+      - generic [ref=f3e240]:
+        - generic [ref=f3e241]: Pack
+        - generic [ref=f3e242]:
+          - textbox "Pack" [ref=f3e243]: 250 g
+          - group [aria-hidden]:
+            - generic: Pack
+      - generic [ref=f3e245]:
+        - generic [ref=f3e246]: Type
+        - generic [ref=f3e247]:
+          - textbox "Type" [ref=f3e248]: Vegetarian
+          - group [aria-hidden]:
+            - generic: Type
+      - generic [ref=f3e250]:
+        - generic [ref=f3e251]: Shelf life
+        - generic [ref=f3e252]:
+          - textbox "Shelf life" [ref=f3e253]: 9 months
+          - group [aria-hidden]:
+            - generic: Shelf life
+      - generic [ref=f3e255]:
+        - generic [ref=f3e256]: Tags
+        - generic [ref=f3e257]:
+          - textbox "Tags" [ref=f3e258]: dry-fruits, almonds, nuts
+          - group [aria-hidden]:
+            - generic: Tags
+      - generic [ref=f3e260]:
+        - generic [ref=f3e261]: Highlights
+        - generic [ref=f3e262]:
+          - textbox "Highlights" [ref=f3e263]: Whole almond kernels\nNaturally crunchy\nGood for daily snacking
+          - group [aria-hidden]:
+            - generic: Highlights
+      - generic [ref=f3e265]:
+        - generic [ref=f3e266]: About the Source
+        - generic [ref=f3e267]:
+          - textbox "About the Source" [ref=f3e268]: Sourced from graded almond lots and packed in moisture-protective pouches.
+          - group [aria-hidden]:
+            - generic: About the Source
+      - generic [ref=f3e270]:
+        - generic [ref=f3e301]: "Variants (one per line: Label | SKU | Price)"
+        - generic [ref=f3e271]:
+          - 'textbox "Variants (one per line: Label | SKU | Price)" [ref=f3e272]': 250 g | QA-CAL-ALMOND-250G | 299
+          - group [aria-hidden]:
+            - generic: "Variants (one per line: Label | SKU | Price)"
+      - generic [ref=f3e274]:
+        - generic [ref=f3e302]:
+          - text: Default price
+          - generic [aria-hidden] [ref=f3e303]: "*"
+        - generic [ref=f3e275]:
+          - spinbutton "Default price" [ref=f3e276]: "299"
+          - group [aria-hidden]:
+            - generic: Default price *
+      - generic [ref=f3e278]:
+        - generic [ref=f3e279]: Main image URL
+        - generic [ref=f3e280]:
+          - textbox "Main image URL" [invalid] [ref=f3e281]: /src/assets/images/dry_fruits.png
+          - group [aria-hidden]:
+            - generic: Main image URL
+        - paragraph [ref=f3e304]: Main image URL must be a valid web URL.
+      - generic [ref=f3e283]:
+        - combobox [ref=f3e284] [cursor=pointer]: "No"
+        - textbox [aria-hidden]: "No"
+        - group [aria-hidden]
+      - generic [ref=f3e286]:
+        - combobox [ref=f3e287] [cursor=pointer]: "No"
+        - textbox [aria-hidden]: "No"
+        - group [aria-hidden]
+      - generic [ref=f3e289]:
+        - combobox [ref=f3e290] [cursor=pointer]: "No"
+        - textbox [aria-hidden]: "No"
+        - group [aria-hidden]
+      - generic [ref=f3e292]:
+        - combobox [ref=f3e293] [cursor=pointer]: "No"
+        - textbox [aria-hidden]: "No"
+        - group [aria-hidden]
+      - generic [ref=f3e295]:
+        - combobox [ref=f3e296] [cursor=pointer]: Active
+        - textbox [aria-hidden]: Active
+        - group [aria-hidden]
+    - generic [ref=f3e298]:
+      - button "Cancel" [ref=f3e299] [cursor=pointer]
+      - button "Save" [active] [ref=f3e300] [cursor=pointer]

@@ -1,0 +1,125 @@
+- generic [ref=f6e8]:
+  - navigation [ref=f6e9]:
+    - generic [ref=f6e10]:
+      - img "Spices and Pickles" [ref=f6e11]
+      - generic [ref=f6e12]:
+        - heading "Location Admin Portal" [level=6] [ref=f6e13]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f6e14] [cursor=pointer]
+    - generic [ref=f6e17]:
+      - generic [ref=f6e18]:
+        - paragraph [ref=f6e19]: Main
+        - button "Dashboard" [ref=f6e20] [cursor=pointer]
+      - generic [ref=f6e25]:
+        - paragraph [ref=f6e26]: Management
+        - button "Stores" [ref=f6e27] [cursor=pointer]
+        - button "Products" [ref=f6e32] [cursor=pointer]
+        - button "Banners" [ref=f6e38] [cursor=pointer]
+        - button "Inventory" [ref=f6e43] [cursor=pointer]
+      - generic [ref=f6e49]:
+        - paragraph [ref=f6e50]: Orders & Payments
+        - button "Orders" [ref=f6e51] [cursor=pointer]
+        - button "Payments" [ref=f6e56] [cursor=pointer]
+        - button "Delivery" [ref=f6e62] [cursor=pointer]
+      - generic [ref=f6e67]:
+        - paragraph [ref=f6e68]: Customer
+        - button "Coupons" [ref=f6e69] [cursor=pointer]
+      - generic [ref=f6e75]:
+        - paragraph [ref=f6e76]: Analytics
+        - button "Reports" [ref=f6e77] [cursor=pointer]
+    - button "View Customer App" [ref=f6e82] [cursor=pointer]
+  - main [ref=f6e83]:
+    - generic [ref=f6e84]:
+      - generic [ref=f6e85]:
+        - button [ref=f6e86] [cursor=pointer]
+        - generic [ref=f6e89]:
+          - text: Location Admin /
+          - strong [ref=f6e90]: Inventory
+      - generic [ref=f6e91]:
+        - textbox "Search portal" [ref=f6e96]
+        - button "Notifications" [ref=f6e97] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=f6e100] [cursor=pointer]:
+          - generic [ref=f6e101]: H
+          - generic [ref=f6e102]: Hyderabad Location Admin
+    - generic [ref=f6e103]:
+      - generic [ref=f6e104]:
+        - heading "Inventory" [level=4] [ref=f6e105]
+        - paragraph [ref=f6e106]: Manage inventory within your assigned scope.
+      - button "View Customer App" [ref=f6e107] [cursor=pointer]
+    - generic [ref=f6e108]:
+      - generic [ref=f6e109]:
+        - generic [ref=f6e110]:
+          - generic: Search
+          - generic [ref=f6e111]:
+            - textbox "Search" [ref=f6e112]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f6e113]:
+          - combobox [ref=f6e114] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f6e115]:
+          - combobox [ref=f6e116] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create" [ref=f6e117] [cursor=pointer]
+        - button "Export" [ref=f6e118] [cursor=pointer]
+      - status [ref=f6e176]: This account does not have permission for this action. Please sign in again.
+      - generic [ref=f6e119]:
+        - generic [ref=f6e120]:
+          - paragraph [ref=f6e121]: 21000000-0000-0000-0000-000000000006
+          - paragraph [ref=f6e122]: 39cfd79d-24e4-4c22-ae71-611bf30388c2
+        - generic [ref=f6e123]:
+          - button "View" [active] [ref=f6e124] [cursor=pointer]
+          - button "Stock +10" [ref=f6e125] [cursor=pointer]
+          - button "Stock -1" [ref=f6e126] [cursor=pointer]
+          - button "Adjust" [ref=f6e127] [cursor=pointer]
+      - generic [ref=f6e128]:
+        - generic [ref=f6e129]:
+          - paragraph [ref=f6e130]: 21000000-0000-0000-0000-000000000006
+          - paragraph [ref=f6e131]: 39cfd79d-24e4-4c22-ae71-611bf30388c2
+        - generic [ref=f6e132]:
+          - button "View" [ref=f6e133] [cursor=pointer]
+          - button "Stock +10" [ref=f6e134] [cursor=pointer]
+          - button "Stock -1" [ref=f6e135] [cursor=pointer]
+          - button "Adjust" [ref=f6e136] [cursor=pointer]
+      - generic [ref=f6e137]:
+        - generic [ref=f6e138]:
+          - paragraph [ref=f6e139]: 21000000-0000-0000-0000-000000000006
+          - paragraph [ref=f6e140]: 39cfd79d-24e4-4c22-ae71-611bf30388c2
+        - generic [ref=f6e141]:
+          - button "View" [ref=f6e142] [cursor=pointer]
+          - button "Stock +10" [ref=f6e143] [cursor=pointer]
+          - button "Stock -1" [ref=f6e144] [cursor=pointer]
+          - button "Adjust" [ref=f6e145] [cursor=pointer]
+      - generic [ref=f6e146]:
+        - generic [ref=f6e147]:
+          - paragraph [ref=f6e148]: 21000000-0000-0000-0000-000000000006
+          - paragraph [ref=f6e149]: 39cfd79d-24e4-4c22-ae71-611bf30388c2
+        - generic [ref=f6e150]:
+          - button "View" [ref=f6e151] [cursor=pointer]
+          - button "Stock +10" [ref=f6e152] [cursor=pointer]
+          - button "Stock -1" [ref=f6e153] [cursor=pointer]
+          - button "Adjust" [ref=f6e154] [cursor=pointer]
+      - generic [ref=f6e155]:
+        - generic [ref=f6e156]:
+          - paragraph [ref=f6e157]: 21000000-0000-0000-0000-000000000006
+          - paragraph [ref=f6e158]: 39cfd79d-24e4-4c22-ae71-611bf30388c2
+        - generic [ref=f6e159]:
+          - button "View" [ref=f6e160] [cursor=pointer]
+          - button "Stock +10" [ref=f6e161] [cursor=pointer]
+          - button "Stock -1" [ref=f6e162] [cursor=pointer]
+          - button "Adjust" [ref=f6e163] [cursor=pointer]
+      - generic [ref=f6e164]:
+        - generic [ref=f6e165]:
+          - paragraph [ref=f6e166]: 21000000-0000-0000-0000-000000000006
+          - paragraph [ref=f6e167]: c12dec85-1cd2-43fd-8617-5861800c39f5
+        - generic [ref=f6e168]:
+          - button "View" [ref=f6e169] [cursor=pointer]
+          - button "Stock +10" [ref=f6e170] [cursor=pointer]
+          - button "Stock -1" [ref=f6e171] [cursor=pointer]
+          - button "Adjust" [ref=f6e172] [cursor=pointer]
+      - generic [ref=f6e173]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f6e174]: Page 1 of 26
+        - button "Next" [ref=f6e175] [cursor=pointer]

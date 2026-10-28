@@ -1,0 +1,241 @@
+- generic [ref=f50e1]:
+  - generic [ref=f50e5]:
+    - navigation [ref=f50e6]:
+      - generic [ref=f50e7]:
+        - generic [ref=f50e9]:
+          - heading [level=6] [ref=f50e219]: Location Admin Portal
+          - text: hyderabad
+        - button [ref=f50e220] [cursor=pointer]
+      - generic [ref=f50e14]:
+        - generic [ref=f50e15]:
+          - paragraph [ref=f50e16]: Main
+          - button [ref=f50e221] [cursor=pointer]:
+            - generic [ref=f50e21]: Dashboard
+        - generic [ref=f50e22]:
+          - paragraph [ref=f50e23]: Management
+          - button [ref=f50e222] [cursor=pointer]:
+            - generic [ref=f50e28]: Stores
+          - button [ref=f50e223] [cursor=pointer]:
+            - generic [ref=f50e34]: Products
+          - button [ref=f50e224] [cursor=pointer]:
+            - generic [ref=f50e39]: Banners
+          - button [ref=f50e225] [cursor=pointer]:
+            - generic [ref=f50e45]: Inventory
+        - generic [ref=f50e46]:
+          - paragraph [ref=f50e47]: Orders & Payments
+          - button [ref=f50e226] [cursor=pointer]:
+            - generic [ref=f50e52]: Orders
+          - button [ref=f50e227] [cursor=pointer]:
+            - generic [ref=f50e58]: Payments
+          - button [ref=f50e228] [cursor=pointer]:
+            - generic [ref=f50e63]: Delivery
+        - generic [ref=f50e64]:
+          - paragraph [ref=f50e65]: Customer
+          - button [ref=f50e229] [cursor=pointer]:
+            - generic [ref=f50e71]: Coupons
+        - generic [ref=f50e72]:
+          - paragraph [ref=f50e73]: Analytics
+          - button [ref=f50e230] [cursor=pointer]:
+            - generic [ref=f50e78]: Reports
+      - button [ref=f50e231] [cursor=pointer]: View Customer App
+    - main [ref=f50e80]:
+      - generic [ref=f50e81]:
+        - generic [ref=f50e82]:
+          - button [ref=f50e83] [cursor=pointer]
+          - generic [ref=f50e86]:
+            - text: Location Admin /
+            - strong [ref=f50e87]: Products
+        - generic [ref=f50e88]:
+          - textbox [ref=f50e232]:
+            - /placeholder: Search portal
+          - button [ref=f50e233] [cursor=pointer]
+          - button [ref=f50e234] [cursor=pointer]:
+            - generic [ref=f50e98]: H
+            - generic [ref=f50e99]: Hyderabad Location Admin
+      - generic [ref=f50e100]:
+        - generic [ref=f50e101]:
+          - heading [level=4] [ref=f50e235]: Products
+          - paragraph [ref=f50e103]: Manage products within your assigned scope.
+        - button [ref=f50e236] [cursor=pointer]: View Customer App
+      - generic [ref=f50e107]:
+        - generic [ref=f50e108]:
+          - generic [ref=f50e109]:
+            - generic: Search
+            - generic [ref=f50e110]:
+              - textbox [ref=f50e237]
+              - group [aria-hidden]:
+                - generic: Search
+          - generic [ref=f50e112]:
+            - combobox [ref=f50e113] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f50e114]:
+            - combobox [ref=f50e115] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f50e238] [cursor=pointer]: Create Product
+          - button [ref=f50e239] [cursor=pointer]: Map Product
+          - button [ref=f50e240] [cursor=pointer]: Export
+        - generic [ref=f50e145]:
+          - generic [ref=f50e146]:
+            - paragraph [ref=f50e147]: QA Location Admin Product 20261025
+            - paragraph [ref=f50e148]: QA-LA-PROD-20261025
+          - generic [ref=f50e149]:
+            - button [ref=f50e241] [cursor=pointer]: View
+            - button [ref=f50e242] [cursor=pointer]: Edit
+            - button [ref=f50e243] [cursor=pointer]: Make unavailable
+            - button [ref=f50e244] [cursor=pointer]: Delete
+            - button [ref=f50e245] [cursor=pointer]: Manage stores
+        - generic [ref=f50e120]:
+          - button [disabled]: Previous
+          - paragraph [ref=f50e121]: Page 1 of 1
+          - button [disabled]: Next
+  - dialog [active] [ref=f50e248]:
+    - heading "Edit Products" [level=2] [ref=f50e249]
+    - generic [ref=f50e250]:
+      - generic [ref=f50e252]:
+        - generic [ref=f50e253]:
+          - text: Product name
+          - generic [aria-hidden] [ref=f50e254]: "*"
+        - generic [ref=f50e255]:
+          - textbox "Product name" [ref=f50e256]: QA Location Admin Product 20261025
+          - group [aria-hidden]:
+            - generic: Product name *
+      - generic [ref=f50e258]:
+        - generic [ref=f50e259]:
+          - text: Master SKU
+          - generic [aria-hidden] [ref=f50e260]: "*"
+        - generic [ref=f50e261]:
+          - textbox "Master SKU" [ref=f50e262]: QA-LA-PROD-20261025
+          - group [aria-hidden]:
+            - generic: Master SKU *
+      - generic [ref=f50e265]:
+        - generic [ref=f50e266]: Category
+        - generic [ref=f50e267]:
+          - combobox "Category" [ref=f50e268]: QA Location Admin Category 20261025
+          - group [aria-hidden]:
+            - generic: Category
+      - generic [ref=f50e271]:
+        - generic [ref=f50e272]: Sub-category
+        - generic [ref=f50e273]:
+          - textbox "Sub-category" [ref=f50e274]: Other
+          - group [aria-hidden]:
+            - generic: Sub-category
+      - generic [ref=f50e276]:
+        - generic [ref=f50e277]:
+          - text: Description
+          - generic [aria-hidden] [ref=f50e278]: "*"
+        - generic [ref=f50e279]:
+          - textbox "Description" [ref=f50e280]: Disposable isolated H2 regression fixture.
+          - group [aria-hidden]:
+            - generic: Description *
+      - generic [ref=f50e282]:
+        - generic: Brand
+        - generic [ref=f50e283]:
+          - textbox "Brand" [ref=f50e284]
+          - group [aria-hidden]:
+            - generic: Brand
+      - generic [ref=f50e286]:
+        - generic: Ingredients
+        - generic [ref=f50e287]:
+          - textbox "Ingredients" [ref=f50e288]
+          - group [aria-hidden]:
+            - generic: Ingredients
+      - generic [ref=f50e290]:
+        - generic: Specifications
+        - generic [ref=f50e291]:
+          - textbox "Specifications" [ref=f50e292]
+          - group [aria-hidden]:
+            - generic: Specifications
+      - generic [ref=f50e294]:
+        - generic: Pack
+        - generic [ref=f50e295]:
+          - textbox "Pack" [ref=f50e296]
+          - group [aria-hidden]:
+            - generic: Pack
+      - generic [ref=f50e298]:
+        - generic: Type
+        - generic [ref=f50e299]:
+          - textbox "Type" [ref=f50e300]
+          - group [aria-hidden]:
+            - generic: Type
+      - generic [ref=f50e302]:
+        - generic: Shelf life
+        - generic [ref=f50e303]:
+          - textbox "Shelf life" [ref=f50e304]
+          - group [aria-hidden]:
+            - generic: Shelf life
+      - generic [ref=f50e306]:
+        - generic: Tags
+        - generic [ref=f50e307]:
+          - textbox "Tags" [ref=f50e308]
+          - group [aria-hidden]:
+            - generic: Tags
+      - generic [ref=f50e310]:
+        - generic: Highlights
+        - generic [ref=f50e311]:
+          - textbox "Highlights" [ref=f50e312]
+          - group [aria-hidden]:
+            - generic: Highlights
+      - generic [ref=f50e314]:
+        - generic: About the Source
+        - generic [ref=f50e315]:
+          - textbox "About the Source" [ref=f50e316]
+          - group [aria-hidden]:
+            - generic: About the Source
+      - generic [ref=f50e318]:
+        - generic [ref=f50e319]: "Variants (one per line: Label | SKU | Price)"
+        - generic [ref=f50e320]:
+          - 'textbox "Variants (one per line: Label | SKU | Price)" [ref=f50e321]': Test Pack | QA-LA-VAR-20261025 | 49
+          - group [aria-hidden]:
+            - generic: "Variants (one per line: Label | SKU | Price)"
+      - generic [ref=f50e323]:
+        - generic [ref=f50e324]:
+          - text: Default price
+          - generic [aria-hidden] [ref=f50e325]: "*"
+        - generic [ref=f50e326]:
+          - spinbutton "Default price" [ref=f50e327]: "49"
+          - group [aria-hidden]:
+            - generic: Default price *
+      - generic [ref=f50e329]:
+        - generic [ref=f50e330]: Main image URL
+        - generic [ref=f50e331]:
+          - textbox "Main image URL" [ref=f50e332]: http://localhost:5175/src/assets/images/logo.png
+          - group [aria-hidden]:
+            - generic: Main image URL
+      - generic [ref=f50e334]:
+        - combobox [ref=f50e335] [cursor=pointer]: "No"
+        - textbox [aria-hidden]: "No"
+        - group [aria-hidden]
+      - generic [ref=f50e337]:
+        - combobox [ref=f50e338] [cursor=pointer]: "No"
+        - textbox [aria-hidden]: "No"
+        - group [aria-hidden]
+      - generic [ref=f50e340]:
+        - combobox [ref=f50e341] [cursor=pointer]: "No"
+        - textbox [aria-hidden]: "No"
+        - group [aria-hidden]
+      - generic [ref=f50e343]:
+        - combobox [ref=f50e344] [cursor=pointer]: "No"
+        - textbox [aria-hidden]: "No"
+        - group [aria-hidden]
+      - generic [ref=f50e346]:
+        - combobox [ref=f50e347] [cursor=pointer]: Active
+        - textbox [aria-hidden]: Active
+        - group [aria-hidden]
+      - generic [ref=f50e348]:
+        - paragraph [ref=f50e349]: Store availability in your assigned location
+        - generic [ref=f50e351]:
+          - generic [ref=f50e352]: Mapped stores
+          - generic [ref=f50e353]:
+            - button "QA Location Admin Store 20261025 (qa-la-store-20261025-01)" [ref=f50e354]:
+              - img [aria-hidden] [ref=f50e356] [cursor=pointer]
+            - combobox "Mapped stores" [ref=f50e358]
+            - button "Open" [ref=f50e360] [cursor=pointer]
+            - group [aria-hidden]:
+              - generic: Mapped stores
+          - paragraph [ref=f50e363]: Only stores in your assigned location are available.
+        - paragraph [ref=f50e364]: "QA Location Admin Store 20261025: included in this location product."
+    - generic [ref=f50e366]:
+      - button "Cancel" [ref=f50e367] [cursor=pointer]
+      - button "Save" [ref=f50e368] [cursor=pointer]

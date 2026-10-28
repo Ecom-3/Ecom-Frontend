@@ -1,0 +1,144 @@
+{
+  "filters": {
+    "from": "",
+    "to": "",
+    "location": "All",
+    "store": "Gachibowli Fresh Hub",
+    "sort": "revenue"
+  },
+  "summary": {
+    "orders": 12,
+    "revenue": 4394,
+    "delivered": 0
+  },
+  "storePerformance": [
+    {
+      "name": "Gachibowli Fresh Hub",
+      "location": "Hyderabad",
+      "orders": 12,
+      "revenue": 4394
+    }
+  ],
+  "orders": [
+    {
+      "id": "7b7544c3-a1f8-4e0b-946e-8f5928d97809",
+      "orderNumber": "ORD-20261022-42A90977",
+      "createdAt": "2026-10-22T07:48:52.785061Z",
+      "status": "CREATED",
+      "total": 419,
+      "store": "Gachibowli Fresh Hub",
+      "location": "Hyderabad",
+      "fulfillmentType": "nearby"
+    },
+    {
+      "id": "8de95b07-5386-4e10-b823-c9d9cc51d679",
+      "orderNumber": "ORD-20261021-B1052432",
+      "createdAt": "2026-10-21T14:13:11.935179Z",
+      "status": "CREATED",
+      "total": 533,
+      "store": "Gachibowli Fresh Hub",
+      "location": "Hyderabad",
+      "fulfillmentType": "pickup"
+    },
+    {
+      "id": "d5ebf7b6-1cb5-485d-ae0e-38648c7d3c13",
+      "orderNumber": "ORD-20261021-DB9FA27C",
+      "createdAt": "2026-10-21T14:08:57.082258Z",
+      "status": "CREATED",
+      "total": 533,
+      "store": "Gachibowli Fresh Hub",
+      "location": "Hyderabad",
+      "fulfillmentType": "pickup"
+    },
+    {
+      "id": "4891cc6e-6f90-4049-8175-220e1a999ec8",
+      "orderNumber": "ORD-20261021-C9E18536",
+      "createdAt": "2026-10-21T05:23:26.438231Z",
+      "status": "CANCELLED",
+      "total": 354,
+      "store": "Gachibowli Fresh Hub",
+      "location": "Hyderabad",
+      "fulfillmentType": "nearby"
+    },
+    {
+      "id": "e877b3e0-230e-4bbe-8dc6-fa0c2618b335",
+      "orderNumber": "ORD-20260923-293106F1",
+      "createdAt": "2026-09-23T09:24:38.538826Z",
+      "status": "CREATED",
+      "total": 568,
+      "store": "Gachibowli Fresh Hub",
+      "location": "Hyderabad",
+      "fulfillmentType": "Instant Delivery"
+    },
+    {
+      "id": "2dac7fee-9c4c-49fb-95a9-71f1ce45a93c",
+      "orderNumber": "ORD-20260923-76038C3C",
+      "createdAt": "2026-09-23T09:16:52.082675Z",
+      "status": "CREATED",
+      "total": 349,
+      "store": "Gachibowli Fresh Hub",
+      "location": "Hyderabad",
+      "fulfillmentType": "Instant Delivery"
+    },
+    {
+      "id": "d62eeec7-a1cf-44dc-8b9d-a7a039bfbdd1",
+      "orderNumber": "ORD-20260923-E1211F6F",
+      "createdAt": "2026-09-23T09:11:45.409631Z",
+      "status": "CREATED",
+      "total": 102,
+      "store": "Gachibowli Fresh Hub",
+      "location": "Hyderabad",
+      "fulfillmentType": "Instant Delivery"
+    },
+    {
+      "id": "b5b80584-9bb2-4c1f-9c35-1da20d303226",
+      "orderNumber": "ORD-20260923-4DC8FF93",
+      "createdAt": "2026-09-23T07:15:51.656082Z",
+      "status": "CREATED",
+      "total": 84,
+      "store": "Gachibowli Fresh Hub",
+      "location": "Hyderabad",
+      "fulfillmentType": "Instant Delivery"
+    },
+    {
+      "id": "7766f7d4-a439-4241-aac1-6747883178c3",
+      "orderNumber": "ORD-20260922-156B6E0C",
+      "createdAt": "2026-09-22T09:52:31.910433Z",
+      "status": "CREATED",
+      "total": 349,
+      "store": "Gachibowli Fresh Hub",
+      "location": "Hyderabad",
+      "fulfillmentType": "Instant Delivery"
+    },
+    {
+      "id": "865fbbad-cbe0-4145-8f67-5fe935fb8b96",
+      "orderNumber": "ORD-20260918-4780B6F1",
+      "createdAt": "2026-09-18T13:06:53.695837Z",
+      "status": "CREATED",
+      "total": 499,
+      "store": "Gachibowli Fresh Hub",
+      "location": "Hyderabad",
+      "fulfillmentType": "instant"
+    },
+    {
+      "id": "25f89e47-5a1b-4bb9-9257-5e2d1d9fa196",
+      "orderNumber": "ORD-20260915-A47E9BB1",
+      "createdAt": "2026-09-15T05:33:17.590224Z",
+      "status": "CREATED",
+      "total": 459,
+      "store": "Gachibowli Fresh Hub",
+      "location": "Hyderabad",
+      "fulfillmentType": "instant"
+    },
+    {
+      "id": "d2f095a4-db22-4e88-8caf-061e98be2b61",
+      "orderNumber": "ORD-20260911-FAFF8E4B",
+      "createdAt": "2026-09-11T08:30:42.706485Z",
+      "status": "SHIPPED",
+      "total": 499,
+      "store": "Gachibowli Fresh Hub",
+      "location": "Hyderabad",
+      "fulfillmentType": "instant"
+    }
+  ]
+}

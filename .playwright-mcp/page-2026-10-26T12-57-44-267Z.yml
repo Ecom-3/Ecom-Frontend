@@ -1,0 +1,81 @@
+- generic [ref=f47e8]:
+  - navigation [ref=f47e9]:
+    - generic [ref=f47e10]:
+      - img "Spices and Pickles" [ref=f47e921]
+      - generic [ref=f47e12]:
+        - heading "Super Admin Portal" [level=6] [ref=f47e922]
+        - text: All locations
+      - button "Collapse sidebar" [ref=f47e923] [cursor=pointer]
+    - generic [ref=f47e17]:
+      - generic [ref=f47e18]:
+        - paragraph [ref=f47e19]: Main
+        - button "Dashboard" [ref=f47e924] [cursor=pointer]
+      - generic [ref=f47e25]:
+        - paragraph [ref=f47e26]: Management
+        - button "Locations" [active] [ref=f47e925] [cursor=pointer]
+        - button "Users" [ref=f47e926] [cursor=pointer]
+        - button "Stores" [ref=f47e927] [cursor=pointer]
+        - button "Products" [ref=f47e928] [cursor=pointer]
+        - button "Categories" [ref=f47e929] [cursor=pointer]
+        - button "Banners" [ref=f47e930] [cursor=pointer]
+        - button "Inventory" [ref=f47e931] [cursor=pointer]
+      - generic [ref=f47e65]:
+        - paragraph [ref=f47e66]: Orders & Payments
+        - button "Orders" [ref=f47e932] [cursor=pointer]
+        - button "Payments" [ref=f47e933] [cursor=pointer]
+        - button "Delivery" [ref=f47e934] [cursor=pointer]
+      - generic [ref=f47e83]:
+        - paragraph [ref=f47e84]: Customer
+        - button "Customers" [ref=f47e935] [cursor=pointer]
+        - button "Reviews" [ref=f47e936] [cursor=pointer]
+        - button "Coupons" [ref=f47e937] [cursor=pointer]
+        - button "Notifications" [ref=f47e938] [cursor=pointer]
+      - generic [ref=f47e106]:
+        - paragraph [ref=f47e107]: Analytics
+        - button "Reports" [ref=f47e939] [cursor=pointer]
+      - generic [ref=f47e113]:
+        - paragraph [ref=f47e114]: System
+        - button "Security" [ref=f47e940] [cursor=pointer]
+        - button "Audit Logs" [ref=f47e941] [cursor=pointer]
+    - button "View Customer App" [ref=f47e942] [cursor=pointer]
+  - main [ref=f47e126]:
+    - generic [ref=f47e127]:
+      - generic [ref=f47e128]:
+        - button [ref=f47e129] [cursor=pointer]
+        - generic [ref=f47e132]:
+          - text: Super Admin /
+          - strong [ref=f47e133]: Locations
+      - generic [ref=f47e134]:
+        - textbox "Search portal" [ref=f47e943]
+        - button "Notifications" [ref=f47e944] [cursor=pointer]
+        - button "A Admin" [ref=f47e945] [cursor=pointer]:
+          - generic [ref=f47e144]: A
+          - generic [ref=f47e145]: Admin
+    - generic [ref=f47e146]:
+      - generic [ref=f47e147]:
+        - heading "Locations" [level=4] [ref=f47e997]
+        - paragraph [ref=f47e149]: Manage locations within your assigned scope.
+      - button "View Customer App" [ref=f47e947] [cursor=pointer]
+    - generic [ref=f47e151]:
+      - generic [ref=f47e152]:
+        - generic [ref=f47e153]:
+          - generic: Search
+          - generic [ref=f47e154]:
+            - textbox "Search" [ref=f47e948]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f47e156]:
+          - combobox [ref=f47e157] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f47e158]:
+          - combobox [ref=f47e159] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create" [ref=f47e949] [cursor=pointer]
+        - button "Export" [ref=f47e950] [cursor=pointer]
+      - paragraph [ref=f47e998]: No matching records. Use Create to add the first record.
+      - generic [ref=f47e180]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f47e181]: Page 1 of 1
+        - button "Next" [disabled]

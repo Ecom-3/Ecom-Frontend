@@ -1,0 +1,71 @@
+- generic [ref=f26e8]:
+  - navigation [ref=f26e9]:
+    - generic [ref=f26e10]:
+      - img "Spices and Pickles" [ref=f26e11]
+      - generic [ref=f26e12]:
+        - heading "Location Admin Portal" [level=6] [ref=f26e13]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f26e14] [cursor=pointer]
+    - generic [ref=f26e17]:
+      - generic [ref=f26e18]:
+        - paragraph [ref=f26e19]: Main
+        - button "Dashboard" [ref=f26e20] [cursor=pointer]
+      - generic [ref=f26e25]:
+        - paragraph [ref=f26e26]: Management
+        - button "Stores" [ref=f26e27] [cursor=pointer]
+        - button "Products" [ref=f26e32] [cursor=pointer]
+        - button "Banners" [ref=f26e38] [cursor=pointer]
+        - button "Inventory" [ref=f26e43] [cursor=pointer]
+      - generic [ref=f26e49]:
+        - paragraph [ref=f26e50]: Orders & Payments
+        - button "Orders" [ref=f26e51] [cursor=pointer]
+        - button "Payments" [ref=f26e56] [cursor=pointer]
+        - button "Delivery" [ref=f26e62] [cursor=pointer]
+      - generic [ref=f26e67]:
+        - paragraph [ref=f26e68]: Customer
+        - button "Coupons" [ref=f26e69] [cursor=pointer]
+      - generic [ref=f26e75]:
+        - paragraph [ref=f26e76]: Analytics
+        - button "Reports" [ref=f26e77] [cursor=pointer]
+    - button "View Customer App" [ref=f26e82] [cursor=pointer]
+  - main [ref=f26e83]:
+    - generic [ref=f26e84]:
+      - generic [ref=f26e85]:
+        - button [ref=f26e86] [cursor=pointer]
+        - generic [ref=f26e89]:
+          - text: Location Admin /
+          - strong [ref=f26e90]: Coupons
+      - generic [ref=f26e91]:
+        - textbox "Search portal" [ref=f26e96]
+        - button "Notifications" [ref=f26e97] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=f26e100] [cursor=pointer]:
+          - generic [ref=f26e101]: H
+          - generic [ref=f26e102]: Hyderabad Location Admin
+    - generic [ref=f26e103]:
+      - generic [ref=f26e104]:
+        - heading "Coupons" [level=4] [ref=f26e105]
+        - paragraph [ref=f26e106]: Manage coupons within your assigned scope.
+      - button "View Customer App" [ref=f26e107] [cursor=pointer]
+    - generic [ref=f26e108]:
+      - generic [ref=f26e109]:
+        - generic [ref=f26e110]:
+          - generic: Search
+          - generic [ref=f26e111]:
+            - textbox "Search" [ref=f26e112]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f26e113]:
+          - combobox [ref=f26e114] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f26e115]:
+          - combobox [ref=f26e116] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create" [ref=f26e117] [cursor=pointer]
+        - button "Export" [ref=f26e118] [cursor=pointer]
+      - paragraph [ref=f26e119]: No matching records. Use Create to add the first record.
+      - generic [ref=f26e120]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f26e121]: Page 1 of 1
+        - button "Next" [disabled]

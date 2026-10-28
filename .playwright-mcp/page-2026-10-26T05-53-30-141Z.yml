@@ -1,0 +1,41 @@
+- generic [ref=e140]:
+  - complementary [ref=e141]:
+    - generic [ref=e142]:
+      - img "Spices and Pickles" [ref=e143]
+      - generic [ref=e144]:
+        - heading "Store Manager" [level=6] [ref=e145]
+        - paragraph [ref=e146]: Gachibowli Fresh Hub
+    - navigation [ref=e147]:
+      - button "Dashboard" [ref=e148] [cursor=pointer]
+      - button "Products" [ref=e153] [cursor=pointer]
+      - button "Banners" [ref=e159] [cursor=pointer]
+      - button "Inventory" [ref=e164] [cursor=pointer]
+      - button "Orders" [ref=e170] [cursor=pointer]
+      - button "Delivery Partners" [ref=e175] [cursor=pointer]
+      - button "Delivery Radius" [ref=e180] [cursor=pointer]
+      - button "Delivery Settings" [ref=e185] [cursor=pointer]
+      - button "Change Password" [ref=e190] [cursor=pointer]
+      - button "Profile" [ref=e195] [cursor=pointer]
+      - button "Logout" [ref=e200] [cursor=pointer]
+    - button "View Customer App" [ref=e205] [cursor=pointer]
+  - main [ref=e206]:
+    - generic [ref=e207]:
+      - button [ref=e208] [cursor=pointer]
+      - button "S Sravani Gachibowli" [ref=e212] [cursor=pointer]:
+        - generic [ref=e213]: S
+        - generic [ref=e214]: Sravani Gachibowli
+      - button "Sign out" [ref=e215] [cursor=pointer]
+    - generic [ref=e216]:
+      - generic [ref=e217]:
+        - heading "Store Products" [level=4] [ref=e218]
+        - paragraph [ref=e219]: Manage products assigned only to Gachibowli Fresh Hub.
+      - button "Create Product" [ref=e220] [cursor=pointer]
+    - generic [ref=e221]:
+      - generic [ref=e222]:
+        - generic: Search your products
+        - generic [ref=e223]:
+          - textbox "Search your products" [ref=e224]
+          - group [aria-hidden]:
+            - generic: Search your products
+      - paragraph [ref=e225]: 0 products
+    - paragraph [ref=e226]: No products yet. Select Create Product to add one to this store.

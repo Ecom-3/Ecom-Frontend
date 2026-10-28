@@ -1,0 +1,124 @@
+- generic [ref=f6e8]:
+  - navigation [ref=f6e9]:
+    - generic [ref=f6e10]:
+      - img "Spices and Pickles" [ref=f6e11]
+      - generic [ref=f6e12]:
+        - heading "Location Admin Portal" [level=6] [ref=f6e13]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f6e14] [cursor=pointer]
+    - generic [ref=f6e17]:
+      - generic [ref=f6e18]:
+        - paragraph [ref=f6e19]: Main
+        - button "Dashboard" [ref=f6e20] [cursor=pointer]
+      - generic [ref=f6e25]:
+        - paragraph [ref=f6e26]: Management
+        - button "Stores" [ref=f6e27] [cursor=pointer]
+        - button "Products" [ref=f6e32] [cursor=pointer]
+        - button "Banners" [ref=f6e38] [cursor=pointer]
+        - button "Inventory" [active] [ref=f6e43] [cursor=pointer]
+      - generic [ref=f6e49]:
+        - paragraph [ref=f6e50]: Orders & Payments
+        - button "Orders" [ref=f6e51] [cursor=pointer]
+        - button "Payments" [ref=f6e56] [cursor=pointer]
+        - button "Delivery" [ref=f6e62] [cursor=pointer]
+      - generic [ref=f6e67]:
+        - paragraph [ref=f6e68]: Customer
+        - button "Coupons" [ref=f6e69] [cursor=pointer]
+      - generic [ref=f6e75]:
+        - paragraph [ref=f6e76]: Analytics
+        - button "Reports" [ref=f6e77] [cursor=pointer]
+    - button "View Customer App" [ref=f6e82] [cursor=pointer]
+  - main [ref=f6e83]:
+    - generic [ref=f6e84]:
+      - generic [ref=f6e85]:
+        - button [ref=f6e86] [cursor=pointer]
+        - generic [ref=f6e89]:
+          - text: Location Admin /
+          - strong [ref=f6e90]: Inventory
+      - generic [ref=f6e91]:
+        - textbox "Search portal" [ref=f6e96]
+        - button "Notifications" [ref=f6e97] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=f6e100] [cursor=pointer]:
+          - generic [ref=f6e101]: H
+          - generic [ref=f6e102]: Hyderabad Location Admin
+    - generic [ref=f6e103]:
+      - generic [ref=f6e104]:
+        - heading "Inventory" [level=4] [ref=f6e249]
+        - paragraph [ref=f6e106]: Manage inventory within your assigned scope.
+      - button "View Customer App" [ref=f6e107] [cursor=pointer]
+    - generic [ref=f6e108]:
+      - generic [ref=f6e109]:
+        - generic [ref=f6e110]:
+          - generic: Search
+          - generic [ref=f6e111]:
+            - textbox "Search" [ref=f6e112]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f6e113]:
+          - combobox [ref=f6e114] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f6e115]:
+          - combobox [ref=f6e116] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create" [ref=f6e221] [cursor=pointer]
+        - button "Export" [ref=f6e118] [cursor=pointer]
+      - generic [ref=f6e250]:
+        - generic [ref=f6e251]:
+          - paragraph [ref=f6e252]: California Almonds
+          - paragraph [ref=f6e253]: DRY-CAL-ALMOND-1KG
+        - generic [ref=f6e254]:
+          - button "View" [ref=f6e255] [cursor=pointer]
+          - button "Stock +10" [ref=f6e256] [cursor=pointer]
+          - button "Stock -1" [ref=f6e257] [cursor=pointer]
+          - button "Adjust" [ref=f6e258] [cursor=pointer]
+      - generic [ref=f6e259]:
+        - generic [ref=f6e260]:
+          - paragraph [ref=f6e261]: California Almonds
+          - paragraph [ref=f6e262]: DRY-CAL-ALMOND-1KG
+        - generic [ref=f6e263]:
+          - button "View" [ref=f6e264] [cursor=pointer]
+          - button "Stock +10" [ref=f6e265] [cursor=pointer]
+          - button "Stock -1" [ref=f6e266] [cursor=pointer]
+          - button "Adjust" [ref=f6e267] [cursor=pointer]
+      - generic [ref=f6e268]:
+        - generic [ref=f6e269]:
+          - paragraph [ref=f6e270]: California Almonds
+          - paragraph [ref=f6e271]: DRY-CAL-ALMOND-1KG
+        - generic [ref=f6e272]:
+          - button "View" [ref=f6e273] [cursor=pointer]
+          - button "Stock +10" [ref=f6e274] [cursor=pointer]
+          - button "Stock -1" [ref=f6e275] [cursor=pointer]
+          - button "Adjust" [ref=f6e276] [cursor=pointer]
+      - generic [ref=f6e277]:
+        - generic [ref=f6e278]:
+          - paragraph [ref=f6e279]: California Almonds
+          - paragraph [ref=f6e280]: DRY-CAL-ALMOND-1KG
+        - generic [ref=f6e281]:
+          - button "View" [ref=f6e282] [cursor=pointer]
+          - button "Stock +10" [ref=f6e283] [cursor=pointer]
+          - button "Stock -1" [ref=f6e284] [cursor=pointer]
+          - button "Adjust" [ref=f6e285] [cursor=pointer]
+      - generic [ref=f6e286]:
+        - generic [ref=f6e287]:
+          - paragraph [ref=f6e288]: California Almonds
+          - paragraph [ref=f6e289]: DRY-CAL-ALMOND-1KG
+        - generic [ref=f6e290]:
+          - button "View" [ref=f6e291] [cursor=pointer]
+          - button "Stock +10" [ref=f6e292] [cursor=pointer]
+          - button "Stock -1" [ref=f6e293] [cursor=pointer]
+          - button "Adjust" [ref=f6e294] [cursor=pointer]
+      - generic [ref=f6e295]:
+        - generic [ref=f6e296]:
+          - paragraph [ref=f6e297]: California Almonds
+          - paragraph [ref=f6e298]: DRY-CAL-ALMOND-500G
+        - generic [ref=f6e299]:
+          - button "View" [ref=f6e300] [cursor=pointer]
+          - button "Stock +10" [ref=f6e301] [cursor=pointer]
+          - button "Stock -1" [ref=f6e302] [cursor=pointer]
+          - button "Adjust" [ref=f6e303] [cursor=pointer]
+      - generic [ref=f6e173]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f6e174]: Page 1 of 26
+        - button "Next" [ref=f6e219] [cursor=pointer]

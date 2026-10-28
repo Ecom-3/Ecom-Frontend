@@ -1,0 +1,150 @@
+- generic [ref=f18e1]:
+  - generic [ref=f18e468]:
+    - navigation [ref=f18e469]:
+      - generic [ref=f18e470]:
+        - generic [ref=f18e472]:
+          - heading [level=6] [ref=f18e719]: Store Manager Portal
+          - text: Gachibowli Fresh Hub
+        - button [ref=f18e720] [cursor=pointer]
+      - generic [ref=f18e477]:
+        - button [ref=f18e721] [cursor=pointer]:
+          - generic [ref=f18e482]: Dashboard
+        - button [ref=f18e722] [cursor=pointer]:
+          - generic [ref=f18e488]: Products
+        - button [ref=f18e723] [cursor=pointer]:
+          - generic [ref=f18e493]: Banners
+        - button [ref=f18e724] [cursor=pointer]:
+          - generic [ref=f18e499]: Inventory
+        - button [ref=f18e725] [cursor=pointer]:
+          - generic [ref=f18e504]: Orders
+        - button [ref=f18e726] [cursor=pointer]:
+          - generic [ref=f18e509]: Delivery Partners
+        - button [ref=f18e727] [cursor=pointer]:
+          - generic [ref=f18e514]: Delivery Radius
+        - button [ref=f18e728] [cursor=pointer]:
+          - generic [ref=f18e519]: Delivery Settings
+        - button [ref=f18e729] [cursor=pointer]:
+          - generic [ref=f18e524]: Change Password
+        - button [ref=f18e730] [cursor=pointer]:
+          - generic [ref=f18e529]: Profile
+        - button [ref=f18e731] [cursor=pointer]:
+          - generic [ref=f18e534]: Logout
+      - button [ref=f18e732] [cursor=pointer]: View Customer App
+    - main [ref=f18e536]:
+      - generic [ref=f18e537]:
+        - generic [ref=f18e538]:
+          - button [ref=f18e539] [cursor=pointer]
+          - generic [ref=f18e542]:
+            - text: Store Manager /
+            - strong [ref=f18e543]: Orders
+        - generic [ref=f18e544]:
+          - textbox [ref=f18e733]:
+            - /placeholder: Search portal
+          - button [ref=f18e734] [cursor=pointer]
+          - button [ref=f18e735] [cursor=pointer]:
+            - generic [ref=f18e554]: S
+            - generic [ref=f18e555]: Sravani Gachibowli
+      - generic [ref=f18e556]:
+        - generic [ref=f18e557]:
+          - heading [level=4] [ref=f18e736]: Orders
+          - paragraph [ref=f18e559]: Manage orders within your assigned scope.
+        - button [ref=f18e737] [cursor=pointer]: View Customer App
+      - generic [ref=f18e561]:
+        - generic [ref=f18e562]:
+          - generic [ref=f18e563]:
+            - generic: Search or paste order ID
+            - generic [ref=f18e564]:
+              - textbox [ref=f18e738]
+              - group [aria-hidden]:
+                - generic: Search or paste order ID
+          - button [ref=f18e739] [cursor=pointer]: Fetch Order
+          - generic [ref=f18e567]:
+            - combobox [expanded] [ref=f18e568] [cursor=pointer]: All
+            - textbox [aria-hidden]: All
+            - group [aria-hidden]
+          - generic [ref=f18e569]:
+            - combobox [ref=f18e570] [cursor=pointer]: Newest
+            - textbox [aria-hidden]: newest
+            - group [aria-hidden]
+          - button [ref=f18e740] [cursor=pointer]: Export
+        - status [ref=f18e653]: Fetched order ORD-20261022-42A90977 from MySQL.
+        - generic [ref=f18e572]:
+          - generic [ref=f18e573]:
+            - paragraph [ref=f18e574]: ORD-20261022-42A90977
+            - paragraph [ref=f18e575]: Gachibowli Fresh Hub
+          - generic [ref=f18e576]:
+            - generic [ref=f18e577]:
+              - combobox [ref=f18e578] [cursor=pointer]: CREATED
+              - textbox [aria-hidden]: CREATED
+              - group [aria-hidden]
+            - button [ref=f18e741] [cursor=pointer]: Accept
+            - button [ref=f18e742] [cursor=pointer]: Assign
+            - button [ref=f18e743] [cursor=pointer]: Reject
+        - generic [ref=f18e654]:
+          - generic [ref=f18e655]:
+            - paragraph [ref=f18e656]: ORD-20261021-B1052432
+            - paragraph [ref=f18e657]: Gachibowli Fresh Hub
+          - generic [ref=f18e658]:
+            - generic [ref=f18e659]:
+              - combobox [ref=f18e660] [cursor=pointer]: CREATED
+              - textbox [aria-hidden]: CREATED
+              - group [aria-hidden]
+            - button [ref=f18e744] [cursor=pointer]: Accept
+            - button [ref=f18e745] [cursor=pointer]: Assign
+            - button [ref=f18e746] [cursor=pointer]: Reject
+        - generic [ref=f18e667]:
+          - generic [ref=f18e668]:
+            - paragraph [ref=f18e669]: ORD-20261021-DB9FA27C
+            - paragraph [ref=f18e670]: Gachibowli Fresh Hub
+          - generic [ref=f18e671]:
+            - generic [ref=f18e672]:
+              - combobox [ref=f18e673] [cursor=pointer]: CREATED
+              - textbox [aria-hidden]: CREATED
+              - group [aria-hidden]
+            - button [ref=f18e747] [cursor=pointer]: Accept
+            - button [ref=f18e748] [cursor=pointer]: Assign
+            - button [ref=f18e749] [cursor=pointer]: Reject
+        - generic [ref=f18e680]:
+          - generic [ref=f18e681]:
+            - paragraph [ref=f18e682]: ORD-20261021-C9E18536
+            - paragraph [ref=f18e683]: Gachibowli Fresh Hub
+          - generic [ref=f18e684]:
+            - generic [ref=f18e685]:
+              - combobox [ref=f18e686] [cursor=pointer]: CANCELLED
+              - textbox [aria-hidden]: CANCELLED
+              - group [aria-hidden]
+            - button [ref=f18e750] [cursor=pointer]: Assign
+            - button [ref=f18e751] [cursor=pointer]: Reject
+        - generic [ref=f18e692]:
+          - generic [ref=f18e693]:
+            - paragraph [ref=f18e694]: ORD-20260923-293106F1
+            - paragraph [ref=f18e695]: Gachibowli Fresh Hub
+          - generic [ref=f18e696]:
+            - generic [ref=f18e697]:
+              - combobox [ref=f18e698] [cursor=pointer]: CREATED
+              - textbox [aria-hidden]: CREATED
+              - group [aria-hidden]
+            - button [ref=f18e752] [cursor=pointer]: Accept
+            - button [ref=f18e753] [cursor=pointer]: Assign
+            - button [ref=f18e754] [cursor=pointer]: Reject
+        - generic [ref=f18e705]:
+          - generic [ref=f18e706]:
+            - paragraph [ref=f18e707]: ORD-20260923-76038C3C
+            - paragraph [ref=f18e708]: Gachibowli Fresh Hub
+          - generic [ref=f18e709]:
+            - generic [ref=f18e710]:
+              - combobox [ref=f18e711] [cursor=pointer]: CREATED
+              - textbox [aria-hidden]: CREATED
+              - group [aria-hidden]
+            - button [ref=f18e755] [cursor=pointer]: Accept
+            - button [ref=f18e756] [cursor=pointer]: Assign
+            - button [ref=f18e757] [cursor=pointer]: Reject
+        - generic [ref=f18e649]:
+          - button [disabled]: Previous
+          - paragraph [ref=f18e650]: Page 1 of 2
+          - button [ref=f18e758] [cursor=pointer]: Next
+  - listbox [ref=f18e761]:
+    - option "All" [active] [selected] [ref=f18e762] [cursor=pointer]
+    - option "CREATED" [ref=f18e763] [cursor=pointer]
+    - option "CANCELLED" [ref=f18e764] [cursor=pointer]
+    - option "SHIPPED" [ref=f18e765] [cursor=pointer]

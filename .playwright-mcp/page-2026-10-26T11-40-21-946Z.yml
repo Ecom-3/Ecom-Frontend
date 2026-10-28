@@ -1,0 +1,191 @@
+- generic [ref=f16e5]:
+  - banner [ref=f16e6]:
+    - generic [ref=f16e7]:
+      - button "Home" [ref=f16e8] [cursor=pointer]
+      - generic [ref=f16e9]: â€º
+      - button "Cart" [ref=f16e10] [cursor=pointer]
+      - generic [ref=f16e11]: â€º
+      - strong [ref=f16e12]: Checkout
+    - navigation "Checkout progress" [ref=f16e13]:
+      - generic [ref=f16e14]: Cart
+      - generic [ref=f16e20]:
+        - generic [ref=f16e21]: "2"
+        - generic [ref=f16e22]: Checkout
+      - generic [ref=f16e24]:
+        - generic [ref=f16e25]: "3"
+        - generic [ref=f16e26]: Payment
+      - generic [ref=f16e28]:
+        - generic [ref=f16e29]: "4"
+        - generic [ref=f16e30]: Confirmation
+    - button "Back to cart" [ref=f16e31] [cursor=pointer]
+  - generic [ref=f16e33]:
+    - generic [ref=f16e34]:
+      - generic [ref=f16e35]:
+        - generic [ref=f16e36]:
+          - generic [ref=f16e41]:
+            - heading "1. Delivery address" [level=2] [ref=f16e42]
+            - generic [ref=f16e43]: Used by each store offering delivery
+          - button "Add New Address" [ref=f16e44] [cursor=pointer]
+        - generic [ref=f16e47]:
+          - generic [ref=f16e48]:
+            - button "Home Default Home, slokam tech, Floor 4, axsis bank, SR Nagar, Srinivas Nagar, SR Nagar, Ward 98 Ameerpet, Greater Hyderabad Municipal Corporation Central Zone, Hyderabad, Khairatabad mandal, Hyderabad, Telangana, 500038, India" [ref=f16e50] [cursor=pointer]:
+              - generic [ref=f16e52]:
+                - generic [ref=f16e53]:
+                  - text: Home
+                  - generic [ref=f16e54]: Default
+                - strong [ref=f16e55]: Home, slokam tech, Floor 4, axsis bank, SR Nagar, Srinivas Nagar, SR Nagar, Ward 98 Ameerpet, Greater Hyderabad Municipal Corporation Central Zone, Hyderabad, Khairatabad mandal, Hyderabad, Telangana, 500038, India
+            - generic [ref=f16e56]:
+              - button "Office Office, slokam tech, Floor 3, axsis bank, SR Nagar, Srinivas Nagar, SR Nagar, Ward 98 Ameerpet, Greater Hyderabad Municipal Corporation Central Zone, Hyderabad, Khairatabad mandal, Hyderabad, Telangana, 500038, India" [active] [pressed] [ref=f16e57] [cursor=pointer]:
+                - generic [ref=f16e59]:
+                  - generic [ref=f16e60]: Office
+                  - strong [ref=f16e61]: Office, slokam tech, Floor 3, axsis bank, SR Nagar, Srinivas Nagar, SR Nagar, Ward 98 Ameerpet, Greater Hyderabad Municipal Corporation Central Zone, Hyderabad, Khairatabad mandal, Hyderabad, Telangana, 500038, India
+              - button "Set as default" [ref=f16e62] [cursor=pointer]
+            - button "Home Srinivas Nagar, SR Nagar, Ward 98 Ameerpet, Greater Hyderabad Municipal Corporation Central Zone, Hyderabad, Khairatabad mandal, Hyderabad, Telangana, 500038, India, slokam tech, 4, axsis bank, Hyderabad, Telangana, India, 500038" [ref=f16e64] [cursor=pointer]:
+              - generic [ref=f16e66]:
+                - generic [ref=f16e67]: Home
+                - strong [ref=f16e68]: Srinivas Nagar, SR Nagar, Ward 98 Ameerpet, Greater Hyderabad Municipal Corporation Central Zone, Hyderabad, Khairatabad mandal, Hyderabad, Telangana, 500038, India, slokam tech, 4, axsis bank, Hyderabad, Telangana, India, 500038
+          - iframe [ref=f16e70]:
+            - generic [ref=f17e2]:
+              - generic:
+                - region "Map" [ref=f17e3]
+                - button "Map marker" [ref=f17e4]
+              - generic:
+                - generic [ref=f17e8]:
+                  - button "Zoom In" [ref=f17e9] [cursor=pointer]
+                  - button "Zoom Out" [ref=f17e11] [cursor=pointer]
+                - group [ref=f17e13]:
+                  - generic [ref=f17e14]:
+                    - link "Report a problem" [ref=f17e15] [cursor=pointer]:
+                      - /url: /fixthemap?lat=17.44270&lon=78.44399&zoom=14
+                    - text: "| ©"
+                    - link "OpenStreetMap contributors" [ref=f17e16] [cursor=pointer]:
+                      - /url: /copyright
+                    - text: ♥️
+                    - link "Make a Donation" [ref=f17e17] [cursor=pointer]:
+                      - /url: https://supporting.openstreetmap.org
+                    - text: .
+                    - link "Website and API terms" [ref=f17e18] [cursor=pointer]:
+                      - /url: https://wiki.osmfoundation.org/wiki/Terms_of_Use
+          - button "Add delivery instructions & photos" [ref=f16e71] [cursor=pointer]
+      - generic [ref=f16e74]:
+        - generic [ref=f16e79]:
+          - heading "2. Fulfillment by store" [level=2] [ref=f16e80]
+          - generic [ref=f16e81]: Each store has an independent delivery or pickup selection
+        - generic [ref=f16e83]:
+          - button "Gachibowli Fresh Hub 1 item · ₹1,099.00 Configure fulfillment Not configured" [expanded] [ref=f16e84] [cursor=pointer]:
+            - generic [ref=f16e85]:
+              - strong [ref=f16e86]: Gachibowli Fresh Hub
+              - generic [ref=f16e87]: 1 item · ₹1,099.00
+              - generic [ref=f16e88]: Configure fulfillment
+            - generic [ref=f16e89]: Not configured
+          - generic [ref=f16e92]:
+            - generic [ref=f16e93]:
+              - generic [ref=f16e94]:
+                - strong [ref=f16e95]: Gachibowli Fresh Hub
+                - generic [ref=f16e96]: 1 item in this store
+              - generic [ref=f16e97]: ₹1,099.00
+            - group "Gachibowli Fresh Hub fulfillment" [ref=f16e98]:
+              - button "Delivery" [pressed] [ref=f16e99] [cursor=pointer]
+              - button "Store pickup" [ref=f16e102] [cursor=pointer]
+            - generic [ref=f16e105]:
+              - button "✓ Instant Delivery 10-26 min - ₹55.00" [pressed] [ref=f16e106] [cursor=pointer]:
+                - generic [ref=f16e107]: ✓
+                - generic [ref=f16e108]:
+                  - strong [ref=f16e109]: Instant Delivery
+                  - generic [ref=f16e110]: 10-26 min - ₹55.00
+              - button "Scheduled Delivery 10-26 min - ₹30.00" [ref=f16e111] [cursor=pointer]:
+                - generic [ref=f16e113]:
+                  - strong [ref=f16e114]: Scheduled Delivery
+                  - generic [ref=f16e115]: 10-26 min - ₹30.00
+              - button "Express Delivery 10-26 min - ₹50.00" [ref=f16e116] [cursor=pointer]:
+                - generic [ref=f16e118]:
+                  - strong [ref=f16e119]: Express Delivery
+                  - generic [ref=f16e120]: 10-26 min - ₹50.00
+              - button "Standard Delivery 10-26 min - ₹30.00" [ref=f16e121] [cursor=pointer]:
+                - generic [ref=f16e123]:
+                  - strong [ref=f16e124]: Standard Delivery
+                  - generic [ref=f16e125]: 10-26 min - ₹30.00
+            - paragraph [ref=f16e126]: 7.09 km from store - Free delivery applied
+            - button "Save Selection" [ref=f16e127] [cursor=pointer]
+      - generic [ref=f16e128]:
+        - generic [ref=f16e129]:
+          - generic [ref=f16e133]:
+            - heading "3. Contact Details" [level=2] [ref=f16e134]
+            - generic [ref=f16e135]: Used for delivery updates about this order
+          - button "Update from Profile" [ref=f16e136] [cursor=pointer]
+        - generic [ref=f16e139]:
+          - generic [ref=f16e140]:
+            - generic [ref=f16e141]: Full Name
+            - textbox "Full Name" [ref=f16e142]:
+              - /placeholder: Name on account
+              - text: GIRIVARDHAN REDDY V
+          - generic [ref=f16e143]:
+            - generic [ref=f16e144]: Phone Number
+            - generic [ref=f16e145]:
+              - textbox "Phone Number Edit" [ref=f16e146]:
+                - /placeholder: Add contact number
+                - text: +91 8639616977
+              - button "Edit" [ref=f16e147] [cursor=pointer]
+          - generic [ref=f16e148]:
+            - generic [ref=f16e149]: Email
+            - textbox "Email" [ref=f16e150]:
+              - /placeholder: Email on account
+              - text: girivennapusa8@gmail.com
+      - generic [ref=f16e151]:
+        - generic [ref=f16e156]:
+          - heading "4. Order Notes (Optional)" [level=2] [ref=f16e157]
+          - generic [ref=f16e158]: Anything we should know before delivery?
+        - generic [ref=f16e160]:
+          - textbox "Add special instructions for delivery (e.g. gate code, landmark, leave at door, etc.)" [ref=f16e161]
+          - group [aria-hidden]
+        - generic [ref=f16e162]:
+          - generic [ref=f16e163]:
+            - generic: Coupon code
+            - generic [ref=f16e164]:
+              - textbox "Coupon code" [ref=f16e165]
+              - group [aria-hidden]:
+                - generic: Coupon code
+            - paragraph [ref=f16e166]: Try TEST10 or TEST100.
+          - button "Apply" [ref=f16e167] [cursor=pointer]
+    - complementary [ref=f16e168]:
+      - generic [ref=f16e172]:
+        - heading "Order Summary" [level=2] [ref=f16e173]
+        - generic [ref=f16e174]: 1 item from 1 store
+      - generic [ref=f16e176]:
+        - generic [ref=f16e177]:
+          - strong [ref=f16e180]: Gachibowli Fresh Hub
+          - generic [ref=f16e181]: Not configured
+        - generic [ref=f16e182]:
+          - img "California Almonds" [ref=f16e183]
+          - generic [ref=f16e184]:
+            - strong [ref=f16e185]: California Almonds
+            - generic [ref=f16e186]: 39cfd79d-24e4-4c22-ae71-611bf30388c2 · 1 × ₹1,099.00
+            - generic [ref=f16e187]: ₹1,099.00
+          - generic [ref=f16e188]: "1"
+        - generic [ref=f16e189]:
+          - generic [ref=f16e190]: Choose a fulfillment option
+          - strong
+        - generic [ref=f16e191]:
+          - generic [ref=f16e192]: Store subtotal
+          - strong [ref=f16e193]: ₹1,099.00
+      - generic [ref=f16e194]:
+        - generic [ref=f16e195]:
+          - generic [ref=f16e196]: Subtotal (1 items)
+          - strong [ref=f16e197]: ₹1,099.00
+        - generic [ref=f16e198]:
+          - generic [ref=f16e199]: Delivery Fee
+          - strong [ref=f16e200]: ₹0.00
+        - generic [ref=f16e201]:
+          - generic [ref=f16e202]: Store Handling Charges
+          - strong [ref=f16e203]: ₹5.00
+        - generic [ref=f16e204]:
+          - generic [ref=f16e205]: Discount
+          - strong [ref=f16e206]: "-₹0.00"
+        - generic [ref=f16e207]:
+          - generic [ref=f16e208]: Total Amount
+          - strong [ref=f16e209]: ₹1,104.00
+      - generic [ref=f16e213]:
+        - strong [ref=f16e214]: Secure Checkout
+        - generic [ref=f16e215]: Your payment information is encrypted and secure.
+      - button "Place Order" [ref=f16e216] [cursor=pointer]
+      - paragraph [ref=f16e219]: You will be redirected to the payment page

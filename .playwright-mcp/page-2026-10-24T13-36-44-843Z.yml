@@ -1,0 +1,140 @@
+- generic [ref=f18e8]:
+  - navigation [ref=f18e9]:
+    - generic [ref=f18e10]:
+      - img "Spices and Pickles" [ref=f18e11]
+      - generic [ref=f18e12]:
+        - heading "Location Admin Portal" [level=6] [ref=f18e13]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f18e14] [cursor=pointer]
+    - generic [ref=f18e17]:
+      - generic [ref=f18e18]:
+        - paragraph [ref=f18e19]: Main
+        - button "Dashboard" [ref=f18e20] [cursor=pointer]
+      - generic [ref=f18e25]:
+        - paragraph [ref=f18e26]: Management
+        - button "Stores" [ref=f18e27] [cursor=pointer]
+        - button "Products" [ref=f18e32] [cursor=pointer]
+        - button "Banners" [ref=f18e38] [cursor=pointer]
+        - button "Inventory" [ref=f18e43] [cursor=pointer]
+      - generic [ref=f18e49]:
+        - paragraph [ref=f18e50]: Orders & Payments
+        - button "Orders" [ref=f18e51] [cursor=pointer]
+        - button "Payments" [ref=f18e56] [cursor=pointer]
+        - button "Delivery" [ref=f18e62] [cursor=pointer]
+      - generic [ref=f18e67]:
+        - paragraph [ref=f18e68]: Customer
+        - button "Coupons" [ref=f18e69] [cursor=pointer]
+      - generic [ref=f18e75]:
+        - paragraph [ref=f18e76]: Analytics
+        - button "Reports" [active] [ref=f18e77] [cursor=pointer]
+    - button "View Customer App" [ref=f18e82] [cursor=pointer]
+  - main [ref=f18e83]:
+    - generic [ref=f18e84]:
+      - generic [ref=f18e85]:
+        - button [ref=f18e86] [cursor=pointer]
+        - generic [ref=f18e89]:
+          - text: Location Admin /
+          - strong [ref=f18e90]: Reports
+      - generic [ref=f18e91]:
+        - textbox "Search portal" [ref=f18e96]
+        - button "Notifications" [ref=f18e97] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=f18e100] [cursor=pointer]:
+          - generic [ref=f18e101]: H
+          - generic [ref=f18e102]: Hyderabad Location Admin
+    - generic [ref=f18e103]:
+      - generic [ref=f18e104]:
+        - heading "Reports" [level=4] [ref=f18e267]
+        - paragraph [ref=f18e106]: Manage reports within your assigned scope.
+      - button "View Customer App" [ref=f18e107] [cursor=pointer]
+    - generic [ref=f18e268]:
+      - generic [ref=f18e269]:
+        - generic [ref=f18e270]:
+          - generic [ref=f18e271]: From
+          - generic [ref=f18e272]:
+            - textbox "From" [ref=f18e273]
+            - group [aria-hidden]:
+              - generic: From
+        - generic [ref=f18e274]:
+          - generic [ref=f18e275]: To
+          - generic [ref=f18e276]:
+            - textbox "To" [ref=f18e277]
+            - group [aria-hidden]:
+              - generic: To
+        - generic [ref=f18e278]:
+          - combobox [disabled] [ref=f18e279]: Hyderabad
+          - textbox [disabled] [aria-hidden]: Hyderabad
+          - group [aria-hidden]
+        - generic [ref=f18e280]:
+          - combobox [ref=f18e281] [cursor=pointer]: All stores in location
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f18e282]:
+          - combobox [ref=f18e283] [cursor=pointer]: Sort stores by revenue
+          - textbox [aria-hidden]: revenue
+          - group [aria-hidden]
+        - button "Reset" [ref=f18e284] [cursor=pointer]
+        - button "Export JSON" [ref=f18e285] [cursor=pointer]
+      - generic [ref=f18e286]:
+        - generic [ref=f18e287]:
+          - paragraph [ref=f18e288]: Revenue
+          - heading "₹14,068" [level=5] [ref=f18e289]
+          - text: All stores in hyderabad
+        - generic [ref=f18e290]:
+          - paragraph [ref=f18e291]: Orders
+          - heading "41" [level=5] [ref=f18e292]
+          - text: All stores in hyderabad
+        - generic [ref=f18e293]:
+          - paragraph [ref=f18e294]: Delivered
+          - heading "1" [level=5] [ref=f18e295]
+          - text: All stores in hyderabad
+        - generic [ref=f18e296]:
+          - paragraph [ref=f18e297]: Products
+          - heading "21" [level=5] [ref=f18e298]
+          - text: All stores in hyderabad
+        - generic [ref=f18e299]:
+          - paragraph [ref=f18e300]: Stock Units
+          - heading "7860" [level=5] [ref=f18e301]
+          - text: All stores in hyderabad
+      - generic [ref=f18e302]:
+        - heading "Store performance" [level=6] [ref=f18e303]
+        - generic [ref=f18e304]:
+          - generic [ref=f18e305]:
+            - generic [ref=f18e306]: Store and location
+            - generic [ref=f18e307]: Orders
+            - generic [ref=f18e308]: Revenue
+          - generic [ref=f18e309]:
+            - generic [ref=f18e310]:
+              - text: Hyderabad Main Store
+              - generic [ref=f18e311]: Hyderabad
+            - generic [ref=f18e312]: "16"
+            - strong [ref=f18e313]: ₹5,767
+          - generic [ref=f18e314]:
+            - generic [ref=f18e315]:
+              - text: Gachibowli Fresh Hub
+              - generic [ref=f18e316]: Hyderabad
+            - generic [ref=f18e317]: "12"
+            - strong [ref=f18e318]: ₹4,394
+          - generic [ref=f18e319]:
+            - generic [ref=f18e320]:
+              - text: SR Nagar Store
+              - generic [ref=f18e321]: Hyderabad
+            - generic [ref=f18e322]: "12"
+            - strong [ref=f18e323]: ₹3,553
+          - generic [ref=f18e324]:
+            - generic [ref=f18e325]:
+              - text: Banjara Hills Pickle House
+              - generic [ref=f18e326]: Hyderabad
+            - generic [ref=f18e327]: "1"
+            - strong [ref=f18e328]: ₹354
+          - generic [ref=f18e329]:
+            - generic [ref=f18e330]:
+              - text: Kukatpally Neighbourhood Market
+              - generic [ref=f18e331]: Hyderabad
+            - generic [ref=f18e332]: "0"
+            - strong [ref=f18e333]: ₹0
+          - generic [ref=f18e334]:
+            - generic [ref=f18e335]:
+              - text: Secunderabad Daily Foods
+              - generic [ref=f18e336]: Hyderabad
+            - generic [ref=f18e337]: "0"
+            - strong [ref=f18e338]: ₹0

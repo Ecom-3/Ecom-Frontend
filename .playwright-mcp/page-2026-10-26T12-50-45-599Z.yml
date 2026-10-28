@@ -1,0 +1,91 @@
+- generic [ref=f46e8]:
+  - navigation [ref=f46e9]:
+    - generic [ref=f46e10]:
+      - img "Spices and Pickles" [ref=f46e3022]
+      - generic [ref=f46e12]:
+        - heading "Super Admin Portal" [level=6] [ref=f46e3023]
+        - text: All locations
+      - button "Collapse sidebar" [ref=f46e3024] [cursor=pointer]
+    - generic [ref=f46e17]:
+      - generic [ref=f46e18]:
+        - paragraph [ref=f46e19]: Main
+        - button "Dashboard" [ref=f46e3025] [cursor=pointer]
+      - generic [ref=f46e25]:
+        - paragraph [ref=f46e26]: Management
+        - button "Locations" [ref=f46e3026] [cursor=pointer]
+        - button "Users" [ref=f46e3027] [cursor=pointer]
+        - button "Stores" [ref=f46e3028] [cursor=pointer]
+        - button "Products" [ref=f46e3029] [cursor=pointer]
+        - button "Categories" [ref=f46e3030] [cursor=pointer]
+        - button "Banners" [ref=f46e3031] [cursor=pointer]
+        - button "Inventory" [ref=f46e3032] [cursor=pointer]
+      - generic [ref=f46e65]:
+        - paragraph [ref=f46e66]: Orders & Payments
+        - button "Orders" [ref=f46e3033] [cursor=pointer]
+        - button "Payments" [ref=f46e3034] [cursor=pointer]
+        - button "Delivery" [ref=f46e3035] [cursor=pointer]
+      - generic [ref=f46e83]:
+        - paragraph [ref=f46e84]: Customer
+        - button "Customers" [ref=f46e3036] [cursor=pointer]
+        - button "Reviews" [ref=f46e3037] [cursor=pointer]
+        - button "Coupons" [ref=f46e3038] [cursor=pointer]
+        - button "Notifications" [ref=f46e3039] [cursor=pointer]
+      - generic [ref=f46e106]:
+        - paragraph [ref=f46e107]: Analytics
+        - button "Reports" [ref=f46e3040] [cursor=pointer]
+      - generic [ref=f46e113]:
+        - paragraph [ref=f46e114]: System
+        - button "Security" [ref=f46e3041] [cursor=pointer]
+        - button "Audit Logs" [ref=f46e3042] [cursor=pointer]
+    - button "View Customer App" [ref=f46e3043] [cursor=pointer]
+  - main [ref=f46e126]:
+    - generic [ref=f46e127]:
+      - generic [ref=f46e128]:
+        - button [ref=f46e129] [cursor=pointer]
+        - generic [ref=f46e132]:
+          - text: Super Admin /
+          - strong [ref=f46e133]: Products
+      - generic [ref=f46e134]:
+        - textbox "Search portal" [ref=f46e3044]
+        - button "Notifications" [ref=f46e3045] [cursor=pointer]
+        - button "A Admin" [ref=f46e3046] [cursor=pointer]:
+          - generic [ref=f46e144]: A
+          - generic [ref=f46e145]: Admin
+    - generic [ref=f46e146]:
+      - generic [ref=f46e147]:
+        - heading "Products" [level=4] [ref=f46e3047]
+        - paragraph [ref=f46e149]: Manage products within your assigned scope.
+      - button "View Customer App" [ref=f46e3048] [cursor=pointer]
+    - generic [ref=f46e151]:
+      - generic [ref=f46e152]:
+        - generic [ref=f46e153]:
+          - generic: Search
+          - generic [ref=f46e154]:
+            - textbox "Search" [ref=f46e3049]
+            - group [aria-hidden]:
+              - generic: Search
+        - generic [ref=f46e156]:
+          - combobox [ref=f46e157] [cursor=pointer]: All
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=f46e158]:
+          - combobox [ref=f46e159] [cursor=pointer]: Newest
+          - textbox [aria-hidden]: newest
+          - group [aria-hidden]
+        - button "Create" [ref=f46e3050] [cursor=pointer]
+        - button "Export" [ref=f46e3051] [cursor=pointer]
+      - status [ref=f46e325]: Deleted successfully.
+      - generic [ref=f46e2527]:
+        - generic [ref=f46e2528]:
+          - paragraph [ref=f46e2529]: Tomato Garlic Pickle
+          - paragraph [ref=f46e2530]: PKL-TOMATO-GARLIC
+        - generic [ref=f46e2531]:
+          - button "View" [ref=f46e3052] [cursor=pointer]
+          - button "Edit" [ref=f46e3053] [cursor=pointer]
+          - button "Duplicate" [ref=f46e3054] [cursor=pointer]
+          - button "Deactivate" [ref=f46e3055] [cursor=pointer]
+          - button "Delete" [ref=f46e3056] [cursor=pointer]
+      - generic [ref=f46e222]:
+        - button "Previous" [disabled]
+        - paragraph [ref=f46e223]: Page 1 of 1
+        - button "Next" [disabled]

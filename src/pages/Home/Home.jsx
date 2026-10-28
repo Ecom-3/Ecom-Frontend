@@ -1,4 +1,4 @@
-import { useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { balancedStoreProductPreview, uniqueStoreProductListings, uniqueCatalogProducts } from '../../utils/storeProductListings';
 import { Box, Typography, Button, Chip, MenuItem, Select } from '@mui/material';
 import SearchOffOutlinedIcon from '@mui/icons-material/SearchOffOutlined';
@@ -26,6 +26,7 @@ import { deliverySummary, storeDeliversTo, deliveryDistanceKm, deliveryProducts,
 import { filterAndSortProducts, prepareBrowseProduct, parseDeliveryEstimate } from '../../utils/productBrowsing.js';
 import { useBrowseDeliveryQuotes } from '../../hooks/useBrowseDeliveryQuotes';
 import { getProductReviewsBatch } from '../../services/reviewApi';
+import { getCurrentDeliveryLocation } from '../../services/googleMapsService';
 import './Home.css';
 
 const OTHER_SUBCATEGORY_CATEGORIES = ['Traditional Pickles', 'Premium Dry Fruits', 'Fresh Vegetables', 'Fresh Non-Veg'];
@@ -58,6 +59,7 @@ const Home = () => {
     t,
     userCity,
     selectedLocation,
+    saveSelectedLocation,
     addresses,
     setShowLocationModal,
     catalogProducts,
@@ -72,6 +74,20 @@ const Home = () => {
     setDeliveryMode,
     selectStore,
   } = useContext(AppContext);
+  const initialLocationRequest = useRef(null);
+  const currentLocationRef = useRef(selectedLocation);
+  useEffect(() => { currentLocationRef.current = selectedLocation; }, [selectedLocation]);
+  useEffect(() => {
+    if (selectedLocation) return undefined;
+    let active = true;
+    initialLocationRequest.current ||= getCurrentDeliveryLocation();
+    initialLocationRequest.current.then((place) => {
+      if (active && !currentLocationRef.current) saveSelectedLocation(place);
+    }).catch(() => {
+      if (active && !currentLocationRef.current) setShowLocationModal(true);
+    });
+    return () => { active = false; };
+  }, [selectedLocation, saveSelectedLocation, setShowLocationModal]);
   useEffect(() => {
     let active = true;
     const ids = catalogProducts.map((product) => product.productId || product.id).filter(Boolean);

@@ -1,0 +1,155 @@
+- generic [ref=f19e8]:
+  - navigation [ref=f19e9]:
+    - generic [ref=f19e10]:
+      - img "Spices and Pickles" [ref=f19e11]
+      - generic [ref=f19e12]:
+        - heading "Location Admin Portal" [level=6] [ref=f19e13]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=f19e14] [cursor=pointer]
+    - generic [ref=f19e17]:
+      - generic [ref=f19e18]:
+        - paragraph [ref=f19e19]: Main
+        - button "Dashboard" [ref=f19e20] [cursor=pointer]
+      - generic [ref=f19e25]:
+        - paragraph [ref=f19e26]: Management
+        - button "Stores" [ref=f19e27] [cursor=pointer]
+        - button "Products" [ref=f19e32] [cursor=pointer]
+        - button "Banners" [ref=f19e38] [cursor=pointer]
+        - button "Inventory" [ref=f19e43] [cursor=pointer]
+      - generic [ref=f19e49]:
+        - paragraph [ref=f19e50]: Orders & Payments
+        - button "Orders" [ref=f19e51] [cursor=pointer]
+        - button "Payments" [ref=f19e56] [cursor=pointer]
+        - button "Delivery" [ref=f19e62] [cursor=pointer]
+      - generic [ref=f19e67]:
+        - paragraph [ref=f19e68]: Customer
+        - button "Coupons" [ref=f19e69] [cursor=pointer]
+      - generic [ref=f19e75]:
+        - paragraph [ref=f19e76]: Analytics
+        - button "Reports" [ref=f19e77] [cursor=pointer]
+    - button "View Customer App" [ref=f19e82] [cursor=pointer]
+  - main [ref=f19e83]:
+    - generic [ref=f19e84]:
+      - generic [ref=f19e85]:
+        - button [ref=f19e86] [cursor=pointer]
+        - generic [ref=f19e89]:
+          - text: Location Admin /
+          - strong [ref=f19e90]: Dashboard
+      - generic [ref=f19e91]:
+        - textbox "Search portal" [ref=f19e96]
+        - button "Notifications" [ref=f19e97] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=f19e100] [cursor=pointer]:
+          - generic [ref=f19e101]: H
+          - generic [ref=f19e102]: Hyderabad Location Admin
+    - generic [ref=f19e103]:
+      - generic [ref=f19e104]:
+        - heading "Welcome back, Hyderabad Location Admin" [level=4] [ref=f19e105]
+        - paragraph [ref=f19e106]: Live operational data for hyderabad.
+      - button "View Customer App" [ref=f19e107] [cursor=pointer]
+    - generic [ref=f19e110]:
+      - generic [ref=f19e111]:
+        - paragraph [ref=f19e115]: Total Orders
+        - heading "41" [level=5] [ref=f19e178]
+        - text: Backend data
+      - generic [ref=f19e117]:
+        - paragraph [ref=f19e121]: Created Orders
+        - heading "29" [level=5] [ref=f19e179]
+        - text: Backend data
+      - generic [ref=f19e123]:
+        - paragraph [ref=f19e127]: Completed Orders
+        - heading "1" [level=5] [ref=f19e180]
+        - text: Backend data
+      - generic [ref=f19e129]:
+        - paragraph [ref=f19e133]: Cancelled Orders
+        - heading "2" [level=5] [ref=f19e181]
+        - text: Backend data
+      - generic [ref=f19e135]:
+        - paragraph [ref=f19e140]: Products
+        - heading "21" [level=5] [ref=f19e182]
+        - text: Mapped to assigned stores
+      - generic [ref=f19e142]:
+        - paragraph [ref=f19e147]: Low Stock
+        - heading "0" [level=5] [ref=f19e183]
+        - text: Backend data
+      - generic [ref=f19e149]:
+        - paragraph [ref=f19e153]: Revenue
+        - heading "â‚¹14,068" [level=5] [ref=f19e184]
+        - text: Backend data
+    - generic [ref=f19e155]:
+      - generic [ref=f19e156]:
+        - generic [ref=f19e157]:
+          - heading "Revenue Overview" [level=6] [ref=f19e158]
+          - generic [ref=f19e159]: Order totals
+        - generic [ref=f19e160]:
+          - 'generic "bfdb8b88-6da4-47b1-9cd7-e482b2f3d135: 339" [ref=f19e185]': "1"
+          - 'generic "4ed8952a-6aaf-41f7-9b31-034e0200b77e: 354" [ref=f19e187]': "2"
+          - 'generic "6badd677-e00a-4f81-b6b8-2db5f2106710: 344" [ref=f19e189]': "3"
+          - 'generic "d5ebf7b6-1cb5-485d-ae0e-38648c7d3c13: 533" [ref=f19e191]': "4"
+          - 'generic "f69d9a45-9006-4065-a71c-036138d4e276: 331" [ref=f19e193]': "5"
+          - 'generic "8de95b07-5386-4e10-b823-c9d9cc51d679: 533" [ref=f19e195]': "6"
+          - 'generic "7b7544c3-a1f8-4e0b-946e-8f5928d97809: 419" [ref=f19e197]': "7"
+          - 'generic "b339ffd4-1e08-4998-a11c-4ba664dafd06: 107" [ref=f19e199]': "8"
+      - generic [ref=f19e162]:
+        - generic [ref=f19e163]:
+          - heading "Order Status" [level=6] [ref=f19e164]
+          - generic [ref=f19e165]: Live distribution
+        - generic [ref=f19e202]:
+          - text: CREATED
+          - strong [ref=f19e203]: "29"
+        - generic [ref=f19e207]:
+          - text: CONFIRMED
+          - strong [ref=f19e208]: "0"
+        - generic [ref=f19e211]:
+          - text: PROCESSING
+          - strong [ref=f19e212]: "1"
+        - generic [ref=f19e216]:
+          - text: SHIPPED
+          - strong [ref=f19e217]: "8"
+        - generic [ref=f19e221]:
+          - text: DELIVERED
+          - strong [ref=f19e222]: "1"
+        - generic [ref=f19e226]:
+          - text: CANCELLED
+          - strong [ref=f19e227]: "2"
+    - generic [ref=f19e167]:
+      - generic [ref=f19e168]:
+        - generic [ref=f19e169]:
+          - heading "Recent Orders" [level=6] [ref=f19e170]
+          - button "View All" [ref=f19e171] [cursor=pointer]
+        - generic [ref=f19e230]:
+          - generic [ref=f19e233]:
+            - strong [ref=f19e234]: b339ffd4-1e08-4998-a11c-4ba664dafd06
+            - generic [ref=f19e235]: Fresh Tomatoes
+          - generic [ref=f19e236]: SHIPPED
+          - strong [ref=f19e238]: â‚¹107
+        - generic [ref=f19e239]:
+          - generic [ref=f19e242]:
+            - strong [ref=f19e243]: 7b7544c3-a1f8-4e0b-946e-8f5928d97809
+            - generic [ref=f19e244]: Premium Cashew Nuts
+          - generic [ref=f19e245]: CREATED
+          - strong [ref=f19e247]: â‚¹419
+        - generic [ref=f19e248]:
+          - generic [ref=f19e251]:
+            - strong [ref=f19e252]: 8de95b07-5386-4e10-b823-c9d9cc51d679
+            - generic [ref=f19e253]: Tomato Garlic Pickle
+          - generic [ref=f19e254]: CREATED
+          - strong [ref=f19e256]: â‚¹533
+        - generic [ref=f19e257]:
+          - generic [ref=f19e260]:
+            - strong [ref=f19e261]: f69d9a45-9006-4065-a71c-036138d4e276
+            - generic [ref=f19e262]: Fresh Prawns
+          - generic [ref=f19e263]: CREATED
+          - strong [ref=f19e265]: â‚¹331
+        - generic [ref=f19e266]:
+          - generic [ref=f19e269]:
+            - strong [ref=f19e270]: d5ebf7b6-1cb5-485d-ae0e-38648c7d3c13
+            - generic [ref=f19e271]: Tomato Garlic Pickle
+          - generic [ref=f19e272]: CREATED
+          - strong [ref=f19e274]: â‚¹533
+      - generic [ref=f19e173]:
+        - generic [ref=f19e174]:
+          - heading "Low Stock Products" [level=6] [ref=f19e175]
+          - button "View Inventory" [ref=f19e176] [cursor=pointer]
+        - generic [ref=f19e275]:
+          - paragraph [ref=f19e278]: Inventory looks healthy
+          - generic [ref=f19e279]: All products are sufficiently stocked.

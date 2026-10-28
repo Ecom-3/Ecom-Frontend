@@ -1,0 +1,46 @@
+- generic [ref=f17e20]:
+  - complementary [ref=f17e21]:
+    - generic [ref=f17e22]:
+      - img "Spices and Pickles" [ref=f17e23]
+      - generic [ref=f17e24]:
+        - heading "Store Manager" [level=6] [ref=f17e25]
+        - paragraph [ref=f17e26]: Gachibowli Fresh Hub
+    - navigation [ref=f17e27]:
+      - button "Dashboard" [ref=f17e28] [cursor=pointer]
+      - button "Products" [ref=f17e33] [cursor=pointer]
+      - button "Banners" [ref=f17e39] [cursor=pointer]
+      - button "Inventory" [ref=f17e44] [cursor=pointer]
+      - button "Orders" [ref=f17e50] [cursor=pointer]
+      - button "Delivery Partners" [ref=f17e55] [cursor=pointer]
+      - button "Delivery Radius" [ref=f17e60] [cursor=pointer]
+      - button "Delivery Settings" [ref=f17e65] [cursor=pointer]
+      - button "Change Password" [ref=f17e70] [cursor=pointer]
+      - button "Profile" [ref=f17e75] [cursor=pointer]
+      - button "Logout" [ref=f17e80] [cursor=pointer]
+    - button "View Customer App" [ref=f17e85] [cursor=pointer]
+  - main [ref=f17e86]:
+    - generic [ref=f17e87]:
+      - button [ref=f17e88] [cursor=pointer]
+      - button "S Sravani Gachibowli" [ref=f17e92] [cursor=pointer]:
+        - generic [ref=f17e93]: S
+        - generic [ref=f17e94]: Sravani Gachibowli
+      - button "Sign out" [ref=f17e95] [cursor=pointer]
+    - generic [ref=f17e97]:
+      - heading "Welcome back, Sravani Gachibowli" [level=4] [ref=f17e98]
+      - paragraph [ref=f17e99]: Gachibowli Fresh Hub
+    - generic [ref=f17e100]:
+      - generic [ref=f17e101]:
+        - paragraph [ref=f17e102]: Orders
+        - heading "12" [level=5] [ref=f17e103]
+      - generic [ref=f17e104]:
+        - paragraph [ref=f17e105]: Active Orders
+        - heading "11" [level=5] [ref=f17e106]
+      - generic [ref=f17e107]:
+        - paragraph [ref=f17e108]: Revenue
+        - heading "₹4,394" [level=5] [ref=f17e109]
+      - generic [ref=f17e110]:
+        - paragraph [ref=f17e111]: Store Status
+        - heading "Active" [level=5] [ref=f17e112]
+    - generic [ref=f17e113]:
+      - button "Manage Delivery Radius" [ref=f17e114] [cursor=pointer]
+      - button "View Orders" [ref=f17e115] [cursor=pointer]

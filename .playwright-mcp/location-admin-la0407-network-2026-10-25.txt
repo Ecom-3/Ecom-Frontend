@@ -1,0 +1,5 @@
+350. [GET] http://localhost:5175/catalog-service/api/v1/stores => [200] OK
+354. [GET] http://localhost:5175/catalog-service/api/v1/stores => [200] OK
+361. [GET] http://localhost:5175/catalog-service/api/v1/stores => [200] OK
+
+Note: 346 static requests not shown, run with "static" option to see them.

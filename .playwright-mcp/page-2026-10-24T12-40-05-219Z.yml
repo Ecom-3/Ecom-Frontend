@@ -1,0 +1,142 @@
+- generic [ref=e20]:
+  - navigation [ref=e21]:
+    - generic [ref=e22]:
+      - img "Spices and Pickles" [ref=e655]
+      - generic [ref=e24]:
+        - heading "Location Admin Portal" [level=6] [ref=e656]
+        - text: hyderabad
+      - button "Collapse sidebar" [ref=e657] [cursor=pointer]
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - paragraph [ref=e31]: Main
+        - button "Dashboard" [ref=e658] [cursor=pointer]
+      - generic [ref=e37]:
+        - paragraph [ref=e38]: Management
+        - button "Stores" [ref=e659] [cursor=pointer]
+        - button "Products" [ref=e660] [cursor=pointer]
+        - button "Banners" [ref=e661] [cursor=pointer]
+        - button "Inventory" [ref=e662] [cursor=pointer]
+      - generic [ref=e61]:
+        - paragraph [ref=e62]: Orders & Payments
+        - button "Orders" [ref=e663] [cursor=pointer]
+        - button "Payments" [ref=e664] [cursor=pointer]
+        - button "Delivery" [ref=e665] [cursor=pointer]
+      - generic [ref=e79]:
+        - paragraph [ref=e80]: Customer
+        - button "Coupons" [ref=e666] [cursor=pointer]
+      - generic [ref=e87]:
+        - paragraph [ref=e88]: Analytics
+        - button "Reports" [active] [ref=e667] [cursor=pointer]
+    - button "View Customer App" [ref=e668] [cursor=pointer]
+  - main [ref=e95]:
+    - generic [ref=e96]:
+      - generic [ref=e97]:
+        - button [ref=e98] [cursor=pointer]
+        - generic [ref=e101]:
+          - text: Location Admin /
+          - strong [ref=e102]: Reports
+      - generic [ref=e103]:
+        - textbox "Search portal" [ref=e669]
+        - button "Notifications" [ref=e670] [cursor=pointer]
+        - button "H Hyderabad Location Admin" [ref=e671] [cursor=pointer]:
+          - generic [ref=e113]: H
+          - generic [ref=e114]: Hyderabad Location Admin
+    - generic [ref=e115]:
+      - generic [ref=e116]:
+        - heading "Reports" [level=4] [ref=e856]
+        - paragraph [ref=e118]: Manage reports within your assigned scope.
+      - button "View Customer App" [ref=e673] [cursor=pointer]
+    - generic [ref=e857]:
+      - generic [ref=e858]:
+        - generic [ref=e859]:
+          - generic [ref=e860]: From
+          - generic [ref=e861]:
+            - textbox "From" [ref=e862]
+            - group [aria-hidden]:
+              - generic: From
+        - generic [ref=e863]:
+          - generic [ref=e864]: To
+          - generic [ref=e865]:
+            - textbox "To" [ref=e866]
+            - group [aria-hidden]:
+              - generic: To
+        - generic [ref=e867]:
+          - combobox [ref=e868] [cursor=pointer]: All locations
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=e869]:
+          - combobox [ref=e870] [cursor=pointer]: All stores in location
+          - textbox [aria-hidden]: All
+          - group [aria-hidden]
+        - generic [ref=e871]:
+          - combobox [ref=e872] [cursor=pointer]: Sort stores by revenue
+          - textbox [aria-hidden]: revenue
+          - group [aria-hidden]
+        - button "Reset" [ref=e873] [cursor=pointer]
+        - button "Export JSON" [ref=e874] [cursor=pointer]
+      - alert [ref=e875]:
+        - generic [ref=e879]: No orders match the selected report filters.
+      - generic [ref=e880]:
+        - generic [ref=e881]:
+          - paragraph [ref=e882]: Revenue
+          - heading "₹0" [level=5] [ref=e883]
+          - text: All business data
+        - generic [ref=e884]:
+          - paragraph [ref=e885]: Orders
+          - heading "0" [level=5] [ref=e886]
+          - text: All business data
+        - generic [ref=e887]:
+          - paragraph [ref=e888]: Delivered
+          - heading "0" [level=5] [ref=e889]
+          - text: All business data
+        - generic [ref=e890]:
+          - paragraph [ref=e891]: Products
+          - heading "0" [level=5] [ref=e892]
+          - text: All business data
+        - generic [ref=e893]:
+          - paragraph [ref=e894]: Stock Units
+          - heading "7860" [level=5] [ref=e895]
+          - text: All business data
+      - generic [ref=e896]:
+        - heading "Store performance" [level=6] [ref=e897]
+        - generic [ref=e898]:
+          - generic [ref=e899]:
+            - generic [ref=e900]: Store and location
+            - generic [ref=e901]: Orders
+            - generic [ref=e902]: Revenue
+          - generic [ref=e903]:
+            - generic [ref=e904]:
+              - text: Banjara Hills Pickle House
+              - generic [ref=e905]: Hyderabad
+            - generic [ref=e906]: "0"
+            - strong [ref=e907]: ₹0
+          - generic [ref=e908]:
+            - generic [ref=e909]:
+              - text: Gachibowli Fresh Hub
+              - generic [ref=e910]: Hyderabad
+            - generic [ref=e911]: "0"
+            - strong [ref=e912]: ₹0
+          - generic [ref=e913]:
+            - generic [ref=e914]:
+              - text: Hyderabad Main Store
+              - generic [ref=e915]: Hyderabad
+            - generic [ref=e916]: "0"
+            - strong [ref=e917]: ₹0
+          - generic [ref=e918]:
+            - generic [ref=e919]:
+              - text: Kukatpally Neighbourhood Market
+              - generic [ref=e920]: Hyderabad
+            - generic [ref=e921]: "0"
+            - strong [ref=e922]: ₹0
+          - generic [ref=e923]:
+            - generic [ref=e924]:
+              - text: Secunderabad Daily Foods
+              - generic [ref=e925]: Hyderabad
+            - generic [ref=e926]: "0"
+            - strong [ref=e927]: ₹0
+          - generic [ref=e928]:
+            - generic [ref=e929]:
+              - text: SR Nagar Store
+              - generic [ref=e930]: Hyderabad
+            - generic [ref=e931]: "0"
+            - strong [ref=e932]: ₹0

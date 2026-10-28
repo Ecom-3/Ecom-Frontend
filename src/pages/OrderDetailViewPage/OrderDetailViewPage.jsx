@@ -107,13 +107,6 @@ const OrderDetailViewPage = () => {
     return () => { ignore = true; };
   }, [requestedOrderId]);
 
-  useEffect(() => {
-    if (!deliveryCompleted || !order?.id) return;
-    const timer = window.setTimeout(() => {
-      navigate(`/order-details/${encodeURIComponent(order.id)}/review`);
-    }, 700);
-    return () => window.clearTimeout(timer);
-  }, [deliveryCompleted, navigate, order?.id]);
 
   const dismissReviewPrompt = () => {
     setDismissedReviewOrderId(order.id);

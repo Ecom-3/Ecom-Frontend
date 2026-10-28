@@ -11,6 +11,8 @@ test('multi-store carts may reach payment review without enabling order creation
 
 test('single verified group with supported totals may proceed', () => {
   assert.equal(checkoutPolicyError({ groupCount: 1, handlingFee: 5 }), '');
+  assert.equal(checkoutPolicyError({ groupCount: 1, handlingFee: 0, globalOrder: true }), '');
+  assert.notEqual(checkoutPolicyError({ groupCount: 1, handlingFee: 0 }), '');
 });
 test('mixed and multi-store checkout is blocked before creation', () => {
   assert.match(checkoutPolicyError({ groupCount: 2 }), /separate orders/);
