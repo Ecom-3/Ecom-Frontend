@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useRef } from 'react';
+import { useContext, useEffect, useMemo, useState, useRef } from 'react';
 import { Box, Typography, InputBase, Badge } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
@@ -21,18 +21,97 @@ const Header = () => {
   const { pathname } = useLocation();
   const animatedPlaceholder = useAnimatedPlaceholder();
   const searchInputRef = useRef(null);
-  const { isLoggedIn, user, cartCount, openCart, selectedLocation, homeSearchQuery, setHomeSearchQuery, t, locale, setShowLocationModal, savedForLater } = useContext(AppContext);
+  const { isLoggedIn, user, cartCount, openCart, selectedLocation, homeSearchQuery, setHomeSearchQuery, catalogProducts, catalogStoreProducts, setSelectedProduct, t, locale, setShowLocationModal, savedForLater } = useContext(AppContext);
+  const searchContainerRef = useRef(null);
+  const [suggestionsOpen, setSuggestionsOpen] = useState(false);
+  const [activeSuggestion, setActiveSuggestion] = useState(-1);
   const [clockTime, setClockTime] = useState(() => new Date());
   useEffect(() => {
     const timer = window.setInterval(() => setClockTime(new Date()), 1000);
     return () => window.clearInterval(timer);
   }, []);
   const selectedZoneTime = new Intl.DateTimeFormat(locale.language === 'Hindi' ? 'hi-IN' : locale.language === 'Telugu' ? 'te-IN' : 'en-IN', {
-    timeZone: locale.timeZone || 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true,
+    timeZone: locale.timeZone || 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true,
   }).format(clockTime);
+  const timeZoneLabel = new Intl.DateTimeFormat('en-IN', {
+    timeZone: locale.timeZone || 'Asia/Kolkata', timeZoneName: 'short',
+  }).formatToParts(clockTime).find((part) => part.type === 'timeZoneName')?.value || 'IST';
   const cleanLabel = (value) => String(value || '').split(',').map((part) => part.trim()).filter((part) => part && !/^undefined$/i.test(part) && !/^null$/i.test(part)).join(', ');
-  const selectedLocationLabel = cleanLabel(selectedLocation?.address || [selectedLocation?.title, selectedLocation?.city].filter(Boolean).join(', '));
+  const selectedLocationLabel = cleanLabel([selectedLocation?.title, selectedLocation?.city].filter((part, index, all) => part && all.indexOf(part) === index).join(', '))
+    || cleanLabel(selectedLocation?.address);
+  const selectedLocationTooltip = cleanLabel(selectedLocation?.address || [selectedLocation?.title, selectedLocation?.city].filter(Boolean).join(', '));
   const deliveryLabel = selectedLocationLabel || t('selectDeliveryLocation');
+  const productSuggestions = useMemo(() => {
+    const query = homeSearchQuery.trim().toLocaleLowerCase();
+    if (query.length < 2) return [];
+
+    const candidates = [
+      ...(catalogProducts || []),
+      ...(catalogStoreProducts || []).map((listing) => ({
+        ...(listing.product || listing),
+        storeId: listing.storeId || listing.product?.storeId,
+        storeName: listing.storeName || listing.product?.storeName,
+      })),
+    ];
+    const productsById = new Map();
+    candidates.forEach((product) => {
+      const id = product?.productId || product?.id;
+      const name = product?.title || product?.name;
+      if (!id || !name || product.active === false || String(product.status || '').toUpperCase() === 'INACTIVE') return;
+      const key = String(id);
+      if (!productsById.has(key)) productsById.set(key, { ...product, id: key, productId: key, title: name });
+    });
+
+    return [...productsById.values()]
+      .filter((product) => [product.title, product.category, product.sku, product.brand]
+        .some((value) => String(value || '').toLocaleLowerCase().includes(query)))
+      .sort((a, b) => Number(!a.title.toLocaleLowerCase().startsWith(query)) - Number(!b.title.toLocaleLowerCase().startsWith(query)))
+      .slice(0, 5);
+  }, [homeSearchQuery, catalogProducts, catalogStoreProducts]);
+
+  useEffect(() => {
+    const closeSuggestionsOutsideSearch = (event) => {
+      if (!searchContainerRef.current?.contains(event.target)) setSuggestionsOpen(false);
+    };
+    document.addEventListener('mousedown', closeSuggestionsOutsideSearch);
+    return () => document.removeEventListener('mousedown', closeSuggestionsOutsideSearch);
+  }, []);
+
+  useEffect(() => setActiveSuggestion(-1), [homeSearchQuery]);
+
+  const selectSuggestion = (product) => {
+    setHomeSearchQuery(product.title);
+    setSelectedProduct(product);
+    setSuggestionsOpen(false);
+    navigate(`/product-info/${encodeURIComponent(product.productId || product.id)}`, { state: { product } });
+  };
+
+  const handleSearchKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      setSuggestionsOpen(false);
+      return;
+    }
+    if (event.key === 'ArrowDown' && productSuggestions.length) {
+      event.preventDefault();
+      setSuggestionsOpen(true);
+      setActiveSuggestion((index) => (index + 1) % productSuggestions.length);
+      return;
+    }
+    if (event.key === 'ArrowUp' && productSuggestions.length) {
+      event.preventDefault();
+      setSuggestionsOpen(true);
+      setActiveSuggestion((index) => (index <= 0 ? productSuggestions.length - 1 : index - 1));
+      return;
+    }
+    if (event.key === 'Enter') {
+      if (suggestionsOpen && productSuggestions[activeSuggestion]) {
+        event.preventDefault();
+        selectSuggestion(productSuggestions[activeSuggestion]);
+      } else if (homeSearchQuery.trim() && window.location.pathname !== '/home') {
+        navigate('/home');
+      }
+    }
+  };
 
   const handleCartClick = () => {
     if (isLoggedIn) {
@@ -49,15 +128,15 @@ const Header = () => {
         {(
           <Box className="header-user-info">
             <Typography className="greeting">{isLoggedIn ? t('greeting', { name: user?.name || t('customer') }) : t('deliveryLocation')}</Typography>
-            <Box component="button" className="delivery-location" onClick={() => { sessionStorage.setItem('locationPickerManualOpen', 'true'); setShowLocationModal(true); }} style={{ cursor: 'pointer', background: 'none', border: 0, textAlign: 'left' }}>
-              <Typography className="deliver-to">{t('deliverTo')}: <span className="location">{deliveryLabel}</span></Typography>
+            <Box component="button" className="delivery-location" title={selectedLocationTooltip} aria-label={`Change delivery location${selectedLocationTooltip ? `: ${selectedLocationTooltip}` : ''}`} onClick={() => { sessionStorage.setItem('locationPickerManualOpen', 'true'); setShowLocationModal(true); }} style={{ cursor: 'pointer', background: 'none', border: 0, textAlign: 'left' }}>
+              <Typography className="deliver-to">{t('deliverTo')}: <span className="location" title={selectedLocationTooltip}>{deliveryLabel}</span></Typography>
               <KeyboardArrowDownIcon className="arrow-down" />
             </Box>
           </Box>
         )}
       </Box>
 
-      <Box className="header-search" sx={{ display: pathname.startsWith('/product') ? 'none' : undefined }}>
+      <Box className="header-search" ref={searchContainerRef} sx={{ display: pathname.startsWith('/product') ? 'none' : undefined }}>
         <Box className="search-box" onClick={() => {
           searchInputRef.current?.focus();
         }}>
@@ -66,8 +145,10 @@ const Header = () => {
             placeholder={locale.language === 'English' ? animatedPlaceholder : t('search')}
             className="search-input"
             value={homeSearchQuery}
-            onChange={(e) => setHomeSearchQuery(e.target.value)}
-            onKeyDown={(event) => { if (event.key === 'Enter' && homeSearchQuery.trim() && window.location.pathname !== '/home') navigate('/home'); }}
+            onChange={(e) => { setHomeSearchQuery(e.target.value); setSuggestionsOpen(true); }}
+            onFocus={() => setSuggestionsOpen(true)}
+            onKeyDown={handleSearchKeyDown}
+            inputProps={{ role: 'combobox', 'aria-autocomplete': 'list', 'aria-expanded': suggestionsOpen && productSuggestions.length > 0, 'aria-controls': 'header-product-suggestions' }}
           />
           {homeSearchQuery ? (
             <CloseIcon
@@ -85,12 +166,35 @@ const Header = () => {
             }} />
           )}
         </Box>
+        {suggestionsOpen && productSuggestions.length > 0 && (
+          <Box className="product-suggestions" id="header-product-suggestions" role="listbox" aria-label="Product suggestions">
+            {productSuggestions.map((product, index) => (
+              <Box
+                key={product.productId || product.id}
+                component="button"
+                type="button"
+                className={`product-suggestion${index === activeSuggestion ? ' active' : ''}`}
+                role="option"
+                aria-selected={index === activeSuggestion}
+                onMouseEnter={() => setActiveSuggestion(index)}
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={() => selectSuggestion(product)}
+              >
+                {product.image && <img src={product.image} alt="" className="product-suggestion-image" />}
+                <span className="product-suggestion-copy">
+                  <span className="product-suggestion-title">{product.title}</span>
+                  <span className="product-suggestion-meta">{[product.category, product.weight, product.price ? `₹${product.price}` : ''].filter(Boolean).join(' · ')}</span>
+                </span>
+              </Box>
+            ))}
+          </Box>
+        )}
       </Box>
 
       <Box className="header-right">
         <Box className="header-time" aria-label={`Current time in ${locale.timeZone || 'selected time zone'}: ${selectedZoneTime}`} title={locale.timeZone || 'Selected time zone'}>
           <span className="header-time-value">{selectedZoneTime}</span>
-          <span className="header-time-zone">{locale.timeZone || 'Selected time zone'}</span>
+          <span className="header-time-zone">{timeZoneLabel}</span>
         </Box>
         <Box className="action-item" onClick={() => navigate('/settings/language')} title="Language, currency and time zone">
           <TranslateIcon className="action-icon" />

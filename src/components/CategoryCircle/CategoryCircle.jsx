@@ -11,7 +11,7 @@ const CategoryCircle = ({ title, image, onClick }) => {
       <Box className="category-circle">
         {image ? <img src={image} alt={title} className="category-circle-img" /> : <Box className="category-circle-img category-circle-img-empty">No image</Box>}
       </Box>
-      <Typography className="category-circle-title">{label}</Typography>
+      <Typography className="category-circle-title" title={label}>{label}</Typography>
     </Box>
   );
 };

@@ -33,9 +33,17 @@
 }
 
 .category-circle-title {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 92px;
+  min-height: 29px;
   font-size: 12px !important;
   font-weight: 600 !important;
   color: #333;
   text-align: center;
   line-height: 1.2 !important;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }

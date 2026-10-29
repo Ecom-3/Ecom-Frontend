@@ -60,6 +60,11 @@
   scrollbar-width: none;
 }
 
+/* Keep product cards at a consistent carousel width so long rows can scroll. */
+.section-content > .product-card {
+  flex: 0 0 190px;
+}
+
 .section-content::-webkit-scrollbar {
   display: none !important;
 }
@@ -84,4 +89,10 @@
 
 .scroll-arrow-left {
   left: -10px;
+}
+
+@media (max-width: 640px) {
+  .section-content > .product-card {
+    flex-basis: 150px;
+  }
 }

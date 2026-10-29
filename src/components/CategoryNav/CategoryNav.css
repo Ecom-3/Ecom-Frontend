@@ -1,11 +1,13 @@
 .category-nav-container {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   background-color: #0B6E4F;
   padding: 3px 20px 2px 20px;
-  gap: 28px;
+  gap: 6px;
   overflow-x: auto;
+  overflow-y: hidden;
+  flex-wrap: nowrap;
   white-space: nowrap;
   border-bottom: none;
 }
@@ -14,7 +16,7 @@
   .category-nav-container {
     justify-content: flex-start;
     padding: 3px 12px 2px 12px;
-    gap: 16px;
+    gap: 4px;
   }
 }
 
@@ -28,7 +30,11 @@
   position: relative;
   padding-bottom: 3px;
   transition: opacity 0.2s;
-  min-width: 50px;
+  box-sizing: border-box;
+  flex: 0 0 88px;
+  width: 88px;
+  min-width: 88px;
+  max-width: 88px;
 }
 
 .category-nav-item:hover {
@@ -48,10 +54,17 @@
 }
 
 .category-label {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
   font-size: 11px !important;
   font-weight: 500 !important;
   color: #ffffff;
   text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .category-nav-item.active .category-label {
@@ -75,4 +88,23 @@
 .category-nav-container {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.category-nav-item:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: -2px;
+  border-radius: 4px;
+}
+
+@media (max-width: 640px) {
+  .category-nav-item {
+    flex-basis: 78px;
+    width: 78px;
+    min-width: 78px;
+    max-width: 78px;
+  }
+
+  .category-label {
+    font-size: 10px !important;
+  }
 }

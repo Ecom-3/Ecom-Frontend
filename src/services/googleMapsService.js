@@ -86,8 +86,25 @@ export const reverseGeocodeLocation = async (lat, lng) => {
 
 export const getCurrentDeliveryLocation = async () => {
   const coordinates = await getBrowserLocation();
-  const place = await reverseGeocodeLocation(coordinates.lat, coordinates.lng);
-  return { ...place, source: 'gps' };
+  try {
+    const place = await reverseGeocodeLocation(coordinates.lat, coordinates.lng);
+    return { ...place, source: 'gps' };
+  } catch {
+    // GPS coordinates are enough to find nearby stores. Keep address entry
+    // separate when the reverse-geocoding service is temporarily unavailable.
+    return {
+      id: `gps-${Number(coordinates.lat).toFixed(6)}-${Number(coordinates.lng).toFixed(6)}`,
+      provider: 'BROWSER_GEOLOCATION',
+      source: 'gps',
+      title: 'Near you',
+      address: '',
+      addressUnresolved: true,
+      city: '',
+      latitude: coordinates.lat,
+      longitude: coordinates.lng,
+      coordinates: { lat: coordinates.lat, lng: coordinates.lng },
+    };
+  }
 };
 
 export const googleMapsConfigured = () => Boolean(apiKey());

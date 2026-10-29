@@ -6,12 +6,15 @@ import mangoPickleImage from '../assets/images/mango_pickle_jar.png';
 import garlicPickleImage from '../assets/images/garlic_pickle_jar.png';
 import lemonPickleImage from '../assets/images/lemon_pickle_jar.png';
 import homeSpicesImage from '../assets/images/home_spices.png';
+import wholeSpicesImage from '../assets/images/whole_spices.png';
+import redChilliPowderImage from '../assets/images/red_chilli_powder.png';
 
 const CATEGORY_IMAGES = {
   'traditional-pickles': traditionalPicklesImage,
   'premium-dry-fruits': premiumDryFruitsImage,
   'fresh-vegetables': freshVegetablesImage,
   'fresh-non-veg': freshNonVegImage,
+  'spices-seasonings': homeSpicesImage,
 };
 
 const categoryKey = (category = {}) => String(category.slug || category.name || category.title || '')
@@ -24,13 +27,16 @@ export const categoryImageFor = (category) => CATEGORY_IMAGES[categoryKey(catego
 
 export const productImageFor = (product = {}) => {
   const text = `${product.name || product.title || ''} ${product.categoryName || product.category || ''} ${product.type || ''}`.toLowerCase();
+  const isSpiceProduct = /spice|seasoning|masala|podi|powder|rasam|biryani/.test(text);
+  if (isSpiceProduct && /chilli|chili|paprika/.test(text)) return redChilliPowderImage;
+  if (isSpiceProduct && /cumin|jeera|coriander|dhaniya|pepper|whole spice/.test(text)) return wholeSpicesImage;
+  if (isSpiceProduct) return homeSpicesImage;
   if (text.includes('garlic')) return garlicPickleImage;
   if (text.includes('lemon') || text.includes('lime')) return lemonPickleImage;
-  if (text.includes('pickle') || text.includes('avakaya') || text.includes('gongura') || text.includes('chilli')) return mangoPickleImage;
+  if (text.includes('pickle') || text.includes('avakaya') || text.includes('gongura')) return mangoPickleImage;
   if (text.includes('dry fruit') || text.includes('almond') || text.includes('cashew') || text.includes('walnut') || text.includes('raisin') || text.includes('pistachio')) return premiumDryFruitsImage;
   if (text.includes('vegetable') || text.includes('tomato') || text.includes('carrot') || text.includes('beans')) return freshVegetablesImage;
   if (text.includes('non-veg') || text.includes('chicken') || text.includes('mutton') || text.includes('prawn')) return freshNonVegImage;
-  if (text.includes('spice')) return homeSpicesImage;
   return mangoPickleImage;
 };
 

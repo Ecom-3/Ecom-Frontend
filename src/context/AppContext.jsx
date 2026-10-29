@@ -944,7 +944,7 @@ export const AppProvider = ({ children }) => {
       address: cleanLocationText(value.address),
       pincode: cleanLocationText(value.pincode),
     };
-    const locationAddress = cleanLocationText(next.address || [next.title && next.title !== next.city ? next.title : '', next.city].filter(Boolean).join(', '));
+    const locationAddress = next.addressUnresolved ? '' : cleanLocationText(next.address || [next.title && next.title !== next.city ? next.title : '', next.city].filter(Boolean).join(', '));
     storeSelectedLocation(next);
     setSelectedLocation(next);
     setUserCity(locationAddress || cleanLocationText([next.title && next.title !== next.city ? next.title : '', next.city].filter(Boolean).join(', ')));
