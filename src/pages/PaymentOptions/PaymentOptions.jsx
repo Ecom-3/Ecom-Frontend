@@ -18,7 +18,7 @@ import AutorenewOutlinedIcon from '@mui/icons-material/AutorenewOutlined';
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { checkoutPolicyError } from '../../utils/checkoutPolicy';
+import { checkoutPolicyError, checkoutReviewError } from '../../utils/checkoutPolicy';
 import { AppContext } from '../../context/AppContext';
 import { buildOrderAddressesPayload, buildOrderItemsPayload, createOrder, getOrder, normalizeOrder, retrySavedOrder } from '../../services/orderApi';
 import { createPayment, getPayment, getPaymentByOrder, getPaymentStatus, normalizePayment } from '../../services/paymentApi';
@@ -206,7 +206,11 @@ const PaymentOptions = () => {
     await verifyGlobalItems();
     const deliveryLines = checkout.deliveryLines || [];
     const splitKeys = splitKeysFor(cartItems, deliveryLines);
-    const policyError = checkoutPolicyError({ groupCount: splitKeys.length, handlingFee: summary.handling, discount: summary.discount, coupon: checkout.coupon, promotionVerified:Boolean(checkout.promotionVerified), globalOrder: checkout.fulfillmentType === 'global' || checkout.sourceStoreId === GLOBAL_STORE_ID });
+    // A multi-store cart is submitted as one order per store below. Validate
+    // the checkout totals and promotion, but do not apply the single-store rule.
+    const policyError = splitKeys.length > 1
+      ? checkoutReviewError({ groupCount: splitKeys.length, handlingFee: summary.handling, discount: summary.discount, coupon: checkout.coupon, promotionVerified:Boolean(checkout.promotionVerified) })
+      : checkoutPolicyError({ groupCount: splitKeys.length, handlingFee: summary.handling, discount: summary.discount, coupon: checkout.coupon, promotionVerified:Boolean(checkout.promotionVerified), globalOrder: checkout.fulfillmentType === 'global' || checkout.sourceStoreId === GLOBAL_STORE_ID });
     if (policyError) throw new Error(policyError);
     const hasGlobalLine = deliveryLines.some((line) => line.fulfillmentType === 'global') || ['global','mixed'].includes(checkout.fulfillmentType);
     const useLocalSplitOrder = hasGlobalLine || splitKeys.length > 1;
@@ -275,7 +279,8 @@ const PaymentOptions = () => {
             total:Number(order.totalAmount || groupSubtotal + groupDelivery),
           };
         }));
-        return { ...childOrders[0], childOrders };
+        const combinedTotal = childOrders.reduce((total, order) => total + Number(order.totalAmount || order.total || 0), 0);
+        return { ...childOrders[0], totalAmount:combinedTotal, total:combinedTotal, childOrders };
     }
     const defaultAddress = addresses.find((address) => address.isDefault) || addresses[0] || {};
     const deliveryQuote = checkout.deliveryQuote || {};
@@ -350,19 +355,21 @@ const PaymentOptions = () => {
         const payableAmount = Number(order.totalAmount || order.total || summary.total || 0);
         if (!order.id || !(payableAmount > 0)) throw new Error('Order Service did not return a valid saved order.');
         let pendingPayment = null;
-        for (let attempt = 0; attempt < 4 && !pendingPayment; attempt += 1) {
-          try {
-            if (attempt > 0) await new Promise((resolve) => window.setTimeout(resolve, 450));
-            pendingPayment = normalizePayment(await getPaymentByOrder(order.id));
-          } catch {
-            pendingPayment = null;
+        if (!order.childOrders?.length) {
+          for (let attempt = 0; attempt < 4 && !pendingPayment; attempt += 1) {
+            try {
+              if (attempt > 0) await new Promise((resolve) => window.setTimeout(resolve, 450));
+              pendingPayment = normalizePayment(await getPaymentByOrder(order.id));
+            } catch {
+              pendingPayment = null;
+            }
           }
         }
         if (!existingOrderId) {
-          finishCheckoutCart(customerId, order.storeId);
+          for (const storeOrder of order.childOrders || [order]) finishCheckoutCart(customerId, storeOrder.storeId);
           if (!retrySaved) clearCartAfterCheckout();
         }
-        setResult({ order, payment: pendingPayment || { status: 'PENDING', amount: payableAmount, paymentMethod: selectedPaymentMethod, paymentId: '' } });
+        setResult({ order, payment: { ...(pendingPayment || {}), status: pendingPayment?.status || 'PENDING', amount: payableAmount, paymentMethod: pendingPayment?.paymentMethod || selectedPaymentMethod, paymentId: pendingPayment?.paymentId || '' } });
         sessionStorage.setItem(COMPLETED_CHECKOUT_RETURN_KEY, order.id);
         setStatus('succeeded');
       } catch (reason) {
