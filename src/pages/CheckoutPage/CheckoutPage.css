@@ -241,6 +241,10 @@
 }
 
 .checkout-address-choice { display: grid; grid-template-rows: 1fr auto; min-width: 0; gap: 2px; }
+.checkout-address-heading-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px; }
+.checkout-address-heading-actions .MuiButton-root { min-width: 0; padding: 3px 6px; font-size: 9px; text-transform: none; }
+.checkout-address-heading-actions .MuiSvgIcon-root, .checkout-address-card-actions .MuiSvgIcon-root { width: 14px; height: 14px; }
+.checkout-address-card-actions { display: flex; flex-wrap: wrap; gap: 4px; }
 
 .checkout-address-card {
   display: flex;
@@ -425,13 +429,16 @@
 .checkout-summary-store-heading > strong { overflow: hidden; min-width: 0; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
 .checkout-fulfillment-pill { margin-left: auto; padding: 2px 5px; border-radius: 8px; color: #087451; background: #e8f6ee; font-size: 8px; white-space: nowrap; }
 .checkout-fulfillment-pill.global { color: #805e00; background: #fff6d8; }
-.checkout-summary-item { display: grid; grid-template-columns: 38px minmax(0, 1fr) 15px; align-items: center; gap: 7px; padding: 4px 0; }
+.checkout-summary-item { display: grid; grid-template-columns: 38px minmax(0, 1fr) 15px 24px; align-items: center; gap: 7px; padding: 4px 0; }
 .checkout-summary-image { width: 38px; height: 38px; border-radius: 4px; object-fit: cover; background: #f1f5f2; }
 .checkout-summary-item-copy { display: grid; gap: 2px; min-width: 0; }
 .checkout-summary-item-copy strong { overflow: hidden; color: #293a31; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
 .checkout-summary-item-copy small { overflow: hidden; color: var(--checkout-muted); font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
 .checkout-summary-item-copy b { color: #1d2a23; font-size: 9px; }
 .checkout-summary-quantity { color: #394a41; font-size: 9px; text-align: right; }
+.checkout-remove-item.MuiIconButton-root { width: 24px; height: 24px; padding: 3px; color: #b42318; }
+.checkout-summary-breakdown-row { display: flex; justify-content: space-between; gap: 8px; margin-top: 4px; color: #68776f; font-size: 8px; }
+.checkout-summary-breakdown-row strong { color: #2c3d33; font-size: 8px; }
 .checkout-summary-discount { display: flex; align-items: center; gap: 5px; padding: 7px 0; color: var(--checkout-green); font-size: 9px; }
 .checkout-summary-discount svg { width: 14px; height: 14px; }
 .checkout-summary-discount strong { margin-left: auto; }

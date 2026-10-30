@@ -1,6 +1,7 @@
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+﻿import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Box, Button, CircularProgress, Collapse, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import ErrorOutlinedIcon from '@mui/icons-material/ErrorOutlined';
@@ -8,6 +9,14 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
+import SecurityOutlinedIcon from '@mui/icons-material/SecurityOutlined';
+import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
+import AutorenewOutlinedIcon from '@mui/icons-material/AutorenewOutlined';
+import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { checkoutPolicyError } from '../../utils/checkoutPolicy';
 import { AppContext } from '../../context/AppContext';
@@ -24,6 +33,7 @@ import { createCheckoutGroup, getCheckoutGroupByKey, getCheckoutGroupByCart } fr
 import { persistStoreCheckout } from '../../utils/persistedStoreCheckout';
 import { getPublicInventoryAvailability } from '../../services/inventoryApi';
 import { validateCheckoutAvailability } from '../../utils/checkoutAvailability';
+import SafeProductImage from '../../components/SafeProductImage/SafeProductImage';
 
 const methods = [
   { id:'upi',label:'UPI',paymentMethod:'DEMO_UPI',displayMethod:'UPI',icon:<PhoneAndroidIcon/>,caption:'Pay using UPI' },
@@ -86,7 +96,7 @@ const resolveCheckoutStoreId = ({ activeCart, checkout = {}, cartItems = [] } = 
 const PaymentOptions = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { activeCart, addresses, cartItems, clearCartAfterCheckout, formatCurrency, user, catalogStores } = useContext(AppContext);
+  const { activeCart, addresses, cartItems, clearCartAfterCheckout, formatCurrency, user, catalogStores, catalogProducts } = useContext(AppContext);
   const customerId = tokenCustomerId() || user?.id || '';
   const checkout = useMemo(() => location.state?.checkout || {}, [location.state]);
   const existingOrderId = location.state?.orderId || location.state?.order?.id || '';
@@ -486,23 +496,76 @@ const PaymentOptions = () => {
 
   const activePaymentStatus = payment?.status || (status === 'pending' ? 'PENDING' : status === 'refunded' ? 'REFUNDED' : status === 'failed' && payment?.paymentId ? 'FAILED' : '');
 
-  if (status !== 'succeeded' && sessionStorage.getItem(COMPLETED_CHECKOUT_RETURN_KEY)) return <Box className="payment-shell" role="status">Returning to your cart…</Box>;
+  if (status !== 'succeeded' && sessionStorage.getItem(COMPLETED_CHECKOUT_RETURN_KEY)) return <Box className="payment-shell" role="status">Returning to your cartâ€¦</Box>;
 
   if (status === 'succeeded' && result) return <Box className="payment-shell"><Box className="payment-result"><Box className="success-ring"><CheckCircleOutlinedIcon/></Box><Typography variant="h4">{result.payment.status === 'PENDING' ? 'Order Placed' : 'Payment Successful'}</Typography><Typography color="text.secondary">{result.payment.status === 'PENDING' ? 'Cash on delivery will be collected when the order arrives.' : 'Payment Service confirmed this payment.'}</Typography><Box className="result-amount"><span>Amount</span><strong>{formatCurrency(result.payment.amount)}</strong></Box><Box className="result-refs"><span>Order ID<strong>{result.order.id}</strong></span><span>Payment ID<strong>{result.payment.paymentId || 'Pending'}</strong></span></Box>{result.order.childOrders?.length>0&&<Box className="summary-content">{result.order.childOrders.map((order)=><Box className="summary-product store-tracking-row" key={order.id}><span>{storeNameFor(order)}<small>{order.id} | {order.deliveryLabel || order.estimatedDelivery || 'Tracking available'}</small></span><strong>{formatCurrency(order.totalAmount || order.total)}</strong><Button size="small" variant="outlined" onClick={()=>navigate(`/order-details/${encodeURIComponent(order.id)}`,{state:{orderId:order.id,paymentId:result.payment.paymentId}})}>Track</Button></Box>)}</Box>}<Box className="result-refs"><span>Payment Status<strong>{result.payment.status}</strong></span><span>Method<strong>{displayPaymentMethod(result.payment.paymentMethod)}</strong></span></Box><Box className="result-actions"><Button variant="contained" onClick={()=>result.order.childOrders?.length?navigate('/orders'):navigate(`/order-details/${encodeURIComponent(result.order.id)}`,{state:{orderId:result.order.id,paymentId:result.payment.paymentId}})}>{result.order.childOrders?.length?'View All Orders':'View Order Details & Tracking'}</Button><Button variant="outlined" onClick={()=>navigate('/home')}>Continue Shopping</Button><Button variant="outlined" onClick={()=>navigate('/cart',{replace:true})}>Back to Cart</Button></Box></Box></Box>;
 
+  const paymentAddress = checkout.deliveryAddress || existingOrder?.addresses?.find((address) => address.addressType === 'SHIPPING')?.addressLine1 || existingOrder?.addresses?.[0]?.addressLine1 || '';
+  const activeMethod = selectableMethods.find((item) => item.id === selectedMethod) || methods.find((item) => item.id === 'cod');
+
   return <Box className="payment-shell">
-    <header className="payment-header"><Button startIcon={<ArrowBackIcon/>} onClick={()=>navigate(-1)}>Secure Checkout</Button><Box><LockOutlinedIcon/><span>Secure Payment</span></Box></header>
+    <header className="payment-header">
+      <Box className="payment-header-left">
+        <Button aria-label="Back" onClick={() => navigate(-1)}><ArrowBackIcon /></Button>
+        <span className="payment-header-lock"><LockOutlinedIcon /></span>
+        <Box><strong>Secure Checkout</strong><small>Your information is safe and secure</small></Box>
+      </Box>
+      <Box className="payment-header-security"><VerifiedUserOutlinedIcon /><Box><strong>Secure Payment</strong><small>256-bit SSL Encrypted</small></Box></Box>
+    </header>
     <main className="payment-layout">
-      <section className={`order-summary-panel ${summaryOpen?'open':''}`}><button type="button" className="summary-toggle" onClick={()=>setSummaryOpen((value)=>!value)}><span><strong>Order Summary</strong><small>{existingOrder ? 'Backend order total' : `${cartItems.length} ${cartItems.length===1?'item':'items'}`}</small></span><strong>{formatCurrency(summary.total)}</strong><KeyboardArrowDownIcon/></button><Collapse in={summaryOpen}><Box className="summary-content">{cartItems.map((item)=><Box className="summary-product" key={cartItemKey(item)}><span>{item.title}<small>{item.weight} x {item.quantity}</small></span><strong>{formatCurrency(Number(item.price)*Number(item.quantity))}</strong></Box>)}{existingOrder && cartItems.length === 0 && <Box className="summary-product"><span>Order {existingOrder.id}<small>Payment retry</small></span><strong>{formatCurrency(existingOrder.totalAmount)}</strong></Box>}<Box className="summary-totals"><span>Subtotal<strong>{formatCurrency(summary.subtotal)}</strong></span><span>Delivery<strong>{formatCurrency(summary.delivery)}</strong></span><span>Handling<strong>{formatCurrency(summary.handling)}</strong></span>{summary.discount>0&&<span className="summary-discount">Discount<strong>-{formatCurrency(summary.discount)}</strong></span>}<span className="summary-grand">Total<strong>{formatCurrency(summary.total)}</strong></span></Box>{checkout.deliveryAddress&&<Typography className="summary-address"><strong>Deliver to</strong>{checkout.deliveryAddress}</Typography>}</Box></Collapse></section>
-      <section className="payment-method-panel"><Box className="payment-title"><Typography variant="h5">Payment Method</Typography><Typography>Choose a payment option</Typography></Box><Box className="method-workspace"><nav className="method-tabs">{selectableMethods.map((item)=><button type="button" key={item.id} className={method===item.id?'active':''} onClick={()=>{setMethod(item.id);setStatus('selecting');setError('');}}>{item.icon}<span>{item.label}</span></button>)}</nav><Box className="method-detail">
-        <Box className="method-form"><Typography variant="h6">{selectableMethods.find((item)=>item.id===method)?.label} Payment</Typography><Typography color="text.secondary">Select your preferred payment method to place the order.</Typography><Box className="option-list">{selectableMethods.map((item)=><button type="button" key={item.id} className={method===item.id?'selected':''} onClick={()=>setMethod(item.id)}><span className="option-mark">{item.label.slice(0,2)}</span><span><strong>{item.displayMethod}</strong><small>{item.caption}</small></span><i>{method===item.id?'●':'○'}</i></button>)}</Box></Box>
-        {activePaymentStatus&&<Box className="payment-state-note" role="status"><strong>{activePaymentStatus}</strong><span>{paymentStatusText[activePaymentStatus] || 'Payment status received from Payment Service.'}</span>{payment?.paymentId&&<span>Payment ID: {payment.paymentId}</span>}</Box>}
-        {checkoutBlock ? <Box className="payment-state-note" role="status"><strong>Checkout unavailable for this cart</strong><span>{checkoutBlock}</span><span>No payment was attempted.</span><Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/cart')}>Edit Cart</Button></Box>
-          : status==='failed'&&<Box className="payment-error" role="alert"><ErrorOutlinedIcon/><Box><strong>{payment?.paymentId ? 'Payment Failed' : 'Checkout Could Not Proceed'}</strong><span>{error || 'Please try again in a moment.'}</span>{!multiStoreCart && /previous cart is claimed by checkout|earlier checkout has an unresolved result|retry that checkout/i.test(error) && <span>Retry Saved Checkout resubmits the original saved order. The different item currently shown will not be submitted by that action.</span>}</Box>{!multiStoreCart && /previous cart is claimed by checkout|earlier checkout has an unresolved result|retry that checkout/i.test(error) ? <Button onClick={()=>pay(true)}>Retry Saved Checkout</Button> : <Button onClick={()=>{setStatus('selecting');setError('');}}>Try Again</Button>}</Box>}
-        <Button className="payment-button" variant="contained" disabled={status==='submitting' || Boolean(checkoutBlock)} onClick={()=>pay()}>{status==='submitting'?<><CircularProgress size={19} color="inherit"/>{persistedMultiStore && multiStoreCart ? 'Saving Checkout...' : 'Placing Order...'}</>:`Place Order ${formatCurrency(summary.total)}`}</Button>
-      </Box></Box></section>
+      <section className={`order-summary-panel ${summaryOpen ? 'open' : ''}`}>
+        <button type="button" className="summary-toggle" onClick={() => setSummaryOpen((value) => !value)}>
+          <span className="summary-cart-icon"><ShoppingCartOutlinedIcon /></span>
+          <span className="summary-toggle-copy"><strong>Order Summary</strong><small>{existingOrder ? 'Backend order total' : `${cartItems.length} ${cartItems.length === 1 ? 'item' : 'items'}`}</small></span>
+          <strong className="summary-toggle-total">{formatCurrency(summary.total)}</strong><KeyboardArrowDownIcon />
+        </button>
+        <Collapse in={summaryOpen}>
+          <Box className="summary-content">
+            {cartItems.map((item) => {
+              const product = catalogProducts.find((entry) => String(entry.productId || entry.id) === String(item.productId || item.id)) || {};
+              const productImage = item.image || item.imageUrl || product.image || product.images?.[0] || product.gallery?.[0] || '';
+              return <Box className="summary-product" key={cartItemKey(item)}>
+                <SafeProductImage src={productImage} alt={item.title || product.title || 'Product'} />
+                <span><strong>{item.title || product.title}</strong><small>{item.sku || product.sku || item.productId || item.id || ''}</small><small>x {item.quantity}</small></span>
+                <strong>{formatCurrency(Number(item.price || item.unitPrice) * Number(item.quantity))}</strong>
+              </Box>;
+            })}
+            {existingOrder && cartItems.length === 0 && <Box className="summary-product"><span><strong>Order {existingOrder.id}</strong><small>Payment retry</small></span><strong>{formatCurrency(existingOrder.totalAmount)}</strong></Box>}
+            <Box className="summary-totals">
+              <span><i><Inventory2OutlinedIcon />Subtotal</i><strong>{formatCurrency(summary.subtotal)}</strong></span>
+              <span><i><LocalShippingOutlinedIcon />Delivery</i><strong>{formatCurrency(summary.delivery)}</strong></span>
+              <span><i><Inventory2OutlinedIcon />Handling</i><strong>{formatCurrency(summary.handling)}</strong></span>
+              {summary.discount > 0 && <span className="summary-discount"><i>Discount</i><strong>-{formatCurrency(summary.discount)}</strong></span>}
+              <span className="summary-grand"><i><PaymentsOutlinedIcon />Total Amount</i><strong>{formatCurrency(summary.total)}</strong></span>
+            </Box>
+            {paymentAddress && <Box className="summary-address"><span className="summary-address-icon"><PlaceOutlinedIcon /></span><Box><strong>Deliver to</strong><span>{paymentAddress}</span></Box><button type="button" onClick={() => navigate('/checkout', { state: { checkout } })}><EditOutlinedIcon />Change</button></Box>}
+          </Box>
+        </Collapse>
+      </section>
+      <section className="payment-method-panel">
+        <Box className="payment-title"><span className="payment-title-icon"><CreditCardIcon /></span><Box><Typography variant="h5">Payment Method</Typography><Typography>Choose a payment option to place the order</Typography></Box><Box className="payment-hero-illustration"><span><CreditCardIcon /></span><VerifiedUserOutlinedIcon /></Box></Box>
+        <Box className="method-workspace">
+          <nav className="method-tabs" aria-label="Payment methods">{selectableMethods.map((item) => <button type="button" key={item.id} className={method === item.id ? 'active' : ''} onClick={() => { setMethod(item.id); setStatus('selecting'); setError(''); }}>{item.icon}<span>{item.label}</span></button>)}</nav>
+          <Box className="method-detail">
+            <Box className="method-form">
+              <Typography variant="h6">{activeMethod.id === 'cod' ? 'COD Payment' : `${activeMethod.displayMethod} Payment`}</Typography>
+              <Typography color="text.secondary">Select your preferred payment method to place the order.</Typography>
+              <Box className="option-list"><button type="button" className="selected" onClick={() => setMethod(activeMethod.id)}><span className="option-mark">{activeMethod.icon}</span><span><strong>{activeMethod.displayMethod === 'Cash on Delivery' ? 'Cash on Delivery' : activeMethod.displayMethod}</strong><small>{activeMethod.id === 'cod' ? 'Pay when the order arrives at your doorstep.' : activeMethod.caption}</small></span><i>●</i></button></Box>
+              <Box className="payment-assurances">
+                <Box><SecurityOutlinedIcon /><span><strong>{activeMethod.id === 'cod' ? 'No Online Payment' : 'Secure Payment'}</strong><small>{activeMethod.id === 'cod' ? 'Pay in cash' : 'Encrypted checkout'}</small></span></Box>
+                <Box><VerifiedUserOutlinedIcon /><span><strong>Safe &amp; Secure</strong><small>Verified delivery</small></span></Box>
+                <Box><AutorenewOutlinedIcon /><span><strong>Easy Returns</strong><small>Hassle free</small></span></Box>
+              </Box>
+              {activePaymentStatus && <Box className="payment-state-note" role="status"><strong>{activePaymentStatus}</strong><span>{paymentStatusText[activePaymentStatus] || 'Payment status received from Payment Service.'}</span>{payment?.paymentId && <span>Payment ID: {payment.paymentId}</span>}</Box>}
+              {checkoutBlock ? <Box className="payment-state-note" role="status"><strong>Checkout unavailable for this cart</strong><span>{checkoutBlock}</span><span>No payment was attempted.</span><Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/cart')}>Edit Cart</Button></Box>
+                : status === 'failed' && <Box className="payment-error" role="alert"><ErrorOutlinedIcon /><Box><strong>{payment?.paymentId ? 'Payment Failed' : 'Checkout Could Not Proceed'}</strong><span>{error || 'Please try again in a moment.'}</span>{!multiStoreCart && /previous cart is claimed by checkout|earlier checkout has an unresolved result|retry that checkout/i.test(error) && <span>Retry Saved Checkout resubmits the original saved order. The different item currently shown will not be submitted by that action.</span>}</Box>{!multiStoreCart && /previous cart is claimed by checkout|earlier checkout has an unresolved result|retry that checkout/i.test(error) ? <Button onClick={() => pay(true)}>Retry Saved Checkout</Button> : <Button onClick={() => { setStatus('selecting'); setError(''); }}>Try Again</Button>}</Box>}
+              <Button className="payment-button" variant="contained" disabled={status === 'submitting' || Boolean(checkoutBlock)} onClick={() => pay()}>{status === 'submitting' ? <><CircularProgress size={19} color="inherit" />{persistedMultiStore && multiStoreCart ? 'Saving Checkout...' : 'Placing Order...'}</> : `Place Order ${formatCurrency(summary.total)}`}<ChevronRightIcon /></Button>
+              <Typography className="payment-cash-note">{activeMethod.id === 'cod' ? `You'll pay ${formatCurrency(summary.total)} in cash when your order is delivered.` : 'Your payment is protected by secure encryption.'}</Typography>
+            </Box>
+          </Box>
+        </Box>
+      </section>
     </main>
-  </Box>;
-};
+  </Box>;};
 
 export default PaymentOptions;

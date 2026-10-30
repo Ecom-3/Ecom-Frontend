@@ -16,7 +16,7 @@ import { AppContext } from '../../context/AppContext';
 import { promotionApplies } from '../../services/promotionScope';
 import { getCachedStoreDeliveryQuote, getPublicStoreProducts } from '../../services/catalogApi';
 import { adaptStoreProductList } from '../../services/catalogAdapter';
-import { deliverySummary, isGlobalProduct, isGlobalStore, isProductEligibleForStore, storeDeliversTo } from '../../utils/storeDelivery';
+import { deliverySummary, GLOBAL_STORE_LISTING, isGlobalProduct, isGlobalStore, isProductEligibleForStore, storeDeliversTo } from '../../utils/storeDelivery';
 import StoreServiceAreaMap from '../../components/StoreServiceAreaMap/StoreServiceAreaMap';
 import './StorePage.css';
 
@@ -47,7 +47,7 @@ const StorePage = () => {
     return () => { ignore = true; };
   }, [storeId]);
 
-  const store = catalogStores.find((item) => item.id === storeId) || null;
+  const store = catalogStores.find((item) => item.id === storeId) || (storeId === GLOBAL_STORE_LISTING.id ? GLOBAL_STORE_LISTING : null);
   const globalStore = isGlobalStore(store);
   useEffect(() => {
     if (store?.id) selectStore(store);
@@ -130,10 +130,10 @@ const StorePage = () => {
         <Box className="store-service-heading">
           <Box className="store-service-heading-icon"><PlaceOutlinedIcon /></Box>
           <Box><Typography variant="h6">Store service area</Typography><Typography>{store.name}</Typography></Box>
-          <Chip label={delivery.radiusLabel} size="small" />
+          <Chip label={globalStore ? 'India-wide delivery' : delivery.radiusLabel} size="small" />
         </Box>
         <Typography className="store-service-address">{store.address || [store.area, store.city || store.location, store.state, store.pincode].filter(Boolean).join(', ')}</Typography>
-        {deliveryLocationLabel && <Typography className="store-selected-location">Delivering to: {deliveryLocationLabel}</Typography>}
+        {globalStore ? <Typography className="store-selected-location">Global products ship nationwide.</Typography> : deliveryLocationLabel && <Typography className="store-selected-location">Delivering to: {deliveryLocationLabel}</Typography>}
         <Box className="store-service-metrics">
           <Box><AccessTimeOutlinedIcon /><span><small>Delivery time</small><b>{quoteEta || delivery.etaLabel}</b></span></Box>
           <Box><LocalShippingOutlinedIcon /><span><small>Delivery fee</small><b>{deliveryChargeLabel}</b></span></Box>
@@ -144,7 +144,7 @@ const StorePage = () => {
         {deliveryModes.length > 0 && <Box className="store-service-modes">{deliveryModes.map((mode) => <Chip key={mode.name} label={mode.label} size="small" />)}</Box>}
         {!deliveryModes.length && <Typography className="store-service-methods">Service types: {serviceMethodsLabel}</Typography>}
       </Box>
-      {hasMapPoint ? <StoreServiceAreaMap
+      {globalStore ? <Box className="store-radius-map store-map-empty">Available for delivery across India.</Box> : hasMapPoint ? <StoreServiceAreaMap
         key={`${store.id}:${customerPoint?.latitude ?? ''}:${customerPoint?.longitude ?? ''}`}
         store={store}
         radiusKm={store.deliveryRadiusKm}

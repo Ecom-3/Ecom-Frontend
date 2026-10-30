@@ -22,9 +22,10 @@ import { AppContext } from '../../context/AppContext';
 import { promotionApplies } from '../../services/promotionScope';
 import { getCategoryProducts, getProducts } from '../../services/catalogApi';
 import { adaptProductList } from '../../services/catalogAdapter';
-import { deliverySummary, storeDeliversTo, deliveryDistanceKm, deliveryProducts, isGlobalStore } from '../../utils/storeDelivery';
+import { deliverySummary, storeDeliversTo, deliveryDistanceKm, deliveryProducts, isGlobalProduct, isGlobalStore } from '../../utils/storeDelivery';
 import { filterAndSortProducts, prepareBrowseProduct, parseDeliveryEstimate } from '../../utils/productBrowsing.js';
 import { useBrowseDeliveryQuotes } from '../../hooks/useBrowseDeliveryQuotes';
+import { useOrderableStores } from '../../hooks/useOrderableStores';
 import { getProductReviewsBatch } from '../../services/reviewApi';
 import { getCurrentDeliveryLocation } from '../../services/googleMapsService';
 import './Home.css';
@@ -178,6 +179,7 @@ const Home = () => {
     .sort((a,b) => Number(a.sortOrder || 0) - Number(b.sortOrder || 0)), [catalogCategories]);
   const sharedStores = useMemo(() => stores.filter((store) => storeDeliversTo(store, selectedLocation) || isGlobalStore(store))
     .sort((a, b) => deliveryDistanceKm(a, selectedLocation) - deliveryDistanceKm(b, selectedLocation)), [stores, selectedLocation]);
+  const orderableStores = useOrderableStores(stores, selectedLocation, allMasterProducts.some(isGlobalProduct));
   const deliveryPool = useMemo(() => deliveryProducts(allMasterProducts, catalogStoreProducts, stores, selectedLocation), [allMasterProducts, catalogStoreProducts, stores, selectedLocation]);
   const quotedProducts = useBrowseDeliveryQuotes(deliveryPool, selectedLocation, addresses);
   const availableProductPool = quotedProducts.map(product => prepareBrowseProduct(product, stores, reviews));
@@ -192,7 +194,7 @@ const Home = () => {
   const quotedCategoryProducts = useBrowseDeliveryQuotes(categoryDeliveryPool, selectedLocation, addresses);
   const availableCategoryProductPool = quotedCategoryProducts.map(product => prepareBrowseProduct(product, stores, reviews));
   const visibleStores = useMemo(() => {
-    const baseStores = sharedStores;
+    const baseStores = orderableStores;
     const storeHasOffer = (store) => {
       const hasProductOffer = catalogProducts.some((product) => (product.storeId === store.id || product.store === store.name || product.storeName === store.name || (isGlobalStore(store) && product.globalProduct)) && (product.offer || Number(product.compareAtPrice || 0) > Number(product.price || 0)));
       return hasProductOffer;
@@ -212,7 +214,7 @@ const Home = () => {
     return enriched
       .filter((store) => storeFilter === 'all' || (storeFilter === 'offers' ? store.hasOffer : storeFilter === 'under30' ? store.under30 : storeFilter === 'above30' ? store.above30 : store.isNew))
       .sort((a, b) => storeFilter === 'new' ? Number(b.isNew) - Number(a.isNew) || deliveryDistanceKm(a, selectedLocation) - deliveryDistanceKm(b, selectedLocation) : ['under30', 'above30'].includes(storeFilter) ? (a.etaMinutes || 999) - (b.etaMinutes || 999) : Number(b.hasOffer) - Number(a.hasOffer) || (a.etaMinutes || 999) - (b.etaMinutes || 999));
-  }, [catalogProducts, selectedLocation, sharedStores, storeFilter]);
+  }, [catalogProducts, selectedLocation, orderableStores, storeFilter]);
   const nearbyProducts = useMemo(() => {
     const nearbyLocalStores = stores.filter((store) => !isGlobalStore(store) && storeDeliversTo(store, selectedLocation));
     const nearbyStoreIds = new Set(nearbyLocalStores.map((store) => String(store.id)));
@@ -390,7 +392,7 @@ const Home = () => {
                   <Box sx={{ width:64, height:64, mx:'auto', borderRadius:'50%', bgcolor:'#eef8f3', display:'grid', placeItems:'center', overflow:'hidden', border:'1px solid #d8eee5' }}><StorefrontOutlinedIcon sx={{ color:'#075F40' }} /></Box>
                   <Typography sx={{ mt:1, fontWeight:800, fontSize:13 }} noWrap>{store.name}</Typography>
                   {store.hasOffer && <Typography sx={{ color:'#dc2626', fontSize:11, fontWeight:800 }}>Offer</Typography>}
-                  <Typography sx={{ color:'#64748b', fontSize:12 }}>{delivery.etaLabel}</Typography>
+                  <Typography sx={{ color:'#64748b', fontSize:12 }}>{isGlobalStore(store) ? 'India-wide delivery' : delivery.etaLabel}</Typography>
                 </Box>; })}
                 {visibleStores.length === 0 && <Typography color="text.secondary" sx={{ gridColumn:'1 / -1' }}>
                   {storeFilter === 'above30' ? 'No stores with delivery above 30 minutes are available for this location.' : `No stores match the selected ${storeFilter === 'under30' ? 'Under 30 mins' : storeFilter === 'offers' ? 'Offers' : 'New'} filter.`}

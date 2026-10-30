@@ -21,7 +21,7 @@ const Header = () => {
   const { pathname } = useLocation();
   const animatedPlaceholder = useAnimatedPlaceholder();
   const searchInputRef = useRef(null);
-  const { isLoggedIn, user, cartCount, openCart, selectedLocation, homeSearchQuery, setHomeSearchQuery, catalogProducts, catalogStoreProducts, setSelectedProduct, t, locale, setShowLocationModal, savedForLater } = useContext(AppContext);
+  const { isLoggedIn, user, cartCount, openCart, selectedLocation, homeSearchQuery, setHomeSearchQuery, catalogProducts, catalogStoreProducts, setSelectedProduct, t, locale, setShowLocationModal, savedForLater, wishlistItems } = useContext(AppContext);
   const searchContainerRef = useRef(null);
   const [suggestionsOpen, setSuggestionsOpen] = useState(false);
   const [activeSuggestion, setActiveSuggestion] = useState(-1);
@@ -200,12 +200,14 @@ const Header = () => {
           <TranslateIcon className="action-icon" />
           <Typography className="action-text">{locale.language}</Typography>
         </Box>
-        <Box className="action-item" role="button" tabIndex={0} aria-label={t('wishlist')} onClick={() => navigate('/wishlist')} onKeyDown={(event) => {
+        <Box className="action-item" role="button" tabIndex={0} aria-label={`${t('wishlist')}: ${wishlistItems.length} items`} onClick={() => navigate('/wishlist')} onKeyDown={(event) => {
           if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); navigate('/wishlist'); }
         }}>
-              <FavoriteBorderIcon className="action-icon" />
-            <Typography className="action-text">{t('wishlist')}</Typography>
-            </Box>
+          <Badge badgeContent={wishlistItems.length} color="error" max={99} showZero className="cart-badge">
+            <FavoriteBorderIcon className="action-icon" />
+          </Badge>
+          <Typography className="action-text">{t('wishlist')}</Typography>
+        </Box>
         {isLoggedIn ? (
           <>
             <Box className="action-item" onClick={() => navigate('/saved-for-later')}>

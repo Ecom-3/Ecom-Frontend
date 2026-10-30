@@ -1,5 +1,5 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField, Typography } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
@@ -12,6 +12,7 @@ import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import { hasCompleteProfile } from '../../utils/profileCompletion';
@@ -59,7 +60,7 @@ const generateRequestedTimes = ({ date }) => {
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
-  const { cartItems, deliveryAddress, setDeliveryAddress, user, addresses, orderAddresses, setDefaultAddress, formatCurrency, userCity, catalogProducts, catalogStores, selectedLocation, clearSelectedLocation } = useContext(AppContext);
+  const { cartItems, removeFromCart, deliveryAddress, setDeliveryAddress, user, addresses, orderAddresses, setDefaultAddress, formatCurrency, userCity, catalogProducts, catalogStores, selectedLocation, clearSelectedLocation } = useContext(AppContext);
   const [selectedAddressId, setSelectedAddressId] = useState('');
   const [addressPickerOpen, setAddressPickerOpen] = useState(false);
   const [fulfillmentByStore, setFulfillmentByStore] = useState({});
@@ -117,6 +118,7 @@ const CheckoutPage = () => {
   } : null;
   const selectedAddress = selectedLocationAddress || selectableAddresses.all.find((item) => item.id === selectedAddressId)
     || addresses.find((item) => item.isDefault) || addresses[0] || {};
+  const addressForEdit = selectedAddressId === 'selected-location' ? matchingSavedAddress : selectableAddresses.all.find((item) => item.id === selectedAddressId);
   const displayedAddresses = selectedLocationAddress?.id === selectedAddressId
     ? [selectedLocationAddress, ...selectableAddresses.all.filter((item) => item.id !== selectedLocationAddress.id)].slice(0, 3)
     : selectableAddresses.all.slice(0, 3);
@@ -214,7 +216,7 @@ const CheckoutPage = () => {
     const requestedMethod = selection.deliveryMethod || preferredDeliveryMethod({ ...quote, deliveryAvailable: true });
     const chosen = quote?.methods?.find((entry) => entry.enabled !== false && entry.deliveryType === requestedMethod);
     const meetsMinimum = quote?.minimumOrder == null || group.subtotal >= Number(quote.minimumOrder);
-    const available = Boolean(quote?.deliveryZoneId && chosen && meetsMinimum && (quote.deliveryAvailable !== false || quote.minimumOrder != null));
+    const available = Boolean(chosen && meetsMinimum && (quote.deliveryAvailable !== false || quote.minimumOrder != null));
     const charge = Number(chosen?.deliveryCharge ?? quote?.deliveryCharge ?? 0);
     return group.items.map((item) => ({
       ...baseLine(item), deliveryType: chosen?.deliveryType || selection.deliveryMethod || 'standard',
@@ -303,7 +305,7 @@ const CheckoutPage = () => {
       const state = deliveryQuotesByStore[group.id];
       const contextKey = `${customerLat}:${customerLng}:${group.subtotal}`;
       if (state?.contextKey !== contextKey || state.loading) return setError(`Delivery availability is still loading for ${group.name}.`);
-      if (state.error || !state.quote?.deliveryZoneId) return setError(state.error || `Delivery is unavailable for ${group.name} at this address.`);
+      if (state.error || !state.quote?.deliveryAvailable) return setError(state.error || `Delivery is unavailable for ${group.name} at this address.`);
       const method = selectedDeliveryMethodFor(group);
       const meetsMinimum = state.quote.minimumOrder == null || group.subtotal >= Number(state.quote.minimumOrder);
       if (!method || !meetsMinimum) return setError(state.quote.message || `Choose an available delivery method for ${group.name}.`);
@@ -443,7 +445,10 @@ const CheckoutPage = () => {
             <Box className="checkout-section-heading">
               <span className="checkout-section-icon"><LocationOnOutlinedIcon /></span>
               <Box><Typography component="h2">1. Delivery address</Typography><small>{hasGlobalDelivery ? 'Required for Global delivery and stores offering delivery' : hasDraftDeliverySelection ? 'Used by each store offering delivery' : 'No delivery address is needed for store pickup'}</small></Box>
-              {hasDraftDeliverySelection && <Button onClick={() => navigate('/address-form', { state: { returnTo: '/checkout', location: selectedLocation } })}><AddLocationAltOutlinedIcon /> Add New Address</Button>}
+              {hasDraftDeliverySelection && <Box className="checkout-address-heading-actions">
+                {addressForEdit?.id && !addressForEdit.fromOrder && <Button onClick={() => navigate('/address-form', { state: { editAddress: addressForEdit, returnTo: '/checkout' } })}><EditOutlinedIcon /> Edit Address</Button>}
+                <Button onClick={() => navigate('/address-form', { state: { returnTo: '/checkout', location: selectedLocation } })}><AddLocationAltOutlinedIcon /> Add New Address</Button>
+              </Box>}
             </Box>
             {hasDraftDeliverySelection ? <Box className="checkout-address-layout">
               <Box className="checkout-address-grid">
@@ -451,7 +456,10 @@ const CheckoutPage = () => {
                   <button type="button" className={`checkout-address-card ${selectedAddressId === address.id ? 'selected' : ''}`} aria-pressed={selectedAddressId === address.id} onClick={() => chooseCheckoutAddress(address)}>
                     <span className="checkout-radio" /><span className="checkout-address-copy"><span className="checkout-address-label">{displayAddressType(address.type)}{address.isDefault && <b>Default</b>}</span><strong>{address.address}</strong></span>
                   </button>
-                  {!address.isDefault && address.id && !address.fromOrder && <Button className="checkout-set-default" onClick={() => setDefaultAddress(address.id).catch((reason) => setError(reason.message || 'Could not update your default address.'))}>Set as default</Button>}
+                  {address.id && address.id !== 'selected-location' && !address.fromOrder && <Box className="checkout-address-card-actions">
+                    {!address.isDefault && <Button className="checkout-set-default" onClick={() => setDefaultAddress(address.id).catch((reason) => setError(reason.message || 'Could not update your default address.'))}>Set as default</Button>}
+                    <Button className="checkout-set-default" onClick={() => navigate('/address-form', { state: { editAddress: address, returnTo: '/checkout' } })}><EditOutlinedIcon /> Edit</Button>
+                  </Box>}
                 </Box>)}
                 {selectableAddresses.all.length > 3 && <Button className="checkout-more-addresses" onClick={() => setAddressPickerOpen(true)}>More saved addresses</Button>}
               </Box>
@@ -506,7 +514,7 @@ const CheckoutPage = () => {
                     {selection.fulfillment === 'delivery' ? <>
                       {quoteState.loading && <Typography className="checkout-muted" role="status">Checking delivery for this store-</Typography>}
                       {quoteState.error && <Typography className="checkout-delivery-note error" role="alert">{quoteState.error}</Typography>}
-                      {quoteState.quote && quoteState.quote.deliveryZoneId && quoteState.quote.minimumOrder != null && group.subtotal < Number(quoteState.quote.minimumOrder) && <Typography className="checkout-delivery-note error">Minimum order for this delivery area is {formatCurrency(quoteState.quote.minimumOrder)}.</Typography>}
+                      {quoteState.quote && quoteState.quote.minimumOrder != null && group.subtotal < Number(quoteState.quote.minimumOrder) && <Typography className="checkout-delivery-note error">Minimum order for this delivery area is {formatCurrency(quoteState.quote.minimumOrder)}.</Typography>}
                       <Box className="checkout-time-options">
                         {methods.map((item) => {
                           const active = selectedMethod?.deliveryType === item.deliveryType;
@@ -585,10 +593,14 @@ const CheckoutPage = () => {
                   <SafeProductImage className="checkout-summary-image" src={item.image} alt={item.title} />
                   <Box className="checkout-summary-item-copy"><strong>{item.title}</strong><small>{item.weight || 'Product'} · {item.quantity} × {formatCurrency(Number(item.price ?? item.unitPrice ?? 0))}</small><b>{formatCurrency(Number(item.price ?? item.unitPrice ?? 0) * Number(item.quantity))}</b></Box>
                   <span className="checkout-summary-quantity">{item.quantity}</span>
+                  <IconButton className="checkout-remove-item" aria-label={`Remove ${item.title} from cart`} size="small" onClick={() => removeFromCart(item.productId || item.id, item.variantId ?? null, item.storeId || item.sourceStoreId || group.storeId)}><DeleteOutlineOutlinedIcon fontSize="small" /></IconButton>
                 </Box>)}
-                <Box className="checkout-summary-store-service"><span>{isGlobalStore ? 'India-wide Global Delivery · 7–10 days' : isConfigured ? storeLine.deliveryLabel || 'Fulfillment' : 'Choose a fulfillment option'}</span><strong>{isConfigured && storeCharge ? formatCurrency(storeCharge) : isConfigured ? 'No charge' : ''}</strong></Box>
+                <Box className="checkout-summary-store-service"><span>Fulfillment</span><strong>{isGlobalStore ? 'India-wide delivery · 7–10 days' : isConfigured ? storeLine.deliveryLabel || (isPickupStore ? 'Store pickup' : 'Delivery') : 'Choose fulfillment'}</strong></Box>
+                <Box className="checkout-summary-breakdown-row"><span>Items subtotal</span><strong>{formatCurrency(storeSubtotal)}</strong></Box>
+                <Box className="checkout-summary-breakdown-row"><span>{isPickupStore ? 'Pickup fee' : isGlobalStore ? 'Shipping fee' : 'Delivery fee'}</span><strong>{isConfigured ? storeCharge ? formatCurrency(storeCharge) : 'No charge' : 'Pending'}</strong></Box>
+                <Box className="checkout-summary-breakdown-row"><span>Store handling</span><strong>{formatCurrency(isGlobalStore ? 0 : 5)}</strong></Box>
                 {scheduledLabel && <small className="checkout-summary-schedule">{isPickupStore ? 'Pickup' : 'Delivery'}: {scheduledLabel}</small>}
-                <Box className="checkout-summary-store-subtotal"><span>Store subtotal</span><strong>{formatCurrency(storeSubtotal)}</strong></Box>
+                <Box className="checkout-summary-store-subtotal"><span>Store total before discount</span><strong>{formatCurrency(storeSubtotal + (isConfigured ? storeCharge : 0) + (isGlobalStore ? 0 : 5))}</strong></Box>
               </Box>;
             })}
           </Box>

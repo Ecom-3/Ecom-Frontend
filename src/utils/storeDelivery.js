@@ -63,6 +63,14 @@ export const deliverySummary = (store = {}, formatCurrency = (value) => `Rs. ${N
 };
 
 const coordinate = (value, limit) => value !== null && value !== undefined && String(value).trim() !== '' && Number.isFinite(Number(value)) && Math.abs(Number(value)) <= limit;
+const locationCoordinate = (location, axis) => {
+  const direct = axis === 'latitude' ? location?.latitude : location?.longitude;
+  const nested = axis === 'latitude' ? location?.coordinates?.lat : location?.coordinates?.lng;
+  const alias = axis === 'latitude' ? location?.lat : location?.lng;
+  return coordinate(direct, axis === 'latitude' ? 90 : 180) ? Number(direct)
+    : coordinate(nested, axis === 'latitude' ? 90 : 180) ? Number(nested)
+      : coordinate(alias, axis === 'latitude' ? 90 : 180) ? Number(alias) : null;
+};
 const activeStore = (store = {}) => store.active !== false && store.deliveryEnabled !== false && !['inactive', 'closed'].includes(String(store.status).toLowerCase()) &&
   String(store.availability).toLowerCase() !== 'unavailable' &&
   ![false, 'no', 'false'].includes(typeof store.delivery === 'string' ? store.delivery.toLowerCase() : store.delivery);
@@ -80,16 +88,25 @@ export const isGlobalProduct = (product = {}) => {
   return product.globalProduct === true;
 };
 
+export const GLOBAL_STORE_LISTING = Object.freeze({
+  id: 'global-store', name: 'India-wide Global Store', global: true, status: 'Active', active: true,
+  delivery: 'Yes', pickup: 'No', deliveryEnabled: true, deliveryModes: 'Global Delivery',
+  deliveryLabel: 'India-wide delivery', location: 'India', city: 'India', address: 'Nationwide delivery for global products',
+});
+
 export const isProductEligibleForStore = (product = {}, store = {}) =>
   !isGlobalStore(store) || isGlobalProduct(product);
 
 export const deliveryDistanceKm = (store, location) => {
-  if (!coordinate(store?.latitude, 90) || !coordinate(store?.longitude, 180) ||
-      !coordinate(location?.latitude, 90) || !coordinate(location?.longitude, 180)) return Infinity;
+  const storeLatitude = locationCoordinate(store, 'latitude');
+  const storeLongitude = locationCoordinate(store, 'longitude');
+  const userLatitude = locationCoordinate(location, 'latitude');
+  const userLongitude = locationCoordinate(location, 'longitude');
+  if (storeLatitude === null || storeLongitude === null || userLatitude === null || userLongitude === null) return Infinity;
   const rad = (value) => Number(value) * Math.PI / 180;
-  const dLat = rad(location.latitude) - rad(store.latitude);
-  const dLon = rad(location.longitude) - rad(store.longitude);
-  const a = Math.sin(dLat / 2) ** 2 + Math.cos(rad(store.latitude)) * Math.cos(rad(location.latitude)) * Math.sin(dLon / 2) ** 2;
+  const dLat = rad(userLatitude) - rad(storeLatitude);
+  const dLon = rad(userLongitude) - rad(storeLongitude);
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos(rad(storeLatitude)) * Math.cos(rad(userLatitude)) * Math.sin(dLon / 2) ** 2;
   return 6371 * 2 * Math.asin(Math.sqrt(Math.min(1, a)));
 };
 
